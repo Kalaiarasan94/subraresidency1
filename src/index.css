@@ -1,0 +1,253 @@
+@import "tailwindcss";
+@config "../tailwind.config.js";
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-brand-cream text-brand-charcoal antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-playfair;
+  }
+}
+
+@layer utilities {
+  .bg-ivory-texture {
+    background-color: #F5E6CA;
+    background-image: radial-gradient(circle at center, transparent 0%, rgba(200, 170, 130, 0.1) 100%),
+                      url("https://www.transparenttextures.com/patterns/parchment.png");
+  }
+
+  .bg-card-ivory {
+    background-color: #FFF9F0;
+  }
+
+  .ornate-shape {
+    clip-path: polygon(
+      15px 0, calc(100% - 15px) 0, 
+      100% 12px, 100% calc(100% - 12px), 
+      calc(100% - 15px) 100%, 15px 100%, 
+      0 calc(100% - 12px), 0 12px
+    );
+  }
+
+  .ornate-border {
+    position: relative;
+  }
+  
+  .ornate-border::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 2px;
+    background: linear-gradient(to right, #C89B3C, #FDF5E6, #C89B3C);
+    -webkit-mask: 
+      linear-gradient(#fff 0 0) content-box, 
+      linear-gradient(#fff 0 0);
+    mask: 
+      linear-gradient(#fff 0 0) content-box, 
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    clip-path: polygon(
+      10px 0, calc(100% - 10px) 0, 
+      100% 15px, 100% calc(100% - 15px), 
+      calc(100% - 10px) 100%, 10px 100%, 
+      0 calc(100% - 15px), 0 15px
+    );
+    pointer-events: none;
+  }
+
+  .subra-divider {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: min(100%, 220px);
+    margin-inline: auto;
+  }
+
+  .subra-divider::before,
+  .subra-divider::after {
+    content: "";
+    height: 1px;
+    flex: 1;
+    background: linear-gradient(to right, transparent, #C89B3C);
+  }
+
+  .subra-divider::after {
+    background: linear-gradient(to left, transparent, #C89B3C);
+  }
+
+  .subra-divider span {
+    width: 9px;
+    height: 9px;
+    transform: rotate(45deg);
+    border: 1px solid #C89B3C;
+    background: #FFF9F0;
+  }
+
+  .ambient-bg {
+    animation: ambientPan 28s ease-in-out infinite alternate;
+  }
+
+  .decor-pillar img {
+    animation: decorFloat 8s ease-in-out infinite;
+  }
+
+  .decor-leaf img {
+    transform-origin: 75% 0%;
+    animation: leafSway 7s ease-in-out infinite;
+  }
+
+  .hero-cloud {
+    animation: cloudDrift 18s ease-in-out infinite alternate;
+  }
+
+  .hero-cloud-slow {
+    animation-duration: 26s;
+    animation-delay: -6s;
+  }
+
+  .hero-cloud-soft {
+    animation-duration: 22s;
+    animation-delay: -10s;
+  }
+
+  .bird-drift {
+    animation: birdGlide 9s ease-in-out infinite alternate;
+  }
+
+  .bird-drift-slow {
+    animation-duration: 12s;
+    animation-delay: -3s;
+  }
+
+  .animated-card {
+    position: relative;
+    transform: translateZ(0);
+    transition: box-shadow 350ms ease, border-color 350ms ease, filter 350ms ease;
+  }
+
+  .animated-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    background: linear-gradient(115deg, transparent 0%, rgba(255, 255, 255, 0.45) 44%, transparent 62%);
+    transform: translateX(-120%);
+    transition: opacity 250ms ease;
+  }
+
+  .animated-card:hover {
+    box-shadow: 0 28px 70px rgba(11, 77, 70, 0.18);
+    filter: saturate(1.04);
+  }
+
+  .animated-card:hover::after {
+    opacity: 1;
+    animation: cardSheen 1s ease forwards;
+  }
+
+  .lux-button {
+    position: relative;
+    overflow: hidden;
+    transition: transform 260ms ease, box-shadow 260ms ease, background-color 260ms ease;
+  }
+
+  .lux-button::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(110deg, transparent 0%, rgba(255, 255, 255, 0.28) 46%, transparent 60%);
+    transform: translateX(-130%);
+  }
+
+  .lux-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 34px rgba(11, 77, 70, 0.2);
+  }
+
+  .lux-button:hover::after {
+    animation: buttonSheen 700ms ease forwards;
+  }
+
+  .subra-divider::before,
+  .subra-divider::after {
+    animation: dividerGlow 3.2s ease-in-out infinite;
+  }
+  
+  .animate-fade-in {
+    animation: fadeIn 1s ease-out forwards;
+  }
+  
+  .animate-slide-up {
+    animation: slideUp 0.8s ease-out forwards;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes ambientPan {
+  from { background-position: center top; }
+  to { background-position: center 56%; }
+}
+
+@keyframes decorFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes leafSway {
+  0%, 100% { transform: rotate(0deg) translateY(0); }
+  50% { transform: rotate(1.8deg) translateY(-8px); }
+}
+
+@keyframes cloudDrift {
+  from { transform: translate3d(-18px, 0, 0) scale(1); }
+  to { transform: translate3d(28px, -10px, 0) scale(1.05); }
+}
+
+@keyframes birdGlide {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-26px, 12px, 0); }
+}
+
+@keyframes cardSheen {
+  from { transform: translateX(-120%); }
+  to { transform: translateX(120%); }
+}
+
+@keyframes buttonSheen {
+  from { transform: translateX(-130%); }
+  to { transform: translateX(130%); }
+}
+
+@keyframes dividerGlow {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
