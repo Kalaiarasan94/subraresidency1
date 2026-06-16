@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom';
-import { Search, MapPin, Calendar, Users, Star, ArrowRight, ShieldCheck, ChevronDown, X, CheckCircle2, CreditCard, QrCode, Info, ChevronRight, Phone } from 'lucide-react';
+import { Search, MapPin, Calendar, Users, Star, ArrowRight, ShieldCheck, ChevronDown, X, CheckCircle2, CreditCard, QrCode, Info, ChevronRight, Phone, Clock, Droplets, Shirt, Footprints, Car, Menu } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '../lib/utils';
 import logo from '../assets/logo.png';
@@ -15,29 +15,36 @@ import mahamahamImg from '../assets/Mahamaham Tank.jpg';
 import airavatesvaraImg from '../assets/Airavatesvara Temple.jpg';
 import uppiliappanImg from '../assets/Uppiliappan Temple.jpg';
 import ramaswamyImg from '../assets/Ramaswamy Temple.jpg';
+import hidden1 from '../assets/hidden/IMG_5703.PNG';
+import hidden2 from '../assets/hidden/IMG_5704.PNG';
+import hidden3 from '../assets/hidden/IMG_5705.PNG';
+import hidden4 from '../assets/hidden/IMG_5706.PNG';
+import hidden5 from '../assets/hidden/IMG_5707.PNG';
+import hidden6 from '../assets/hidden/IMG_5709.PNG';
 import { Button } from '../components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
+import AboutKumbakonam from '../components/AboutKumbakonam';
 
 const fadeInUp = {
   initial: { opacity: 0, y: 46, scale: 0.98 },
   whileInView: { opacity: 1, y: 0, scale: 1 },
   viewport: { once: true },
-  transition: { duration: 0.85, ease: [0.22, 1, 0.36, 1] }
+  transition: { duration: 0.85, ease: [0.22, 1, 0.36, 1] } as any
 };
 
 const fadeInLeft = {
   initial: { opacity: 0, x: -58, scale: 0.98 },
   whileInView: { opacity: 1, x: 0, scale: 1 },
   viewport: { once: true },
-  transition: { duration: 0.85, ease: [0.22, 1, 0.36, 1] }
+  transition: { duration: 0.85, ease: [0.22, 1, 0.36, 1] } as any
 };
 
 const fadeInRight = {
   initial: { opacity: 0, x: 58, scale: 0.98 },
   whileInView: { opacity: 1, x: 0, scale: 1 },
   viewport: { once: true },
-  transition: { duration: 0.85, ease: [0.22, 1, 0.36, 1] }
+  transition: { duration: 0.85, ease: [0.22, 1, 0.36, 1] } as any
 };
 
 const staggerContainer = {
@@ -64,7 +71,7 @@ const heroStagger = {
 const heroItem = {
   initial: { opacity: 0, y: 34, filter: "blur(8px)" },
   animate: { opacity: 1, y: 0, filter: "blur(0px)" },
-  transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] }
+  transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] } as any
 };
 
 const ROOMS_DATA = [
@@ -164,6 +171,221 @@ const ATTRACTIONS_DATA = [
   { title: "Sri Swarnapureeswarar Temple", dist: "6.6 kilometers", preferred: "Cab recommended", image: "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=800&q=80" },
   { title: "Swamimalai Murugan Temple", dist: "7.9 kilometers", preferred: "Cab recommended", image: "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=800&q=80" },
   { title: "Mahalinga Swamy Temple", dist: "10 kilometers", preferred: "Cab recommended", image: "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=800&q=80" }
+];
+
+const HIDDEN_TRAILS_DATA = [
+  {
+    title: "Azhagaputhur Swarnapureeswarar Temple",
+    dist: "6–7 km",
+    speciality: "Rare Murugan holding Sangu and Chakra instead of Vel.",
+    prayer: "Courage, protection, family welfare, ancestral blessings.",
+    image: hidden1
+  },
+  {
+    title: "Abhi Mukheswarar Temple",
+    dist: "1 km",
+    speciality: "Mahamaham-associated Shiva temple.",
+    prayer: "Health, planetary harmony, peace.",
+    image: hidden2
+  },
+  {
+    title: "Karkadeswarar Temple, Thirundudevankudi",
+    dist: "10 km",
+    speciality: "Cancer Rasi and Ayilyam star temple tradition.",
+    prayer: "Health, emotional wellbeing, planetary relief.",
+    image: hidden3
+  },
+  {
+    title: "Innambur Ezhutharinathar Temple",
+    dist: "10 km",
+    speciality: "Temple of learning, writing and Vidyabhyasam.",
+    prayer: "Education, wisdom, learning ability, exam confidence.",
+    image: hidden4
+  },
+  {
+    title: "Thiruvalanchuzhi Swetha Vinayagar Temple",
+    dist: "6–7 km",
+    speciality: "Rare White Vinayagar formed from sea foam tradition.",
+    prayer: "Obstacle removal, auspicious beginnings, prosperity.",
+    image: hidden5
+  },
+  {
+    title: "Kottaiyur Kodeeswarar Temple",
+    dist: "5 km",
+    speciality: "Unique Navagraha arrangement.",
+    prayer: "Prosperity, family peace, planetary balance.",
+    image: hidden6
+  },
+  {
+    title: "Sakkottai Amirthakadeswarar Temple",
+    dist: "5–6 km",
+    speciality: "Connected to the sacred Amirtha Kalasam legend.",
+    prayer: "Life renewal, spiritual cleansing, family welfare.",
+    image: hidden1
+  },
+  {
+    title: "Thirupurambiyam Sakshinatheswarar Temple",
+    dist: "8–10 km",
+    speciality: "Pralayam Katha Vinayagar tradition.",
+    prayer: "Protection, education, child blessings.",
+    image: hidden2
+  },
+  {
+    title: "Patteeswaram Dhenupureeswarar Temple",
+    dist: "8 km",
+    speciality: "Famous Durga shrine.",
+    prayer: "Courage, protection, overcoming obstacles.",
+    image: hidden3
+  },
+  {
+    title: "Thirucherai Sara Parameswarar Temple",
+    dist: "15 km",
+    speciality: "Rina Vimochana Lingeswarar tradition.",
+    prayer: "Debt relief, financial peace, family stability.",
+    image: hidden4
+  },
+  {
+    title: "Thirucherai Saranatha Perumal Temple",
+    dist: "15 km",
+    speciality: "Rare Divya Desam with five consorts.",
+    prayer: "Family harmony, marriage blessings, prosperity.",
+    image: hidden5
+  },
+  {
+    title: "Nachiyar Koil Kal Garuda Temple",
+    dist: "10 km",
+    speciality: "Famous Kal Garuda procession tradition.",
+    prayer: "Protection, prosperity and dosha relief.",
+    image: hidden6
+  },
+  {
+    title: "Thirubhuvanam Kampaheswarar Temple",
+    dist: "7 km",
+    speciality: "Sarabeswarar shrine and Chola architecture.",
+    prayer: "Protection, legal relief, fear removal.",
+    image: hidden1
+  },
+  {
+    title: "Thiruvisanallur Sivayoginathar Temple",
+    dist: "8–10 km",
+    speciality: "Chatur Kala Bhairava worship.",
+    prayer: "Business growth, prosperity and protection.",
+    image: hidden2
+  }
+];
+
+const RECOMMENDED_TRAILS_DATA = [
+  {
+    title: "Trail 1: Short Hidden Trail (3–4 Hours)",
+    route: "Azhagaputhur Swarnapureeswarar Temple → Kottaiyur Kodeeswarar Temple → Thiruvalanchuzhi Swetha Vinayagar Temple",
+    bestFor: "Rare Murugan Darshan, Navagraha worship and Vinayagar blessings."
+  },
+  {
+    title: "Trail 2: Education & Blessings Trail",
+    route: "Innambur Ezhutharinathar Temple → Thirupurambiyam Sakshinatheswarar Temple → Azhagaputhur Swarnapureeswarar Temple",
+    bestFor: "Students, children and families seeking education-related blessings."
+  },
+  {
+    title: "Trail 3: Parihara & Protection Trail",
+    route: "Abhi Mukheswarar Temple → Thirucherai Sara Parameswarar Temple → Thirubhuvanam Kampaheswarar Temple → Thiruvisanallur Sivayoginathar Temple",
+    bestFor: "Health, debt relief, protection and spiritual wellbeing."
+  },
+  {
+    title: "Trail 4: Full Day Sacred Discovery",
+    route: "Patteeswaram Dhenupureeswarar Temple → Thirucherai Temples → Nachiyar Koil Kal Garuda Temple → Thirubhuvanam Kampaheswarar Temple",
+    bestFor: "Complete spiritual exploration covering Shiva, Vishnu and Durga traditions."
+  }
+];
+
+const TEMPLE_DETAILS_DATA = [
+  {
+    name: "Mahamaham Tank",
+    dist: "Approximately 700 meters",
+    mode: "Walk / Auto",
+    timing: "6:00 AM – 10:00 AM and 4:30 PM – 7:00 PM",
+    specialFor: "Mahamaham festival, holy bathing rituals, sacred tank visit",
+    desc: "One of the most sacred landmarks of Kumbakonam and closely connected with the spiritual identity of the town."
+  },
+  {
+    name: "Kasi Viswanathar Temple",
+    dist: "Approximately 700 meters",
+    mode: "Walk / Auto",
+    timing: "7:00 AM – 12:00 PM and 4:00 PM – 8:00 PM",
+    specialFor: "Shiva darshan and peaceful spiritual atmosphere",
+    desc: "A revered Shiva temple located near Mahamaham Tank and an important spiritual destination."
+  },
+  {
+    name: "Nageswaran Temple",
+    dist: "Approximately 1.2 km",
+    mode: "Auto Preferred",
+    timing: "6:00 AM – 12:00 PM and 4:00 PM – 8:30 PM",
+    specialFor: "Chola architecture and Shiva worship",
+    desc: "An ancient Shiva temple admired for its historic architecture and peaceful ambience."
+  },
+  {
+    name: "Sarangapani Temple",
+    dist: "Approximately 1.8 km",
+    mode: "Auto",
+    timing: "6:00 AM – 12:30 PM and 4:00 PM – 9:00 PM",
+    specialFor: "Divya Desam worship and Lord Vishnu darshan",
+    desc: "One of the most important Vishnu temples in Kumbakonam known for its grand structure."
+  },
+  {
+    name: "Arulmigu Adi Kumbeswarar Temple",
+    dist: "Approximately 2.3 km",
+    mode: "Auto / Cab",
+    timing: "5:30 AM – 12:00 PM and 4:00 PM – 8:30 PM",
+    specialFor: "Major Shiva temple and Kumbakonam origin legend",
+    desc: "A landmark spiritual destination deeply connected with the sacred traditions of Kumbakonam."
+  },
+  {
+    name: "Chakrapani Temple",
+    dist: "Approximately 2.8 km",
+    mode: "Auto",
+    timing: "6:00 AM – 12:00 PM and 4:00 PM – 8:30 PM",
+    specialFor: "Sudarshana Chakra worship",
+    desc: "A historic Vishnu temple known for unique iconography and a peaceful atmosphere."
+  },
+  {
+    name: "Airavatesvara Temple, Darasuram",
+    dist: "Approximately 4.5 km",
+    mode: "Auto / Cab",
+    timing: "6:00 AM – 12:00 PM and 4:00 PM – 8:00 PM",
+    specialFor: "UNESCO heritage architecture",
+    desc: "A masterpiece of Chola architecture renowned for intricate carvings and artistic beauty."
+  },
+  {
+    name: "Arulmigu Sri Oppiliappan Temple",
+    dist: "Approximately 6.2 km",
+    mode: "Cab / Auto",
+    timing: "6:00 AM – 1:00 PM and 4:00 PM – 9:00 PM",
+    specialFor: "Divya Desam worship and salt-free prasadam",
+    desc: "A major pilgrimage destination dedicated to Lord Vishnu and popular among families."
+  },
+  {
+    name: "Sri Swarnapureeswarar Temple",
+    dist: "Approximately 6.6 km",
+    mode: "Cab Recommended",
+    timing: "6:00 AM – 12:00 PM and 4:30 PM – 8:30 PM",
+    specialFor: "Peaceful Shiva worship",
+    desc: "A serene spiritual destination known for its calm ambience and traditional worship."
+  },
+  {
+    name: "Swamimalai Murugan Temple",
+    dist: "Approximately 7.9 km",
+    mode: "Cab Recommended",
+    timing: "6:00 AM – 12:00 PM and 4:00 PM – 8:30 PM",
+    specialFor: "One of the Six Abodes of Lord Murugan",
+    desc: "A sacred pilgrimage site associated with the Pranava Mantra legend."
+  },
+  {
+    name: "Thiruvidaimarudur Mahalinga Swamy Temple",
+    dist: "Approximately 10 km",
+    mode: "Cab Recommended",
+    timing: "5:30 AM – 12:30 PM and 4:00 PM – 9:00 PM",
+    specialFor: "Grand Shiva worship experience",
+    desc: "A majestic Shiva temple known for its large corridors and powerful spiritual atmosphere."
+  }
 ];
 
 const AvailabilityBar = () => (
@@ -542,7 +764,7 @@ const DecorativeLayout = ({ children }: { children: React.ReactNode }) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.9, ease: "easeOut" }}
-      className="min-h-screen relative"
+      className="min-h-screen relative bg-brand-cream"
       style={{ 
         backgroundImage: `url(${bgImg})`,
         backgroundSize: 'cover',
@@ -554,7 +776,7 @@ const DecorativeLayout = ({ children }: { children: React.ReactNode }) => {
       <motion.div
         className="fixed inset-0 pointer-events-none z-0 bg-[radial-gradient(circle_at_50%_20%,rgba(255,249,240,0.9),transparent_34%),linear-gradient(to_bottom,rgba(255,249,240,0.35),rgba(255,249,240,0.72))]"
         initial={{ opacity: 0 }}
-        animate={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
         transition={{ duration: 1.4, ease: "easeOut" }}
       />
       {/* Persistent Decorative Elements */}
@@ -563,7 +785,7 @@ const DecorativeLayout = ({ children }: { children: React.ReactNode }) => {
         className="fixed top-20 left-0 w-32 md:w-72 bottom-0 pointer-events-none z-10 opacity-100 overflow-hidden decor-pillar"
         initial={{ opacity: 0, x: -70 }}
         animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] } as any}
       >
         <img src={pillerImg} alt="" className="h-full object-cover object-left scale-x-[-1]" />
       </motion.div>
@@ -572,7 +794,7 @@ const DecorativeLayout = ({ children }: { children: React.ReactNode }) => {
         className="fixed top-20 right-0 w-32 md:w-64 h-64 md:h-96 pointer-events-none z-10 opacity-100 decor-leaf"
         initial={{ opacity: 0, x: 60, y: -20 }}
         animate={{ opacity: 1, x: 0, y: 0 }}
-        transition={{ duration: 1.2, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 1.2, delay: 0.1, ease: [0.22, 1, 0.36, 1] } as any}
       >
         <img src={leafImg} alt="" className="w-full h-auto object-contain" />
       </motion.div>
@@ -824,6 +1046,15 @@ const Home = ({ onBookRoom }: { onBookRoom: (room: any) => void }) => {
 };
 
 const AboutPage = () => {
+  const [selectedLocation, setSelectedLocation] = useState('Kumbakonam Railway Station');
+
+  const findDistance = (name: string) => {
+    if (name === 'Kumbakonam Railway Station') return '300 meters';
+    if (name === 'Kumbakonam Bus Stand') return '700 meters';
+    const attr = ATTRACTIONS_DATA.find(a => a.title === name);
+    return attr?.dist || '';
+  };
+
   return (
     <DecorativeLayout>
       <SectionWrapper className="pt-40">
@@ -843,57 +1074,128 @@ const AboutPage = () => {
           </div>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start border-t border-catalogue-gold/20 pt-16 mb-32 bg-card-ivory p-8 md:p-12 ornate-shape ornate-border shadow-xl">
+        <div className="grid grid-cols-1 lg:grid-cols-[0.8fr_1.4fr_0.8fr] gap-8 items-start border-t border-catalogue-gold/20 pt-16 mb-32 bg-card-ivory p-6 md:p-8 ornate-shape ornate-border shadow-xl">
           {/* Transport Points */}
-          <motion.div variants={fadeInLeft} className="space-y-8">
-            <div className="flex items-center gap-4 text-catalogue-green border-b border-catalogue-gold/20 pb-4">
-              <QrCode size={32} className="text-catalogue-gold" />
-              <h3 className="font-playfair text-3xl font-bold uppercase tracking-widest leading-none">Transport Points</h3>
+          <motion.div variants={fadeInLeft} className="space-y-10">
+            <div className="flex items-center gap-3 text-catalogue-green border-b border-catalogue-gold/20 pb-5">
+              <QrCode size={24} className="text-catalogue-gold" />
+              <h3 className="font-playfair text-2xl font-bold uppercase tracking-widest leading-none">Transport <br/>Points</h3>
             </div>
             <table className="w-full text-left font-playfair">
               <thead>
                 <tr className="text-[10px] text-catalogue-gold font-bold uppercase tracking-[0.2em] border-b border-catalogue-gold/20">
                   <th className="pb-4">Place</th>
                   <th className="pb-4">Distance</th>
-                  <th className="pb-4">Preferred</th>
-                  <th className="pb-4">Time</th>
+                  <th className="pb-4 text-center">Action</th>
                 </tr>
               </thead>
               <tbody className="text-catalogue-green font-bold">
-                <tr className="border-b border-catalogue-gold/10">
-                  <td className="py-6">Kumbakonam Railway Station</td>
-                  <td>300 meters</td>
-                  <td>Walk</td>
-                  <td className="italic text-catalogue-gold text-sm font-bold">Approx. 3-5 min</td>
+                <tr className="border-b border-catalogue-gold/10 group/row">
+                  <td className="py-8 text-base">Railway Station</td>
+                  <td className="text-xs font-semibold tracking-wide">300M</td>
+                  <td className="text-center">
+                    <button 
+                      onClick={() => setSelectedLocation('Kumbakonam Railway Station')}
+                      className={cn(
+                        "px-4 py-2 text-[10px] uppercase tracking-widest font-bold transition-all duration-300 border rounded-full flex items-center gap-2 mx-auto",
+                        selectedLocation === 'Kumbakonam Railway Station' 
+                          ? "bg-catalogue-gold text-white border-catalogue-gold shadow-md" 
+                          : "bg-transparent text-catalogue-gold border-catalogue-gold/40 hover:bg-catalogue-gold/10 hover:border-catalogue-gold"
+                      )}
+                    >
+                      <MapPin size={12} className={selectedLocation === 'Kumbakonam Railway Station' ? "text-white" : "text-catalogue-gold"} />
+                      VIEW
+                    </button>
+                  </td>
                 </tr>
-                <tr>
-                  <td className="py-6">Kumbakonam Bus Stand</td>
-                  <td>700 meters</td>
-                  <td>Walk / Auto</td>
-                  <td className="italic text-catalogue-gold text-sm font-bold">Approx. 8 min walk</td>
+                <tr className="group/row">
+                  <td className="py-8 text-base">Bus Stand</td>
+                  <td className="text-xs font-semibold tracking-wide">700M</td>
+                  <td className="text-center">
+                    <button 
+                      onClick={() => setSelectedLocation('Kumbakonam Bus Stand')}
+                      className={cn(
+                        "px-4 py-2 text-[10px] uppercase tracking-widest font-bold transition-all duration-300 border rounded-full flex items-center gap-2 mx-auto",
+                        selectedLocation === 'Kumbakonam Bus Stand' 
+                          ? "bg-catalogue-gold text-white border-catalogue-gold shadow-md" 
+                          : "bg-transparent text-catalogue-gold border-catalogue-gold/40 hover:bg-catalogue-gold/10 hover:border-catalogue-gold"
+                      )}
+                    >
+                      <MapPin size={12} className={selectedLocation === 'Kumbakonam Bus Stand' ? "text-white" : "text-catalogue-gold"} />
+                      VIEW
+                    </button>
+                  </td>
                 </tr>
               </tbody>
             </table>
           </motion.div>
 
+          {/* Map View Column */}
+          <motion.div variants={fadeInUp} className="space-y-10 lg:mt-0">
+            <div className="flex items-center gap-3 text-catalogue-green border-b border-catalogue-gold/20 pb-5">
+              <MapPin size={24} className="text-catalogue-gold" />
+              <h3 className="font-playfair text-2xl font-bold uppercase tracking-widest leading-none">Map <br/>View</h3>
+            </div>
+            <div className="aspect-square w-full bg-white border border-catalogue-gold/20 shadow-2xl relative overflow-hidden group ornate-border">
+              <iframe
+                title="Location Map"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                loading="lazy"
+                allowFullScreen
+                src={`https://www.google.com/maps?q=Subra+Residency+Kumbakonam+to+${selectedLocation}&output=embed`}
+              ></iframe>
+              <div className="absolute bottom-0 left-0 right-0 bg-catalogue-green/95 backdrop-blur-sm p-5 border-t border-catalogue-gold/30 text-white shadow-2xl">
+                 <div className="flex justify-between items-center mb-3">
+                   <div className="space-y-0.5">
+                     <p className="text-[9px] uppercase font-bold text-catalogue-gold tracking-[0.2em]">Current Destination</p>
+                     <p className="font-playfair text-lg font-bold leading-tight">{selectedLocation}</p>
+                   </div>
+                   <div className="text-right space-y-0.5">
+                     <p className="text-[9px] uppercase font-bold text-catalogue-gold tracking-[0.2em]">Distance</p>
+                     <p className="font-playfair text-lg font-bold text-white">{findDistance(selectedLocation)}</p>
+                   </div>
+                 </div>
+                 <div className="pt-3 border-t border-white/10 flex items-center gap-2 text-[9px] font-bold text-catalogue-gold tracking-widest uppercase">
+                    <Info size={12} className="text-catalogue-gold" />
+                    <span>Route from Subra Residency</span>
+                 </div>
+              </div>
+            </div>
+          </motion.div>
+
           {/* Spiritual Trail */}
-          <motion.div variants={fadeInRight} className="space-y-8">
-            <div className="flex items-center gap-4 text-catalogue-green border-b border-catalogue-gold/20 pb-4">
-              <MapPin size={32} className="text-catalogue-gold" />
-              <h3 className="font-playfair text-3xl font-bold uppercase tracking-widest leading-none">Spiritual Trail</h3>
+          <motion.div variants={fadeInRight} className="space-y-10">
+            <div className="flex items-center gap-3 text-catalogue-green border-b border-catalogue-gold/20 pb-5">
+              <MapPin size={24} className="text-catalogue-gold" />
+              <h3 className="font-playfair text-2xl font-bold uppercase tracking-widest leading-none">Spiritual <br/>Trail</h3>
             </div>
             <div className="grid grid-cols-1 gap-0">
-               <div className="flex text-[10px] text-catalogue-gold font-bold uppercase tracking-[0.2em] border-b border-catalogue-gold/20 pb-4">
+               <div className="flex text-[10px] text-catalogue-gold font-bold uppercase tracking-[0.2em] border-b border-catalogue-gold/20 pb-4 mb-2">
                  <div className="flex-1">Place</div>
-                 <div className="w-24">Distance</div>
-                 <div className="w-32">Preferred</div>
+                 <div className="w-20">Dist.</div>
+                 <div className="w-20 text-center">Action</div>
                </div>
-               <div className="max-h-[400px] overflow-y-auto pr-4 custom-scrollbar">
+               <div className="max-h-[550px] overflow-y-auto pr-3 custom-scrollbar space-y-1">
                 {ATTRACTIONS_DATA.map((attr, i) => (
-                  <div key={i} className="flex items-center py-4 border-b border-catalogue-gold/10 text-catalogue-green font-bold">
-                    <div className="flex-1 text-sm">{attr.title}</div>
-                    <div className="w-24 text-[11px] uppercase">{attr.dist}</div>
-                    <div className="w-32 text-[11px] uppercase italic text-catalogue-gold font-bold">{attr.preferred}</div>
+                  <div key={i} className="flex items-center py-6 border-b border-catalogue-gold/10 text-catalogue-green font-bold hover:bg-catalogue-gold/5 transition-colors px-1">
+                    <div className="flex-1 text-[13px] font-playfair tracking-wide pr-3 leading-tight">{attr.title}</div>
+                    <div className="w-20 text-[10px] font-semibold tracking-wider text-catalogue-green/70">{attr.dist.toUpperCase()}</div>
+                    <div className="w-20 text-center">
+                      <button 
+                        onClick={() => setSelectedLocation(attr.title)}
+                        className={cn(
+                          "px-3 py-1.5 text-[9px] uppercase tracking-widest font-bold transition-all duration-300 border rounded-full flex items-center gap-1.5 mx-auto",
+                          selectedLocation === attr.title 
+                            ? "bg-catalogue-gold text-white border-catalogue-gold shadow-sm" 
+                            : "bg-transparent text-catalogue-gold border-catalogue-gold/40 hover:bg-catalogue-gold/10 hover:border-catalogue-gold"
+                        )}
+                      >
+                        <MapPin size={10} className={selectedLocation === attr.title ? "text-white" : "text-catalogue-gold"} />
+                        VIEW
+                      </button>
+                    </div>
                   </div>
                 ))}
                </div>
@@ -901,63 +1203,68 @@ const AboutPage = () => {
           </motion.div>
         </div>
 
-        {/* Why Kumbakonam Section (Image 4) */}
+        {/* Temple Details Near Subra Residency */}
         <div className="space-y-16 py-20 border-t border-catalogue-gold/20">
           <div className="text-center space-y-6">
-            <h2 className="font-playfair text-5xl md:text-7xl text-catalogue-green font-black">WHY KUMBAKONAM IS CALLED<br />THE TEMPLE TOWN</h2>
-            <p className="font-playfair text-xl text-catalogue-gold italic font-bold">A sacred city where devotion, heritage and living tradition meet.</p>
-            <p className="font-playfair text-lg text-catalogue-green/80 max-w-4xl mx-auto leading-relaxed font-semibold">
-              Kumbakonam is lovingly known as the Temple Town because its streets, sacred tanks and neighborhoods are woven with centuries-old temples, living rituals and timeless South Indian heritage. With remarkable Shaivite and Vaishnavite shrines standing close to one another, the town offers a rare spiritual atmosphere where architecture, devotion and culture continue to thrive every day.
+            <h2 className="font-playfair text-5xl md:text-7xl text-catalogue-green font-black uppercase tracking-tight">TEMPLE DETAILS NEAR SUBRA RESIDENCY</h2>
+            <p className="font-playfair text-xl text-catalogue-gold italic font-bold">Explore the Sacred Trail Around Kumbakonam</p>
+            <p className="font-playfair text-lg text-catalogue-green max-w-4xl mx-auto leading-relaxed font-semibold">
+              Kumbakonam is surrounded by some of Tamil Nadu's most revered temples, sacred tanks and spiritual landmarks. Guests staying at Subra Residency can easily plan temple visits from the property, as many important temples are located within a short travel distance. Discover the rich spiritual heritage of the region through these iconic destinations.
             </p>
           </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
-            {[
-              { title: "Mahamaham Tank", time: "6:00 AM – 10:00 AM and 4:30 PM – 7:00 PM", desc: "Sacred tank famed for the Mahamaham festival and holy Theerthavari rituals." },
-              { title: "Kasi Viswanathar Temple", time: "7:00 AM – 12:00 PM and 4:00 PM – 8:00 PM", desc: "Revered Shiva temple near Mahamaham Tank, tied to Kumbakonam's sacred identity." },
-              { title: "Nageswaran Temple", time: "6:00 AM – 12:00 PM and 4:00 PM – 8:30 PM", desc: "Ancient Shiva temple admired for Chola-era architecture and peaceful darshan." },
-              { title: "Sarangapani Temple", time: "6:00 AM – 12:30 PM and 4:00 PM – 9:00 PM", desc: "Important Divya Desam Vishnu temple known for its grand chariot-style sanctum." },
-              { title: "Arulmigu Adi Kumbeswarar Temple", time: "5:30 AM – 12:00 PM and 4:00 PM – 8:30 PM", desc: "Major Shiva temple linked to the origin legend of Kumbakonam and Mahamaham." }
-            ].map((item, i) => (
-              <motion.div key={i} variants={fadeInUp} whileHover={{ y: -8, scale: 1.02 }} className="animated-card bg-card-ivory p-6 border border-catalogue-gold/10 space-y-4 shadow-md ornate-shape ornate-border">
-                <h4 className="font-playfair text-xl font-bold text-catalogue-green">{item.title}</h4>
-                <p className="text-xs text-catalogue-green/70 leading-relaxed italic">{item.desc}</p>
-                <div className="pt-4 border-t border-catalogue-gold/20">
-                  <p className="text-[10px] font-bold text-catalogue-gold uppercase tracking-widest">Best Darshan</p>
-                  <p className="text-[11px] font-bold text-catalogue-green mt-1">{item.time}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
 
-        {/* More Sacred Landmarks (Image 5) */}
-        <div className="space-y-16 py-20 border-t border-catalogue-gold/20">
-          <div className="text-center space-y-6">
-            <h2 className="font-playfair text-5xl md:text-7xl text-catalogue-green font-black">MORE SACRED LANDMARKS<br />AROUND KUMBAKONAM</h2>
-            <p className="font-playfair text-xl text-catalogue-gold italic font-bold">A graceful continuation of the spiritual trail beyond the town centre.</p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              { title: "Chakrapani Temple", time: "6:00 AM – 12:00 PM and 4:00 PM – 8:30 PM", desc: "Historic Vishnu temple dedicated to Sudarshana Chakra, revered for its unique iconography and peaceful temple atmosphere." },
-              { title: "Airavatesvara Temple, Darasuram", time: "6:00 AM – 12:00 PM and 4:00 PM – 8:00 PM", desc: "UNESCO-recognised Chola masterpiece admired for exquisite stone carvings, sculpted mandapams and timeless Dravidian architecture." },
-              { title: "Arulmigu Sri Oppiliappan Temple", time: "6:00 AM – 1:00 PM and 4:00 PM – 9:00 PM", desc: "Sacred Divya Desam devoted to Lord Vishnu, especially known for prasadam prepared without salt and deep Vaishnavite tradition." },
-              { title: "Sri Swarnapureeswarar Temple", time: "6:00 AM – 12:00 PM and 4:30 PM – 8:30 PM", desc: "Revered Shiva temple valued for its serene ambience, spiritual significance and enduring local worship traditions." },
-              { title: "Swamimalai Murugan Temple", time: "6:00 AM – 12:00 PM and 4:00 PM – 8:30 PM", desc: "One of the six sacred abodes of Lord Murugan, celebrated for the legend of Murugan teaching the Pranava mantra." },
-              { title: "Thiruvidaimarudur Mahalinga Swamy Temple", time: "5:30 AM – 12:30 PM and 4:00 PM – 9:00 PM", desc: "A major Shiva sthalam known for its grand scale, powerful sanctity and majestic temple corridors." }
-            ].map((item, i) => (
-              <motion.div key={i} variants={fadeInUp} whileHover={{ y: -8, scale: 1.015 }} className="animated-card group relative overflow-hidden bg-card-ivory p-8 border border-catalogue-gold/10 hover:border-catalogue-gold/40 transition-all shadow-lg ornate-shape ornate-border">
-                <div className="space-y-6">
-                  <h4 className="font-playfair text-2xl font-bold text-catalogue-green">{item.title}</h4>
-                  <p className="text-sm text-catalogue-green/80 leading-relaxed font-semibold">{item.desc}</p>
-                  <div className="pt-6 border-t border-catalogue-gold/20">
-                    <p className="text-[10px] font-bold text-catalogue-gold uppercase tracking-widest">Best Darshan</p>
-                    <p className="text-xs font-bold text-catalogue-green mt-2">{item.time}</p>
-                  </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {TEMPLE_DETAILS_DATA.map((temple, i) => (
+              <motion.div key={i} variants={fadeInUp} whileHover={{ y: -10, scale: 1.015 }} className="animated-card bg-card-ivory p-8 border border-catalogue-gold/10 flex flex-col h-full ornate-shape ornate-border shadow-lg group">
+                <div className="space-y-6 flex-grow">
+                   <h4 className="font-playfair text-2xl font-bold text-catalogue-green leading-tight">{temple.name}</h4>
+                   <div className="space-y-3">
+                     <div className="flex items-center gap-3 text-sm">
+                       <MapPin size={16} className="text-catalogue-gold shrink-0" />
+                       <span className="text-catalogue-green font-bold">{temple.dist}</span>
+                     </div>
+                     <div className="flex items-center gap-3 text-sm">
+                       <Car size={16} className="text-catalogue-gold shrink-0" />
+                       <span className="text-catalogue-green/80 font-semibold">Mode: {temple.mode}</span>
+                     </div>
+                     <div className="flex items-center gap-3 text-sm">
+                       <Clock size={16} className="text-catalogue-gold shrink-0" />
+                       <span className="text-catalogue-green/80 font-semibold">Timing: {temple.timing}</span>
+                     </div>
+                   </div>
+                   <div className="pt-4 border-t border-catalogue-gold/10">
+                     <p className="text-[10px] font-bold text-catalogue-gold uppercase tracking-widest mb-1">Special For</p>
+                     <p className="text-sm text-catalogue-green font-bold italic">{temple.specialFor}</p>
+                   </div>
+                   <p className="text-sm text-catalogue-green/70 leading-relaxed font-medium">{temple.desc}</p>
                 </div>
               </motion.div>
             ))}
+          </div>
+
+          {/* Suggested Temple Visit Plans */}
+          <div className="mt-16 bg-catalogue-green p-12 text-white shadow-2xl ornate-shape ornate-border border border-catalogue-gold/30">
+             <div className="space-y-8 max-w-4xl mx-auto">
+               <div className="text-center space-y-4">
+                 <h3 className="font-playfair text-4xl font-bold uppercase tracking-widest text-catalogue-gold">Suggested Temple Visit Plans</h3>
+                 <div className="w-24 h-1 bg-catalogue-gold mx-auto" />
+               </div>
+               
+               <div className="grid grid-cols-1 md:grid-cols-2 gap-12 pt-8">
+                 <div className="space-y-4">
+                   <h4 className="text-catalogue-gold font-bold uppercase tracking-widest text-lg border-b border-catalogue-gold/30 pb-2">Short Temple Visit</h4>
+                   <p className="text-white/90 leading-relaxed font-semibold italic">Mahamaham Tank, Kasi Viswanathar Temple, Nageswaran Temple, Sarangapani Temple, Arulmigu Adi Kumbeswarar Temple.</p>
+                 </div>
+                 <div className="space-y-4">
+                   <h4 className="text-catalogue-gold font-bold uppercase tracking-widest text-lg border-b border-catalogue-gold/30 pb-2">Extended Spiritual Trail</h4>
+                   <p className="text-white/90 leading-relaxed font-semibold italic">Chakrapani Temple, Airavatesvara Temple, Oppiliappan Temple, Sri Swarnapureeswarar Temple, Swamimalai Murugan Temple, Thiruvidaimarudur Mahalinga Swamy Temple.</p>
+                 </div>
+               </div>
+
+               <p className="text-center text-catalogue-gold font-playfair text-lg italic pt-12 border-t border-catalogue-gold/20">
+                 From sacred tanks to ancient temples and timeless traditions, Kumbakonam offers a spiritual journey filled with devotion, heritage and peace. Subra Residency helps guests stay close to this sacred experience with comfort and convenience.
+               </p>
+             </div>
           </div>
         </div>
       </SectionWrapper>
@@ -1016,7 +1323,7 @@ const AttractionsPage = () => {
           <p className="font-bold text-catalogue-gold uppercase tracking-[0.4em] text-xs">Spiritual Trail</p>
           <h2 className="font-playfair text-5xl md:text-7xl text-catalogue-green">Temple Highlights</h2>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-24">
           {ATTRACTIONS_DATA.map((attr, i) => (
             <motion.div key={i} variants={fadeInUp} whileHover={{ y: -10, scale: 1.015 }} className="animated-card bg-card-ivory overflow-hidden ornate-shape ornate-border shadow-lg group">
               <div className="aspect-video overflow-hidden border-b border-catalogue-gold/20">
@@ -1031,6 +1338,116 @@ const AttractionsPage = () => {
               </div>
             </motion.div>
           ))}
+        </div>
+
+        {/* New Section: Hidden Spiritual Trails */}
+        <div className="space-y-16 py-20 border-t border-catalogue-gold/20">
+          <div className="text-center space-y-6 max-w-4xl mx-auto">
+            <h2 className="font-playfair text-5xl md:text-7xl text-catalogue-green font-black uppercase tracking-tight">Hidden Spiritual Trails<br />Around Kumbakonam</h2>
+            <p className="font-playfair text-xl text-catalogue-gold italic font-bold">"Discover the lesser-known spiritual side of Kumbakonam through rare temples, sacred traditions, village legends, unique deities and peaceful pilgrimage experiences beyond the regular tourist route. Curated specially for guests of Subra Residency, these hidden spiritual trails offer deeper cultural and devotional experiences."</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {HIDDEN_TRAILS_DATA.map((attr, i) => (
+              <motion.div key={i} variants={fadeInUp} whileHover={{ y: -10, scale: 1.015 }} className="animated-card bg-card-ivory overflow-hidden ornate-shape ornate-border shadow-lg group flex flex-col h-full">
+                <div className="aspect-video overflow-hidden border-b border-catalogue-gold/20">
+                  <img src={attr.image} alt={attr.title} loading="lazy" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                </div>
+                <div className="p-8 space-y-6 flex-grow flex flex-col">
+                  <div className="space-y-2">
+                    <h4 className="font-playfair text-2xl font-bold text-catalogue-green leading-tight">{attr.title}</h4>
+                    <p className="text-xs font-bold text-catalogue-gold uppercase tracking-widest">{attr.dist} from Residency</p>
+                  </div>
+                  
+                  <div className="space-y-4 flex-grow">
+                    <div className="space-y-1">
+                      <p className="text-[10px] font-bold text-catalogue-gold uppercase tracking-widest">Speciality</p>
+                      <p className="text-sm text-catalogue-green/80 font-semibold leading-relaxed">{attr.speciality}</p>
+                    </div>
+                    <div className="space-y-1">
+                      <p className="text-[10px] font-bold text-catalogue-gold uppercase tracking-widest">Prayer Focus</p>
+                      <p className="text-sm text-catalogue-green font-bold italic">{attr.prayer}</p>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
+        {/* Recommended Spiritual Trails */}
+        <div className="space-y-16 py-20 border-t border-catalogue-gold/20">
+          <div className="text-center space-y-4">
+            <h2 className="font-playfair text-4xl md:text-6xl text-catalogue-green font-bold uppercase tracking-wide">Recommended Spiritual Trails</h2>
+            <p className="font-playfair text-lg text-catalogue-gold italic font-semibold">Hand-picked itineraries for a meaningful pilgrimage</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {RECOMMENDED_TRAILS_DATA.map((trail, i) => (
+              <motion.div key={i} variants={fadeInUp} whileHover={{ y: -5, scale: 1.01 }} className="animated-card bg-card-ivory p-8 border border-catalogue-gold/20 shadow-xl ornate-shape ornate-border group">
+                <div className="space-y-6">
+                  <div className="flex items-start gap-4">
+                    <div className="p-3 bg-catalogue-gold/10 text-catalogue-gold group-hover:bg-catalogue-gold group-hover:text-white transition-colors">
+                      <MapPin size={24} />
+                    </div>
+                    <div className="space-y-1">
+                      <h4 className="font-playfair text-2xl font-bold text-catalogue-green">{trail.title}</h4>
+                      <p className="text-xs font-bold text-catalogue-gold uppercase tracking-widest">Best For: {trail.bestFor}</p>
+                    </div>
+                  </div>
+                  <div className="p-6 bg-white/50 border-l-4 border-catalogue-gold ornate-shape">
+                    <p className="text-sm text-catalogue-green font-bold leading-loose tracking-wide">
+                      {trail.route}
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
+        {/* Temple Travel Tips */}
+        <div className="space-y-16 py-20 border-t border-catalogue-gold/20">
+          <div className="text-center">
+            <h2 className="font-playfair text-4xl md:text-6xl text-catalogue-green font-bold uppercase tracking-wide">Temple Travel Tips</h2>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
+            {[
+              { icon: <Clock size={24} />, text: "Start early to avoid heat and crowds." },
+              { icon: <Droplets size={24} />, text: "Carry drinking water." },
+              { icon: <Shirt size={24} />, text: "Wear modest traditional attire." },
+              { icon: <Footprints size={24} />, text: "Remove footwear before entering temples." },
+              { icon: <CheckCircle2 size={24} />, text: "Confirm temple timings before travel." },
+              { icon: <Car size={24} />, text: "Use local cabs for village temples." },
+              { icon: <Info size={24} />, text: "Respect local customs and temple guidelines." }
+            ].map((tip, i) => (
+              <motion.div key={i} variants={fadeInUp} className="bg-white p-6 text-center space-y-4 border border-catalogue-gold/10 shadow-sm ornate-shape flex flex-col items-center justify-center">
+                <div className="text-catalogue-gold">
+                  {tip.icon}
+                </div>
+                <p className="text-[10px] font-bold text-catalogue-green uppercase tracking-wider leading-relaxed">
+                  {tip.text}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
+        {/* CTA Section */}
+        <div className="mt-20 p-12 bg-catalogue-green text-white text-center space-y-8 ornate-shape ornate-border border-4 border-catalogue-gold/30 relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-32 h-32 bg-catalogue-gold/10 rounded-full -translate-x-1/2 -translate-y-1/2 blur-3xl" />
+          <div className="absolute bottom-0 right-0 w-64 h-64 bg-catalogue-gold/5 rounded-full translate-x-1/4 translate-y-1/4 blur-3xl" />
+          
+          <div className="relative z-10 space-y-6">
+            <h2 className="font-playfair text-4xl md:text-6xl font-bold uppercase tracking-tight">Need Help Planning Your Temple Journey?</h2>
+            <p className="font-playfair text-xl text-white/80 italic max-w-3xl mx-auto">"Our team can help you with temple information, route suggestions, local transportation and darshan planning during your stay at Subra Residency."</p>
+            <div className="pt-6">
+              <Button className="lux-button bg-catalogue-gold text-white px-12 py-8 text-xl font-bold uppercase tracking-widest rounded-none hover:bg-white hover:text-catalogue-green transition-all shadow-2xl">
+                Contact Reception
+              </Button>
+            </div>
+          </div>
         </div>
       </SectionWrapper>
     </DecorativeLayout>
@@ -1146,6 +1563,7 @@ const Footer = () => (
 export const CustomerPortal = () => {
   const [selectedRoom, setSelectedRoom] = useState<any>(null);
   const [isBookingOpen, setIsBookingOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
 
   const handleBookRoom = (room: any) => {
@@ -1163,11 +1581,11 @@ export const CustomerPortal = () => {
       <motion.nav
         initial={{ opacity: 0, y: -26 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] } as any}
         className="fixed top-0 left-0 right-0 z-50 bg-ivoryMist/95 backdrop-blur-md shadow-md border-b border-catalogue-gold/20 px-6 py-4"
       >
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-3">
+          <Link to="/" className="flex items-center gap-3" onClick={() => setIsMobileMenuOpen(false)}>
             <img src={logo} alt="Subra Residency" className="h-10 md:h-12 w-auto" />
             <div className="flex flex-col">
               <span className="font-playfair text-xl md:text-2xl font-black tracking-widest text-catalogue-green leading-none">SUBRA</span>
@@ -1176,11 +1594,33 @@ export const CustomerPortal = () => {
           </Link>
           
           <div className="hidden md:flex items-center gap-10">
-            <Link to="/" className="text-xs font-bold uppercase tracking-[0.2em] text-catalogue-green hover:text-catalogue-gold transition-colors">Home</Link>
-            <Link to="/about" className="text-xs font-bold uppercase tracking-[0.2em] text-catalogue-green hover:text-catalogue-gold transition-colors">About Us</Link>
-            <Link to="/rooms" className="text-xs font-bold uppercase tracking-[0.2em] text-catalogue-green hover:text-catalogue-gold transition-colors">Rooms</Link>
-            <Link to="/attractions" className="text-xs font-bold uppercase tracking-[0.2em] text-catalogue-green hover:text-catalogue-gold transition-colors">Attractions</Link>
-            <Link to="/contact" className="text-xs font-bold uppercase tracking-[0.2em] text-catalogue-green hover:text-catalogue-gold transition-colors">Contact</Link>
+            {[
+              { path: "/", label: "Home" },
+              { path: "/about", label: "About Us" },
+              { path: "/about-kumbakonam", label: "About Kumbakonam" },
+              { path: "/rooms", label: "Rooms" },
+              { path: "/attractions", label: "Attractions" },
+              { path: "/contact", label: "Contact" }
+            ].map((link) => (
+              <Link 
+                key={link.path}
+                to={link.path} 
+                className={cn(
+                  "text-xs font-bold uppercase tracking-[0.2em] transition-all duration-300 relative py-1",
+                  location.pathname === link.path ? "text-catalogue-gold" : "text-catalogue-green hover:text-catalogue-gold"
+                )}
+              >
+                {link.label}
+                {location.pathname === link.path && (
+                  <motion.div 
+                    layoutId="activeTab"
+                    className="absolute -bottom-1 left-0 right-0 h-[2px] bg-catalogue-gold"
+                    initial={{ width: 0 }}
+                    animate={{ width: "100%" }}
+                  />
+                )}
+              </Link>
+            ))}
             <Link to="/rooms">
               <Button 
                 className="lux-button bg-catalogue-gold text-white hover:bg-catalogue-green transition-all font-bold uppercase tracking-widest text-[10px] px-8 py-6 rounded-none shadow-lg"
@@ -1190,20 +1630,66 @@ export const CustomerPortal = () => {
             </Link>
           </div>
 
-          <button className="md:hidden text-catalogue-green">
-            <Search size={24} />
+          <button 
+            className="md:hidden text-catalogue-green"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
+
+        {/* Mobile Menu */}
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              className="md:hidden bg-white border-t border-catalogue-gold/10 overflow-hidden"
+            >
+              <div className="flex flex-col p-6 space-y-4">
+                {[
+                  { path: "/", label: "Home" },
+                  { path: "/about", label: "About Us" },
+                  { path: "/about-kumbakonam", label: "About Kumbakonam" },
+                  { path: "/rooms", label: "Rooms" },
+                  { path: "/attractions", label: "Attractions" },
+                  { path: "/contact", label: "Contact" }
+                ].map((link) => (
+                  <Link 
+                    key={link.path}
+                    to={link.path} 
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className={cn(
+                      "text-sm font-bold uppercase tracking-widest py-2 border-b border-catalogue-gold/5",
+                      location.pathname === link.path ? "text-catalogue-gold" : "text-catalogue-green"
+                    )}
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+                <Link to="/rooms" onClick={() => setIsMobileMenuOpen(false)}>
+                  <Button className="w-full bg-catalogue-gold text-white font-bold uppercase tracking-widest rounded-none py-6 mt-4">
+                    Book Now
+                  </Button>
+                </Link>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </motion.nav>
 
-      <main>
-        <Routes>
-          <Route path="/" element={<Home onBookRoom={handleBookRoom} />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/rooms" element={<RoomsPage onBookRoom={handleBookRoom} />} />
-          <Route path="/attractions" element={<AttractionsPage />} />
-          <Route path="/contact" element={<ThankYouPage />} />
-        </Routes>
+      <main className="pt-20">
+        <AnimatePresence mode="wait">
+          <Routes location={location} key={location.pathname}>
+            <Route path="/" element={<motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.4 }}><Home onBookRoom={handleBookRoom} /></motion.div>} />
+            <Route path="/about" element={<motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.4 }}><AboutPage /></motion.div>} />
+            <Route path="/about-kumbakonam" element={<motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.4 }}><DecorativeLayout><AboutKumbakonam /></DecorativeLayout></motion.div>} />
+            <Route path="/rooms" element={<motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.4 }}><RoomsPage onBookRoom={handleBookRoom} /></motion.div>} />
+            <Route path="/attractions" element={<motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.4 }}><AttractionsPage /></motion.div>} />
+            <Route path="/contact" element={<motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.4 }}><ThankYouPage /></motion.div>} />
+          </Routes>
+        </AnimatePresence>
       </main>
 
       <RoomBookingFlow 
