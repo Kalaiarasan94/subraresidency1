@@ -9,7 +9,15 @@ import leafImg from '../assets/leaf.png';
 import templeBotImg from '../assets/temple-bot.png';
 import bgImg from '../assets/bg.png';
 import locationMapImg from '../assets/location map.png';
-import hotelBuildingImg from '../assets/hotel-building.png';
+import hotelBuildingImg from '../assets/hotel/IMG_5592 (2).png';
+import diningImg from '../assets/hotel/dinning.png';
+import hallImg from '../assets/hotel/hall.png';
+import room1 from '../assets/hotel/rooms/ChatGPT Image May 16, 2026, 07_23_38 PM (3).png';
+import room2 from '../assets/hotel/rooms/ChatGPT Image May 16, 2026, 07_23_42 PM (6).png';
+import room3 from '../assets/hotel/rooms/ChatGPT Image May 16, 2026, 07_23_42 PM (7).png';
+import room4 from '../assets/hotel/rooms/ChatGPT Image May 16, 2026, 07_23_42 PM (8).png';
+import room5 from '../assets/hotel/rooms/ChatGPT Image May 16, 2026, 07_23_43 PM (10).png';
+import room6 from '../assets/hotel/rooms/ChatGPT Image May 16, 2026, 07_23_43 PM (9).png';
 import sarangapaniImg from '../assets/sarangapani temple.jpg';
 import mahamahamImg from '../assets/Mahamaham Tank.jpg';
 import airavatesvaraImg from '../assets/Airavatesvara Temple.jpg';
@@ -79,12 +87,8 @@ const ROOMS_DATA = [
     id: 'deluxe',
     title: "Deluxe Room",
     price: "₹3,500",
-    image: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=800&q=80",
-    images: [
-      "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=800&q=80"
-    ],
+    image: room1,
+    images: [room1, room4],
     desc: "A comfortable and thoughtfully arranged room for a calm, restful stay. Ideal for up to 2 guests. (Kids can be allowed if any).",
     details: {
       bed: "King Size Bed",
@@ -98,12 +102,8 @@ const ROOMS_DATA = [
     id: 'super-deluxe',
     title: "Super Deluxe Room",
     price: "₹4,500",
-    image: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80",
-    images: [
-      "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1591088398332-8a7761a9e044?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1540518614846-7eded433c457?auto=format&fit=crop&w=800&q=80"
-    ],
+    image: room2,
+    images: [room2, room5],
     desc: "A spacious 1 BHK-style stay with added living comfort. Suitable for 2 or 3 guests.",
     details: {
       bed: "Queen Size + Single Bed",
@@ -117,12 +117,8 @@ const ROOMS_DATA = [
     id: 'executive-family',
     title: "Executive Family Suite Room",
     price: "₹7,500",
-    image: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=800&q=80",
-    images: [
-      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1578683010236-d716f9a3f2c5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=800&q=80"
-    ],
+    image: room3,
+    images: [room3, room6],
     desc: "A premium family stay with spacious interiors and enhanced comfort. Suitable for 4 to 6 guests.",
     details: {
       bed: "2 King Size Beds",
@@ -302,89 +298,122 @@ const TEMPLE_DETAILS_DATA = [
     name: "Mahamaham Tank",
     dist: "Approximately 700 meters",
     mode: "Walk / Auto",
-    timing: "6:00 AM – 10:00 AM and 4:30 PM – 7:00 PM",
-    specialFor: "Mahamaham festival, holy bathing rituals, sacred tank visit",
-    desc: "One of the most sacred landmarks of Kumbakonam and closely connected with the spiritual identity of the town."
+    timing: "6:00 AM–10:00 AM and 4:30 PM–7:00 PM",
+    dressCode: "Modest attire recommended",
+    specialFor: "Mahamaham festival, holy bathing rituals, sacred tank visit and spiritual photography.",
+    desc: "Mahamaham Tank is one of the most sacred landmarks of Kumbakonam and closely connected with the spiritual identity of the town. It is especially known for the Mahamaham festival, celebrated once in twelve years and visited by devotees from many places. The tank is associated with holy bathing rituals and temple traditions.",
+    guestNote: "Since it is very close to Subra Residency, guests can visit by walk or auto.",
+    image: mahamahamImg
   },
   {
     name: "Kasi Viswanathar Temple",
     dist: "Approximately 700 meters",
     mode: "Walk / Auto",
-    timing: "7:00 AM – 12:00 PM and 4:00 PM – 8:00 PM",
-    specialFor: "Shiva darshan and peaceful spiritual atmosphere",
-    desc: "A revered Shiva temple located near Mahamaham Tank and an important spiritual destination."
+    timing: "7:00 AM–12:00 PM and 4:00 PM–8:00 PM",
+    dressCode: "Traditional / modest attire recommended",
+    specialFor: "Shiva darshan, Mahamaham-area temple visit and peaceful spiritual atmosphere.",
+    desc: "Kasi Viswanathar Temple is a revered Shiva temple located near Mahamaham Tank. It is an important temple for devotees seeking Lord Shiva's blessings and is closely connected with the sacred character of Kumbakonam. The temple is suitable for peaceful darshan and can be easily combined with a visit to Mahamaham Tank.",
+    guestNote: "This is a convenient short visit from the hotel.",
+    image: "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=800&q=80"
   },
   {
     name: "Nageswaran Temple",
-    dist: "Approximately 1.2 km",
-    mode: "Auto Preferred",
-    timing: "6:00 AM – 12:00 PM and 4:00 PM – 8:30 PM",
-    specialFor: "Chola architecture and Shiva worship",
-    desc: "An ancient Shiva temple admired for its historic architecture and peaceful ambience."
+    dist: "Approximately 1.2 kilometers",
+    mode: "Auto preferred",
+    timing: "6:00 AM–12:00 PM and 4:00 PM–8:30 PM",
+    dressCode: "Modest traditional attire recommended",
+    specialFor: "Chola-era architecture, Shiva worship, peaceful darshan and heritage interest.",
+    desc: "Nageswaran Temple is an ancient Shiva temple admired for its Chola-era architectural style and calm spiritual setting. It is one of the important temples within Kumbakonam town and is visited by devotees as well as heritage lovers. The temple's traditional structure, stone work and peaceful ambience make it a meaningful stop in the in-town spiritual trail.",
+    guestNote: "Auto is preferred for a comfortable visit.",
+    image: "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=800&q=80"
   },
   {
     name: "Sarangapani Temple",
-    dist: "Approximately 1.8 km",
+    dist: "Approximately 1.8 kilometers",
     mode: "Auto",
-    timing: "6:00 AM – 12:30 PM and 4:00 PM – 9:00 PM",
-    specialFor: "Divya Desam worship and Lord Vishnu darshan",
-    desc: "One of the most important Vishnu temples in Kumbakonam known for its grand structure."
+    timing: "6:00 AM–12:30 PM and 4:00 PM–9:00 PM",
+    dressCode: "Traditional / modest attire recommended",
+    specialFor: "Divya Desam worship, Lord Vishnu darshan, chariot-style sanctum and grand temple architecture.",
+    desc: "Sarangapani Temple is one of the most important Vishnu temples in Kumbakonam and is associated with the Divya Desam tradition. The temple is known for its grand structure, deep Vaishnavite significance and impressive chariot-style sanctum. It is one of the must-visit temples for guests exploring the spiritual identity of Kumbakonam.",
+    guestNote: "Suitable for both pilgrims and heritage travellers.",
+    image: sarangapaniImg
   },
   {
     name: "Arulmigu Adi Kumbeswarar Temple",
-    dist: "Approximately 2.3 km",
+    dist: "Approximately 2.3 kilometers",
     mode: "Auto / Cab",
-    timing: "5:30 AM – 12:00 PM and 4:00 PM – 8:30 PM",
-    specialFor: "Major Shiva temple and Kumbakonam origin legend",
-    desc: "A landmark spiritual destination deeply connected with the sacred traditions of Kumbakonam."
+    timing: "5:30 AM–12:00 PM and 4:00 PM–8:30 PM",
+    dressCode: "Fully covered traditional / modest attire recommended",
+    specialFor: "Major Shiva temple, Kumbakonam origin legend, Mahamaham connection and traditional worship.",
+    desc: "Arulmigu Adi Kumbeswarar Temple is one of the most important Shiva temples in Kumbakonam. It is closely connected with the origin legend of Kumbakonam and the sacred Mahamaham tradition. The temple is one of the main spiritual landmarks of the town and is considered an essential visit for pilgrims coming to Kumbakonam.",
+    guestNote: "Plan extra time during festival days, Pradosham and auspicious occasions.",
+    image: ramaswamyImg
   },
   {
     name: "Chakrapani Temple",
-    dist: "Approximately 2.8 km",
+    dist: "Approximately 2.8 kilometers",
     mode: "Auto",
-    timing: "6:00 AM – 12:00 PM and 4:00 PM – 8:30 PM",
-    specialFor: "Sudarshana Chakra worship",
-    desc: "A historic Vishnu temple known for unique iconography and a peaceful atmosphere."
+    timing: "6:00 AM–12:00 PM and 4:00 PM–8:30 PM",
+    dressCode: "Traditional / modest attire recommended",
+    specialFor: "Sudarshana Chakra worship, Vishnu temple tradition and peaceful darshan.",
+    desc: "Chakrapani Temple is a historic Vishnu temple dedicated to Sudarshana Chakra. It is known for its unique iconography and peaceful temple atmosphere. The temple is an important Vaishnavite spiritual stop within Kumbakonam and can be included along with other nearby town temples.",
+    guestNote: "Can be combined with Sarangapani Temple and other nearby temples.",
+    image: "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=800&q=80"
   },
   {
     name: "Airavatesvara Temple, Darasuram",
-    dist: "Approximately 4.5 km",
+    dist: "Approximately 4.5 kilometers",
     mode: "Auto / Cab",
-    timing: "6:00 AM – 12:00 PM and 4:00 PM – 8:00 PM",
-    specialFor: "UNESCO heritage architecture",
-    desc: "A masterpiece of Chola architecture renowned for intricate carvings and artistic beauty."
+    timing: "6:00 AM–12:00 PM and 4:00 PM–8:00 PM",
+    dressCode: "Modest attire recommended",
+    specialFor: "Chola architecture, UNESCO-recognised heritage, sculptural beauty and stone carvings.",
+    desc: "Airavatesvara Temple at Darasuram is one of the finest examples of Chola temple architecture near Kumbakonam. It is admired for its stone carvings, sculpted mandapams, detailed pillars and artistic beauty. The temple is especially suitable for guests who love heritage, sculpture, photography and South Indian temple architecture.",
+    guestNote: "Cab or auto is recommended for a comfortable visit.",
+    image: airavatesvaraImg
   },
   {
     name: "Arulmigu Sri Oppiliappan Temple",
-    dist: "Approximately 6.2 km",
+    dist: "Approximately 6.2 kilometers",
     mode: "Cab / Auto",
-    timing: "6:00 AM – 1:00 PM and 4:00 PM – 9:00 PM",
-    specialFor: "Divya Desam worship and salt-free prasadam",
-    desc: "A major pilgrimage destination dedicated to Lord Vishnu and popular among families."
+    timing: "6:00 AM–1:00 PM and 4:00 PM–9:00 PM",
+    dressCode: "Traditional / modest attire recommended",
+    specialFor: "Divya Desam worship, salt-free prasadam, Lord Vishnu darshan and family prayers.",
+    desc: "Arulmigu Sri Oppiliappan Temple is a sacred Divya Desam dedicated to Lord Vishnu. The temple is especially known for its prasadam prepared without salt and its strong Vaishnavite tradition. It is a major pilgrimage destination near Kumbakonam and is highly suitable for families and devotees.",
+    guestNote: "Cab is recommended for families and senior citizens.",
+    image: uppiliappanImg
   },
   {
     name: "Sri Swarnapureeswarar Temple",
-    dist: "Approximately 6.6 km",
-    mode: "Cab Recommended",
-    timing: "6:00 AM – 12:00 PM and 4:30 PM – 8:30 PM",
-    specialFor: "Peaceful Shiva worship",
-    desc: "A serene spiritual destination known for its calm ambience and traditional worship."
+    dist: "Approximately 6.6 kilometers",
+    mode: "Cab recommended",
+    timing: "6:00 AM–12:00 PM and 4:30 PM–8:30 PM",
+    dressCode: "Modest traditional attire recommended",
+    specialFor: "Shiva worship, calm temple atmosphere, local spiritual tradition and peaceful darshan.",
+    desc: "Sri Swarnapureeswarar Temple is a revered Shiva temple known for its peaceful ambience, spiritual significance and traditional local worship practices. It is a meaningful stop for guests who wish to explore a quieter temple away from the busier town centre.",
+    guestNote: "Best visited by cab for a smoother travel experience.",
+    image: "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=800&q=80"
   },
   {
     name: "Swamimalai Murugan Temple",
-    dist: "Approximately 7.9 km",
-    mode: "Cab Recommended",
-    timing: "6:00 AM – 12:00 PM and 4:00 PM – 8:30 PM",
-    specialFor: "One of the Six Abodes of Lord Murugan",
-    desc: "A sacred pilgrimage site associated with the Pranava Mantra legend."
+    dist: "Approximately 7.9 kilometers",
+    mode: "Cab recommended",
+    timing: "6:00 AM–12:00 PM and 4:00 PM–8:30 PM",
+    dressCode: "Traditional / modest attire recommended",
+    specialFor: "Arupadai Veedu temple, Lord Murugan worship, Pranava mantra legend and family pilgrimage.",
+    desc: "Swamimalai Murugan Temple is one of the six sacred abodes of Lord Murugan. The temple is celebrated for the legend of Lord Murugan teaching the meaning of the Pranava mantra. It is one of the most important Murugan temples near Kumbakonam and is a must-visit for Lord Murugan devotees.",
+    guestNote: "Cab is recommended, especially for families and elderly guests.",
+    image: "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=800&q=80"
   },
   {
     name: "Thiruvidaimarudur Mahalinga Swamy Temple",
-    dist: "Approximately 10 km",
-    mode: "Cab Recommended",
-    timing: "5:30 AM – 12:30 PM and 4:00 PM – 9:00 PM",
-    specialFor: "Grand Shiva worship experience",
-    desc: "A majestic Shiva temple known for its large corridors and powerful spiritual atmosphere."
+    dist: "Approximately 10 kilometers",
+    mode: "Cab recommended",
+    timing: "5:30 AM–12:30 PM and 4:00 PM–9:00 PM",
+    dressCode: "Traditional / modest attire recommended",
+    specialFor: "Major Shiva worship, grand temple corridors, powerful spiritual atmosphere and traditional darshan.",
+    desc: "Thiruvidaimarudur Mahalinga Swamy Temple is a major Shiva sthalam known for its grand scale, majestic corridors and powerful spiritual atmosphere. It is one of the important Shiva temples near Kumbakonam. The temple's size, traditional ambience and sanctity make it a meaningful part of the extended temple trail.",
+    guestNote: "Cab is preferred due to the distance from the property.",
+    image: "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=800&q=80"
   }
 ];
 
@@ -458,7 +487,7 @@ const RoomBookingFlow = ({ isOpen, onClose, room }: { isOpen: boolean, onClose: 
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-brand-charcoal/90 backdrop-blur-md overflow-y-auto">
+    <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-brand-charcoal/90 backdrop-blur-md overflow-y-auto">
       <motion.div 
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
@@ -745,7 +774,7 @@ const RoomBookingFlow = ({ isOpen, onClose, room }: { isOpen: boolean, onClose: 
 };
 
 const SectionWrapper = ({ children, className, id }: { children: React.ReactNode, className?: string, id?: string }) => (
-  <section id={id} className={cn("relative py-24 px-6 md:px-12", className)}>
+  <section id={id} className={cn("relative py-16 px-6 md:px-12", className)}>
     <motion.div 
       variants={fadeInUp}
       initial="initial"
@@ -837,7 +866,7 @@ const Home = ({ onBookRoom }: { onBookRoom: (room: any) => void }) => {
     <DecorativeLayout>
       <div className="space-y-0">
         {/* Hero */}
-      <section className="relative min-h-[86vh] flex flex-col items-center justify-start overflow-hidden pt-24 md:pt-28 pb-10">
+      <section className="relative min-h-[86vh] flex flex-col items-center justify-start overflow-hidden pt-16 md:pt-20 pb-10">
         <HeroSky />
         
         <motion.div
@@ -846,17 +875,17 @@ const Home = ({ onBookRoom }: { onBookRoom: (room: any) => void }) => {
           animate="animate"
           className="relative z-10 space-y-4 md:space-y-5 max-w-5xl px-6 text-center"
         >
-          <motion.h1 variants={heroItem} className="font-playfair text-5xl md:text-8xl text-catalogue-green font-black tracking-tight leading-none drop-shadow-sm">
+          <motion.h1 variants={heroItem} className="font-playfair text-4xl md:text-6xl text-catalogue-green font-black tracking-tight leading-none drop-shadow-sm">
             WELCOME
           </motion.h1>
           <motion.p variants={heroItem} className="font-playfair text-xl md:text-3xl text-catalogue-green italic tracking-widest uppercase drop-shadow-sm">
             TO A STAY THAT FEELS LIKE
           </motion.p>
-          <motion.p variants={heroItem} className="font-playfair text-4xl md:text-6xl text-catalogue-green font-bold drop-shadow-sm">
+          <motion.p variants={heroItem} className="font-playfair text-2xl md:text-4xl text-catalogue-green font-bold drop-shadow-sm">
             Home, Away from Home
           </motion.p>
           <motion.div variants={heroItem} className="space-y-2 pt-4">
-            <h2 className="font-playfair text-4xl md:text-6xl text-catalogue-green font-bold drop-shadow-sm">வரவேற்கிறோம்</h2>
+            <h2 className="font-playfair text-2xl md:text-4xl text-catalogue-green font-bold drop-shadow-sm">வரவேற்கிறோம்</h2>
             <p className="font-playfair text-xl md:text-2xl text-catalogue-green/80 font-semibold drop-shadow-sm">இது வீடு போன்ற உணர்வைத் தரும் ஓர் இடம்.</p>
           </motion.div>
           <motion.div variants={heroItem} className="pt-4">
@@ -877,7 +906,7 @@ const Home = ({ onBookRoom }: { onBookRoom: (room: any) => void }) => {
       <SectionWrapper className="bg-white/50 backdrop-blur-sm">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <motion.div variants={fadeInLeft} className="space-y-8">
-            <h2 className="font-playfair text-4xl md:text-6xl text-catalogue-green font-bold leading-tight">
+            <h2 className="font-playfair text-3xl md:text-5xl text-catalogue-green font-black uppercase tracking-tight leading-tight">
               YOUR STAY BEGINS HERE
             </h2>
             <p className="font-playfair text-xl text-catalogue-green/80 italic">
@@ -905,7 +934,7 @@ const Home = ({ onBookRoom }: { onBookRoom: (room: any) => void }) => {
       <SectionWrapper id="rooms">
         <div className="text-center mb-16 space-y-4">
           <p className="font-bold text-catalogue-gold uppercase tracking-[0.4em] text-xs">Room Categories</p>
-          <h2 className="font-playfair text-5xl md:text-7xl text-catalogue-green">Luxurious Sanctuaries</h2>
+          <h2 className="font-playfair text-3xl md:text-5xl text-catalogue-green font-black uppercase tracking-tight">Luxurious Sanctuaries</h2>
         </div>
         <motion.div 
           variants={staggerContainer}
@@ -944,14 +973,14 @@ const Home = ({ onBookRoom }: { onBookRoom: (room: any) => void }) => {
       <SectionWrapper className="bg-catalogue-green/5">
         <div className="text-center mb-16 space-y-4">
           <p className="font-bold text-catalogue-gold uppercase tracking-[0.4em] text-xs">Comfortable Stays • Elegant Dining</p>
-          <h2 className="font-playfair text-5xl md:text-7xl text-catalogue-green uppercase">Dining & Events</h2>
+          <h2 className="font-playfair text-3xl md:text-5xl text-catalogue-green font-black uppercase tracking-tight">Dining & Events</h2>
           <OrnateDivider className="mt-6" />
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           <motion.div variants={fadeInLeft} whileHover={{ y: -8, scale: 1.01 }} className="animated-card space-y-8 group bg-card-ivory p-8 ornate-shape ornate-border shadow-xl">
             <div className="aspect-video overflow-hidden border border-catalogue-gold/20">
-              <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=800&q=80" alt="Dining Hall" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+              <img src={diningImg} alt="Dining Hall" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
             </div>
             <div className="text-center space-y-4">
               <h3 className="font-playfair text-4xl text-catalogue-green font-bold">Dining Hall</h3>
@@ -964,7 +993,7 @@ const Home = ({ onBookRoom }: { onBookRoom: (room: any) => void }) => {
           
           <motion.div variants={fadeInRight} whileHover={{ y: -8, scale: 1.01 }} className="animated-card space-y-8 group bg-card-ivory p-8 ornate-shape ornate-border shadow-xl">
             <div className="aspect-video overflow-hidden border border-catalogue-gold/20">
-              <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=800&q=80" alt="Banquet Hall" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+              <img src={hallImg} alt="Banquet Hall" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
             </div>
             <div className="text-center space-y-4">
               <h3 className="font-playfair text-4xl text-catalogue-green font-bold">Banquet Hall</h3>
@@ -990,7 +1019,7 @@ const Home = ({ onBookRoom }: { onBookRoom: (room: any) => void }) => {
             <div className="space-y-6">
               <div className="space-y-4">
                 <p className="font-bold text-catalogue-gold uppercase tracking-[0.4em] text-xs">Our Location</p>
-                <h3 className="font-playfair text-5xl md:text-6xl text-catalogue-green font-black leading-tight">Find Us in the Heart of Kumbakonam</h3>
+                <h3 className="font-playfair text-3xl md:text-5xl text-catalogue-green font-black uppercase tracking-tight leading-tight">Find Us in the Heart of Kumbakonam</h3>
                 <OrnateDivider className="mt-6 ml-0" />
               </div>
               
@@ -1045,7 +1074,143 @@ const Home = ({ onBookRoom }: { onBookRoom: (room: any) => void }) => {
   );
 };
 
-const AboutPage = () => {
+const TempleModal = ({ temple, onClose }: { temple: any, onClose: () => void }) => {
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, []);
+
+  if (!temple) return null;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-[200] flex items-center justify-center p-4 md:p-8"
+    >
+      <div 
+        className="absolute inset-0 bg-brand-charcoal/80"
+        onClick={onClose}
+      />
+      
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9, y: 20 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.9, y: 20 }}
+        className="bg-brand-cream w-full max-w-6xl max-h-[85vh] overflow-hidden relative shadow-2xl ornate-shape ornate-border border border-catalogue-gold/30 flex flex-col md:flex-row shadow-[0_0_80px_rgba(0,0,0,0.5)]"
+      >
+        <button 
+          onClick={onClose}
+          className="absolute top-6 right-6 z-50 p-2 bg-catalogue-gold text-white rounded-full hover:bg-catalogue-green transition-colors shadow-lg"
+        >
+          <X size={24} />
+        </button>
+
+        {/* Left Side: Map & Travel Info */}
+        <div className="w-full md:w-5/12 h-[300px] md:h-auto relative p-4 bg-white border-b md:border-b-0 md:border-r border-catalogue-gold/10">
+           <div className="absolute inset-4 overflow-hidden ornate-shape border border-catalogue-gold/10">
+              <iframe
+                title="Temple Map"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                loading="lazy"
+                allowFullScreen
+                src={`https://www.google.com/maps?q=Subra+Residency+Kumbakonam+to+${temple.name}&output=embed`}
+                className="w-full h-full border-0"
+              ></iframe>
+           </div>
+           <div className="absolute bottom-10 left-10 right-10 bg-catalogue-green/90 backdrop-blur-sm p-4 border border-catalogue-gold/30 text-white shadow-xl ornate-shape">
+              <div className="space-y-4">
+                <div className="flex items-center gap-3">
+                   <MapPin className="text-catalogue-gold" size={20} />
+                   <div>
+                      <p className="text-[10px] uppercase font-bold text-catalogue-gold tracking-widest leading-none mb-1">Route from Hotel</p>
+                      <p className="font-playfair text-base font-bold">To {temple.name}</p>
+                   </div>
+                </div>
+                <div className="grid grid-cols-2 gap-4 border-t border-white/10 pt-4">
+                  <div>
+                    <p className="text-[9px] uppercase font-bold text-catalogue-gold tracking-widest">Distance</p>
+                    <p className="text-sm font-bold">{temple.dist}</p>
+                  </div>
+                  <div>
+                    <p className="text-[9px] uppercase font-bold text-catalogue-gold tracking-widest">Mode</p>
+                    <p className="text-sm font-bold">{temple.mode}</p>
+                  </div>
+                </div>
+              </div>
+           </div>
+        </div>
+
+        {/* Right Side: Image & Details */}
+        <div className="w-full md:w-7/12 p-8 md:p-12 space-y-8 overflow-y-auto no-scrollbar">
+           <div className="space-y-6">
+              <div className="w-full aspect-video overflow-hidden border border-catalogue-gold/20 shadow-md">
+                 <img src={temple.image} alt={temple.name} className="w-full h-full object-cover" />
+              </div>
+              <div className="border-b border-catalogue-gold/20 pb-4">
+                <h2 className="font-playfair text-3xl md:text-4xl font-black text-catalogue-green uppercase tracking-tight leading-tight">
+                  {temple.name}
+                </h2>
+              </div>
+           </div>
+
+           <div className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-1">
+                   <p className="text-[10px] font-bold text-catalogue-gold uppercase tracking-[0.2em]">Suggested Darshan Time</p>
+                   <p className="text-catalogue-green font-bold flex items-center gap-2 text-sm">
+                      <Clock size={14} className="text-catalogue-gold shrink-0" />
+                      {temple.timing}
+                   </p>
+                </div>
+                <div className="space-y-1">
+                   <p className="text-[10px] font-bold text-catalogue-gold uppercase tracking-[0.2em]">Dress Code</p>
+                   <p className="text-catalogue-green font-bold flex items-center gap-2 text-sm italic">
+                      <Shirt size={14} className="text-catalogue-gold shrink-0" />
+                      {temple.dressCode}
+                   </p>
+                </div>
+              </div>
+
+              <div className="space-y-6">
+                <div className="space-y-1">
+                  <p className="text-[10px] font-bold text-catalogue-gold uppercase tracking-widest">Special For</p>
+                  <p className="text-base text-catalogue-green font-bold italic leading-relaxed">{temple.specialFor}</p>
+                </div>
+
+                <p className="text-catalogue-green/90 leading-relaxed font-medium text-lg italic border-l-4 border-catalogue-gold pl-6">
+                  {temple.desc}
+                </p>
+                
+                <div className="space-y-6 pt-2">
+                   <div className="bg-catalogue-green/5 p-6 border border-catalogue-gold/20 ornate-shape">
+                      <p className="text-[10px] font-bold text-catalogue-gold uppercase tracking-widest mb-2">Guest Note</p>
+                      <p className="text-sm text-catalogue-green font-semibold italic leading-relaxed">{temple.guestNote}</p>
+                   </div>
+                </div>
+              </div>
+           </div>
+
+           <div className="pt-8">
+              <Button 
+                onClick={onClose}
+                className="lux-button w-full bg-catalogue-green text-white py-8 text-sm font-bold uppercase tracking-widest rounded-none hover:bg-catalogue-gold transition-all"
+              >
+                Close Temple Details
+              </Button>
+           </div>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+};
+
+const AboutPage = ({ onSelectTemple }: { onSelectTemple: (temple: any) => void }) => {
   const [selectedLocation, setSelectedLocation] = useState('Kumbakonam Railway Station');
 
   const findDistance = (name: string) => {
@@ -1057,9 +1222,9 @@ const AboutPage = () => {
 
   return (
     <DecorativeLayout>
-      <SectionWrapper className="pt-40">
+      <SectionWrapper className="pt-20">
         <div className="text-center mb-16 space-y-6">
-          <h1 className="font-playfair text-5xl md:text-8xl text-catalogue-green font-black max-w-3xl mx-auto leading-tight">WHY CHOOSE SUBRA?</h1>
+          <h1 className="font-playfair text-4xl md:text-6xl text-catalogue-green font-black max-w-3xl mx-auto leading-tight">WHY CHOOSE SUBRA?</h1>
           <p className="font-playfair text-xl md:text-2xl text-catalogue-gold italic font-bold">Stay in the heart of Kumbakonam – close to temples and transport.</p>
           <OrnateDivider className="my-8" />
           <p className="font-playfair text-lg md:text-xl text-catalogue-green max-w-3xl mx-auto leading-relaxed font-semibold">
@@ -1206,7 +1371,7 @@ const AboutPage = () => {
         {/* Temple Details Near Subra Residency */}
         <div className="space-y-16 py-20 border-t border-catalogue-gold/20">
           <div className="text-center space-y-6">
-            <h2 className="font-playfair text-5xl md:text-7xl text-catalogue-green font-black uppercase tracking-tight">TEMPLE DETAILS NEAR SUBRA RESIDENCY</h2>
+            <h2 className="font-playfair text-3xl md:text-5xl text-catalogue-green font-black uppercase tracking-tight">TEMPLE DETAILS NEAR SUBRA RESIDENCY</h2>
             <p className="font-playfair text-xl text-catalogue-gold italic font-bold">Explore the Sacred Trail Around Kumbakonam</p>
             <p className="font-playfair text-lg text-catalogue-green max-w-4xl mx-auto leading-relaxed font-semibold">
               Kumbakonam is surrounded by some of Tamil Nadu's most revered temples, sacred tanks and spiritual landmarks. Guests staying at Subra Residency can easily plan temple visits from the property, as many important temples are located within a short travel distance. Discover the rich spiritual heritage of the region through these iconic destinations.
@@ -1215,9 +1380,16 @@ const AboutPage = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {TEMPLE_DETAILS_DATA.map((temple, i) => (
-              <motion.div key={i} variants={fadeInUp} whileHover={{ y: -10, scale: 1.015 }} className="animated-card bg-card-ivory p-8 border border-catalogue-gold/10 flex flex-col h-full ornate-shape ornate-border shadow-lg group">
+              <motion.div 
+                key={i} 
+                variants={fadeInUp} 
+                whileHover={{ y: -10, scale: 1.015 }} 
+                onClick={() => onSelectTemple(temple)}
+                className="animated-card bg-card-ivory p-8 border border-catalogue-gold/10 flex flex-col h-full ornate-shape ornate-border shadow-lg group cursor-pointer"
+              >
                 <div className="space-y-6 flex-grow">
-                   <h4 className="font-playfair text-2xl font-bold text-catalogue-green leading-tight">{temple.name}</h4>
+                   <h4 className="font-playfair text-2xl font-black text-catalogue-green leading-tight group-hover:text-catalogue-gold transition-colors">{temple.name}</h4>
+                   
                    <div className="space-y-3">
                      <div className="flex items-center gap-3 text-sm">
                        <MapPin size={16} className="text-catalogue-gold shrink-0" />
@@ -1232,11 +1404,19 @@ const AboutPage = () => {
                        <span className="text-catalogue-green/80 font-semibold">Timing: {temple.timing}</span>
                      </div>
                    </div>
+
                    <div className="pt-4 border-t border-catalogue-gold/10">
                      <p className="text-[10px] font-bold text-catalogue-gold uppercase tracking-widest mb-1">Special For</p>
-                     <p className="text-sm text-catalogue-green font-bold italic">{temple.specialFor}</p>
+                     <p className="text-sm text-catalogue-green font-bold italic leading-relaxed">{temple.specialFor}</p>
                    </div>
-                   <p className="text-sm text-catalogue-green/70 leading-relaxed font-medium">{temple.desc}</p>
+
+                   <p className="text-sm text-catalogue-green/70 leading-relaxed font-medium line-clamp-3">
+                     {temple.desc}
+                   </p>
+
+                   <div className="mt-4 pt-4 border-t border-catalogue-gold/5 flex justify-end">
+                      <p className="text-[10px] font-bold text-catalogue-gold uppercase tracking-[0.2em] group-hover:translate-x-2 transition-transform">Click to View Map & Info →</p>
+                   </div>
                 </div>
               </motion.div>
             ))}
@@ -1275,10 +1455,10 @@ const AboutPage = () => {
 const RoomsPage = ({ onBookRoom }: { onBookRoom: (room: any) => void }) => {
   return (
     <DecorativeLayout>
-      <SectionWrapper className="pt-40">
+      <SectionWrapper className="pt-20">
         <div className="text-center mb-8 space-y-4">
           <p className="font-bold text-catalogue-gold uppercase tracking-[0.4em] text-xs">Our Accommodations</p>
-          <h2 className="font-playfair text-5xl md:text-7xl text-catalogue-green">Luxurious Sanctuaries</h2>
+          <h2 className="font-playfair text-3xl md:text-5xl text-catalogue-green font-black uppercase tracking-tight">Luxurious Sanctuaries</h2>
         </div>
 
         <div className="mb-16">
@@ -1318,10 +1498,10 @@ const RoomsPage = ({ onBookRoom }: { onBookRoom: (room: any) => void }) => {
 const AttractionsPage = () => {
   return (
     <DecorativeLayout>
-      <SectionWrapper className="pt-40">
+      <SectionWrapper className="pt-20">
         <div className="text-center mb-16 space-y-4">
           <p className="font-bold text-catalogue-gold uppercase tracking-[0.4em] text-xs">Spiritual Trail</p>
-          <h2 className="font-playfair text-5xl md:text-7xl text-catalogue-green">Temple Highlights</h2>
+          <h2 className="font-playfair text-3xl md:text-5xl text-catalogue-green font-black uppercase tracking-tight">Temple Highlights</h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-24">
           {ATTRACTIONS_DATA.map((attr, i) => (
@@ -1343,7 +1523,7 @@ const AttractionsPage = () => {
         {/* New Section: Hidden Spiritual Trails */}
         <div className="space-y-16 py-20 border-t border-catalogue-gold/20">
           <div className="text-center space-y-6 max-w-4xl mx-auto">
-            <h2 className="font-playfair text-5xl md:text-7xl text-catalogue-green font-black uppercase tracking-tight">Hidden Spiritual Trails<br />Around Kumbakonam</h2>
+            <h2 className="font-playfair text-3xl md:text-5xl text-catalogue-green font-black uppercase tracking-tight">Hidden Spiritual Trails<br />Around Kumbakonam</h2>
             <p className="font-playfair text-xl text-catalogue-gold italic font-bold">"Discover the lesser-known spiritual side of Kumbakonam through rare temples, sacred traditions, village legends, unique deities and peaceful pilgrimage experiences beyond the regular tourist route. Curated specially for guests of Subra Residency, these hidden spiritual trails offer deeper cultural and devotional experiences."</p>
           </div>
 
@@ -1378,7 +1558,7 @@ const AttractionsPage = () => {
         {/* Recommended Spiritual Trails */}
         <div className="space-y-16 py-20 border-t border-catalogue-gold/20">
           <div className="text-center space-y-4">
-            <h2 className="font-playfair text-4xl md:text-6xl text-catalogue-green font-bold uppercase tracking-wide">Recommended Spiritual Trails</h2>
+            <h2 className="font-playfair text-3xl md:text-5xl text-catalogue-green font-black uppercase tracking-tight">Recommended Spiritual Trails</h2>
             <p className="font-playfair text-lg text-catalogue-gold italic font-semibold">Hand-picked itineraries for a meaningful pilgrimage</p>
           </div>
 
@@ -1409,7 +1589,7 @@ const AttractionsPage = () => {
         {/* Temple Travel Tips */}
         <div className="space-y-16 py-20 border-t border-catalogue-gold/20">
           <div className="text-center">
-            <h2 className="font-playfair text-4xl md:text-6xl text-catalogue-green font-bold uppercase tracking-wide">Temple Travel Tips</h2>
+            <h2 className="font-playfair text-3xl md:text-5xl text-catalogue-green font-black uppercase tracking-tight">Temple Travel Tips</h2>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
@@ -1440,7 +1620,7 @@ const AttractionsPage = () => {
           <div className="absolute bottom-0 right-0 w-64 h-64 bg-catalogue-gold/5 rounded-full translate-x-1/4 translate-y-1/4 blur-3xl" />
           
           <div className="relative z-10 space-y-6">
-            <h2 className="font-playfair text-4xl md:text-6xl font-bold uppercase tracking-tight">Need Help Planning Your Temple Journey?</h2>
+            <h2 className="font-playfair text-3xl md:text-5xl text-catalogue-green font-black uppercase tracking-tight">Need Help Planning Your Temple Journey?</h2>
             <p className="font-playfair text-xl text-white/80 italic max-w-3xl mx-auto">"Our team can help you with temple information, route suggestions, local transportation and darshan planning during your stay at Subra Residency."</p>
             <div className="pt-6">
               <Button className="lux-button bg-catalogue-gold text-white px-12 py-8 text-xl font-bold uppercase tracking-widest rounded-none hover:bg-white hover:text-catalogue-green transition-all shadow-2xl">
@@ -1457,10 +1637,10 @@ const AttractionsPage = () => {
 const ThankYouPage = () => {
   return (
     <DecorativeLayout>
-      <SectionWrapper className="pt-40">
+      <SectionWrapper className="pt-20">
         <div className="text-center mb-16 space-y-8">
           <img src={logo} alt="Logo" className="h-20 mx-auto mb-6" />
-          <h1 className="font-playfair text-6xl md:text-9xl text-catalogue-green font-black tracking-tighter">THANK YOU</h1>
+          <h1 className="font-playfair text-4xl md:text-7xl text-catalogue-green font-black tracking-tighter">THANK YOU</h1>
           <p className="font-playfair text-xl md:text-3xl text-catalogue-gold italic font-bold">For choosing Subra Residency</p>
           <p className="font-playfair text-lg text-catalogue-green max-w-2xl mx-auto leading-relaxed font-semibold">
             Thank you for considering Subra Residency for your stay in Kumbakonam. We are honoured to be a part of your journey and look forward to welcoming you with comfort, care and heartfelt hospitality.
@@ -1506,7 +1686,7 @@ const ThankYouPage = () => {
           </div>
         </div>
 
-        <div className="text-center pt-20 pb-10 space-y-4">
+        <div className="text-center pt-10 pb-10 space-y-4">
           <p className="font-playfair text-2xl text-catalogue-green font-bold">நன்றி வணக்கம்</p>
           <p className="font-playfair text-xl text-catalogue-gold italic font-bold">We look forward to welcoming you again.</p>
         </div>
@@ -1516,7 +1696,7 @@ const ThankYouPage = () => {
 };
 
 const Footer = () => (
-  <footer className="bg-catalogue-green py-16 text-center border-t border-catalogue-gold/40 relative z-20">
+  <footer className="bg-catalogue-green py-10 text-center border-t border-catalogue-gold/40 relative z-20">
     <div className="max-w-7xl mx-auto px-6 space-y-12">
       <div className="flex flex-col md:flex-row items-center justify-center gap-8 border-b border-catalogue-gold/10 pb-12">
         <div className="flex flex-col items-center gap-4">
@@ -1549,7 +1729,7 @@ const Footer = () => (
       </div>
 
       <div className="space-y-6 pt-12">
-        <p className="font-playfair text-xl md:text-5xl text-catalogue-gold font-bold tracking-[0.1em] uppercase">
+        <p className="font-playfair text-xl md:text-3xl text-catalogue-gold font-bold tracking-[0.1em] uppercase">
           STAY BLESSED. STAY COMFORTABLE. STAY WITH SUBRA.
         </p>
         <p className="text-[10px] text-catalogue-gold/40 uppercase tracking-[0.5em]">
@@ -1562,6 +1742,7 @@ const Footer = () => (
 
 export const CustomerPortal = () => {
   const [selectedRoom, setSelectedRoom] = useState<any>(null);
+  const [selectedTemple, setSelectedTemple] = useState<any>(null);
   const [isBookingOpen, setIsBookingOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
@@ -1683,7 +1864,7 @@ export const CustomerPortal = () => {
         <AnimatePresence mode="wait">
           <Routes location={location} key={location.pathname}>
             <Route path="/" element={<motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.4 }}><Home onBookRoom={handleBookRoom} /></motion.div>} />
-            <Route path="/about" element={<motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.4 }}><AboutPage /></motion.div>} />
+            <Route path="/about" element={<motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.4 }}><AboutPage onSelectTemple={setSelectedTemple} /></motion.div>} />
             <Route path="/about-kumbakonam" element={<motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.4 }}><DecorativeLayout><AboutKumbakonam /></DecorativeLayout></motion.div>} />
             <Route path="/rooms" element={<motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.4 }}><RoomsPage onBookRoom={handleBookRoom} /></motion.div>} />
             <Route path="/attractions" element={<motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.4 }}><AttractionsPage /></motion.div>} />
@@ -1697,6 +1878,12 @@ export const CustomerPortal = () => {
         onClose={() => setIsBookingOpen(false)} 
         room={selectedRoom || ROOMS_DATA[0]} 
       />
+
+      <AnimatePresence>
+        {selectedTemple && (
+          <TempleModal temple={selectedTemple} onClose={() => setSelectedTemple(null)} />
+        )}
+      </AnimatePresence>
 
       <Footer />
     </div>

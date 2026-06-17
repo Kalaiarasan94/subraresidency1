@@ -24,19 +24,35 @@ const AboutKumbakonam: React.FC = () => {
     <div id="about-kumbakonam" className="min-h-screen font-inter selection:bg-catalogue-gold selection:text-white">
       
       {/* HERO SECTION */}
-      <section className="relative pt-32 pb-20 px-6 md:px-12">
+      <section className="relative pt-20 pb-20 px-6 md:px-12">
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9 }}
           className="max-w-7xl mx-auto text-center mb-16"
         >
-          <h1 className="font-playfair text-4xl md:text-6xl text-catalogue-green font-black leading-tight mb-6 uppercase tracking-tight">
+          <h1 className="font-playfair text-3xl md:text-5xl text-catalogue-green font-black leading-tight mb-6 uppercase tracking-tight">
             WHY KUMBAKONAM IS CALLED<br />THE TEMPLE TOWN
           </h1>
           <p className="font-playfair text-lg md:text-xl text-catalogue-gold italic font-bold">
             "A sacred city where devotion, heritage and living tradition meet."
           </p>
+          <div className="mt-12 max-w-3xl mx-auto text-left bg-white/50 backdrop-blur-sm p-8 border border-catalogue-gold/20 shadow-lg">
+            <h2 className="font-playfair text-2xl md:text-3xl text-catalogue-green font-black mb-6 uppercase tracking-tight text-center">
+              Why Kumbakonam is Called Kumbakonam
+            </h2>
+            <div className="space-y-4 text-catalogue-green/90 font-medium leading-relaxed">
+              <p>
+                The name Kumbakonam carries a beautiful traditional meaning that reflects the town’s sacred identity. In Tamil, “Konam” means direction or angle, and “Kumbam” refers to the holy temple kalasam or sacred pot-like crown seen on top of temples.
+              </p>
+              <p>
+                In the olden days, Kumbakonam was filled with ancient temples, divine towers, and sacred streets. It is believed that wherever one stood within the town and looked in any direction, a temple kumbam would be visible. Every angle of the town carried the sight of divinity, and every direction reminded people of faith, tradition, and temple culture.
+              </p>
+              <p>
+                This is why the land came to be lovingly known as Kumbakonam — a place where the Kumbam of a temple could be seen from every Konam. Though modern buildings have now changed the view in many places, the spiritual identity of Kumbakonam remains untouched. Even today, the town stands as a timeless temple town, where devotion lives in its streets, history rests in its walls, and divine grace rises above its skyline.
+              </p>
+            </div>
+          </div>
         </motion.div>
 
         <motion.div 
@@ -82,14 +98,14 @@ const AboutKumbakonam: React.FC = () => {
       </section>
 
       {/* DETAILED CONTENT SECTIONS */}
-      <section className="max-w-7xl mx-auto px-6 md:px-12 py-24 space-y-32">
+      <section className="max-w-7xl mx-auto px-6 md:px-12 py-16 space-y-24">
         
         {/* 1. A Town Woven Around Temples */}
         <div className="grid md:grid-cols-2 gap-16 items-center">
           <motion.div {...fadeInUp} className="bg-white/90 backdrop-blur-md p-8 md:p-12 shadow-xl border border-catalogue-gold/20 relative">
             <div className="absolute inset-2 border border-catalogue-gold/10 pointer-events-none" />
             <div className="relative z-10 space-y-6">
-              <h2 className="font-playfair text-3xl font-bold text-catalogue-green">A Town Woven Around Temples</h2>
+              <h2 className="font-playfair text-2xl font-black text-catalogue-green uppercase tracking-tight">A Town Woven Around Temples</h2>
               <div className="space-y-4 text-catalogue-green/90 font-medium leading-relaxed">
                 <p>
                   Kumbakonam is called the Temple Town because temples are woven into the daily rhythm of the town. The streets, neighbourhoods and sacred water bodies are surrounded by shrines, temple towers, mandapams and traditional houses.
@@ -112,7 +128,7 @@ const AboutKumbakonam: React.FC = () => {
           <motion.div {...fadeInUp} className="md:order-2 bg-white/90 backdrop-blur-md p-8 md:p-12 shadow-xl border border-catalogue-gold/20 relative">
             <div className="absolute inset-2 border border-catalogue-gold/10 pointer-events-none" />
             <div className="relative z-10 space-y-6">
-              <h2 className="font-playfair text-3xl font-bold text-catalogue-green">The Sacred Identity of Mahamaham Tank</h2>
+              <h2 className="font-playfair text-2xl font-black text-catalogue-green uppercase tracking-tight">The Sacred Identity of Mahamaham Tank</h2>
               <div className="space-y-4 text-catalogue-green/90 font-medium leading-relaxed">
                 <p>
                   Mahamaham Tank is one of the most important sacred landmarks of Kumbakonam. It is deeply connected with the religious identity of the town and is especially known for the Mahamaham festival, celebrated once in twelve years.
@@ -135,7 +151,7 @@ const AboutKumbakonam: React.FC = () => {
           <motion.div {...fadeInUp} className="bg-white/90 backdrop-blur-md p-8 md:p-12 shadow-xl border border-catalogue-gold/20 relative">
             <div className="absolute inset-2 border border-catalogue-gold/10 pointer-events-none" />
             <div className="relative z-10 space-y-6">
-              <h2 className="font-playfair text-3xl font-bold text-catalogue-green">The Origin Legend and Adi Kumbeswarar Temple</h2>
+              <h2 className="font-playfair text-2xl font-black text-catalogue-green uppercase tracking-tight">The Origin Legend and Adi Kumbeswarar Temple</h2>
               <div className="space-y-4 text-catalogue-green/90 font-medium leading-relaxed">
                 <p>
                   One of the most important spiritual landmarks of Kumbakonam is Arulmigu Adi Kumbeswarar Temple. This temple is closely connected with the origin legend of Kumbakonam and the sacred identity of the town.
@@ -161,7 +177,7 @@ const AboutKumbakonam: React.FC = () => {
           <motion.div {...fadeInUp} className="md:order-2 bg-white/90 backdrop-blur-md p-8 md:p-12 shadow-xl border border-catalogue-gold/20 relative">
             <div className="absolute inset-2 border border-catalogue-gold/10 pointer-events-none" />
             <div className="relative z-10 space-y-6">
-              <h2 className="font-playfair text-3xl font-bold text-catalogue-green">A Rare Meeting Place of Shaivite and Vaishnavite Traditions</h2>
+              <h2 className="font-playfair text-2xl font-black text-catalogue-green uppercase tracking-tight">A Rare Meeting Place of Shaivite and Vaishnavite Traditions</h2>
               <div className="space-y-4 text-catalogue-green/90 font-medium leading-relaxed">
                 <p>
                   Kumbakonam is spiritually rich because it carries both Shaivite and Vaishnavite traditions with great importance. Shaivite temples such as Arulmigu Adi Kumbeswarar Temple, Kasi Viswanathar Temple and Nageswaran Temple reflect the town's deep connection with Lord Shiva worship.
@@ -189,7 +205,7 @@ const AboutKumbakonam: React.FC = () => {
              <div className="bg-white/90 backdrop-blur-md p-10 md:p-16 shadow-2xl border border-catalogue-gold/20 relative">
                 <div className="absolute inset-4 border border-catalogue-gold/10 pointer-events-none" />
                 <div className="relative z-10 space-y-6">
-                  <h2 className="font-playfair text-4xl font-bold text-catalogue-green uppercase tracking-tight">Temple Architecture That Carries Centuries of Craftsmanship</h2>
+                  <h2 className="font-playfair text-3xl font-black text-catalogue-green uppercase tracking-tight">Temple Architecture That Carries Centuries of Craftsmanship</h2>
                   <p className="text-catalogue-green/90 font-medium leading-relaxed text-lg">
                     Kumbakonam and its surrounding region are known for beautiful South Indian temple architecture. The temples here display tall gopurams, sculpted stone walls, pillared corridors, carved mandapams, sacred tanks and traditional temple layouts.
                   </p>
