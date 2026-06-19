@@ -1,16 +1,62 @@
-# React + Vite
+# Subra HMS Portal
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend for the Subra Residency hotel management system. The UI is kept in React/Vite, with each portal separated by feature folder so backend API wiring can be added cleanly.
 
-Currently, two official plugins are available:
+## Project Structure
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```txt
+src/
+  app/
+    App.tsx              # Main portal router
+    portalDomains.ts    # Domain-to-portal resolver
+  assets/               # Images and static visual assets
+  components/
+    ui/                 # Shared UI primitives
+  features/
+    admin/              # Admin portal
+    customer/           # Public customer website
+    reception/          # Reception/front-desk portal
+  lib/
+    utils.ts            # Shared helpers
+  main.tsx              # React entry point
+```
 
-## React Compiler
+## Portal Routing
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Local development keeps the existing routes:
 
-## Expanding the ESLint configuration
+```txt
+/             Customer portal
+/reception    Reception portal
+/admin        Admin portal
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+For production, copy `.env.example` to `.env` and set the three domain names:
+
+```txt
+VITE_CUSTOMER_DOMAIN=subraresidency.com
+VITE_RECEPTION_DOMAIN=reception.subraresidency.com
+VITE_ADMIN_DOMAIN=admin.subraresidency.com
+```
+
+When a configured domain matches the browser hostname, the app loads only that portal at the root of that domain.
+
+## Backend Wiring Guide
+
+Add API clients and backend integration beside the portal that owns them:
+
+```txt
+src/features/customer/
+src/features/reception/
+src/features/admin/
+```
+
+Put code shared by all portals in `src/lib` or `src/components/ui`.
+
+## Commands
+
+```bash
+npm run dev
+npm run build
+npm run preview
+```

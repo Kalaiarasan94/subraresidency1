@@ -2,15 +2,15 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 // Asset Imports
-import heroImg from '../assets/aboutkumbakonam/old-kumbakonam-hero.jpg';
-import tankImg from '../assets/aboutkumbakonam/mahamaham-tank.jpg';
-import corridorImg from '../assets/aboutkumbakonam/temple-corridors.jpg';
-import coffeeImg from '../assets/aboutkumbakonam/coffee-hotel-street.jpg';
-import townStreetImg from '../assets/aboutkumbakonam/IMG_5721.PNG';
-import img5710 from '../assets/aboutkumbakonam/IMG_5710 (2).PNG';
-import img5713 from '../assets/aboutkumbakonam/IMG_5713.PNG';
-import insideImg from '../assets/aboutkumbakonam/inside.PNG';
-import streetImg from '../assets/aboutkumbakonam/street.PNG';
+import heroImg from '../../assets/aboutkumbakonam/old-kumbakonam-hero.jpg';
+import tankImg from '../../assets/aboutkumbakonam/mahamaham-tank.jpg';
+import corridorImg from '../../assets/aboutkumbakonam/temple-corridors.jpg';
+import coffeeImg from '../../assets/aboutkumbakonam/coffee-hotel-street.jpg';
+import townStreetImg from '../../assets/aboutkumbakonam/IMG_5721.PNG';
+import img5710 from '../../assets/aboutkumbakonam/IMG_5710 (2).PNG';
+import img5713 from '../../assets/aboutkumbakonam/IMG_5713.PNG';
+import insideImg from '../../assets/aboutkumbakonam/inside.PNG';
+import streetImg from '../../assets/aboutkumbakonam/street.PNG';
 
 const fadeInUp = {
   initial: { opacity: 0, y: 40 },
@@ -342,3 +342,4 @@ const AboutKumbakonam: React.FC = () => {
 };
 
 export default AboutKumbakonam;
+
