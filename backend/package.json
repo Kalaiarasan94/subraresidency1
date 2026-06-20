@@ -1,0 +1,16 @@
+{
+  "name": "subra-residency-backend",
+  "version": "1.0.0",
+  "description": "PHP Backend for Subra Residency",
+  "main": "api/index.php",
+  "scripts": {
+    "start": "php -S localhost:8001"
+  },
+  "keywords": [
+    "php",
+    "backend",
+    "hotel"
+  ],
+  "author": "Antigravity",
+  "license": "ISC"
+}

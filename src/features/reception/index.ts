@@ -1,1 +1,0 @@
-export { ReceptionPortal } from './ReceptionPortal';
