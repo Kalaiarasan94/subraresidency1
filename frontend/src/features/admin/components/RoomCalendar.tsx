@@ -2,12 +2,17 @@ import { useState, useEffect } from 'react';
 import { Card, CardContent } from '../../../components/ui/card';
 import { Button } from '../../../components/ui/button';
 import { ChevronLeft, ChevronRight, Clock, ShieldCheck, Hammer, BookmarkCheck } from 'lucide-react';
+import { fetchRoomAvailability, updateRoomAvailability, fetchBookingForRoomDate } from '../../../lib/api';
 
 export const RoomCalendar = () => {
   const now = new Date();
   const [currentDate, setCurrentDate] = useState(now);
   const [selectedDate, setSelectedDate] = useState<Date | null>(now);
   const [roomStatuses, setRoomStatuses] = useState<any[]>([]);
+  const [roomsList, setRoomsList] = useState<any[]>([]);
+  const [selectedRoom, setSelectedRoom] = useState<number | null>(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalData, setModalData] = useState<any>(null);
 
   // Mock data for demo purposes
   const generateMockStatuses = (date: Date) => {
@@ -28,10 +33,51 @@ export const RoomCalendar = () => {
   };
 
   useEffect(() => {
-    if (selectedDate) {
-      setRoomStatuses(generateMockStatuses(selectedDate));
-    }
-  }, [selectedDate]);
+    const loadData = async () => {
+      try {
+        // load rooms list
+        const resp = await fetch('http://localhost:8001/api/index.php/rooms/list');
+        if (resp.ok) {
+          const data = await resp.json();
+          setRoomsList(data);
+          if (!selectedRoom && data.length > 0) setSelectedRoom(data[0].id);
+        }
+      } catch (e) {
+        console.error('Failed to fetch rooms list', e);
+      }
+
+      if (selectedDate && selectedRoom) {
+        const dateStr = selectedDate.toISOString().slice(0,10);
+        const avail = await fetchRoomAvailability(selectedRoom, dateStr, dateStr);
+        // Map roomsList to statuses for the selected date
+        const mapped = (roomsList.length > 0) ? roomsList.map((r: any) => {
+          const match = (avail || []).find((a: any) => Number(a.room_id) === Number(r.id) && a.date === dateStr);
+          return {
+            id: r.id,
+            name: r.room_name || r.title || `Room ${r.id}`,
+            status: match ? match.status : (r.status || 'Available'),
+            guest: match && match.guest ? match.guest : null
+          };
+        }) : [];
+        setRoomStatuses(mapped);
+      }
+    };
+    loadData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedDate, selectedRoom]);
+
+  const dataForRoomStatusesFromAvail = (roomId: number, date: Date, availRows: any[]) => {
+    const dateStr = date.toISOString().slice(0,10);
+    return roomsList.map((r: any) => {
+      const match = (availRows || []).find((a: any) => Number(a.room_id) === Number(r.id) && a.date === dateStr);
+      return {
+        id: r.id,
+        name: r.room_name || r.title || `Room ${r.id}`,
+        status: match ? match.status : (r.status || 'Available'),
+        guest: match && match.guest ? match.guest : null
+      };
+    });
+  };
 
   const daysInMonth = (date: Date) => {
     return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
@@ -119,6 +165,12 @@ export const RoomCalendar = () => {
            <h3 className="text-xl font-bold text-slate-800">
              Inventory Status for {selectedDate?.toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}
            </h3>
+           <div>
+             <select className="p-2 border rounded-md text-sm" value={selectedRoom ?? ''} onChange={(e) => setSelectedRoom(Number(e.target.value))}>
+               <option value="">Select Room</option>
+               {roomsList.map(r => <option key={r.id} value={r.id}>{r.room_name || r.title || r.id}</option>)}
+             </select>
+           </div>
            <div className="flex gap-2 text-[10px] font-bold uppercase tracking-widest bg-emerald-50 p-2 rounded-lg text-emerald-700">
               <Clock size={12} /> Live Sync
            </div>
@@ -137,21 +189,83 @@ export const RoomCalendar = () => {
                          room.status === 'Maintenance' ? <Hammer size={20} /> : <BookmarkCheck size={20} />}
                       </div>
                       <div>
-                         <p className="text-xs font-bold text-slate-400 uppercase tracking-widest leading-none mb-1">Room {room.id}</p>
-                         <h5 className="font-bold text-slate-800">{room.name}</h5>
+                         <p className="text-xs font-bold text-slate-400 uppercase tracking-widest leading-none mb-1">{String(room.name).toUpperCase()}</p>
+                   <h5 className="font-bold text-slate-800">{room.name} {room.room_number ? (' - ' + room.room_number) : ''}</h5>
                          {room.status === 'Booked' && room.guest && <p className="text-[10px] font-medium text-slate-500 mt-1 italic">Guest: {room.guest}</p>}
                       </div>
                    </div>
-                   <div className={`text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-tighter ${
-                      room.status === 'Available' ? 'bg-emerald-100 text-emerald-800' :
-                      room.status === 'Maintenance' ? 'bg-amber-100 text-amber-800' : 'bg-rose-100 text-rose-800'
-                   }`}>
-                      {room.status}
-                   </div>
+             <div className={`text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-tighter ${
+               room.status === 'Available' ? 'bg-emerald-100 text-emerald-800' :
+               room.status === 'Maintenance' ? 'bg-amber-100 text-amber-800' : 'bg-rose-100 text-rose-800'
+             }`}>
+               {room.status}
+             </div>
+             <div className="ml-3">
+               <select value={room.status} onChange={async (e) => {
+                  const newStatus = e.target.value;
+                  const dateStr = selectedDate?.toISOString().slice(0,10);
+                  if (!dateStr) return;
+                  const res = await updateRoomAvailability({ room_id: room.id, date: dateStr, status: newStatus });
+                  if (res && res.success) {
+                    // optimistic update
+                    setRoomStatuses(prev => prev.map(p => p.id === room.id ? { ...p, status: newStatus } : p));
+                  } else {
+                    alert('Failed to update availability');
+                  }
+               }} className="text-xs font-bold p-1 rounded-md border">
+                 <option>Available</option>
+                 <option>Booked</option>
+                 <option>Maintenance</option>
+               </select>
+             </div>
+            <div className="ml-4">
+              <button className="text-sm font-bold underline text-slate-600" onClick={async () => {
+                const dateStr = selectedDate?.toISOString().slice(0,10);
+                if (!dateStr) return;
+                const info = await fetchBookingForRoomDate(room.id, dateStr);
+                setModalData({ room, date: dateStr, info });
+                setModalOpen(true);
+              }}>Details</button>
+            </div>
                 </CardContent>
              </Card>
            ))}
         </div>
+        {modalOpen && (
+          <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+            <div className="bg-white rounded-lg p-6 w-11/12 max-w-2xl">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-xl font-bold">Room Details</h3>
+                <button className="text-slate-500" onClick={() => { setModalOpen(false); setModalData(null); }}>Close</button>
+              </div>
+              <div>
+                <p className="text-sm font-bold">Room: {modalData?.room?.name} {modalData?.room?.room_number ? (' - ' + modalData.room.room_number) : ''}</p>
+                <p className="text-sm text-slate-500">Date: {modalData?.date}</p>
+                <div className="mt-4">
+                  {modalData?.info?.booking ? (
+                    <div className="space-y-2">
+                      <p className="font-bold">Booked Online</p>
+                      <p>Booking ID: {modalData.info.booking.booking_id}</p>
+                      <p>Guest: {modalData.info.booking.guest_name}</p>
+                      <p>Email: {modalData.info.booking.guest_email}</p>
+                      <p>Phone: {modalData.info.booking.guest_phone}</p>
+                      <p>Check-in: {modalData.info.booking.check_in_date}</p>
+                      <p>Check-out: {modalData.info.booking.check_out_date}</p>
+                    </div>
+                  ) : modalData?.info?.availability ? (
+                    <div>
+                      <p className="font-bold">Manual Availability</p>
+                      <p>Status: {modalData.info.availability.status}</p>
+                      <p>Note: {modalData.info.availability.note}</p>
+                    </div>
+                  ) : (
+                    <p className="text-slate-500">This room is free for this date.</p>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

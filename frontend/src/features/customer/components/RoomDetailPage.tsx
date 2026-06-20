@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+// react hooks imported below (useState, useEffect)
 import { 
   ShieldCheck, ArrowLeft, Star, MapPin, 
   Info, CheckCircle2, User, Bed, Ruler
@@ -6,6 +6,8 @@ import {
 import { Button } from '../../../components/ui/button';
 import { Card, CardContent } from '../../../components/ui/card';
 import { Badge } from '../../../components/ui/badge';
+import { useState, useEffect } from 'react';
+import { fetchRoomAvailability } from '../../../lib/api';
 
 interface Props {
   room: any;
@@ -24,6 +26,26 @@ export const RoomDetailPage: React.FC<Props> = ({ room, onBack, onBook }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const [availability, setAvailability] = useState<any>({});
+
+  useEffect(() => {
+    const load = async () => {
+      if (!room || !room.id) return;
+      const start = new Date();
+      const end = new Date();
+      end.setDate(end.getDate() + 13); // next 14 days
+      const startStr = start.toISOString().slice(0,10);
+      const endStr = end.toISOString().slice(0,10);
+      const data = await fetchRoomAvailability(room.id, startStr, endStr);
+      const map: any = {};
+      if (Array.isArray(data)) {
+        data.forEach((d: any) => { map[d.date] = d.status; });
+      }
+      setAvailability(map);
+    };
+    load();
+  }, [room]);
 
   // --- Dynamic data mapping from Admin DB ---
   const title = room.title || room.room_name || 'Luxury Sanctuary';
@@ -234,6 +256,64 @@ export const RoomDetailPage: React.FC<Props> = ({ room, onBack, onBook }) => {
                     <div className="space-y-1">
                       <p className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">Guests</p>
                       <p className="text-xs font-bold text-slate-800 font-sans tabular-nums">{adults} Adults, {kids} Children</p>
+                    </div>
+                    <div className="mt-4">
+                      <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-3">Availability (next 14 days)</p>
+
+                      {/* 14-day grid: two rows of 7 */}
+                      <div className="grid grid-cols-7 gap-2">
+                        {Array.from({ length: 14 }).map((_, i) => {
+                          const d = new Date();
+                          d.setDate(d.getDate() + i);
+                          const key = d.toISOString().slice(0, 10);
+                          const status = (availability && availability[key]) || 'Available';
+
+                          const bgClass = status === 'Available'
+                            ? 'bg-emerald-50 border-emerald-200'
+                            : status === 'Maintenance'
+                              ? 'bg-amber-50 border-amber-200'
+                              : 'bg-rose-50 border-rose-200';
+
+                          const textClass = status === 'Available'
+                            ? 'text-emerald-700'
+                            : status === 'Maintenance'
+                              ? 'text-amber-700'
+                              : 'text-rose-700';
+
+                          const weekday = d.toLocaleString('en-IN', { weekday: 'short' });
+                          const day = d.getDate();
+                          const month = d.toLocaleString('en-IN', { month: 'short' });
+
+                          return (
+                            <div
+                              key={key}
+                              title={`${weekday} ${day} ${month} — ${status}`}
+                              className={`p-2 rounded-lg border ${bgClass} shadow-sm flex flex-col items-center justify-center text-center`}>
+                              <div className={`text-[10px] font-semibold ${textClass}`}>{weekday}</div>
+                              <div className={`text-lg font-black ${textClass}`}>{day}</div>
+                              <div className={`text-[10px] mt-1 px-2 py-0.5 rounded-full font-bold ${textClass} ${status === 'Available' ? 'bg-emerald-100' : status === 'Maintenance' ? 'bg-amber-100' : 'bg-rose-100'}`}>
+                                {status}
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+
+                      {/* Legend */}
+                      <div className="mt-3 flex items-center gap-4 text-xs text-slate-600">
+                        <div className="flex items-center gap-2">
+                          <span className="w-3 h-3 rounded bg-emerald-500" />
+                          <span className="font-bold">Available</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="w-3 h-3 rounded bg-amber-500" />
+                          <span className="font-bold">Maintenance</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="w-3 h-3 rounded bg-rose-500" />
+                          <span className="font-bold">Booked</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
 

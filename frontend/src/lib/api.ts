@@ -27,3 +27,43 @@ export const createBooking = async (bookingData: any) => {
         return null;
     }
 };
+
+export const fetchRoomAvailability = async (roomId: number, start?: string, end?: string) => {
+    try {
+        const params = new URLSearchParams();
+        if (roomId) params.set('room_id', String(roomId));
+        if (start) params.set('start', start);
+        if (end) params.set('end', end);
+        const response = await fetch(`${API_BASE_URL}/rooms/availabilityList?` + params.toString());
+        if (!response.ok) throw new Error('Failed to fetch availability');
+        return await response.json();
+    } catch (error) {
+        console.error('API Error:', error);
+        return null;
+    }
+};
+
+export const updateRoomAvailability = async (payload: any) => {
+    try {
+        const response = await fetch(`${API_BASE_URL}/rooms/availabilityUpdate`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        return await response.json();
+    } catch (error) {
+        console.error('API Error:', error);
+        return null;
+    }
+};
+
+export const fetchBookingForRoomDate = async (roomId: number, date: string) => {
+    try {
+        const resp = await fetch(`${API_BASE_URL}/rooms/availabilityBooking?room_id=${roomId}&date=${date}`);
+        if (!resp.ok) throw new Error('Failed to fetch booking');
+        return await resp.json();
+    } catch (e) {
+        console.error(e);
+        return null;
+    }
+};

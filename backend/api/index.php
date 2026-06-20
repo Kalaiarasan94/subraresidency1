@@ -45,6 +45,12 @@ switch ($resource) {
             $controller->getRoomById($id);
         } elseif ($action == 'updateStatus') {
             $controller->updateStatus();
+        } elseif ($action == 'availabilityList') {
+            include_once __DIR__ . '/admin/rooms/availability_list.php';
+        } elseif ($action == 'availabilityBooking') {
+            include_once __DIR__ . '/admin/rooms/availability_booking.php';
+        } elseif ($action == 'availabilityUpdate') {
+            include_once __DIR__ . '/admin/rooms/availability_update.php';
         }
         break;
 

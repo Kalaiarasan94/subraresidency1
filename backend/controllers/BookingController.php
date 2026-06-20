@@ -53,6 +53,32 @@ class BookingController {
                     // Update room status
                     $update_room = "UPDATE rooms SET status = 'booked' WHERE id = ?";
                     $this->db->prepare($update_room)->execute([$room_id]);
+                    
+                    // --- Sync into room_availability: mark each date in [checkIn, checkOut) as Booked ---
+                    try {
+                        $checkIn = $data->checkIn; // expected YYYY-MM-DD
+                        $checkOut = $data->checkOut; // expected YYYY-MM-DD
+                        if ($checkIn && $checkOut) {
+                            $startTs = strtotime($checkIn);
+                            $endTs = strtotime($checkOut);
+                            if ($endTs > $startTs) {
+                                $upsert = $this->db->prepare("INSERT INTO room_availability (room_id, `date`, status, note) VALUES (?, ?, 'Booked', ?) ON DUPLICATE KEY UPDATE status = VALUES(status), note = VALUES(note)");
+                                for ($ts = $startTs; $ts < $endTs; $ts += 86400) {
+                                    $d = date('Y-m-d', $ts);
+                                    // store booking reference in note for traceability
+                                    $note = 'booking:' . $booking_id;
+                                    try {
+                                        $upsert->execute([$room_id, $d, $note]);
+                                    } catch (Exception $e) {
+                                        // ignore FK issues or other issues but continue
+                                        error_log('Availability sync failed for ' . $room_id . ' on ' . $d . ': ' . $e->getMessage());
+                                    }
+                                }
+                            }
+                        }
+                    } catch (Exception $e) {
+                        error_log('Failed to sync availability: ' . $e->getMessage());
+                    }
                 }
 
                 $this->db->commit();

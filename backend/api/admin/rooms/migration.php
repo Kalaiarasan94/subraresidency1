@@ -65,6 +65,19 @@ try {
         );
     ");
 
+        $db->exec("
+            CREATE TABLE IF NOT EXISTS room_availability (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                room_id INT NOT NULL,
+                `date` DATE NOT NULL,
+                status ENUM('Available','Booked','Maintenance') NOT NULL DEFAULT 'Available',
+                note VARCHAR(255) DEFAULT NULL,
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                UNIQUE KEY room_date_unique (room_id, `date`),
+                FOREIGN KEY (room_id) REFERENCES rooms_new(id) ON DELETE CASCADE
+            );
+        ");
+
     echo json_encode(["success" => true, "message" => "Migration complete"]);
 } catch (Exception $e) {
     echo json_encode(["success" => false, "message" => $e->getMessage()]);
