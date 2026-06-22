@@ -10,7 +10,17 @@ import { OrnateDivider } from './OrnateDivider';
 import { SectionWrapper, DecorativeLayout } from './Layout';
 import { fetchRoomCategories } from '../../../lib/api';
 
-export const RoomsPage = ({ onBookRoom, onRoomClick }: { onBookRoom: (room: any) => void, onRoomClick: (room: any) => void }) => {
+export const RoomsPage = ({ 
+  onBookRoom, 
+  onRoomClick,
+  searchFilters,
+  setSearchFilters
+}: { 
+  onBookRoom: (room: any) => void;
+  onRoomClick: (room: any) => void;
+  searchFilters?: any;
+  setSearchFilters?: (filters: any) => void;
+}) => {
   const [allRooms, setAllRooms] = useState<any[]>(ROOMS_DATA);
   const [displayRooms, setDisplayRooms] = useState<any[]>(ROOMS_DATA);
 
@@ -50,6 +60,30 @@ export const RoomsPage = ({ onBookRoom, onRoomClick }: { onBookRoom: (room: any)
             <OrnateDivider className="w-32" />
           </div>
         </div>
+
+        {searchFilters && (
+          <div className="max-w-2xl mx-auto mb-16 p-5 bg-white/80 backdrop-blur-md rounded-2xl border border-catalogue-gold/30 flex items-center justify-between text-xs font-bold text-catalogue-green uppercase tracking-widest shadow-md ornate-border">
+            <div className="flex gap-8 items-center">
+              <div>
+                <span className="text-[10px] text-catalogue-gold block tracking-wider font-semibold">Check-In</span>
+                <span className="font-sans font-black">{searchFilters.checkIn}</span>
+              </div>
+              <div className="h-8 w-[1px] bg-catalogue-gold/25" />
+              <div>
+                <span className="text-[10px] text-catalogue-gold block tracking-wider font-semibold">Check-Out</span>
+                <span className="font-sans font-black">{searchFilters.checkOut}</span>
+              </div>
+              <div className="h-8 w-[1px] bg-catalogue-gold/25" />
+              <div>
+                <span className="text-[10px] text-catalogue-gold block tracking-wider font-semibold">Guests</span>
+                <span className="font-sans font-black">{searchFilters.guests}</span>
+              </div>
+            </div>
+            <div className="text-catalogue-gold font-bold text-[10px] tracking-widest">
+              Selected Dates
+            </div>
+          </div>
+        )}
 
         <AnimatePresence mode="wait">
           {displayRooms.length > 0 ? (

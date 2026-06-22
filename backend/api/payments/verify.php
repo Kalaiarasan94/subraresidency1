@@ -52,16 +52,29 @@ if (!empty($input['razorpay_payment_id']) && !empty($input['razorpay_order_id'])
         $bookingDbId = $ar['id'] ?? null;
         $ins->execute([$bookingId, $paymentId, $amount]);
 
-        // Assign room if not assigned yet (simple logic: pick first available)
-        $roomAssign = $db->query("SELECT id FROM rooms WHERE status = 'available' LIMIT 1");
-        if ($roomAssignRow = $roomAssign->fetch(PDO::FETCH_ASSOC)) {
-            $room_id = $roomAssignRow['id'];
-            // insert into booking_rooms
-            $db->prepare("INSERT INTO booking_rooms (booking_id, room_id, price_at_booking) VALUES (?, ?, ?)")->execute([$bookingDbId, $room_id, $amount]);
+        // Check if room is already assigned to avoid duplicate rows
+        $checkRoom = $db->prepare("SELECT room_id FROM booking_rooms WHERE booking_id = ?");
+        $checkRoom->execute([$bookingDbId]);
+        $assignedRoom = $checkRoom->fetch(PDO::FETCH_ASSOC);
+
+        if ($assignedRoom) {
+            $room_id = $assignedRoom['room_id'];
             // mark room as booked
             $db->prepare("UPDATE rooms SET status = 'booked' WHERE id = ?")->execute([$room_id]);
+        } else {
+            // Assign room if not assigned yet (simple logic: pick first available)
+            $roomAssign = $db->query("SELECT id FROM rooms WHERE status = 'available' LIMIT 1");
+            if ($roomAssignRow = $roomAssign->fetch(PDO::FETCH_ASSOC)) {
+                $room_id = $roomAssignRow['id'];
+                // insert into booking_rooms
+                $db->prepare("INSERT INTO booking_rooms (booking_id, room_id, price_at_booking) VALUES (?, ?, ?)")->execute([$bookingDbId, $room_id, $amount]);
+                // mark room as booked
+                $db->prepare("UPDATE rooms SET status = 'booked' WHERE id = ?")->execute([$room_id]);
+            }
+        }
 
-            // Upsert room_availability for the booking dates
+        // Upsert room_availability for the booking dates
+        if (isset($room_id)) {
             $getBookingDates = $db->prepare("SELECT check_in_date, check_out_date FROM bookings WHERE id = ?");
             $getBookingDates->execute([$bookingDbId]);
             $bd = $getBookingDates->fetch(PDO::FETCH_ASSOC);
@@ -77,9 +90,55 @@ if (!empty($input['razorpay_payment_id']) && !empty($input['razorpay_order_id'])
             }
         }
 
+        // Insert a QR record to allow scanning to retrieve booking info (transactional)
+        $qrIns = $db->prepare("INSERT INTO qr_codes (booking_id, qr_content) VALUES (?, ?)");
+        $qrIns->execute([$bookingDbId, $bookingId]);
+
         $db->commit();
 
-        echo json_encode(['status' => 'success', 'message' => 'Payment verified and booking confirmed', 'booking_id' => $bookingId, 'payment_id' => $paymentId]);
+        // After successful transaction commit, query details to send confirmation email
+        $emailSent = false;
+        try {
+            $detailsQuery = $db->prepare("
+                SELECT b.guest_name, b.guest_email, b.check_in_date, b.check_out_date, b.total_amount, rc.name as room_category_name
+                FROM bookings b
+                LEFT JOIN booking_rooms br ON br.booking_id = b.id
+                LEFT JOIN rooms r ON r.id = br.room_id
+                LEFT JOIN room_categories rc ON rc.id = r.category_id
+                WHERE b.id = ?
+            ");
+            $detailsQuery->execute([$bookingDbId]);
+            $bookingDetails = $detailsQuery->fetch(PDO::FETCH_ASSOC);
+
+            if ($bookingDetails) {
+                $guestName = $bookingDetails['guest_name'];
+                $guestEmail = $bookingDetails['guest_email'];
+                $checkIn = $bookingDetails['check_in_date'];
+                $checkOut = $bookingDetails['check_out_date'];
+                $totalAmount = $bookingDetails['total_amount'];
+                $roomCategoryName = $bookingDetails['room_category_name'] ?? 'Luxury Sanctuary';
+
+                include_once __DIR__ . '/../../utils/Mailer.php';
+                $emailSent = Mailer::sendBookingConfirmation(
+                    $guestEmail,
+                    $guestName,
+                    $bookingId,
+                    $checkIn,
+                    $checkOut,
+                    $totalAmount,
+                    $roomCategoryName
+                );
+            }
+        } catch (Exception $mailEx) {
+            error_log("Failed to send booking confirmation email: " . $mailEx->getMessage());
+        }
+
+        echo json_encode([
+            'status' => 'success', 
+            'message' => 'Payment verified and booking confirmed' . ($emailSent ? ' and email sent' : ' (email failed to send)'), 
+            'booking_id' => $bookingId, 
+            'payment_id' => $paymentId
+        ]);
         exit;
     } catch (Exception $e) {
         if ($db && $db->inTransaction()) $db->rollBack();
@@ -88,16 +147,6 @@ if (!empty($input['razorpay_payment_id']) && !empty($input['razorpay_order_id'])
         exit;
     }
 }
-
-    // After successful processing, insert a QR record to allow scanning to retrieve booking info
-    try {
-        $database = new Database();
-        $db2 = $database->getConnection();
-        $qrIns = $db2->prepare("INSERT INTO qr_codes (booking_id, qr_content) VALUES ((SELECT id FROM bookings WHERE booking_id = ?), ?) ");
-        $qrIns->execute([$bookingId ?? '', $bookingId ?? '']);
-    } catch (Exception $e) {
-        // non-fatal
-    }
 
 // Webhook handling: Razorpay can post events; for now accept 'payment.captured' with raw body signature header
 if (!empty($_SERVER['HTTP_X_RAZORPAY_SIGNATURE'])) {

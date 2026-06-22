@@ -43,8 +43,17 @@ class BookingController {
 
                 // Save booking details into booking_details table for easy retrieval
                 try {
-                    $bdStmt = $this->db->prepare("INSERT INTO booking_details (booking_id, guest_name, guest_email, guest_phone, guests, additional_notes) VALUES (?, ?, ?, ?, ?, ?)");
-                    $bdStmt->execute([$db_booking_id, $data->name, $data->email, $data->phone, $data->guests ?? '', $data->notes ?? '']);
+                    $bdStmt = $this->db->prepare("INSERT INTO booking_details (booking_id, guest_name, guest_email, guest_phone, guests, country, address, additional_notes) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+                    $bdStmt->execute([
+                        $db_booking_id, 
+                        $data->name, 
+                        $data->email, 
+                        $data->phone, 
+                        $data->guests ?? '', 
+                        $data->country ?? '', 
+                        $data->address ?? '', 
+                        $data->notes ?? $data->specialRequests ?? ''
+                    ]);
                 } catch (Exception $e) {
                     error_log('Failed to insert booking_details: ' . $e->getMessage());
                 }
@@ -89,21 +98,10 @@ class BookingController {
 
                 $this->db->commit();
 
-                // Send Confirmation Email
-                include_once '../utils/Mailer.php';
-                $emailSent = Mailer::sendBookingConfirmation(
-                    $data->email,
-                    $data->name,
-                    $booking_id,
-                    $data->checkIn,
-                    $data->checkOut,
-                    $data->amount ?? 3500.00
-                );
-
                 http_response_code(201);
                 echo json_encode(array(
                     "status" => "success",
-                    "message" => "Booking created successfully" . ($emailSent ? " and email sent." : " but failed to send email."),
+                    "message" => "Booking created successfully",
                     "booking_id" => $booking_id
                 ));
             } catch (Exception $e) {

@@ -13,13 +13,19 @@ export const CustomerPortal = () => {
   const [isBookingOpen, setIsBookingOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const [searchFilters, setSearchFilters] = useState<any>({
+    checkIn: new Date().toISOString().split('T')[0],
+    checkOut: new Date(Date.now() + 86400000).toISOString().split('T')[0], // tomorrow
+    guests: '2 Guests'
+  });
 
   const handleBookRoom = (room: any) => {
-    // Navigate to the full-page booking flow instead of opening the modal
-    navigate('/bookings', { state: { room } });
+    setDetailedRoom(null);
+    // Navigate to the full-page booking flow passing room and current searchFilters state
+    navigate('/bookings', { state: { room, searchFilters } });
   };
-
-  const navigate = useNavigate();
 
   const handleRoomClick = (room: any) => {
     setDetailedRoom(room);
@@ -45,9 +51,16 @@ export const CustomerPortal = () => {
             room={detailedRoom} 
             onBack={() => setDetailedRoom(null)} 
             onBook={() => handleBookRoom(detailedRoom)}
+            searchFilters={searchFilters}
           />
         ) : (
-          <CustomerRoutes onBookRoom={handleBookRoom} onSelectTemple={setSelectedTemple} onRoomClick={handleRoomClick} />
+          <CustomerRoutes 
+            onBookRoom={handleBookRoom} 
+            onSelectTemple={setSelectedTemple} 
+            onRoomClick={handleRoomClick} 
+            searchFilters={searchFilters}
+            setSearchFilters={setSearchFilters}
+          />
         )}
       </main>
 

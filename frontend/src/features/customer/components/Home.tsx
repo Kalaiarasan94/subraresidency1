@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { MapPin, Users, BedDouble, Maximize2, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Button } from '../../../components/ui/button';
@@ -13,7 +13,18 @@ import { SectionWrapper, DecorativeLayout } from './Layout';
 import { HeroSky } from './HeroSky';
 import { fetchRoomCategories } from '../../../lib/api';
 
-export const Home = ({ onBookRoom, onRoomClick }: { onBookRoom: (room: any) => void, onRoomClick: (room: any) => void }) => {
+export const Home = ({ 
+  onBookRoom, 
+  onRoomClick, 
+  searchFilters, 
+  setSearchFilters 
+}: { 
+  onBookRoom: (room: any) => void; 
+  onRoomClick: (room: any) => void;
+  searchFilters: any;
+  setSearchFilters: (filters: any) => void;
+}) => {
+  const navigate = useNavigate();
   const [rooms, setRooms] = useState<any[]>(ROOMS_DATA);
 
   useEffect(() => {
@@ -48,7 +59,10 @@ export const Home = ({ onBookRoom, onRoomClick }: { onBookRoom: (room: any) => v
               <p className="font-playfair text-xl md:text-2xl text-catalogue-green/80 font-semibold italic">இது வீடு போன்ற உணர்வைத் தரும் ஓர் இடம்.</p>
             </motion.div>
             <motion.div variants={heroItem} className="pt-8">
-              <AvailabilityBar />
+              <AvailabilityBar onSearch={(filters) => {
+                setSearchFilters(filters);
+                navigate('/rooms');
+              }} />
             </motion.div>
           </motion.div>
         </section>

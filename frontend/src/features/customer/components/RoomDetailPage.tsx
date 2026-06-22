@@ -13,6 +13,7 @@ interface Props {
   room: any;
   onBack: () => void;
   onBook: () => void;
+  searchFilters?: any;
 }
 
 // Helper: prevent double-₹ and format consistently
@@ -22,7 +23,7 @@ const formatPrice = (val: any): string => {
   return s.includes('₹') ? s : `₹${Number(s).toLocaleString('en-IN')}`;
 };
 
-export const RoomDetailPage: React.FC<Props> = ({ room, onBack, onBook }) => {
+export const RoomDetailPage: React.FC<Props> = ({ room, onBack, onBook, searchFilters }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -246,16 +247,16 @@ export const RoomDetailPage: React.FC<Props> = ({ room, onBack, onBook }) => {
                     <div className="grid grid-cols-2 pb-4 mb-4 border-b border-slate-200">
                       <div className="space-y-1">
                         <p className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">Check-In</p>
-                        <p className="text-xs font-bold text-slate-800 font-sans">Select Date</p>
+                        <p className="text-xs font-bold text-slate-800 font-sans">{searchFilters?.checkIn || 'Select Date'}</p>
                       </div>
                       <div className="space-y-1 border-l border-slate-200 pl-4">
                         <p className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">Check-Out</p>
-                        <p className="text-xs font-bold text-slate-800 font-sans">Select Date</p>
+                        <p className="text-xs font-bold text-slate-800 font-sans">{searchFilters?.checkOut || 'Select Date'}</p>
                       </div>
                     </div>
                     <div className="space-y-1">
                       <p className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">Guests</p>
-                      <p className="text-xs font-bold text-slate-800 font-sans tabular-nums">{adults} Adults, {kids} Children</p>
+                      <p className="text-xs font-bold text-slate-800 font-sans tabular-nums">{searchFilters?.guests || `${adults} Guests`}</p>
                     </div>
                     <div className="mt-4">
                       <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-3">Availability (next 14 days)</p>

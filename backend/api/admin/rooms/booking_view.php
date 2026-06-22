@@ -11,7 +11,7 @@ if (!$booking_id) {
 }
 
 $db = (new Database())->getConnection();
-$stmt = $db->prepare("SELECT b.*, bd.*, p.transaction_id, p.amount as paid_amount FROM bookings b LEFT JOIN booking_details bd ON bd.booking_id = b.id LEFT JOIN payments p ON p.booking_id = b.id WHERE b.booking_id = ? LIMIT 1");
+$stmt = $db->prepare("SELECT b.*, bd.guests, bd.country, bd.address, bd.additional_notes, p.transaction_id, p.amount as paid_amount FROM bookings b LEFT JOIN booking_details bd ON bd.booking_id = b.id LEFT JOIN payments p ON p.booking_id = b.id WHERE b.booking_id = ? LIMIT 1");
 $stmt->execute([$booking_id]);
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 if (!$row) {

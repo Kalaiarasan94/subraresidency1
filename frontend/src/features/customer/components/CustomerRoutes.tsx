@@ -8,6 +8,8 @@ type CustomerRoutesProps = {
   onBookRoom: (room: any) => void;
   onSelectTemple: (temple: any) => void;
   onRoomClick: (room: any) => void;
+  searchFilters: any;
+  setSearchFilters: (filters: any) => void;
 };
 
 const PageTransition = ({ children }: { children: React.ReactNode }) => (
@@ -16,16 +18,16 @@ const PageTransition = ({ children }: { children: React.ReactNode }) => (
   </motion.div>
 );
 
-export const CustomerRoutes = ({ onBookRoom, onSelectTemple, onRoomClick }: CustomerRoutesProps) => {
+export const CustomerRoutes = ({ onBookRoom, onSelectTemple, onRoomClick, searchFilters, setSearchFilters }: CustomerRoutesProps) => {
   const location = useLocation();
 
   return (
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<PageTransition><Home onBookRoom={onBookRoom} onRoomClick={onRoomClick} /></PageTransition>} />
+        <Route path="/" element={<PageTransition><Home onBookRoom={onBookRoom} onRoomClick={onRoomClick} searchFilters={searchFilters} setSearchFilters={setSearchFilters} /></PageTransition>} />
         <Route path="/about" element={<PageTransition><AboutPage onSelectTemple={onSelectTemple} /></PageTransition>} />
         <Route path="/about-kumbakonam" element={<PageTransition><DecorativeLayout><AboutKumbakonam /></DecorativeLayout></PageTransition>} />
-        <Route path="/rooms" element={<PageTransition><RoomsPage onBookRoom={onBookRoom} onRoomClick={onRoomClick} /></PageTransition>} />
+        <Route path="/rooms" element={<PageTransition><RoomsPage onBookRoom={onBookRoom} onRoomClick={onRoomClick} searchFilters={searchFilters} setSearchFilters={setSearchFilters} /></PageTransition>} />
         <Route path="/attractions" element={<PageTransition><AttractionsPage /></PageTransition>} />
         <Route path="/contact" element={<PageTransition><ThankYouPage /></PageTransition>} />
         <Route path="/bookings" element={<PageTransition><BookingPage /></PageTransition>} />
