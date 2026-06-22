@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import { CustomerNavigation } from './components/CustomerNavigation';
 import { CustomerRoutes } from './components/CustomerRoutes';
@@ -15,9 +15,11 @@ export const CustomerPortal = () => {
   const location = useLocation();
 
   const handleBookRoom = (room: any) => {
-    setSelectedRoom(room);
-    setIsBookingOpen(true);
+    // Navigate to the full-page booking flow instead of opening the modal
+    navigate('/bookings', { state: { room } });
   };
+
+  const navigate = useNavigate();
 
   const handleRoomClick = (room: any) => {
     setDetailedRoom(room);

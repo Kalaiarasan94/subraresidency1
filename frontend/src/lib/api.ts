@@ -28,6 +28,56 @@ export const createBooking = async (bookingData: any) => {
     }
 };
 
+export const createPaymentOrder = async (payload: { booking_id: string; amount: number; currency?: string }) => {
+    try {
+        const response = await fetch(`${API_BASE_URL}/payments/createOrder`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        return await response.json();
+    } catch (error) {
+        console.error('API Error:', error);
+        return null;
+    }
+};
+
+export const verifyPayment = async (payload: any) => {
+    try {
+        const response = await fetch(`${API_BASE_URL}/payments/verify`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        return await response.json();
+    } catch (error) {
+        console.error('API Error:', error);
+        return null;
+    }
+};
+
+export const fetchBookingById = async (bookingId: string) => {
+    try {
+        const resp = await fetch(`${API_BASE_URL}/bookings/view?booking_id=${encodeURIComponent(bookingId)}`);
+        if (!resp.ok) throw new Error('Failed to fetch booking');
+        return await resp.json();
+    } catch (e) {
+        console.error(e);
+        return null;
+    }
+};
+
+export const fetchAdminBookings = async (limit = 50, offset = 0) => {
+    try {
+        const resp = await fetch(`${API_BASE_URL}/admin/bookings/list?limit=${limit}&offset=${offset}`);
+        if (!resp.ok) throw new Error('Failed to fetch admin bookings');
+        return await resp.json();
+    } catch (e) {
+        console.error(e);
+        return null;
+    }
+};
+
 export const fetchRoomAvailability = async (roomId: number, start?: string, end?: string) => {
     try {
         const params = new URLSearchParams();

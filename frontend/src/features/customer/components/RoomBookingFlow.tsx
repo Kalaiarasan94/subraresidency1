@@ -9,7 +9,8 @@ import { Badge } from '../../../components/ui/badge';
 import { fadeInUp, fadeInLeft, fadeInRight, staggerContainer, heroStagger, heroItem } from './animations';
 import { ROOMS_DATA, ATTRACTIONS_DATA, HIDDEN_TRAILS_DATA, RECOMMENDED_TRAILS_DATA, TEMPLE_DETAILS_DATA } from './data';
 import { logo, pillerImg, leafImg, templeBotImg, bgImg, locationMapImg, hotelBuildingImg, diningImg, hallImg, sarangapaniImg, mahamahamImg, airavatesvaraImg, uppiliappanImg, ramaswamyImg } from './assets';
-import { createBooking } from '../../../lib/api';
+import { createBooking, createPaymentOrder, verifyPayment } from '../../../lib/api';
+import { useNavigate } from 'react-router-dom';
 
 export const RoomBookingFlow = ({ isOpen, onClose, room }: { isOpen: boolean, onClose: () => void, room: any }) => {
   const [step, setStep] = useState<'details' | 'form' | 'payment' | 'confirm'>('details');
@@ -24,6 +25,7 @@ export const RoomBookingFlow = ({ isOpen, onClose, room }: { isOpen: boolean, on
     guests: '2 Guests'
   });
   const [activeImage, setActiveImage] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (isOpen) {
@@ -39,19 +41,81 @@ export const RoomBookingFlow = ({ isOpen, onClose, room }: { isOpen: boolean, on
     if (step === 'details') setStep('form');
     else if (step === 'form') setStep('payment');
     else if (step === 'payment') {
-        setIsSubmitting(true);
-        const result = await createBooking({
-            ...bookingDetails,
-            category_id: room.id,
-            amount: room.price_24h || 3500
-        });
-        setIsSubmitting(false);
-        if (result && result.status === 'success') {
-            setRealBookingId(result.booking_id);
-            setStep('confirm');
-        } else {
-            alert('Booking failed. Please try again.');
+    // 1) create booking as pending (server marks payment_status pending)
+    setIsSubmitting(true);
+    const bookingResp = await createBooking({
+      ...bookingDetails,
+      category_id: room.id,
+      amount: room.price_24h || 3500
+    });
+    if (!bookingResp || bookingResp.status !== 'success') {
+      setIsSubmitting(false);
+      alert('Failed to create booking. Please try again.');
+      return;
+    }
+
+  const bookingId = bookingResp.booking_id;
+
+  // 2) determine amount (in rupees) and request Razorpay order from backend
+  const amountValue = Number(room?.price_24h || room?.price || 3500);
+  const orderResp = await createPaymentOrder({ booking_id: bookingId, amount: amountValue });
+    if (!orderResp || orderResp.status !== 'success') {
+      setIsSubmitting(false);
+      alert('Failed to create payment order.');
+      return;
+    }
+
+    const order = orderResp.order;
+    const keyId = orderResp.key_id;
+
+    // 3) load Razorpay script and open checkout
+    const loadRzp = () => new Promise((res, rej) => {
+      if ((window as any).Razorpay) return res(true);
+      const s = document.createElement('script');
+      s.src = 'https://checkout.razorpay.com/v1/checkout.js';
+      s.onload = () => res(true);
+      s.onerror = () => rej(false);
+      document.body.appendChild(s);
+    });
+
+    try {
+      await loadRzp();
+      const options = {
+        key: keyId,
+        amount: order.amount,
+        currency: order.currency,
+        name: 'Subra Residency',
+        description: room?.title,
+        order_id: order.id,
+        handler: async function (response: any) {
+          // verify payment on server
+          const verifyResp = await verifyPayment({
+            razorpay_payment_id: response.razorpay_payment_id,
+            razorpay_order_id: response.razorpay_order_id,
+            razorpay_signature: response.razorpay_signature,
+            booking_id: bookingId
+          });
+          setIsSubmitting(false);
+          if (verifyResp && verifyResp.status === 'success') {
+            setRealBookingId(bookingId);
+            // redirect to dedicated booking page with state
+            navigate('/bookings', { state: { bookingId, room, guest: bookingDetails, amount: amountValue, checkIn: bookingDetails.checkIn, checkOut: bookingDetails.checkOut } });
+          } else {
+            alert('Payment verification failed. Contact support.');
+          }
+        },
+        prefill: {
+          name: bookingDetails.name,
+          email: bookingDetails.email,
+          contact: bookingDetails.phone
         }
+      };
+      const rzp = new (window as any).Razorpay(options);
+      rzp.open();
+    } catch (e) {
+      setIsSubmitting(false);
+      alert('Payment failed to start. Please try again.');
+    }
     }
     else if (step === 'confirm') setStep('confirm');
   };
@@ -280,12 +344,13 @@ export const RoomBookingFlow = ({ isOpen, onClose, room }: { isOpen: boolean, on
                   <p className="text-[10px] text-catalogue-green/60 uppercase tracking-widest font-bold">Total Amount Payable</p>
                 </div>
                 
-                <Button 
-                  onClick={handleNext}
-                  className="w-full bg-catalogue-green text-white py-8 text-lg font-bold uppercase tracking-widest rounded-none hover:bg-catalogue-gold transition-all"
-                >
-                  Pay & Confirm Booking
-                </Button>
+                    <Button 
+                      onClick={handleNext}
+                      disabled={isSubmitting}
+                      className="w-full bg-catalogue-green text-white py-8 text-lg font-bold uppercase tracking-widest rounded-none hover:bg-catalogue-gold transition-all disabled:opacity-50"
+                    >
+                      {isSubmitting ? 'Processing...' : 'Pay & Confirm Booking'}
+                    </Button>
               </motion.div>
             )}
 
@@ -309,8 +374,12 @@ export const RoomBookingFlow = ({ isOpen, onClose, room }: { isOpen: boolean, on
                   <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-catalogue-gold" />
                   <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-catalogue-gold" />
                   <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-catalogue-gold" />
-                  <QrCode size={140} className="text-catalogue-green mx-auto" />
-                  <p className="mt-4 text-[10px] font-bold text-catalogue-gold uppercase tracking-[0.2em]">Booking ID: SUBRA-73958</p>
+                  {/* Ideally render a QR code component for `realBookingId` */}
+                  <div className="mx-auto mb-3">
+                    {/* placeholder box for QR image; generate server-side or use a client lib to render from booking id */}
+                    <div className="w-40 h-40 bg-slate-100 flex items-center justify-center">{realBookingId ? <span className="text-xs font-bold">QR</span> : null}</div>
+                  </div>
+                  <p className="mt-4 text-[10px] font-bold text-catalogue-gold uppercase tracking-[0.2em]">Booking ID: {realBookingId || '—'}</p>
                 </div>
 
                 <div className="bg-catalogue-green p-6 text-white text-xs space-y-3 text-left shadow-lg">

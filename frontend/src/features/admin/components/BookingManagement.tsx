@@ -5,22 +5,19 @@ import {
   Search, Filter, Globe, UserCheck, 
   Settings, MoreVertical, Download, PlusSquare
 } from 'lucide-react';
+import { fetchAdminBookings } from '../../../lib/api';
 
 export const BookingManagement = () => {
   const [filterSource, setFilterSource] = useState('All');
   const [bookings, setBookings] = useState<any[]>([]);
-
-  // Mock data for source visualization demo
-  const mockBookings = [
-    { id: 'BK001', guest: 'Rajesh Kumar', room: 'Royal Suite (101)', date: 'Jun 20 - Jun 22', amount: '₹11,000', source: 'Online', status: 'Confirmed' },
-    { id: 'BK002', guest: 'Anitha S', room: 'Heritage Room (104)', date: 'Jun 21 - Jun 23', amount: '₹15,200', source: 'Walk-in', status: 'Stay-in' },
-    { id: 'BK003', guest: 'David Miller', room: 'Executive Suite (205)', date: 'Jun 20 - Jun 25', amount: '₹22,500', source: 'Manual', status: 'Confirmed' },
-    { id: 'BK004', guest: 'Michael Chen', room: 'Garden Room (302)', date: 'Jun 19 - Jun 21', amount: '₹7,600', source: 'Online', status: 'Checked-out' },
-  ];
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    // In real app, fetch from API
-    setBookings(mockBookings);
+    setLoading(true);
+    fetchAdminBookings(100, 0).then((res: any) => {
+      setLoading(false);
+      if (res && res.status === 'success') setBookings(res.bookings.map((b: any) => ({ id: b.booking_id, guest: b.guest_name, room: b.rooms ? b.rooms.map((r:any)=>r.room_number).join(', ') : '', date: b.check_in_date + ' - ' + b.check_out_date, amount: '₹' + (b.paid_amount || b.total_amount), source: b.source || 'Website', status: b.status })));
+    }).catch(() => setLoading(false));
   }, []);
 
   const filteredBookings = filterSource === 'All' 
@@ -93,6 +90,9 @@ export const BookingManagement = () => {
       {/* Table Section */}
       <Card className="border border-slate-200 shadow-sm rounded-2xl overflow-hidden bg-white">
         <CardContent className="p-0">
+          {loading && (
+            <div className="p-6 text-center text-slate-500">Loading bookings...</div>
+          )}
           <div className="overflow-x-auto">
             <table className="w-full text-left">
               <thead>
@@ -144,11 +144,14 @@ export const BookingManagement = () => {
                          {bk.status}
                        </span>
                     </td>
-                    <td className="px-8 py-5 text-right">
-                       <button className="p-2 text-slate-300 hover:text-slate-600 transition-colors">
-                          <MoreVertical size={18} />
-                       </button>
-                    </td>
+              <td className="px-8 py-5 text-right">
+                <div className="flex items-center justify-end gap-3">
+                 <button onClick={() => window.open(`/backend/admin_view_booking.php?booking_id=${bk.id}`, '_blank')} className="px-3 py-2 bg-emerald-50 text-emerald-700 rounded-md text-sm font-bold">View</button>
+                 <button className="p-2 text-slate-300 hover:text-slate-600 transition-colors">
+                  <MoreVertical size={18} />
+                 </button>
+                </div>
+              </td>
                   </tr>
                 ))}
               </tbody>

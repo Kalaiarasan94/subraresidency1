@@ -26,9 +26,9 @@ class BookingController {
                 $date_str = date('Ymd');
                 $booking_id = "HBK" . $date_str . strtoupper(substr(uniqid(), -4));
 
-                // Insert into bookings
+                // Insert into bookings as pending payment
                 $query = "INSERT INTO bookings (booking_id, guest_name, guest_email, guest_phone, check_in_date, check_out_date, total_amount, status, payment_status, source) 
-                          VALUES (?, ?, ?, ?, ?, ?, ?, 'confirmed', 'success', 'website')";
+                          VALUES (?, ?, ?, ?, ?, ?, ?, 'pending', 'pending', 'website')";
                 $stmt = $this->db->prepare($query);
                 $stmt->execute([
                     $booking_id, 
@@ -41,6 +41,14 @@ class BookingController {
                 ]);
                 $db_booking_id = $this->db->lastInsertId();
 
+                // Save booking details into booking_details table for easy retrieval
+                try {
+                    $bdStmt = $this->db->prepare("INSERT INTO booking_details (booking_id, guest_name, guest_email, guest_phone, guests, additional_notes) VALUES (?, ?, ?, ?, ?, ?)");
+                    $bdStmt->execute([$db_booking_id, $data->name, $data->email, $data->phone, $data->guests ?? '', $data->notes ?? '']);
+                } catch (Exception $e) {
+                    error_log('Failed to insert booking_details: ' . $e->getMessage());
+                }
+
                 // Assign a room (simple logic: take first available in category)
                 // In a real app we'd check availability for dates
                 $room_query = "SELECT id FROM rooms WHERE status = 'available' LIMIT 1";
@@ -50,9 +58,7 @@ class BookingController {
                     $db_room_query = "INSERT INTO booking_rooms (booking_id, room_id, price_at_booking) VALUES (?, ?, ?)";
                     $this->db->prepare($db_room_query)->execute([$db_booking_id, $room_id, $data->amount ?? 3500.00]);
                     
-                    // Update room status
-                    $update_room = "UPDATE rooms SET status = 'booked' WHERE id = ?";
-                    $this->db->prepare($update_room)->execute([$room_id]);
+                    // Do NOT mark room as booked yet. Wait for payment confirmation.
                     
                     // --- Sync into room_availability: mark each date in [checkIn, checkOut) as Booked ---
                     try {

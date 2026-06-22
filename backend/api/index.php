@@ -54,13 +54,37 @@ switch ($resource) {
         }
         break;
 
+    case 'admin':
+        // further nested: /admin/bookings/list
+        $sub = $parts[1] ?? '';
+        $subAction = $parts[2] ?? '';
+        if ($sub === 'bookings') {
+            if ($subAction === 'list') {
+                include_once __DIR__ . '/admin/bookings/list.php';
+            }
+        }
+        break;
+
     case 'bookings':
         include_once '../controllers/BookingController.php';
         $controller = new BookingController();
         if ($action == 'create') {
             $controller->create();
         }
+            if ($action == 'view') {
+                // returns booking details by booking_id
+                include_once __DIR__ . '/admin/rooms/booking_view.php';
+            }
         break;
+
+        case 'payments':
+            // payments/createOrder -> create Razorpay order for a booking
+            if ($action == 'createOrder') {
+                include_once __DIR__ . '/payments/create_order.php';
+            } elseif ($action == 'verify') {
+                include_once __DIR__ . '/payments/verify.php';
+            }
+            break;
 
     case 'auth':
         include_once '../controllers/AuthController.php';
