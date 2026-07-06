@@ -199,11 +199,12 @@ export default function BookingPage() {
                 setBookingFull(finalBooking.booking);
               }
             } else {
-              alert('Payment verification failed. Please contact reception.');
+              const errorMsg = verifyResp?.message || 'Payment verification failed. Please contact reception.';
+              alert(errorMsg);
             }
           } catch (err) {
             console.error(err);
-            alert('Verification process encountered an error.');
+            alert('Verification process encountered an error. Please contact support.');
           } finally {
             setIsSubmitting(false);
           }

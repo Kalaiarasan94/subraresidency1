@@ -1,20 +1,55 @@
 <?php
+// backend/api/payments/verify.php
+
 header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type");
 header("Content-Type: application/json; charset=UTF-8");
 
-include_once __DIR__ . '/../../config/db.php';
-
-// This endpoint can be used as both webhook (POST from Razorpay) or client-side verification
-$input = json_decode(file_get_contents('php://input'), true);
-if (!$input) {
-    http_response_code(400);
-    echo json_encode(['status' => 'error', 'message' => 'Invalid input']);
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
     exit;
 }
 
-$env = parse_ini_file(__DIR__ . '/../../.env');
+// Disable error display to prevent breaking JSON output
+ini_set('display_errors', 0);
+error_reporting(E_ALL);
+
+function log_error($message) {
+    $log_file = __DIR__ . '/../../logs/payment.log';
+    if (!file_exists(dirname($log_file))) {
+        mkdir(dirname($log_file), 0777, true);
+    }
+    error_log("[" . date('Y-m-d H:i:s') . "] " . $message . "\n", 3, $log_file);
+}
+
+include_once __DIR__ . '/../../config/db.php';
+
+$input = json_decode(file_get_contents('php://input'), true);
+if (!$input) {
+    log_error("Invalid input: " . file_get_contents('php://input'));
+    http_response_code(400);
+    echo json_encode(['status' => 'error', 'message' => 'Invalid input data']);
+    exit;
+}
+
+log_error("Verification request for booking: " . ($input['booking_id'] ?? 'unknown'));
+
+$env_path = __DIR__ . '/../../.env';
+if (!file_exists($env_path)) {
+    log_error(".env file missing at $env_path");
+    http_response_code(500);
+    echo json_encode(['status' => 'error', 'message' => 'Configuration error']);
+    exit;
+}
+
+$env = parse_ini_file($env_path);
 $key_id = $env['RAZORPAY_KEY_ID'] ?? '';
 $key_secret = $env['RAZORPAY_KEY_SECRET'] ?? '';
+
+if (empty($key_secret)) {
+    log_error("RAZORPAY_KEY_SECRET missing in .env");
+}
 
 // Basic verification flow (client sends: razorpay_payment_id, razorpay_order_id, razorpay_signature, booking_id)
 if (!empty($input['razorpay_payment_id']) && !empty($input['razorpay_order_id']) && !empty($input['razorpay_signature']) && !empty($input['booking_id'])) {
@@ -27,139 +62,138 @@ if (!empty($input['razorpay_payment_id']) && !empty($input['razorpay_order_id'])
     $data = $orderId . '|' . $paymentId;
     $expected = hash_hmac('sha256', $data, $key_secret);
     if (!hash_equals($expected, $signature)) {
+        log_error("Signature mismatch for booking $bookingId. Expected: $expected, Got: $signature");
         http_response_code(400);
-        echo json_encode(['status' => 'error', 'message' => 'Invalid signature']);
+        echo json_encode(['status' => 'error', 'message' => 'Payment signature verification failed. Please contact support.']);
         exit;
     }
 
-    // Mark booking as paid, insert payments row, assign room, sync availability (single transactional op)
     try {
         $database = new Database();
         $db = $database->getConnection();
         $db->beginTransaction();
 
-        // Update booking payment_status and status
-        $update = $db->prepare("UPDATE bookings SET payment_status = 'success', status = 'confirmed' WHERE booking_id = ?");
-        $update->execute([$bookingId]);
+        // 1. Get Booking details first
+        $bookingStmt = $db->prepare("SELECT id, total_amount, check_in_date, check_out_date, guest_name, guest_email FROM bookings WHERE booking_id = ?");
+        $bookingStmt->execute([$bookingId]);
+        $booking = $bookingStmt->fetch(PDO::FETCH_ASSOC);
 
-        // Insert into payments table (create if not exists elsewhere)
-        $ins = $db->prepare("INSERT INTO payments (booking_id, transaction_id, amount, payment_method, status) VALUES ((SELECT id FROM bookings WHERE booking_id = ?), ?, ?, 'razorpay', 'success')");
-        // Attempt to get amount from bookings
-        $amountRow = $db->prepare("SELECT total_amount, id FROM bookings WHERE booking_id = ?");
-        $amountRow->execute([$bookingId]);
-        $ar = $amountRow->fetch(PDO::FETCH_ASSOC);
-        $amount = $ar['total_amount'] ?? 0;
-        $bookingDbId = $ar['id'] ?? null;
-        $ins->execute([$bookingId, $paymentId, $amount]);
+        if (!$booking) {
+            throw new Exception("Booking ID $bookingId not found in database");
+        }
 
-        // Check if room is already assigned to avoid duplicate rows
+        $bookingDbId = $booking['id'];
+        $amount = $booking['total_amount'];
+
+        // 2. Update booking status
+        $update = $db->prepare("UPDATE bookings SET payment_status = 'success', status = 'confirmed' WHERE id = ?");
+        $update->execute([$bookingDbId]);
+
+        // 3. Insert into payments table
+        $ins = $db->prepare("INSERT INTO payments (booking_id, transaction_id, amount, payment_method, status) VALUES (?, ?, ?, 'razorpay', 'success')");
+        $ins->execute([$bookingDbId, $paymentId, $amount]);
+
+        // 4. Handle Room Assignment if not already done
         $checkRoom = $db->prepare("SELECT room_id FROM booking_rooms WHERE booking_id = ?");
         $checkRoom->execute([$bookingDbId]);
         $assignedRoom = $checkRoom->fetch(PDO::FETCH_ASSOC);
 
+        $room_id = null;
         if ($assignedRoom) {
             $room_id = $assignedRoom['room_id'];
-            // mark room as booked
-            $db->prepare("UPDATE rooms SET status = 'booked' WHERE id = ?")->execute([$room_id]);
         } else {
-            // Assign room if not assigned yet (simple logic: pick first available)
+            // Assign first available room
             $roomAssign = $db->query("SELECT id FROM rooms WHERE status = 'available' LIMIT 1");
             if ($roomAssignRow = $roomAssign->fetch(PDO::FETCH_ASSOC)) {
                 $room_id = $roomAssignRow['id'];
-                // insert into booking_rooms
-                $db->prepare("INSERT INTO booking_rooms (booking_id, room_id, price_at_booking) VALUES (?, ?, ?)")->execute([$bookingDbId, $room_id, $amount]);
-                // mark room as booked
-                $db->prepare("UPDATE rooms SET status = 'booked' WHERE id = ?")->execute([$room_id]);
+                $db->prepare("INSERT INTO booking_rooms (booking_id, room_id, price_at_booking) VALUES (?, ?, ?)")
+                   ->execute([$bookingDbId, $room_id, $amount]);
             }
         }
 
-        // Upsert room_availability for the booking dates
-        if (isset($room_id)) {
-            $getBookingDates = $db->prepare("SELECT check_in_date, check_out_date FROM bookings WHERE id = ?");
-            $getBookingDates->execute([$bookingDbId]);
-            $bd = $getBookingDates->fetch(PDO::FETCH_ASSOC);
-            if ($bd) {
-                $startTs = strtotime($bd['check_in_date']);
-                $endTs = strtotime($bd['check_out_date']);
-                $upsert = $db->prepare("INSERT INTO room_availability (room_id, `date`, status, note) VALUES (?, ?, 'Booked', ?) ON DUPLICATE KEY UPDATE status = VALUES(status), note = VALUES(note)");
-                for ($ts = $startTs; $ts < $endTs; $ts += 86400) {
-                    $d = date('Y-m-d', $ts);
-                    $note = 'booking:' . $bookingId;
-                    $upsert->execute([$room_id, $d, $note]);
-                }
+        if ($room_id) {
+            // Mark room as booked
+            $db->prepare("UPDATE rooms SET status = 'booked' WHERE id = ?")->execute([$room_id]);
+
+            // Sync availability
+            $startTs = strtotime($booking['check_in_date']);
+            $endTs = strtotime($booking['check_out_date']);
+            $upsert = $db->prepare("INSERT INTO room_availability (room_id, `date`, status, note) VALUES (?, ?, 'Booked', ?) ON DUPLICATE KEY UPDATE status = VALUES(status), note = VALUES(note)");
+            for ($ts = $startTs; $ts < $endTs; $ts += 86400) {
+                $d = date('Y-m-d', $ts);
+                $upsert->execute([$room_id, $d, 'booking:' . $bookingId]);
             }
         }
 
-        // Insert a QR record to allow scanning to retrieve booking info (transactional)
-        $qrIns = $db->prepare("INSERT INTO qr_codes (booking_id, qr_content) VALUES (?, ?)");
-        $qrIns->execute([$bookingDbId, $bookingId]);
+        // 5. Insert QR record
+        $db->prepare("INSERT INTO qr_codes (booking_id, qr_content) VALUES (?, ?) ON DUPLICATE KEY UPDATE qr_content = VALUES(qr_content)")
+           ->execute([$bookingDbId, $bookingId]);
 
         $db->commit();
+        log_error("Booking $bookingId successfully confirmed in database.");
 
-        // After successful transaction commit, query details to send confirmation email
+        // 6. Send Email (Non-breaking)
         $emailSent = false;
         try {
             $detailsQuery = $db->prepare("
-                SELECT b.guest_name, b.guest_email, b.check_in_date, b.check_out_date, b.total_amount, rc.name as room_category_name
-                FROM bookings b
-                LEFT JOIN booking_rooms br ON br.booking_id = b.id
-                LEFT JOIN rooms r ON r.id = br.room_id
-                LEFT JOIN room_categories rc ON rc.id = r.category_id
-                WHERE b.id = ?
+                SELECT rc.name as room_category_name
+                FROM booking_rooms br
+                JOIN rooms r ON r.id = br.room_id
+                JOIN room_categories rc ON rc.id = r.category_id
+                WHERE br.booking_id = ?
+                LIMIT 1
             ");
             $detailsQuery->execute([$bookingDbId]);
-            $bookingDetails = $detailsQuery->fetch(PDO::FETCH_ASSOC);
+            $roomDetails = $detailsQuery->fetch(PDO::FETCH_ASSOC);
+            $roomCategoryName = $roomDetails['room_category_name'] ?? 'Luxury Sanctuary';
 
-            if ($bookingDetails) {
-                $guestName = $bookingDetails['guest_name'];
-                $guestEmail = $bookingDetails['guest_email'];
-                $checkIn = $bookingDetails['check_in_date'];
-                $checkOut = $bookingDetails['check_out_date'];
-                $totalAmount = $bookingDetails['total_amount'];
-                $roomCategoryName = $bookingDetails['room_category_name'] ?? 'Luxury Sanctuary';
-
-                include_once __DIR__ . '/../../utils/Mailer.php';
-                $emailSent = Mailer::sendBookingConfirmation(
-                    $guestEmail,
-                    $guestName,
-                    $bookingId,
-                    $checkIn,
-                    $checkOut,
-                    $totalAmount,
-                    $roomCategoryName
-                );
+            include_once __DIR__ . '/../../utils/Mailer.php';
+            $emailSent = Mailer::sendBookingConfirmation(
+                $booking['guest_email'],
+                $booking['guest_name'],
+                $bookingId,
+                $booking['check_in_date'],
+                $booking['check_out_date'],
+                $amount,
+                $roomCategoryName
+            );
+            
+            if ($emailSent) {
+                log_error("Email sent successfully to " . $booking['guest_email']);
+            } else {
+                log_error("Email failed to send to " . $booking['guest_email']);
             }
         } catch (Exception $mailEx) {
-            error_log("Failed to send booking confirmation email: " . $mailEx->getMessage());
+            log_error("Email Exception: " . $mailEx->getMessage());
         }
 
         echo json_encode([
             'status' => 'success', 
-            'message' => 'Payment verified and booking confirmed' . ($emailSent ? ' and email sent' : ' (email failed to send)'), 
+            'message' => 'Payment verified and booking confirmed',
+            'email_status' => $emailSent ? 'sent' : 'failed',
             'booking_id' => $bookingId, 
             'payment_id' => $paymentId
         ]);
         exit;
+
     } catch (Exception $e) {
         if ($db && $db->inTransaction()) $db->rollBack();
+        log_error("Verification Error for $bookingId: " . $e->getMessage());
         http_response_code(500);
-        echo json_encode(['status' => 'error', 'message' => 'Failed to verify payment: ' . $e->getMessage()]);
+        echo json_encode(['status' => 'error', 'message' => 'Database error: ' . $e->getMessage()]);
         exit;
     }
 }
 
-// Webhook handling: Razorpay can post events; for now accept 'payment.captured' with raw body signature header
+// Webhook handling
 if (!empty($_SERVER['HTTP_X_RAZORPAY_SIGNATURE'])) {
-    $raw = file_get_contents('php://input');
-    $sig = $_SERVER['HTTP_X_RAZORPAY_SIGNATURE'];
-    // For production verify using webhook secret (not implemented here)
-    // Respond with 200
+    log_error("Webhook received from Razorpay");
     http_response_code(200);
-    echo json_encode(['status' => 'ok', 'message' => 'webhook received']);
+    echo json_encode(['status' => 'ok']);
     exit;
 }
 
+log_error("No recognizable payload received.");
 http_response_code(400);
-echo json_encode(['status' => 'error', 'message' => 'No recognizable verification payload']);
-
+echo json_encode(['status' => 'error', 'message' => 'Invalid request payload']);
 ?>

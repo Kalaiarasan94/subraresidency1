@@ -18,6 +18,9 @@ try {
     if ($room_id && $start && $end) {
         $query .= " WHERE room_id = ? AND `date` BETWEEN ? AND ?";
         $params = [$room_id, $start, $end];
+    } elseif ($start && $end) {
+        $query .= " WHERE `date` BETWEEN ? AND ?";
+        $params = [$start, $end];
     } elseif ($room_id) {
         $query .= " WHERE room_id = ?";
         $params = [$room_id];

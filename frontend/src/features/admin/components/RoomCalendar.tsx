@@ -1,271 +1,227 @@
-import { useState, useEffect } from 'react';
-import { Card, CardContent } from '../../../components/ui/card';
+import { useState, useEffect, useRef } from 'react';
+import { Card } from '../../../components/ui/card';
 import { Button } from '../../../components/ui/button';
-import { ChevronLeft, ChevronRight, Clock, ShieldCheck, Hammer, BookmarkCheck } from 'lucide-react';
-import { fetchRoomAvailability, updateRoomAvailability, fetchBookingForRoomDate } from '../../../lib/api';
+import { 
+  ChevronLeft, ChevronRight, Clock, 
+  Search, RefreshCw, Filter,
+  CheckCircle, AlertCircle, Hammer
+} from 'lucide-react';
+import { fetchRoomAvailability, updateRoomAvailability } from '../../../lib/api';
 
 export const RoomCalendar = () => {
-  const now = new Date();
-  const [currentDate, setCurrentDate] = useState(now);
-  const [selectedDate, setSelectedDate] = useState<Date | null>(now);
-  const [roomStatuses, setRoomStatuses] = useState<any[]>([]);
-  const [roomsList, setRoomsList] = useState<any[]>([]);
-  const [selectedRoom, setSelectedRoom] = useState<number | null>(null);
-  const [modalOpen, setModalOpen] = useState(false);
-  const [modalData, setModalData] = useState<any>(null);
+  const [rooms, setRooms] = useState<any[]>([]);
+  const [availability, setAvailability] = useState<any[]>([]);
+  const [startDate, setStartDate] = useState(new Date());
+  const [loading, setLoading] = useState(true);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
-  // Mock data for demo purposes
-  const generateMockStatuses = (date: Date) => {
-    const statuses = [
-      { id: 101, name: 'Royal Suite', status: 'Booked', guest: 'John Doe' },
-      { id: 102, name: 'Heritage Room', status: 'Available' },
-      { id: 103, name: 'Executive Suite', status: 'Maintenance' },
-      { id: 104, name: 'Garden Room', status: 'Booked', guest: 'Jane Smith' },
-      { id: 105, name: 'Legacy Room', status: 'Available' },
-      { id: 201, name: 'Temple View', status: 'Available' },
-      { id: 202, name: 'Classic Room', status: 'Maintenance' },
-    ];
-    // Randomize slightly based on date
-    return statuses.map(s => ({
-        ...s,
-        status: (date.getDate() + s.id) % 3 === 0 ? 'Booked' : (date.getDate() + s.id) % 5 === 0 ? 'Maintenance' : 'Available'
-    }));
-  };
+  // Generate 31 days from startDate
+  const days = Array.from({ length: 31 }, (_, i) => {
+    const d = new Date(startDate);
+    d.setDate(startDate.getDate() + i);
+    return d;
+  });
 
   useEffect(() => {
-    const loadData = async () => {
-      try {
-        // load rooms list
-        const resp = await fetch('http://localhost:8001/api/index.php/rooms/list');
-        if (resp.ok) {
-          const data = await resp.json();
-          setRoomsList(data);
-          if (!selectedRoom && data.length > 0) setSelectedRoom(data[0].id);
-        }
-      } catch (e) {
-        console.error('Failed to fetch rooms list', e);
-      }
-
-      if (selectedDate && selectedRoom) {
-        const dateStr = selectedDate.toISOString().slice(0,10);
-        const avail = await fetchRoomAvailability(selectedRoom, dateStr, dateStr);
-        // Map roomsList to statuses for the selected date
-        const mapped = (roomsList.length > 0) ? roomsList.map((r: any) => {
-          const match = (avail || []).find((a: any) => Number(a.room_id) === Number(r.id) && a.date === dateStr);
-          return {
-            id: r.id,
-            name: r.room_name || r.title || `Room ${r.id}`,
-            status: match ? match.status : (r.status || 'Available'),
-            guest: match && match.guest ? match.guest : null
-          };
-        }) : [];
-        setRoomStatuses(mapped);
-      }
-    };
     loadData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedDate, selectedRoom]);
+  }, [startDate]);
 
-  const dataForRoomStatusesFromAvail = (roomId: number, date: Date, availRows: any[]) => {
-    const dateStr = date.toISOString().slice(0,10);
-    return roomsList.map((r: any) => {
-      const match = (availRows || []).find((a: any) => Number(a.room_id) === Number(r.id) && a.date === dateStr);
-      return {
-        id: r.id,
-        name: r.room_name || r.title || `Room ${r.id}`,
-        status: match ? match.status : (r.status || 'Available'),
-        guest: match && match.guest ? match.guest : null
-      };
-    });
+  const loadData = async () => {
+    setLoading(true);
+    try {
+      // 1. Fetch Rooms
+      const rResp = await fetch('http://localhost:8001/api/index.php/rooms/list');
+      const roomsData = await rResp.json();
+      setRooms(roomsData);
+
+      // 2. Fetch Availability for the range
+      const end = new Date(startDate);
+      end.setDate(startDate.getDate() + 30);
+      
+      const availData = await fetchRoomAvailability(
+        0, // 0 handles all rooms
+        startDate.toISOString().split('T')[0],
+        end.toISOString().split('T')[0]
+      );
+      setAvailability(availData || []);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const daysInMonth = (date: Date) => {
-    return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+  const getStatus = (roomId: number, date: Date) => {
+    const dateStr = date.toISOString().split('T')[0];
+    const match = availability.find(a => Number(a.room_id) === Number(roomId) && a.date === dateStr);
+    return match ? match.status.toLowerCase() : 'available';
   };
 
-  const firstDayOfMonth = (date: Date) => {
-    return new Date(date.getFullYear(), date.getMonth(), 1).getDay();
+  const handleStatusChange = async (roomId: number, date: Date, newStatus: string) => {
+    const dateStr = date.toISOString().split('T')[0];
+    const res = await updateRoomAvailability({ room_id: roomId, date: dateStr, status: newStatus });
+    if (res && res.success) {
+      // Local update
+      setAvailability(prev => {
+        const existing = prev.findIndex(a => Number(a.room_id) === Number(roomId) && a.date === dateStr);
+        if (existing > -1) {
+          const updated = [...prev];
+          updated[existing] = { ...updated[existing], status: newStatus };
+          return updated;
+        } else {
+          return [...prev, { room_id: roomId, date: dateStr, status: newStatus }];
+        }
+      });
+    }
   };
 
-  const nextMonth = () => setCurrentDate(new Date(currentDate.setMonth(currentDate.getMonth() + 1)));
-  const prevMonth = () => setCurrentDate(new Date(currentDate.setMonth(currentDate.getMonth() - 1)));
-
-  const handleDateClick = (day: number) => {
-    setSelectedDate(new Date(currentDate.getFullYear(), currentDate.getMonth(), day));
+  const shiftDate = (days: number) => {
+    const next = new Date(startDate);
+    next.setDate(startDate.getDate() + days);
+    setStartDate(next);
   };
-
-  const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 font-sans">
-      <div className="lg:col-span-1 space-y-6">
-        <Card className="border-slate-200 shadow-sm overflow-hidden bg-white rounded-2xl">
-          <div className="p-6 bg-emerald-900 text-white flex justify-between items-center">
-            <h3 className="font-bold">{monthNames[currentDate.getMonth()]} {currentDate.getFullYear()}</h3>
-            <div className="flex gap-2">
-              <Button onClick={prevMonth} variant="ghost" className="h-8 w-8 p-0 text-white hover:bg-emerald-800"><ChevronLeft size={16}/></Button>
-              <Button onClick={nextMonth} variant="ghost" className="h-8 w-8 p-0 text-white hover:bg-emerald-800"><ChevronRight size={16}/></Button>
-            </div>
+    <div className="space-y-6 animate-in fade-in duration-700 pb-20">
+      {/* Header Bar */}
+      <div className="bg-[#0b336b] text-white p-4 rounded-xl flex items-center justify-between shadow-lg">
+        <div className="flex items-center gap-4">
+          <div className="bg-white/10 p-2 rounded-lg">
+            <Clock size={20} className="text-emerald-400" />
           </div>
-          <CardContent className="p-6">
-            <div className="grid grid-cols-7 text-center mb-4">
-              {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map(d => <span key={d} className="text-[10px] font-bold text-slate-400">{d}</span>)}
-            </div>
-            <div className="grid grid-cols-7 gap-1">
-              {Array(firstDayOfMonth(currentDate)).fill(null).map((_, i) => <div key={`empty-${i}`} />)}
-              {Array(daysInMonth(currentDate)).fill(null).map((_, i) => {
-                const day = i + 1;
-                const dateObj = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
-                const isToday = now.toDateString() === dateObj.toDateString();
-                const isSelected = selectedDate?.toDateString() === dateObj.toDateString();
-                const isPast = dateObj < new Date(now.getFullYear(), now.getMonth(), now.getDate());
-                
-                return (
-                  <button 
-                    key={day} 
-                    onClick={() => !isPast && handleDateClick(day)}
-                    disabled={isPast}
-                    className={`h-10 w-10 flex items-center justify-center rounded-lg text-sm font-bold transition-all ${
-                      isSelected ? 'bg-emerald-600 text-white shadow-md' : 
-                      isToday ? 'bg-emerald-100 text-emerald-900' : 
-                      isPast ? 'text-slate-200 cursor-not-allowed' : 'hover:bg-slate-50 text-slate-600'
-                    }`}
-                  >
-                    {day}
-                  </button>
-                );
-              })}
-            </div>
-          </CardContent>
-        </Card>
+          <div>
+            <h2 className="text-lg font-black uppercase tracking-widest">Live Inventory Timeline</h2>
+            <p className="text-[10px] font-bold text-emerald-300 uppercase tracking-[0.2em]">Real-time Room Status & Availability</p>
+          </div>
+        </div>
 
-        <Card className="border-slate-200 shadow-sm bg-white rounded-2xl">
-          <CardContent className="p-6 space-y-4">
-             <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest">Legend</h4>
-             <div className="space-y-3">
-                <div className="flex items-center gap-3">
-                   <div className="w-3 h-3 rounded-full bg-emerald-500" />
-                   <span className="text-sm font-bold text-slate-600">Available</span>
-                </div>
-                <div className="flex items-center gap-3">
-                   <div className="w-3 h-3 rounded-full bg-amber-500" />
-                   <span className="text-sm font-bold text-slate-600">Maintenance</span>
-                </div>
-                <div className="flex items-center gap-3">
-                   <div className="w-3 h-3 rounded-full bg-rose-500" />
-                   <span className="text-sm font-bold text-slate-600">Booked / Occupied</span>
-                </div>
-             </div>
-          </CardContent>
-        </Card>
+        <div className="flex items-center gap-3">
+          <div className="flex bg-white/10 rounded-lg p-1 border border-white/10">
+            <Button variant="ghost" size="sm" onClick={() => shiftDate(-7)} className="text-white hover:bg-white/10 h-8 px-2"><ChevronLeft size={16}/></Button>
+            <div className="px-4 flex items-center text-[10px] font-black uppercase tracking-widest border-x border-white/10">
+              {startDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} - 
+              {days[30].toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+            </div>
+            <Button variant="ghost" size="sm" onClick={() => shiftDate(7)} className="text-white hover:bg-white/10 h-8 px-2"><ChevronRight size={16}/></Button>
+          </div>
+          <Button onClick={loadData} variant="ghost" size="sm" className="text-white hover:bg-white/10 h-10 w-10 p-0 rounded-lg border border-white/10">
+            <RefreshCw size={16} className={loading ? 'animate-spin' : ''} />
+          </Button>
+        </div>
       </div>
 
-      <div className="lg:col-span-2 space-y-4">
-        <div className="flex items-center justify-between mb-4">
-           <h3 className="text-xl font-bold text-slate-800">
-             Inventory Status for {selectedDate?.toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}
-           </h3>
-           <div>
-             <select className="p-2 border rounded-md text-sm" value={selectedRoom ?? ''} onChange={(e) => setSelectedRoom(Number(e.target.value))}>
-               <option value="">Select Room</option>
-               {roomsList.map(r => <option key={r.id} value={r.id}>{r.room_name || r.title || r.id}</option>)}
-             </select>
-           </div>
-           <div className="flex gap-2 text-[10px] font-bold uppercase tracking-widest bg-emerald-50 p-2 rounded-lg text-emerald-700">
-              <Clock size={12} /> Live Sync
-           </div>
+      {/* Control Bar */}
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <div className="flex items-center gap-4">
+          <div className="relative group">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-emerald-600 transition-colors" size={14} />
+            <input 
+              type="text" 
+              placeholder="Filter rooms..." 
+              className="pl-10 pr-4 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-600 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 w-64 shadow-sm"
+            />
+          </div>
+          <div className="flex items-center gap-2 bg-white px-3 py-2 rounded-xl border border-slate-200 shadow-sm cursor-pointer hover:bg-slate-50 transition-all">
+            <Filter size={14} className="text-slate-400" />
+            <span className="text-[10px] font-black uppercase text-slate-600 tracking-wider">All Categories</span>
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-           {roomStatuses.map((room) => (
-             <Card key={room.id} className="border-slate-100 shadow-sm hover:shadow-md transition-all rounded-xl bg-white group overflow-hidden">
-                <CardContent className="p-4 flex items-center justify-between">
-                   <div className="flex items-center gap-4">
-                      <div className={`p-3 rounded-lg ${
-                        room.status === 'Available' ? 'bg-emerald-50 text-emerald-600' :
-                        room.status === 'Maintenance' ? 'bg-amber-50 text-amber-600' : 'bg-rose-50 text-rose-600'
-                      }`}>
-                        {room.status === 'Available' ? <ShieldCheck size={20} /> :
-                         room.status === 'Maintenance' ? <Hammer size={20} /> : <BookmarkCheck size={20} />}
-                      </div>
-                      <div>
-                         <p className="text-xs font-bold text-slate-400 uppercase tracking-widest leading-none mb-1">{String(room.name).toUpperCase()}</p>
-                   <h5 className="font-bold text-slate-800">{room.name} {room.room_number ? (' - ' + room.room_number) : ''}</h5>
-                         {room.status === 'Booked' && room.guest && <p className="text-[10px] font-medium text-slate-500 mt-1 italic">Guest: {room.guest}</p>}
-                      </div>
-                   </div>
-             <div className={`text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-tighter ${
-               room.status === 'Available' ? 'bg-emerald-100 text-emerald-800' :
-               room.status === 'Maintenance' ? 'bg-amber-100 text-amber-800' : 'bg-rose-100 text-rose-800'
-             }`}>
-               {room.status}
-             </div>
-             <div className="ml-3">
-               <select value={room.status} onChange={async (e) => {
-                  const newStatus = e.target.value;
-                  const dateStr = selectedDate?.toISOString().slice(0,10);
-                  if (!dateStr) return;
-                  const res = await updateRoomAvailability({ room_id: room.id, date: dateStr, status: newStatus });
-                  if (res && res.success) {
-                    // optimistic update
-                    setRoomStatuses(prev => prev.map(p => p.id === room.id ? { ...p, status: newStatus } : p));
-                  } else {
-                    alert('Failed to update availability');
-                  }
-               }} className="text-xs font-bold p-1 rounded-md border">
-                 <option>Available</option>
-                 <option>Booked</option>
-                 <option>Maintenance</option>
-               </select>
-             </div>
-            <div className="ml-4">
-              <button className="text-sm font-bold underline text-slate-600" onClick={async () => {
-                const dateStr = selectedDate?.toISOString().slice(0,10);
-                if (!dateStr) return;
-                const info = await fetchBookingForRoomDate(room.id, dateStr);
-                setModalData({ room, date: dateStr, info });
-                setModalOpen(true);
-              }}>Details</button>
-            </div>
-                </CardContent>
-             </Card>
-           ))}
-        </div>
-        {modalOpen && (
-          <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg p-6 w-11/12 max-w-2xl">
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-xl font-bold">Room Details</h3>
-                <button className="text-slate-500" onClick={() => { setModalOpen(false); setModalData(null); }}>Close</button>
-              </div>
-              <div>
-                <p className="text-sm font-bold">Room: {modalData?.room?.name} {modalData?.room?.room_number ? (' - ' + modalData.room.room_number) : ''}</p>
-                <p className="text-sm text-slate-500">Date: {modalData?.date}</p>
-                <div className="mt-4">
-                  {modalData?.info?.booking ? (
-                    <div className="space-y-2">
-                      <p className="font-bold">Booked Online</p>
-                      <p>Booking ID: {modalData.info.booking.booking_id}</p>
-                      <p>Guest: {modalData.info.booking.guest_name}</p>
-                      <p>Email: {modalData.info.booking.guest_email}</p>
-                      <p>Phone: {modalData.info.booking.guest_phone}</p>
-                      <p>Check-in: {modalData.info.booking.check_in_date}</p>
-                      <p>Check-out: {modalData.info.booking.check_out_date}</p>
-                    </div>
-                  ) : modalData?.info?.availability ? (
-                    <div>
-                      <p className="font-bold">Manual Availability</p>
-                      <p>Status: {modalData.info.availability.status}</p>
-                      <p>Note: {modalData.info.availability.note}</p>
-                    </div>
-                  ) : (
-                    <p className="text-slate-500">This room is free for this date.</p>
-                  )}
-                </div>
-              </div>
-            </div>
+        <div className="flex items-center gap-6 bg-white p-2 px-4 rounded-xl border border-slate-200 shadow-sm">
+          <div className="flex items-center gap-2">
+            <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]"></div>
+            <span className="text-[9px] font-black uppercase text-slate-400">Available</span>
           </div>
-        )}
+          <div className="flex items-center gap-2">
+            <div className="w-2.5 h-2.5 rounded-full bg-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.5)]"></div>
+            <span className="text-[9px] font-black uppercase text-slate-400">Booked</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-2.5 h-2.5 rounded-full bg-amber-500 shadow-[0_0_8_8px_rgba(245,158,11,0.5)]"></div>
+            <span className="text-[9px] font-black uppercase text-slate-400">Maintenance</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Timeline Grid */}
+      <Card className="border-none shadow-xl overflow-hidden rounded-2xl bg-white flex flex-col">
+        <div className="overflow-x-auto custom-scrollbar" ref={scrollRef}>
+          <table className="w-full border-collapse">
+            <thead>
+              <tr className="bg-slate-50/50">
+                <th className="sticky left-0 z-30 bg-slate-50 p-4 min-w-[200px] text-left border-b border-r border-slate-100 shadow-[2px_0_5px_rgba(0,0,0,0.02)]">
+                  <span className="text-[10px] font-black uppercase text-slate-400 tracking-[0.2em]">Rooms & Suites</span>
+                </th>
+                {days.map((day, i) => (
+                  <th key={i} className={`p-3 border-b border-r border-slate-100 min-w-[60px] ${day.getDay() === 0 || day.getDay() === 6 ? 'bg-amber-50/30' : ''}`}>
+                    <div className="flex flex-col items-center gap-1">
+                      <span className="text-[8px] font-black uppercase text-slate-400">{day.toLocaleDateString('en-US', { weekday: 'short' })}</span>
+                      <span className={`text-xs font-black p-1 px-2 rounded-lg ${
+                        day.toDateString() === new Date().toDateString() ? 'bg-[#0b336b] text-white' : 'text-slate-800'
+                      }`}>
+                        {day.getDate()}
+                      </span>
+                    </div>
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {loading ? Array(5).fill(0).map((_, i) => (
+                <tr key={i} className="animate-pulse">
+                  <td className="p-6 border-b border-r border-slate-100 bg-slate-50/30"></td>
+                  {Array(31).fill(0).map((_, j) => (
+                    <td key={j} className="p-6 border-b border-r border-slate-100"></td>
+                  ))}
+                </tr>
+              )) : rooms.map((room) => (
+                <tr key={room.id} className="group hover:bg-slate-50/30 transition-colors">
+                  <td className="sticky left-0 z-20 bg-white group-hover:bg-slate-50 p-4 border-b border-r border-slate-100 shadow-[2px_0_5px_rgba(0,0,0,0.02)]">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center text-[10px] font-black text-slate-600">
+                        {room.room_number || room.id}
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="text-[11px] font-black text-slate-800 leading-tight">{room.title || room.room_name}</span>
+                        <span className="text-[8px] font-bold text-slate-400 uppercase tracking-tighter">{room.category_name}</span>
+                      </div>
+                    </div>
+                  </td>
+                  {days.map((day, i) => {
+                    const status = getStatus(room.id, day);
+                    return (
+                      <td key={i} className={`p-2 border-b border-r border-slate-100 min-w-[60px] relative`}>
+                        <div 
+                          onClick={() => {
+                            const next = status === 'available' ? 'booked' : status === 'booked' ? 'maintenance' : 'available';
+                            handleStatusChange(room.id, day, next);
+                          }}
+                          className={`w-full h-10 rounded-lg cursor-pointer transition-all flex items-center justify-center group/cell hover:scale-105 active:scale-95 ${
+                          status === 'available' ? 'bg-emerald-50 text-emerald-600 hover:bg-emerald-100' :
+                          status === 'booked' ? 'bg-rose-50 text-rose-600 hover:bg-rose-100' :
+                          'bg-amber-50 text-amber-600 hover:bg-amber-100'
+                        }`}>
+                           {status === 'available' && <CheckCircle size={14} className="opacity-0 group-hover/cell:opacity-100 transition-opacity" />}
+                           {status === 'booked' && <AlertCircle size={14} />}
+                           {status === 'maintenance' && <Hammer size={14} />}
+                        </div>
+                      </td>
+                    );
+                  })}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </Card>
+
+      {/* Footer Info */}
+      <div className="flex items-center justify-between text-[9px] font-black uppercase text-slate-400 tracking-widest px-4">
+        <div className="flex items-center gap-4">
+          <span className="flex items-center gap-1"><div className="w-1.5 h-1.5 rounded-full bg-emerald-500" /> Click cell to toggle status</span>
+          <span className="flex items-center gap-1"><div className="w-1.5 h-1.5 rounded-full bg-slate-300" /> Grey columns indicate weekends</span>
+        </div>
+        <div>Last Updated: {new Date().toLocaleTimeString()}</div>
       </div>
     </div>
   );

@@ -236,6 +236,60 @@ class RoomController {
             echo json_encode(["message" => "Room not found"]);
         }
     }
+
+    // Update a room's details directly in rooms_new
+    public function updateRoomDetails() {
+        $data = json_decode(file_get_contents("php://input"));
+        if (empty($data->id)) {
+            http_response_code(400);
+            echo json_encode(["message" => "Room ID is required"]);
+            return;
+        }
+
+        $id = $data->id;
+        $fields = [];
+        $params = [];
+
+        // Map incoming fields to database columns
+        $map = [
+            'room_name' => 'room_name',
+            'room_number' => 'room_number',
+            'base_price' => 'base_price',
+            'full_description' => 'full_description',
+            'short_description' => 'short_description',
+            'house_rules' => 'house_rules',
+            'status' => 'status',
+            'max_adults' => 'max_adults',
+            'bed_type' => 'bed_type',
+            'room_size' => 'room_size',
+            'featured_image' => 'featured_image'
+        ];
+
+        foreach ($map as $apiKey => $dbCol) {
+            if (isset($data->$apiKey)) {
+                $fields[] = "$dbCol = :$apiKey";
+                $params[":$apiKey"] = $data->$apiKey;
+            }
+        }
+
+        if (empty($fields)) {
+            http_response_code(400);
+            echo json_encode(["message" => "No fields to update"]);
+            return;
+        }
+
+        $query = "UPDATE rooms_new SET " . implode(', ', $fields) . " WHERE id = :id";
+        $params[':id'] = $id;
+
+        $stmt = $this->db->prepare($query);
+        if ($stmt->execute($params)) {
+            http_response_code(200);
+            echo json_encode(["message" => "Room updated successfully"]);
+        } else {
+            http_response_code(500);
+            echo json_encode(["message" => "Failed to update room"]);
+        }
+    }
 }
 
 ?>

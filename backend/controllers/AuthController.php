@@ -21,6 +21,9 @@ class AuthController {
         if (!empty($data->username) && !empty($data->password)) {
             $table = ($user_type == 'admin') ? 'admins' : 'reception_users';
             
+            // Map 'receptionist' to 'reception' for consistency if needed
+            $role_name = ($user_type == 'admin') ? 'admin' : 'receptionist';
+
             $query = "SELECT id, username, password, full_name FROM " . $table . " WHERE username = ?";
             $stmt = $this->db->prepare($query);
             $stmt->execute([$data->username]);
@@ -28,7 +31,6 @@ class AuthController {
             if ($stmt->rowCount() > 0) {
                 $row = $stmt->fetch(PDO::FETCH_ASSOC);
                 if (password_verify($data->password, $row['password'])) {
-                    // Success - In a real app we'd generate a JWT here
                     http_response_code(200);
                     echo json_encode(array(
                         "status" => "success",
@@ -37,7 +39,7 @@ class AuthController {
                             "id" => $row['id'],
                             "username" => $row['username'],
                             "full_name" => $row['full_name'],
-                            "role" => $user_type
+                            "role" => $role_name
                         )
                     ));
                 } else {

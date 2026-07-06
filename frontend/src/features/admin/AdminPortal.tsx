@@ -1,46 +1,48 @@
 import { useState } from 'react';
 import { 
-  Users, Hotel, Calendar, PieChart, Settings, 
-  LayoutDashboard, LogOut, Menu, X, CreditCard
+  Hotel, Calendar, Settings, 
+  LayoutDashboard, LogOut, Menu, X, CreditCard,
+  BarChart3, Layout, PieChart, Mail, Users
 } from 'lucide-react';
-import { Button } from '../../components/ui/button';
-import { Card, CardContent } from '../../components/ui/card';
 import { CategoryManagement } from './components/CategoryManagement';
 import { BookingManagement } from './components/BookingManagement';
 import { RoomCalendar } from './components/RoomCalendar';
 import { AdminRoomDetailView } from './components/AdminRoomDetailView';
+import { AdminDashboardView } from './components/AdminDashboardView';
+import { AdminSettingsView } from './components/AdminSettingsView';
 import { CreateRoom } from '../../pages/admin/room/CreateRoom';
+
+const SidebarItem = ({ activeTab, item, isSidebarOpen, onClick }: any) => (
+  <button
+    onClick={onClick}
+    className={`w-full flex items-center gap-4 px-4 py-3 rounded-lg text-sm font-bold transition-all ${
+      activeTab === item.id 
+      ? 'bg-white text-emerald-950 shadow-lg shadow-black/20 scale-[1.02]' 
+      : 'text-emerald-100 hover:bg-emerald-800'
+    }`}
+  >
+    <item.icon size={20} />
+    {isSidebarOpen && <span>{item.label}</span>}
+  </button>
+);
 
 export const AdminPortal = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
+  const [dashboardView, setDashboardView] = useState('overview'); // Added state for dashboard sub-tabs
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [showCreateRoom, setShowCreateRoom] = useState(false);
   const [previewRoom, setPreviewRoom] = useState<any>(null);
-  const [editingRoom, setEditingRoom] = useState<any>(null);
 
   const handlePreviewRoom = (room: any) => {
     setPreviewRoom(room);
     setActiveTab('rooms');
   };
 
-  const handleEditRoomFromPreview = (room: any) => {
-    setEditingRoom(room);
-    setPreviewRoom(null);
-  };
-
   const handleAddRoom = () => {
-    setEditingRoom(null);
     setPreviewRoom(null);
     setShowCreateRoom(true);
     setActiveTab('rooms');
   };
-
-  const stats = [
-    { label: 'Total Bookings', value: '1,284', change: '+12%', icon: Calendar, color: 'text-emerald-600' },
-    { label: 'Available Rooms', value: '42', change: '85%', icon: Hotel, color: 'text-blue-600' },
-    { label: 'Today Revenue', value: '₹42,500', change: '+18%', icon: CreditCard, color: 'text-amber-600' },
-    { label: 'Active Guests', value: '86', change: '+5%', icon: Users, color: 'text-purple-600' },
-  ];
 
   return (
     <div className="min-h-screen bg-slate-50 flex font-sans">
@@ -51,33 +53,70 @@ export const AdminPortal = () => {
           {isSidebarOpen && <span className="font-bold text-lg tracking-widest">SUBRA ADMIN</span>}
         </div>
 
-        <nav className="flex-grow p-4 space-y-1">
-          {[
-            { id: 'dashboard', icon: LayoutDashboard, label: 'Dashboard' },
-            { id: 'rooms', icon: Hotel, label: 'Room List' },
-            { id: 'calendar', icon: Calendar, label: 'Live Calendar' },
-            { id: 'bookings', icon: CreditCard, label: 'Bookings' },
-            { id: 'analytics', icon: PieChart, label: 'Analytics' },
-          ].map((item) => (
-            <button
-              key={item.id}
-              onClick={() => { setActiveTab(item.id); setEditingRoom(null); setShowCreateRoom(false); }}
-              className={`w-full flex items-center gap-4 px-4 py-3 rounded-lg text-sm font-bold transition-all ${
-                activeTab === item.id 
-                ? 'bg-white text-emerald-950' 
-                : 'text-emerald-100 hover:bg-emerald-800'
-              }`}
-            >
-              <item.icon size={20} />
-              {isSidebarOpen && <span>{item.label}</span>}
-            </button>
-          ))}
+        <nav className="flex-grow p-4 space-y-6 overflow-y-auto custom-scrollbar">
+          {/* Section: Intelligence */}
+          <div>
+            {isSidebarOpen && <p className="px-4 mb-2 text-[10px] font-black uppercase text-emerald-500 tracking-widest">Intelligence</p>}
+            <div className="space-y-1">
+              {[
+                { id: 'dashboard', icon: LayoutDashboard, label: 'Analytics Hub' },
+                { id: 'reports', icon: BarChart3, label: 'System Reports' },
+              ].map((item: any) => (
+                <SidebarItem 
+                  key={item.id} 
+                  activeTab={activeTab} 
+                  item={item} 
+                  isSidebarOpen={isSidebarOpen} 
+                  onClick={() => { setActiveTab(item.id); setShowCreateRoom(false); }} 
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Section: Management */}
+          <div>
+            {isSidebarOpen && <p className="px-4 mb-2 text-[10px] font-black uppercase text-emerald-500 tracking-widest">Hospitality</p>}
+            <div className="space-y-1">
+              {[
+                { id: 'booking_mgmt', icon: Calendar, label: 'Booking Management' },
+                { id: 'rooms', icon: Hotel, label: 'Room Manager' },
+                { id: 'calendar', icon: Calendar, label: 'Live Inventory' },
+                { id: 'bookings', icon: CreditCard, label: 'Transactions' },
+              ].map((item: any) => (
+                <SidebarItem 
+                  key={item.id} 
+                  activeTab={activeTab} 
+                  item={item} 
+                  isSidebarOpen={isSidebarOpen} 
+                  onClick={() => { setActiveTab(item.id); setShowCreateRoom(false); }} 
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Section: System */}
+          <div>
+            {isSidebarOpen && <p className="px-4 mb-2 text-[10px] font-black uppercase text-emerald-500 tracking-widest">Configuration</p>}
+            <div className="space-y-1">
+              {[
+                { id: 'website', icon: Layout, label: 'Website Settings' },
+              ].map((item: any) => (
+                <SidebarItem 
+                  key={item.id} 
+                  activeTab={activeTab} 
+                  item={item} 
+                  isSidebarOpen={isSidebarOpen} 
+                  onClick={() => { setActiveTab(item.id); setShowCreateRoom(false); }} 
+                />
+              ))}
+            </div>
+          </div>
         </nav>
 
         <div className="p-4 border-t border-emerald-800">
           <button className="flex items-center gap-3 text-emerald-300 hover:text-white transition-colors text-sm font-bold w-full p-2">
             <LogOut size={20} />
-            {isSidebarOpen && <span>Logout</span>}
+            {isSidebarOpen && <span>Exit Portal</span>}
           </button>
         </div>
       </aside>
@@ -90,8 +129,14 @@ export const AdminPortal = () => {
               {isSidebarOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
             <h2 className="text-xl font-bold text-slate-800 uppercase tracking-tight">
-               {activeTab === 'rooms' && (editingRoom || showCreateRoom) ? 'Configure Room' : 
-                activeTab === 'calendar' ? 'Live System Calendar' : activeTab}
+               {activeTab === 'rooms' && showCreateRoom ? 'Configure Room' : 
+                activeTab === 'calendar' ? 'Inventory Calendar' : 
+                activeTab === 'dashboard' ? 'Business Intelligence' : 
+                activeTab === 'reports' ? 'Operational Reports' :
+                activeTab === 'booking_mgmt' ? 'Booking & Room Control' :
+                activeTab === 'bookings' ? 'Financial Hub' :
+                activeTab === 'website' ? 'Interface Management' :
+                activeTab === 'settings' ? 'System Configuration' : activeTab}
             </h2>
           </div>
           
@@ -108,53 +153,27 @@ export const AdminPortal = () => {
           </div>
         </header>
 
-        <div className="p-8 max-w-7xl mx-auto">
-          {activeTab === 'dashboard' && (
-             // ... stats code remains ...
-             <div className="space-y-8">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {stats.map((stat, i) => (
-                  <Card key={i} className="border-none shadow-sm hover:shadow-md transition-shadow">
-                    <CardContent className="p-6">
-                      <div className="flex justify-between items-start mb-4">
-                        <div className={`p-3 rounded-xl bg-slate-50 ${stat.color}`}>
-                          <stat.icon size={24} />
-                        </div>
-                        <span className="text-emerald-600 text-xs font-bold bg-emerald-50 px-2 py-1 rounded-full">{stat.change}</span>
-                      </div>
-                      <p className="text-sm font-bold text-slate-500 uppercase tracking-wider mb-1">{stat.label}</p>
-                      <h3 className="text-2xl font-bold text-slate-900">{stat.value}</h3>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-              
-              <div className="bg-white p-10 rounded-2xl border border-slate-200 text-center space-y-4">
-                 <h3 className="text-xl font-bold text-slate-800">Quick Actions</h3>
-                 <div className="flex justify-center gap-4">
-                    <Button onClick={handleAddRoom} className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-8 py-4 rounded-xl text-xs uppercase tracking-widest h-auto">
-                       + Create New Room
-                    </Button>
-                    <Button variant="outline" className="border-slate-200 font-bold px-8 py-4 rounded-xl text-xs uppercase tracking-widest h-auto">
-                       Generate Report
-                    </Button>
-                 </div>
-              </div>
-            </div>
-          )}
+        <div className="p-8 max-w-7xl mx-auto pb-20">
+          {activeTab === 'dashboard' && <AdminDashboardView activeSubTab={dashboardView} />}
+          
+          {activeTab === 'reports' && <AdminDashboardView activeSubTab="finance" />}
+          {activeTab === 'booking_mgmt' && <AdminDashboardView activeSubTab="rooms" />}
+          {activeTab === 'bookings' && <AdminDashboardView activeSubTab="finance" />}
+          {activeTab === 'website' && <AdminSettingsView />}
 
           {activeTab === 'rooms' && (
-            editingRoom || showCreateRoom ? (
+            showCreateRoom ? (
               <CreateRoom 
-                initialData={editingRoom} 
-                onCancel={() => { setEditingRoom(null); setShowCreateRoom(false); }}
-                onSuccess={() => { setEditingRoom(null); setShowCreateRoom(false); }}
+                onCancel={() => { setShowCreateRoom(false); }}
+                onSuccess={() => { setShowCreateRoom(false); }}
               />
             ) : previewRoom ? (
               <AdminRoomDetailView 
                 room={previewRoom}
                 onBack={() => setPreviewRoom(null)}
-                onEdit={handleEditRoomFromPreview}
+                onRefresh={() => {
+                  setPreviewRoom(null);
+                }}
               />
             ) : (
               <CategoryManagement 
@@ -165,20 +184,8 @@ export const AdminPortal = () => {
           )}
 
           {activeTab === 'calendar' && <RoomCalendar />}
+          {activeTab === 'settings' && <AdminSettingsView />}
           {activeTab === 'bookings' && <BookingManagement />}
-          
-          {['analytics', 'settings'].includes(activeTab) && (
-            <div className="bg-white p-12 rounded-2xl border border-slate-200 text-center space-y-4">
-              <div className="w-20 h-20 bg-emerald-50 rounded-full flex items-center justify-center mx-auto">
-                <Settings className="text-emerald-600 animate-spin-slow" size={40} />
-              </div>
-              <h3 className="text-2xl font-bold text-slate-800">Module Synchronizing</h3>
-              <p className="text-slate-500 max-w-sm mx-auto font-medium">This functional module is currently being optimized for faster processing.</p>
-              <Button className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg px-8 py-2 text-sm font-bold h-auto">
-                Notify Primary Admin
-              </Button>
-            </div>
-          )}
         </div>
       </main>
     </div>

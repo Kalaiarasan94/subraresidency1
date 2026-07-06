@@ -1,25 +1,62 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   ArrowLeft, Star, MapPin, 
-  CheckCircle2, Edit3, Trash2, Globe
+  CheckCircle2, Globe, Save, Loader2, Camera, Info
 } from 'lucide-react';
 import { Button } from '../../../components/ui/button';
 import { Card, CardContent } from '../../../components/ui/card';
+import { updateRoomDetails } from '../../../lib/api';
 
 interface Props {
   room: any;
   onBack: () => void;
-  onEdit: (room: any) => void;
-  onDelete?: (id: number) => void;
+  onRefresh: () => void;
 }
 
-export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onEdit, onDelete }) => {
+export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onRefresh }) => {
+  const [isSaving, setIsSaving] = useState(false);
+  const [formData, setFormData] = useState({
+    id: room.id,
+    room_name: room.title || room.room_name,
+    base_price: room.price_24h || room.price?.replace(/[^0-9]/g, '') || '',
+    full_description: room.full_description || room.description || '',
+    house_rules: room.house_rules || '',
+    status: room.status || 'Available',
+    featured_image: room.image?.split('localhost:8001')[1] || room.image || '',
+    max_adults: room.adults || '',
+    bed_type: room.bed_type || '',
+    room_size: room.size || ''
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSave = async () => {
+    setIsSaving(true);
+    try {
+      const result = await updateRoomDetails(formData);
+      if (result && result.message) {
+        alert("Changes saved successfully!");
+        onRefresh();
+      } else {
+        alert("Failed to save changes.");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("An error occurred while saving.");
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
   const galleryImages = room.images && room.images.length > 0 ? room.images : [room.image];
 
   return (
-    <div className="bg-white min-h-screen rounded-3xl border border-slate-200 overflow-hidden shadow-sm font-sans">
+    <div className="bg-white min-h-screen rounded-3xl border border-slate-200 overflow-hidden shadow-sm font-sans relative">
       {/* Admin Action Bar */}
-      <div className="bg-emerald-900 px-8 py-4 flex justify-between items-center text-white">
+      <div className="bg-emerald-900 px-8 py-4 flex justify-between items-center text-white sticky top-0 z-50 shadow-md">
         <button 
           onClick={onBack}
           className="flex items-center gap-2 text-emerald-100 hover:text-white transition-colors group"
@@ -27,40 +64,43 @@ export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onEdit, onD
           <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
           <span className="font-bold text-xs uppercase tracking-widest">Back to Inventory</span>
         </button>
+        
         <div className="flex gap-4">
            <Button 
-             onClick={() => onEdit(room)}
-             className="bg-white text-emerald-900 hover:bg-emerald-50 px-6 py-2 rounded-lg font-bold text-xs uppercase tracking-widest shadow-lg flex items-center gap-2"
+             onClick={handleSave}
+             disabled={isSaving}
+             className="bg-white text-emerald-900 hover:bg-emerald-50 px-8 py-2 rounded-lg font-bold text-xs uppercase tracking-widest shadow-lg flex items-center gap-2 min-w-[140px]"
            >
-             <Edit3 size={14} /> Full Edit Configuration
+             {isSaving ? <Loader2 size={14} className="animate-spin" /> : <Save size={14} />}
+             {isSaving ? 'Saving...' : 'Save All Changes'}
            </Button>
-           {onDelete && (
-             <Button 
-               variant="outline"
-               onClick={() => onDelete(room.id)}
-               className="border-emerald-700 text-emerald-100 hover:bg-rose-500 hover:text-white hover:border-rose-500 px-4 py-2 rounded-lg font-bold text-xs uppercase tracking-widest transition-all"
-             >
-               <Trash2 size={14} />
-             </Button>
-           )}
         </div>
       </div>
 
       <div className="p-8 max-w-6xl mx-auto">
-        {/* Mirror Frontend UI */}
+        {/* Mirror Frontend UI - Now with Editable Fields */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 border-b border-slate-100 pb-8">
-          <div>
-            <div className="flex items-center gap-2 mb-2">
-               <span className="bg-emerald-50 text-emerald-700 text-[10px] font-black px-2 py-0.5 rounded uppercase tracking-widest border border-emerald-100">Official Preview</span>
+          <div className="flex-1">
+            <div className="flex items-center gap-2 mb-4">
+               <span className="bg-emerald-50 text-emerald-700 text-[10px] font-black px-2 py-0.5 rounded uppercase tracking-widest border border-emerald-100">Direct In-Place Editor</span>
                {room.show_on_website ? (
                  <span className="flex items-center gap-1 text-[10px] font-black text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded uppercase border border-emerald-100"><Globe size={10} /> Live on Website</span>
                ) : (
                  <span className="text-[10px] font-black text-slate-400 bg-slate-50 px-2 py-0.5 rounded uppercase border border-slate-100">Draft / Internal</span>
                )}
             </div>
-            <h1 className="text-4xl font-bold text-slate-900 mb-3 tracking-tight">
-              {room.title || room.room_name}
-            </h1>
+            
+            <div className="group relative">
+                <input 
+                    name="room_name"
+                    value={formData.room_name}
+                    onChange={handleChange}
+                    className="text-4xl font-bold text-slate-900 mb-1 tracking-tight w-full bg-transparent border-b-2 border-transparent hover:border-emerald-200 focus:border-emerald-500 focus:outline-none transition-all py-1"
+                    placeholder="Enter Room Category Name"
+                />
+                <span className="text-[10px] text-slate-400 font-bold uppercase tracking-widest block mb-3 pl-1">Room Category Title</span>
+            </div>
+
             <div className="flex flex-wrap items-center gap-4 text-sm text-slate-500 font-bold">
               <div className="flex items-center gap-1">
                 <Star size={16} className="text-amber-500 fill-amber-500" />
@@ -73,30 +113,62 @@ export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onEdit, onD
               </div>
             </div>
           </div>
-          <div className="text-right">
-             <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Nightly Rate</p>
-             <p className="text-3xl font-bold text-emerald-600">₹{room.price || room.base_price}</p>
+          
+          <div className="text-right bg-emerald-50 p-4 rounded-2xl border border-emerald-100">
+             <p className="text-xs font-bold text-emerald-700 uppercase tracking-widest mb-2 flex items-center justify-end gap-1"><Info size={12}/> Nightly Rate (INR)</p>
+             <div className="flex items-center justify-end">
+                <span className="text-2xl font-bold text-emerald-600 mr-1">₹</span>
+                <input 
+                    name="base_price"
+                    type="number"
+                    value={formData.base_price}
+                    onChange={handleChange}
+                    className="text-3xl font-bold text-emerald-600 bg-transparent w-32 text-right focus:outline-none border-b-2 border-emerald-200 focus:border-emerald-600 appearance-none"
+                    style={{ MozAppearance: 'textfield' }}
+                />
+             </div>
           </div>
         </div>
 
-        {/* Gallery Preview */}
-        <div className="grid grid-cols-4 gap-3 h-80 mb-12 rounded-2xl overflow-hidden border border-slate-100 shadow-sm">
-           <div className="col-span-2 row-span-2 overflow-hidden bg-slate-100">
-              <img src={galleryImages[0]} className="w-full h-full object-cover" />
-           </div>
-           <div className="overflow-hidden bg-slate-100"><img src={galleryImages[1] || galleryImages[0]} className="w-full h-full object-cover" /></div>
-           <div className="overflow-hidden bg-slate-100"><img src={galleryImages[2] || galleryImages[0]} className="w-full h-full object-cover" /></div>
-           <div className="overflow-hidden bg-slate-100"><img src={galleryImages[3] || galleryImages[0]} className="w-full h-full object-cover" /></div>
-           <div className="overflow-hidden bg-slate-100 opacity-50"><img src={galleryImages[4] || galleryImages[0]} className="w-full h-full object-cover" /></div>
+        {/* Gallery Preview / Image Editor Section */}
+        <div className="space-y-4 mb-12">
+            <div className="flex items-center justify-between">
+                <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2"><Camera size={14}/> Image Gallery Configuration</h3>
+                <div className="flex gap-2">
+                    <input 
+                        name="featured_image"
+                        value={formData.featured_image}
+                        onChange={handleChange}
+                        className="text-xs font-medium text-slate-600 bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 w-80 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                        placeholder="path/to/featured_image.jpg"
+                    />
+                </div>
+            </div>
+            
+            <div className="grid grid-cols-4 gap-3 h-80 rounded-2xl overflow-hidden border border-slate-100 shadow-sm relative group">
+               <div className="col-span-2 row-span-2 overflow-hidden bg-slate-100 relative">
+                    <img src={galleryImages[0]} className="w-full h-full object-cover" alt="Primary" />
+                    <div className="absolute inset-x-0 bottom-0 bg-black/50 text-white text-[10px] font-bold p-2 text-center uppercase tracking-widest">Primary Featured Image</div>
+               </div>
+               <div className="overflow-hidden bg-slate-100"><img src={galleryImages[1] || galleryImages[0]} className="w-full h-full object-cover" alt="G1" /></div>
+               <div className="overflow-hidden bg-slate-100"><img src={galleryImages[2] || galleryImages[0]} className="w-full h-full object-cover" alt="G2" /></div>
+               <div className="overflow-hidden bg-slate-100"><img src={galleryImages[3] || galleryImages[0]} className="w-full h-full object-cover" alt="G3" /></div>
+               <div className="overflow-hidden bg-slate-100 opacity-50"><img src={galleryImages[4] || galleryImages[0]} className="w-full h-full object-cover" alt="G4" /></div>
+            </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-16">
           <div className="lg:col-span-2 space-y-12">
              <section className="pb-12 border-b border-slate-100">
                 <h3 className="text-sm font-bold text-emerald-600 uppercase tracking-widest mb-4">Official Public Description</h3>
-                <p className="text-slate-700 leading-relaxed text-lg whitespace-pre-wrap font-medium">
-                   {room.full_description || room.description || "No detailed description entered for this room."}
-                </p>
+                <textarea 
+                    name="full_description"
+                    value={formData.full_description}
+                    onChange={handleChange}
+                    rows={8}
+                    className="w-full p-6 text-slate-700 leading-relaxed text-lg whitespace-pre-wrap font-medium bg-slate-50 rounded-2xl border-2 border-transparent hover:border-slate-200 focus:border-emerald-500 focus:bg-white focus:outline-none transition-all shadow-inner"
+                    placeholder="Describe this sanctuary for your guests..."
+                />
              </section>
 
              <section className="pb-12 border-b border-slate-100">
@@ -108,6 +180,9 @@ export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onEdit, onD
                        <span className="font-bold text-sm tracking-tight">{amenity}</span>
                     </div>
                   ))}
+                  <div className="col-span-2 mt-4 p-4 bg-amber-50 rounded-xl border border-amber-100 text-xs text-amber-700 font-bold italic">
+                      Amenities are currently read-only. Use the Category Manager to globalize these changes.
+                  </div>
                 </div>
              </section>
 
@@ -116,44 +191,95 @@ export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onEdit, onD
                 <div className="grid grid-cols-3 gap-8 p-6 bg-slate-50 rounded-2xl border border-slate-100">
                    <div className="text-center">
                       <p className="text-[10px] text-slate-400 font-bold uppercase mb-1">Max Adults</p>
-                      <p className="text-xl font-bold text-slate-800">{room.adults || 2}</p>
+                      <input 
+                        name="max_adults"
+                        type="number"
+                        value={formData.max_adults || room.adults}
+                        onChange={handleChange}
+                        className="text-xl font-bold text-slate-800 bg-transparent text-center border-b border-transparent hover:border-slate-300 focus:outline-none focus:border-emerald-500 w-16"
+                      />
                    </div>
                    <div className="text-center border-x border-slate-200 px-4">
                       <p className="text-[10px] text-slate-400 font-bold uppercase mb-1">Bed Configuration</p>
-                      <p className="text-xl font-bold text-slate-800">{room.bed_type || 'King'}</p>
+                      <input 
+                        name="bed_type"
+                        value={formData.bed_type || room.bed_type}
+                        onChange={handleChange}
+                        className="text-xl font-bold text-slate-800 bg-transparent text-center border-b border-transparent hover:border-slate-300 focus:outline-none focus:border-emerald-500 w-full"
+                      />
                    </div>
                    <div className="text-center">
-                      <p className="text-[10px] text-slate-400 font-bold uppercase mb-1">Area</p>
-                      <p className="text-xl font-bold text-slate-800">{room.size || '450'} ft²</p>
+                      <p className="text-[10px] text-slate-400 font-bold uppercase mb-1">Area (sq ft)</p>
+                      <input 
+                        name="room_size"
+                        value={formData.room_size || room.size}
+                        onChange={handleChange}
+                        className="text-xl font-bold text-slate-800 bg-transparent text-center border-b border-transparent hover:border-slate-300 focus:outline-none focus:border-emerald-500 w-20"
+                      />
                    </div>
                 </div>
              </section>
           </div>
 
           <div className="lg:col-span-1">
-             <Card className="rounded-3xl shadow-lg border-emerald-100 bg-emerald-50/30 overflow-hidden sticky top-24">
+             <Card className="rounded-3xl shadow-xl border-emerald-100 bg-emerald-50/30 overflow-hidden sticky top-28">
                 <CardContent className="p-8 space-y-6">
-                   <h3 className="text-xs font-bold text-emerald-700 uppercase tracking-widest mb-4 border-b border-emerald-100 pb-2">Status & Rules</h3>
+                   <h3 className="text-xs font-bold text-emerald-700 uppercase tracking-widest mb-4 border-b border-emerald-100 pb-2 flex items-center justify-between">
+                       Status & Rules
+                       <span className="animate-pulse bg-emerald-500 h-2 w-2 rounded-full"></span>
+                   </h3>
+                   
                    <div className="space-y-4">
-                      <div className="flex justify-between items-center bg-white p-4 rounded-xl shadow-sm">
-                         <span className="text-xs font-bold text-slate-400 uppercase">Live Status</span>
-                         <span className={`text-xs font-black uppercase tracking-widest ${room.status === 'Available' ? 'text-emerald-600' : 'text-amber-600'}`}>
-                           {room.status}
-                         </span>
+                      <div className="flex flex-col gap-2 bg-white p-4 rounded-2xl shadow-sm border border-slate-100">
+                         <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Live Inventory Status</span>
+                         <select 
+                            name="status"
+                            value={formData.status}
+                            onChange={handleChange}
+                            className={`text-sm font-black uppercase tracking-wider bg-transparent focus:outline-none border-none cursor-pointer ${formData.status === 'Available' ? 'text-emerald-600' : 'text-amber-600'}`}
+                         >
+                            <option value="Available">Available</option>
+                            <option value="Booked">Booked</option>
+                            <option value="Cleaning">Cleaning</option>
+                            <option value="Maintenance">Maintenance</option>
+                         </select>
                       </div>
+                      
                       <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
                          <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">House Rules Summary</p>
-                         <p className="text-sm font-medium text-slate-600 leading-relaxed whitespace-pre-wrap italic">
-                            {room.house_rules || "No specific rules configured."}
-                         </p>
+                         <textarea 
+                            name="house_rules"
+                            value={formData.house_rules}
+                            onChange={handleChange}
+                            rows={4}
+                            className="w-full text-sm font-medium text-slate-600 leading-relaxed bg-slate-50 p-3 rounded-xl border border-transparent focus:border-emerald-500 focus:bg-white focus:outline-none transition-all italic"
+                            placeholder="e.g. No loud music. Check-out by 11 AM."
+                         />
                       </div>
                    </div>
+
                    <Button 
-                     onClick={() => onEdit(room)}
-                     className="w-full bg-emerald-900 hover:bg-emerald-800 text-white font-bold uppercase tracking-widest py-6 rounded-xl shadow-lg h-auto transition-all active:scale-95"
+                     onClick={handleSave}
+                     disabled={isSaving}
+                     className="w-full bg-emerald-900 hover:bg-emerald-800 text-white font-bold uppercase tracking-widest py-8 rounded-2xl shadow-xl h-auto transition-all active:scale-95 group"
                    >
-                     Navigate to Editor
+                     {isSaving ? (
+                        <span className="flex items-center gap-3">
+                            <Loader2 className="animate-spin" /> COMMITTING CHANGES...
+                        </span>
+                     ) : (
+                        <span className="flex flex-col items-center">
+                            <span className="text-sm">Save Sanctuary Update</span>
+                            <span className="text-[9px] text-emerald-300 font-black mt-1 group-hover:text-white">FORCE GLOBAL SYNC</span>
+                        </span>
+                     )}
                    </Button>
+
+                   <div className="text-center pt-2">
+                       <p className="text-[9px] text-slate-400 font-bold uppercase tracking-widest opacity-50 px-4">
+                           Updates take place immediately on the customer-facing website and mobile app.
+                       </p>
+                   </div>
                 </CardContent>
              </Card>
           </div>

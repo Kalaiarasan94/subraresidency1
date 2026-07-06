@@ -2,11 +2,20 @@
 // backend/config/db.php
 
 class Database {
-    private $host = "localhost";
-    private $db_name = "subra";
-    private $username = "root";
-    private $password = "";
+    private $host;
+    private $db_name;
+    private $username;
+    private $password;
     public $conn;
+
+    public function __construct() {
+        $env = @parse_ini_file(__DIR__ . '/../.env');
+        if (!$env) $env = [];
+        $this->host = $env['DB_HOST'] ?? 'localhost';
+        $this->db_name = $env['DB_NAME'] ?? 'subra';
+        $this->username = $env['DB_USER'] ?? 'root';
+        $this->password = $env['DB_PASS'] ?? '';
+    }
 
     public function getConnection() {
         $this->conn = null;

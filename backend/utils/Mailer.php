@@ -3,17 +3,26 @@
 
 class Mailer {
     private static function getEnvVars() {
-        return parse_ini_file(__DIR__ . '/../.env');
+        // Updated to handle both .env formats
+        return @parse_ini_file(__DIR__ . '/../.env');
     }
 
-
     public static function sendBookingConfirmation($toEmail, $toName, $bookingId, $checkIn, $checkOut, $amount, $roomName = 'Luxury Sanctuary') {
-        $url = 'https://api.brevo.com/v3/smtp/email';
+        $env = self::getEnvVars();
+        $apiKey = $env['BREVO_API_KEY'] ?? '';
+        $senderEmail = $env['BREVO_SENDER_EMAIL'] ?? 'af6402001@smtp-brevo.com';
+        $senderName = $env['BREVO_SENDER_NAME'] ?? 'Subra Residency';
 
-        // Calculate nights and pricing breakdown for email invoice
+        if (empty($apiKey)) {
+            error_log("[Mailer] Brevo API Key is missing in .env");
+            return false;
+        }
+
+        // Calculate nights
         $nights = round((strtotime($checkOut) - strtotime($checkIn)) / 86400);
         if ($nights <= 0) $nights = 1;
-        
+
+        // Pricing breakdown
         $subtotal = $amount - 1350;
         if ($subtotal <= 0) {
             $subtotal = $amount;
@@ -26,194 +35,147 @@ class Mailer {
             $nightlyRate = $subtotal / $nights;
         }
 
+        // Beautifully crafted HTML email that acts as a digital voucher
         $htmlContent = "
+        <!DOCTYPE html>
         <html>
         <head>
+            <meta charset='utf-8'>
             <style>
-                body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.6; color: #334155; background-color: #f8fafc; margin: 0; padding: 0; }
-                .container { max-width: 600px; margin: 20px auto; padding: 30px; border: 1px solid #e2e8f0; border-radius: 16px; background-color: #ffffff; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
-                .header { background-color: #0f3a20; color: #ffffff; padding: 25px; text-align: center; border-radius: 12px 12px 0 0; border-bottom: 4px solid #cda052; }
-                .header h1 { font-family: 'Playfair Display', Georgia, serif; margin: 0; font-size: 24px; letter-spacing: 2px; }
-                .header p { margin: 5px 0 0 0; font-size: 10px; text-transform: uppercase; letter-spacing: 3px; color: #cda052; }
-                .content { padding: 25px 10px; }
-                .greeting { font-size: 16px; font-weight: bold; color: #0f3a20; }
-                .details-box { background-color: #f8fafc; border: 1px solid #f1f5f9; padding: 20px; border-radius: 12px; margin: 20px 0; }
-                .details-box table { width: 100%; border-collapse: collapse; font-size: 13px; }
-                .details-box td { padding: 6px 0; }
-                .details-label { color: #64748b; font-weight: bold; text-transform: uppercase; font-size: 10px; letter-spacing: 1px; }
-                .details-value { color: #0f3a20; font-weight: bold; text-align: right; }
-                .invoice-table { width: 100%; border-collapse: collapse; margin: 25px 0; font-size: 13px; }
-                .invoice-table th { border-bottom: 2px solid #e2e8f0; text-align: left; padding: 10px 0; color: #64748b; text-transform: uppercase; font-size: 10px; letter-spacing: 1px; }
-                .invoice-table td { padding: 12px 0; border-bottom: 1px solid #f1f5f9; }
-                .grand-total { font-size: 16px; font-weight: bold; color: #0f3a20; text-align: right; }
-                .qr-container { text-align: center; margin: 30px auto; padding: 20px; border: 1px solid rgba(205, 160, 82, 0.3); border-radius: 16px; background-color: #ffffff; max-width: 240px; }
-                .qr-container h3 { color: #0f3a20; margin: 0 0 10px 0; font-size: 12px; text-transform: uppercase; letter-spacing: 2px; }
-                .qr-img { width: 180px; height: 180px; display: block; margin: 0 auto; border: 1px solid #f1f5f9; border-radius: 8px; }
-                .qr-desc { font-size: 9px; color: #64748b; margin: 10px 0 0 0; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; }
-                .footer { text-align: center; font-size: 11px; color: #94a3b8; margin-top: 30px; border-t: 1px solid #f1f5f9; padding-top: 20px; }
-                .payment-stamp { display: inline-block; border: 2px dashed rgba(16, 185, 129, 0.4); background-color: #ecfdf5; color: #047857; font-weight: bold; padding: 8px 15px; border-radius: 8px; font-size: 14px; letter-spacing: 2px; margin: 15px 0; text-transform: uppercase; }
+                body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #1a202c; background-color: #f7fafc; margin: 0; padding: 20px; }
+                .voucher { max-width: 600px; margin: 0 auto; background: #ffffff; border: 1px solid #e2e8f0; border-top: 8px solid #0f3a20; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+                .header { background: #0f3a20; color: #ffffff; padding: 30px; text-align: center; }
+                .header h1 { margin: 0; font-size: 28px; letter-spacing: 2px; color: #ffffff; }
+                .header p { margin: 5px 0 0; color: #cda052; text-transform: uppercase; font-size: 12px; letter-spacing: 4px; font-weight: bold; }
+                .body { padding: 40px; }
+                .status-badge { display: inline-block; padding: 8px 16px; background: #f0fff4; color: #22543d; border: 1px solid #c6f6d5; border-radius: 9999px; font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 25px; }
+                .details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; border-bottom: 1px solid #edf2f7; padding-bottom: 30px; margin-bottom: 30px; }
+                .detail-item { margin-bottom: 15px; }
+                .label { color: #718096; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; margin-bottom: 4px; display: block; }
+                .value { font-size: 15px; font-weight: 600; color: #2d3748; }
+                .price-table { width: 100%; border-collapse: collapse; margin: 30px 0; }
+                .price-table th { text-align: left; font-size: 11px; text-transform: uppercase; color: #718096; border-bottom: 1px solid #edf2f7; padding-bottom: 10px; }
+                .price-table td { padding: 15px 0; border-bottom: 1px solid #f7fafc; }
+                .total-row { font-size: 20px; font-weight: 700; color: #0f3a20; }
+                .qr-section { text-align: center; padding: 30px; background: #fdfbf7; border-top: 1px dashed #e2e8f0; }
+                .qr-code { background: #ffffff; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px; display: inline-block; }
+                .footer { padding: 30px; text-align: center; color: #a0aec0; font-size: 12px; }
+                @media print { body { background: white; padding: 0; } .voucher { border: none; box-shadow: none; width: 100%; max-width: 100%; } }
             </style>
         </head>
         <body>
-            <div class='container'>
+            <div class='voucher'>
                 <div class='header'>
                     <h1>SUBRA RESIDENCY</h1>
-                    <p>Stay Away from Home • Kumbakonam</p>
+                    <p>OFFICIAL BOOKING VOUCHER</p>
                 </div>
-                <div class='content'>
-                    <p class='greeting'>Dear {$toName},</p>
-                    <p>Thank you for choosing Subra Residency! Your payment has been processed successfully, and your reservation is now **fully secured**.</p>
+                <div class='body'>
+                    <div class='status-badge'>Confirmed & Paid</div>
+                    <p>Dear <strong>{$toName}</strong>, your stay at Subra Residency is officially confirmed. Please present this digital voucher upon arrival.</p>
                     
-                    <div style='text-align: center;'>
-                        <span class='payment-stamp'>✓ PAID & CONFIRMED</span>
-                    </div>
-
-                    <!-- Stay Details -->
-                    <div class='details-box'>
-                        <table>
+                    <div style='margin-top: 40px;'>
+                        <table style='width: 100%;'>
                             <tr>
-                                <td class='details-label'>Booking ID</td>
-                                <td class='details-value'>{$bookingId}</td>
-                            </tr>
-                            <tr>
-                                <td class='details-label'>Sanctuary Stay</td>
-                                <td class='details-value' style='text-transform: uppercase;'>{$roomName}</td>
-                            </tr>
-                            <tr>
-                                <td class='details-label'>Check-In</td>
-                                <td class='details-value'>{$checkIn}</td>
-                            </tr>
-                            <tr>
-                                <td class='details-label'>Check-Out</td>
-                                <td class='details-value'>{$checkOut}</td>
+                                <td style='width: 50%; vertical-align: top;'>
+                                    <span class='label'>Booking Reference</span>
+                                    <span class='value'>{$bookingId}</span>
+                                </td>
+                                <td style='width: 50%; vertical-align: top; text-align: right;'>
+                                    <span class='label'>Sanctuary Category</span>
+                                    <span class='value'>" . strtoupper($roomName) . "</span>
+                                </td>
                             </tr>
                         </table>
                     </div>
 
-                    <!-- Invoice Statement -->
-                    <table class='invoice-table'>
-                      <thead>
-                        <tr>
-                          <th style='width: 60%;'>Description</th>
-                          <th style='text-align: center; width: 10%;'>Qty</th>
-                          <th style='text-align: right; width: 30%;'>Amount</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>
-                            <strong style='color: #334155; text-transform: uppercase;'>{$roomName}</strong><br />
-                            <span style='font-size: 11px; color: #94a3b8;'>Stay of {$nights} Night(s) @ " . number_format($nightlyRate, 2) . " / NT</span>
-                          </td>
-                          <td style='text-align: center;'>1</td>
-                          <td style='text-align: right;'>₹" . number_format($subtotal, 2) . "</td>
-                        </tr>
-                        " . ($cleaningFee > 0 ? "
-                        <tr>
-                          <td style='color: #64748b;'>Cleaning & Setup Service</td>
-                          <td style='text-align: center;'>1</td>
-                          <td style='text-align: right;'>₹" . number_format($cleaningFee, 2) . "</td>
-                        </tr>
-                        " : "") . "
-                        " . ($serviceFee > 0 ? "
-                        <tr>
-                          <td style='color: #64748b;'>Hotel Service & GST</td>
-                          <td style='text-align: center;'>1</td>
-                          <td style='text-align: right;'>₹" . number_format($serviceFee, 2) . "</td>
-                        </tr>
-                        " : "") . "
-                        <tr>
-                          <td colspan='2' style='text-align: right; font-weight: bold; border-top: 1px solid #e2e8f0; padding-top: 15px;'>GRAND TOTAL (PAID)</td>
-                          <td class='grand-total' style='border-top: 1px solid #e2e8f0; padding-top: 15px;'>₹" . number_format($amount, 2) . "</td>
-                        </tr>
-                      </tbody>
-                    </table>
-
-                    <!-- Check-in QR Code -->
-                    <div class='qr-container'>
-                        <h3>Reception QR</h3>
-                        <img class='qr-img' src='https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl=" . urlencode($bookingId) . "' alt='Booking QR' />
-                        <p class='qr-desc'>Present at front desk to check-in</p>
+                    <div style='margin-top: 25px;'>
+                        <table style='width: 100%;'>
+                            <tr>
+                                <td style='width: 50%;'>
+                                    <span class='label'>Check-in Date</span>
+                                    <span class='value'>{$checkIn}</span>
+                                    <span style='font-size: 10px; color: #a0aec0; display: block;'>After 12:00 PM</span>
+                                </td>
+                                <td style='width: 50%; text-align: right;'>
+                                    <span class='label'>Check-out Date</span>
+                                    <span class='value'>{$checkOut}</span>
+                                    <span style='font-size: 10px; color: #a0aec0; display: block;'>Before 11:00 AM</span>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
-                    
-                    <p style='margin-top: 30px;'>If you require any assistance or would like to modify your stay, please reply directly to this email or call us at +91 73958 09991.</p>
-                    <p>We look forward to hosting you!</p>
-                    <p>Warm regards,<br><strong>The Subra Residency Team</strong></p>
+
+                    <table class='price-table'>
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th style='text-align: right;'>Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style='font-size: 14px;'>Accommodation ({$nights} Nights)</td>
+                                <td style='text-align: right; font-weight: 500;'>₹ " . number_format($subtotal, 2) . "</td>
+                            </tr>
+                            <tr>
+                                <td style='font-size: 14px;'>Service Fee & Taxes</td>
+                                <td style='text-align: right; font-weight: 500;'>₹ 1,350.00</td>
+                            </tr>
+                            <tr>
+                                <td class='total-row' style='padding-top: 20px;'>Total Amount Paid</td>
+                                <td class='total-row' style='text-align: right; padding-top: 20px;'>₹ " . number_format($amount, 2) . "</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
+
+                <div class='qr-section'>
+                    <div class='qr-code'>
+                        <img src='https://chart.googleapis.com/chart?cht=qr&chs=180x180&chl=" . urlencode($bookingId) . "' alt='Check-in QR' style='display: block;'>
+                    </div>
+                    <p style='font-size: 12px; color: #718096; margin-top: 15px; font-weight: 500;'>Scan at front desk for priority check-in</p>
+                </div>
+
                 <div class='footer'>
-                    Authorized Subra Residency Digital Invoice. All rights reserved.<br />
-                    L.B.S Road, Near Railway Station, Kumbakonam, Tamil Nadu
+                    <p>Subra Residency • L.B.S Road • Kumbakonam • Tamil Nadu</p>
+                    <p>Need help? Call +91 73958 09991 or reply to this email.</p>
                 </div>
             </div>
         </body>
         </html>";
 
-        $env = self::getEnvVars();
-        $smtp_server = "smtp-relay.brevo.com";
-        $port = 465;
-        $username = $env['BREVO_SENDER_EMAIL'] ?? '';
-        $password = $env['BREVO_API_KEY'] ?? '';
-        $from = $env['BREVO_SENDER_EMAIL'] ?? '';
-        $senderName = $env['BREVO_SENDER_NAME'] ?? 'Subra Residency';
+        // Call Brevo API (Transactional Email V3)
+        $data = [
+            'sender' => ['name' => $senderName, 'email' => $senderEmail],
+            'to' => [['email' => $toEmail, 'name' => $toName]],
+            'subject' => "Your Subra Residency Voucher - {$bookingId}",
+            'htmlContent' => $htmlContent
+        ];
 
-        $socket = fsockopen("ssl://" . $smtp_server, $port, $errno, $errstr, 15);
-        if (!$socket) {
-            error_log("Brevo SMTP connection failed: $errstr ($errno)");
+        $ch = curl_init('https://api.brevo.com/v3/smtp/email');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'api-key: ' . $apiKey,
+            'Content-Type: application/json',
+            'Accept: application/json'
+        ]);
+
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $error = curl_error($ch);
+        curl_close($ch);
+
+        if ($httpCode >= 200 && $httpCode < 300) {
+            $logMsg = "[" . date('Y-m-d H:i:s') . "] [Mailer] Email sent successfully to $toEmail (Booking $bookingId)\n";
+            file_put_contents(__DIR__ . '/../logs/payment.log', $logMsg, FILE_APPEND);
+            return true;
+        } else {
+            $logMsg = "[" . date('Y-m-d H:i:s') . "][Mailer] Brevo API Error (HTTP $httpCode): " . ($response ?: $error) . "\n";
+            file_put_contents(__DIR__ . '/../logs/payment.log', $logMsg, FILE_APPEND);
             return false;
         }
-
-        $read = function($socket) {
-            $response = "";
-            while ($line = fgets($socket, 512)) {
-                $response .= $line;
-                if (substr($line, 3, 1) == " ") {
-                    break;
-                }
-            }
-            return $response;
-        };
-
-        $send = function($socket, $cmd) use ($read) {
-            fputs($socket, $cmd . "\r\n");
-            return $read($socket);
-        };
-
-        $res = $read($socket); // 220
-        $res .= $send($socket, "EHLO localhost"); // 250
-        $res .= $send($socket, "AUTH LOGIN"); // 334
-        $res .= $send($socket, base64_encode($username)); // 334
-        $res .= $send($socket, base64_encode($password)); // 235 (Success)
-        
-        if (strpos($res, "235") === false) {
-            error_log("Brevo SMTP Auth Failed:\n" . $res);
-            fclose($socket);
-            return false;
-        }
-
-        $send($socket, "MAIL FROM: <$from>"); // 250
-        $send($socket, "RCPT TO: <$toEmail>"); // 250
-        $send($socket, "DATA"); // 354
-        
-        // Headers & Body
-        $headers = "MIME-Version: 1.0\r\n";
-        $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
-        $headers .= "From: \"$senderName\" <$from>\r\n";
-        $headers .= "To: \"$toName\" <$toEmail>\r\n";
-        $headers .= "Subject: Booking Confirmed - $bookingId\r\n";
-        $headers .= "Date: " . date("r") . "\r\n";
-        
-        fputs($socket, $headers . "\r\n" . $htmlContent . "\r\n.\r\n");
-        $dataResp = $read($socket); // 250
-        
-        $send($socket, "QUIT"); // 221
-        fclose($socket);
-
-        if (strpos($dataResp, "250") === false) {
-            error_log("Brevo SMTP Data Send Failed: " . $dataResp);
-            return false;
-        }
-
-        return true;
     }
 }
 ?>

@@ -1,6 +1,4 @@
-// frontend/src/lib/api.ts
-
-const API_BASE_URL = 'http://localhost:8001/api/index.php';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8001/api/index.php';
 
 export const fetchRoomCategories = async () => {
     try {
@@ -114,6 +112,19 @@ export const fetchBookingForRoomDate = async (roomId: number, date: string) => {
         return await resp.json();
     } catch (e) {
         console.error(e);
+        return null;
+    }
+};
+export const updateRoomDetails = async (payload: any) => {
+    try {
+        const response = await fetch(`${API_BASE_URL}/rooms/updateDetails`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        return await response.json();
+    } catch (error) {
+        console.error('API Error:', error);
         return null;
     }
 };

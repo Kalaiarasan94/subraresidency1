@@ -101,7 +101,8 @@ export const RoomBookingFlow = ({ isOpen, onClose, room }: { isOpen: boolean, on
             // redirect to dedicated booking page with state
             navigate('/bookings', { state: { bookingId, room, guest: bookingDetails, amount: amountValue, checkIn: bookingDetails.checkIn, checkOut: bookingDetails.checkOut } });
           } else {
-            alert('Payment verification failed. Contact support.');
+            const errorMsg = verifyResp?.message || 'Payment verification failed. Please contact support.';
+            alert(errorMsg);
           }
         },
         prefill: {
