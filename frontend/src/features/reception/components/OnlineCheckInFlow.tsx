@@ -3,14 +3,16 @@ import { Card, CardContent } from '../../../components/ui/card';
 import { Button } from '../../../components/ui/button';
 import { 
   Search, QrCode, UserCheck, ShieldCheck, 
-  CreditCard, LogIn, ChevronRight, CheckCircle,
-  FileText, Smartphone, Printer, Mail,
-  Calendar, Users, Hotel
+  CreditCard, ChevronRight, CheckCircle,
+  Smartphone, Printer, FileText, Mail,
+  Calendar, Users, Hotel, Loader2,
+  Check, AlertCircle, Trash2
 } from 'lucide-react';
+import { API_BASE_URL, BACKEND_URL } from '../../../lib/api';
 
 const StepIndicator = ({ steps, currentStep }: any) => (
   <div className="flex items-center justify-center space-x-4 mb-12">
-    {steps.map((step: string, i: number) => (
+    {steps.map((_step: string, i: number) => (
       <div key={i} className="flex items-center">
         <div className={`w-10 h-10 rounded-2xl flex items-center justify-center font-black text-xs transition-all duration-500 ${
           i <= currentStep ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-900/20' : 'bg-slate-100 text-slate-400'
@@ -25,27 +27,73 @@ const StepIndicator = ({ steps, currentStep }: any) => (
   </div>
 );
 
-export const OnlineCheckInFlow = () => {
+const ALREADY_PROCESSED_STATUSES = ['checked-in', 'checked-out', 'completed'];
+
+type OnlineCheckInFlowProps = {
+  prefillBookingId?: string | null;
+  onPrefillConsumed?: () => void;
+};
+
+export const OnlineCheckInFlow = ({ prefillBookingId, onPrefillConsumed }: OnlineCheckInFlowProps = {}) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [bookingId, setBookingId] = useState('');
   const [bookingData, setBookingData] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [availableRooms, setAvailableRooms] = useState<any[]>([]);
+  const [loadingRooms, setLoadingRooms] = useState(false);
+  const [isFinalizing, setIsFinalizing] = useState(false);
+  const [guestEmail, setGuestEmail] = useState('');
+  
+  // Interactive doc verification states
+  const [verifiedDocs, setVerifiedDocs] = useState<string[]>(['Aadhar Card']);
+  const [otherProofName, setOtherProofName] = useState('');
+  const toggleDoc = (doc: string) => {
+    setVerifiedDocs(prev =>
+      prev.includes(doc) ? prev.filter(d => d !== doc) : [...prev, doc]
+    );
+    if (doc === 'Other Proofs' && verifiedDocs.includes('Other Proofs')) {
+      setOtherProofName('');
+    }
+  };
 
-  const steps = ['Identity', 'Verify', 'Documents', 'Payment', 'Room', 'Success'];
+  // Payment status override
+  const [paymentStatusOverride, setPaymentStatusOverride] = useState<string>('');
+  const [selectedRoom, setSelectedRoom] = useState<any>(null);
+
+  const steps = ['Identity', 'Verify', 'Documents', 'Room', 'Payment', 'Success'];
 
   const handleNext = () => setCurrentStep(prev => Math.min(prev + 1, steps.length - 1));
   const handleBack = () => setCurrentStep(prev => Math.max(prev - 1, 0));
 
-  const findBooking = async () => {
-    if (!bookingId) return;
+  const resetFlow = () => {
+    setCurrentStep(0);
+    setBookingId('');
+    setBookingData(null);
+    setGuestEmail('');
+    setVerifiedDocs(['Aadhar Card']);
+    setOtherProofName('');
+    setPaymentStatusOverride('');
+    setAvailableRooms([]);
+    setLoadingRooms(false);
+    setError('');
+    setSelectedRoom(null);
+  };
+
+  const findBooking = async (idOverride?: string) => {
+    const targetId = idOverride ?? bookingId;
+    if (!targetId) return;
     setLoading(true);
     setError('');
     try {
-       const resp = await fetch(`http://localhost:8001/api/index.php/bookings/view?id=${bookingId}`);
+       const resp = await fetch(`${API_BASE_URL}/bookings/view?booking_id=${targetId}`);
        const json = await resp.json();
        if (json.status === 'success') {
+         if (ALREADY_PROCESSED_STATUSES.includes(String(json.data.status).toLowerCase())) {
+           alert('This booking has already been checked in / allocated.');
+           setLoading(false);
+           return;
+         }
          setBookingData({
             id: json.data.booking_id,
             guest: json.data.guest_name,
@@ -58,6 +106,8 @@ export const OnlineCheckInFlow = () => {
             paid: `₹ ${json.data.total_amount}`,
             status: json.data.status
          });
+         setGuestEmail(json.data.guest_email || '');
+         setPaymentStatusOverride(json.data.payment_status === 'success' ? 'success' : 'pending');
          handleNext();
        } else {
          setError('Reservation not found. Please verify the ID.');
@@ -69,24 +119,110 @@ export const OnlineCheckInFlow = () => {
     }
   };
 
+  // Auto-search when arriving here via a QR-scan notification click
   useEffect(() => {
-    if (currentStep === 4 && bookingData) {
+    if (prefillBookingId) {
+      setBookingId(prefillBookingId);
+      findBooking(prefillBookingId);
+      onPrefillConsumed?.();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [prefillBookingId]);
+
+  const updateCheckInPayment = async (status: string) => {
+    if (!bookingData) return;
+    try {
+      const resp = await fetch(`${API_BASE_URL}/management/updatePaymentStatus`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ booking_id: bookingData.id, status })
+      });
+      const json = await resp.json();
+      if (json.status === 'success') {
+        setBookingData((prev: any) => ({ ...prev, status: status === 'success' ? 'confirmed' : 'pending' }));
+        setPaymentStatusOverride(status === 'success' ? 'success' : 'pending');
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const deleteCheckInBooking = async () => {
+    if (!bookingData) return;
+    if (!window.confirm("Are you sure you want to cancel this booking and delete this record?")) return;
+    try {
+      const resp = await fetch(`${API_BASE_URL}/management/deletePayment`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ booking_id: bookingData.id })
+      });
+      const json = await resp.json();
+      if (json.status === 'success') {
+        alert("Booking cancelled and deleted successfully.");
+        // reset flow
+        setCurrentStep(0);
+        setBookingId('');
+        setBookingData(null);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    if (currentStep === 3 && bookingData) {
       const fetchRooms = async () => {
+        setLoadingRooms(true);
         try {
-          const resp = await fetch('http://localhost:8001/api/index.php/rooms/list');
+          // Use date-aware availability check so we only show rooms free for this stay
+          const checkin = bookingData.checkin || '';
+          const checkout = bookingData.checkout || '';
+          const resp = await fetch(
+            `${API_BASE_URL}/rooms/checkAvailability?checkin=${checkin}&checkout=${checkout}`
+          );
           const json = await resp.json();
-          if (json.status === 'success') {
-            const filtered = json.data.filter((r: any) => 
-               r.status === 'available' && 
-               (r.category_name === bookingData.category || !bookingData.category)
-            );
-            setAvailableRooms(filtered);
+          if (json.status === 'success' && Array.isArray(json.rooms)) {
+            setAvailableRooms(json.rooms);
+          } else {
+            // fallback: all non-maintenance rooms
+            const fallback = await fetch(`${API_BASE_URL}/rooms/list`);
+            const fJson = await fallback.json();
+            const roomsArray = Array.isArray(fJson) ? fJson : (fJson.rooms || fJson.data || []);
+            setAvailableRooms(roomsArray.filter((r: any) =>
+              r.status === 'Available' || r.status === 'available'
+            ));
           }
-        } catch (err) {}
+        } catch (err) {
+          console.error("Error loading available rooms:", err);
+        } finally {
+          setLoadingRooms(false);
+        }
       };
       fetchRooms();
     }
   }, [currentStep, bookingData]);
+
+  const handleSelectRoomAndCheckin = async (roomId: number) => {
+    setIsFinalizing(true);
+    try {
+      const resp = await fetch(`${API_BASE_URL}/admin/bookings/checkin`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ booking_id: bookingData.id, room_id: roomId })
+      });
+      const json = await resp.json();
+      if (json.status === 'success') {
+        handleNext();
+      } else {
+        alert(json.message || "Failed to complete check-in.");
+      }
+    } catch (e) {
+      console.error(e);
+      alert("Error contacting reservation check-in service.");
+    } finally {
+      setIsFinalizing(false);
+    }
+  };
 
   return (
     <div className="max-w-5xl mx-auto py-4">
@@ -117,8 +253,18 @@ export const OnlineCheckInFlow = () => {
                       className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl py-5 pl-14 pr-6 text-sm font-black text-slate-800 focus:outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 transition-all uppercase tracking-widest"
                     />
                  </div>
+                 <div className="relative group">
+                    <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-emerald-600 transition-colors" size={20} />
+                    <input 
+                      type="email" 
+                      placeholder="Guest Email Address" 
+                      value={guestEmail}
+                      onChange={(e) => setGuestEmail(e.target.value)}
+                      className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl py-5 pl-14 pr-6 text-sm font-black text-slate-800 focus:outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 transition-all tracking-widest"
+                    />
+                 </div>
                  {error && <p className="text-[10px] font-black text-rose-500 uppercase tracking-widest animate-bounce">{error}</p>}
-                 <Button disabled={loading} onClick={findBooking} className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-black py-8 rounded-2xl text-lg uppercase tracking-widest shadow-xl shadow-emerald-900/20 active:scale-95 transition-all">
+                 <Button disabled={loading} onClick={() => findBooking()} className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-black py-8 rounded-2xl text-lg uppercase tracking-widest shadow-xl shadow-emerald-900/20 active:scale-95 transition-all">
                     {loading ? 'Locating...' : 'Search Booking'}
                  </Button>
               </div>
@@ -128,12 +274,12 @@ export const OnlineCheckInFlow = () => {
 
         {currentStep === 1 && bookingData && (
           <Card className="border-none shadow-2xl rounded-[2rem] overflow-hidden bg-white animate-in zoom-in-95 duration-300">
-             <div className="bg-emerald-900 p-8 text-white flex justify-between items-center">
+             <div className="bg-emerald-950 p-8 text-white flex justify-between items-center bg-[#0b3a24]">
                 <div>
                    <p className="text-[10px] font-black uppercase text-emerald-400 tracking-widest mb-1">Reservation ID</p>
                    <h3 className="text-2xl font-black">{bookingData.id}</h3>
-                </div>
-                <div className="bg-emerald-800/50 p-4 rounded-2xl border border-white/10 text-right">
+                 </div>
+                 <div className="bg-emerald-900/50 p-4 rounded-2xl border border-white/10 text-right">
                    <p className="text-[10px] font-black uppercase text-emerald-400 tracking-widest mb-1">Status</p>
                    <span className="bg-emerald-500 text-white px-3 py-1 rounded-full text-[10px] font-black uppercase">{bookingData.status}</span>
                 </div>
@@ -145,7 +291,7 @@ export const OnlineCheckInFlow = () => {
                   { label: 'Stay Duration', value: `${bookingData.checkin} - ${bookingData.checkout}`, icon: Calendar },
                   { label: 'Category', value: bookingData.category, icon: Hotel },
                   { label: 'Guests', value: bookingData.guests, icon: Users },
-                  { label: 'Total', value: bookingData.total, icon: CreditCard, color: 'text-emerald-700' },
+                  { label: 'Total', value: bookingData.total, icon: CreditCard, color: 'text-emerald-700 font-bold' },
                 ].map((item, i) => (
                   <div key={i} className="space-y-1">
                     <p className="text-[9px] font-black uppercase text-slate-400 tracking-widest flex items-center gap-2">
@@ -173,37 +319,59 @@ export const OnlineCheckInFlow = () => {
                   </div>
                   <h3 className="text-xl font-black text-slate-800 uppercase tracking-tighter">Document Verification</h3>
                </div>
-               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  {['Aadhar Card', 'PAN Card', 'Address Proof'].map((doc, i) => (
-                    <div key={i} className="p-6 rounded-3xl bg-slate-50 border-2 border-slate-100 flex flex-col items-center text-center space-y-4">
-                       <CheckCircle className="text-emerald-500" size={24} />
-                       <p className="text-xs font-black text-slate-700 uppercase">{doc}</p>
-                    </div>
-                  ))}
+               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                  {['Aadhar Card', 'PAN Card', 'Address Proof', 'Other Proofs'].map((doc, i) => {
+                    const isChecked = verifiedDocs.includes(doc);
+                    return (
+                      <button
+                        key={i}
+                        onClick={() => toggleDoc(doc)}
+                        className={`p-6 rounded-3xl border-2 transition-all flex flex-col items-center justify-center text-center space-y-4 cursor-pointer focus:outline-none w-full ${
+                          isChecked 
+                            ? 'bg-emerald-50/40 border-emerald-500 shadow-lg shadow-emerald-500/5' 
+                            : 'bg-slate-50 border-slate-100 hover:border-slate-350'
+                        }`}
+                      >
+                         <div className={`w-8 h-8 rounded-full flex items-center justify-center border transition-all ${
+                           isChecked ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-slate-300 text-transparent bg-white'
+                         }`}>
+                           <Check size={16} strokeWidth={3} />
+                         </div>
+                         <p className="text-xs font-black text-slate-700 uppercase tracking-tight">{doc}</p>
+                      </button>
+                    );
+                  })}
                </div>
+
+               {verifiedDocs.includes('Other Proofs') && (
+                  <div className="animate-in fade-in slide-in-from-top-2 duration-300">
+                     <label className="block text-xs font-black text-slate-500 uppercase tracking-widest mb-2">Specify Other Proof Name</label>
+                     <input
+                        type="text"
+                        value={otherProofName}
+                        onChange={(e) => setOtherProofName(e.target.value)}
+                        placeholder="e.g. Passport, Voter ID, Driving Licence"
+                        className="w-full px-5 py-4 rounded-2xl border-2 border-slate-100 focus:border-emerald-500 focus:outline-none text-sm font-medium text-slate-700 transition-all"
+                        autoFocus
+                     />
+                  </div>
+               )}
+
                <div className="flex justify-between pt-8 border-t border-slate-100">
-                  <button onClick={handleBack} className="text-xs font-black text-slate-400 uppercase">Go Back</button>
-                  <Button onClick={handleNext} className="bg-emerald-600 hover:bg-emerald-700 text-white font-black px-12 rounded-xl py-6 h-auto uppercase">Approve & Continue</Button>
+                  <button onClick={handleBack} className="text-xs font-black text-slate-400 uppercase tracking-widest hover:text-slate-600 transition-colors">Go Back</button>
+                  <Button
+                     onClick={handleNext}
+                     disabled={verifiedDocs.includes('Other Proofs') && !otherProofName.trim()}
+                     className="bg-[#0b3a24] hover:bg-black text-white font-black px-12 rounded-xl py-6 h-auto uppercase tracking-widest transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-[#0b3a24]"
+                  >
+                     Approve & Continue
+                  </Button>
                </div>
             </CardContent>
           </Card>
         )}
 
         {currentStep === 3 && (
-          <Card className="border-none shadow-2xl rounded-[2rem] overflow-hidden bg-white">
-             <CardContent className="p-12 text-center space-y-10">
-                <div className="w-24 h-24 bg-emerald-50 rounded-full flex items-center justify-center text-emerald-500 mx-auto">
-                   <CreditCard size={48} />
-                </div>
-                <h3 className="text-2xl font-black text-slate-800 uppercase tracking-tighter">Payment Status: PAID</h3>
-                <Button onClick={handleNext} className="bg-emerald-600 hover:bg-emerald-700 text-white font-black px-16 rounded-xl py-6 h-auto uppercase tracking-widest shadow-xl shadow-emerald-900/20">
-                   Assign Room Key
-                </Button>
-             </CardContent>
-          </Card>
-        )}
-
-        {currentStep === 4 && (
           <Card className="border-none shadow-2xl rounded-[2rem] overflow-hidden bg-white">
              <CardContent className="p-12 space-y-10">
                 <div className="flex justify-between items-start">
@@ -213,15 +381,104 @@ export const OnlineCheckInFlow = () => {
                       <p className="text-lg font-black text-emerald-700">{availableRooms.length} Available Rooms</p>
                    </div>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                   {availableRooms.map(room => (
-                     <button key={room.id} onClick={handleNext} className="p-8 rounded-3xl border-2 border-slate-100 bg-white hover:border-emerald-500 hover:shadow-xl transition-all group overflow-hidden">
-                        <p className="text-3xl font-black text-slate-800 group-hover:text-emerald-700 transition-colors uppercase">{room.room_number}</p>
-                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-2">{room.category_name}</p>
-                     </button>
-                   ))}
-                   {availableRooms.length === 0 && <p className="col-span-full text-center py-10 font-black text-slate-400 uppercase">No rooms available in this category.</p>}
+                {loadingRooms ? (
+                  <div className="flex flex-col items-center justify-center py-20 gap-4">
+                     <Loader2 className="animate-spin text-emerald-600" size={36} />
+                     <span className="text-xs font-black uppercase tracking-widest text-slate-400">Scanning available rooms for this stay window...</span>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                     {availableRooms.map(room => (
+                       <button 
+                         key={room.id} 
+                         onClick={() => { setSelectedRoom(room); handleNext(); }} 
+                         className="p-8 rounded-3xl border-2 border-slate-100 bg-white hover:border-emerald-500 hover:shadow-xl transition-all group overflow-hidden"
+                       >
+                          <p className="text-3xl font-black text-slate-800 group-hover:text-emerald-700 transition-colors uppercase">{room.room_number}</p>
+                          <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-2">{room.category || room.room_name}</p>
+                       </button>
+                     ))}
+                     {availableRooms.length === 0 && (
+                       <div className="col-span-full text-center py-16 space-y-3">
+                         <p className="font-black text-slate-400 uppercase tracking-widest">No rooms available for this date range.</p>
+                         <p className="text-xs text-slate-300 font-medium">All rooms may be occupied — check the Room Calendar.</p>
+                       </div>
+                     )}
+                  </div>
+                )}
+                <div className="flex justify-between pt-8 border-t border-slate-100 w-full">
+                   <button onClick={handleBack} className="text-xs font-black text-slate-400 uppercase tracking-widest hover:text-slate-600 transition-colors">Go Back</button>
                 </div>
+             </CardContent>
+          </Card>
+        )}
+
+        {currentStep === 4 && (
+          <Card className="border-none shadow-2xl rounded-[2rem] overflow-hidden bg-white">
+             <CardContent className="p-12 text-center space-y-10">
+                <div className="w-24 h-24 bg-emerald-50 rounded-full flex items-center justify-center text-emerald-500 mx-auto">
+                   <CreditCard size={48} />
+                </div>
+                <div>
+                   <h3 className="text-2xl font-black text-slate-800 uppercase tracking-tighter">
+                      Payment Status: <span className={paymentStatusOverride === 'success' ? 'text-emerald-600' : 'text-amber-500'}>
+                         {paymentStatusOverride === 'success' ? 'PAID' : 'PENDING'}
+                      </span>
+                   </h3>
+                   {selectedRoom && (
+                     <p className="text-xs font-bold text-emerald-700 bg-emerald-50 px-4 py-2 rounded-xl inline-block mt-3 uppercase tracking-wider">
+                       Allocated: Room {selectedRoom.room_number} ({selectedRoom.category})
+                     </p>
+                   )}
+                   <p className="text-xs font-medium text-slate-400 mt-2">Manage Guest Payment & Settlement below</p>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-lg mx-auto">
+                   <button
+                      onClick={() => updateCheckInPayment('success')}
+                      className={`p-5 rounded-2xl border-2 font-black uppercase text-xs transition-all flex items-center justify-center gap-2 hover:shadow-md ${
+                         paymentStatusOverride === 'success'
+                            ? 'bg-emerald-50/70 border-emerald-500 text-emerald-700 shadow-sm'
+                            : 'bg-white border-slate-100 text-slate-700 hover:border-slate-200'
+                      }`}
+                   >
+                      <CheckCircle size={16} /> Paid
+                   </button>
+                   <button
+                      onClick={() => updateCheckInPayment('pending')}
+                      className={`p-5 rounded-2xl border-2 font-black uppercase text-xs transition-all flex items-center justify-center gap-2 hover:shadow-md ${
+                         paymentStatusOverride === 'pending'
+                            ? 'bg-amber-50/70 border-amber-500 text-amber-700 shadow-sm'
+                            : 'bg-white border-slate-100 text-slate-700 hover:border-slate-200'
+                      }`}
+                   >
+                      <AlertCircle size={16} /> Pending
+                   </button>
+                   <button
+                      onClick={deleteCheckInBooking}
+                      className="p-5 rounded-2xl border-2 border-rose-100 hover:border-rose-500 bg-white hover:bg-rose-50 text-rose-600 hover:text-rose-700 font-black uppercase text-xs transition-all flex items-center justify-center gap-2 hover:shadow-md"
+                   >
+                      <Trash2 size={16} /> Cancel & Delete
+                   </button>
+                </div>
+
+                {isFinalizing ? (
+                  <div className="flex flex-col items-center justify-center py-6 gap-3">
+                     <Loader2 className="animate-spin text-emerald-600" size={24} />
+                     <span className="text-xs font-black uppercase tracking-widest">Finalizing guest check-in & key mapping...</span>
+                  </div>
+                ) : (
+                  <div className="flex justify-between pt-8 border-t border-slate-100 max-w-lg mx-auto w-full">
+                     <button onClick={handleBack} className="text-xs font-black text-slate-400 uppercase tracking-widest hover:text-slate-600 transition-colors">Go Back</button>
+                     <Button 
+                       onClick={() => handleSelectRoomAndCheckin(selectedRoom?.id)} 
+                       disabled={!selectedRoom}
+                       className="bg-[#0b3a24] hover:bg-black text-white font-black px-12 rounded-xl py-6 h-auto uppercase tracking-widest shadow-xl shadow-[#0b3a24]/10 transition-all disabled:opacity-40"
+                     >
+                        Finalize Check-in & Confirm
+                     </Button>
+                  </div>
+                )}
              </CardContent>
           </Card>
         )}
@@ -235,17 +492,28 @@ export const OnlineCheckInFlow = () => {
                  <div className="space-y-4">
                     <h2 className="text-4xl font-black uppercase tracking-tighter">Check-in Complete</h2>
                     <p className="text-emerald-500/60 font-bold uppercase tracking-[0.4em] text-[10px]">Session Finalized Successfully</p>
-                 </div>
-                 <div className="flex justify-center gap-4">
-                    <button className="p-6 bg-white/5 hover:bg-white/10 rounded-2xl border border-white/5 transition-all group">
-                       <Printer className="text-emerald-500 group-hover:scale-110 transition-transform" />
-                    </button>
-                    <button className="p-6 bg-white/5 hover:bg-white/10 rounded-2xl border border-white/5 transition-all group">
-                       <Mail className="text-emerald-500 group-hover:scale-110 transition-transform" />
-                    </button>
-                    <Button onClick={() => window.location.reload()} className="bg-emerald-500 hover:bg-emerald-600 text-white font-black px-12 rounded-2xl py-6 h-auto uppercase tracking-widest shadow-2xl shadow-emerald-500/20">
-                       New Check-in
-                    </Button>
+                    <div className="flex justify-center flex-wrap gap-4">
+                     <button 
+                       onClick={() => window.open(`${BACKEND_URL}/admin_view_booking.php?booking_id=${bookingId}&print=1`, '_blank')}
+                       className="p-6 bg-white/5 hover:bg-white/10 rounded-2xl border border-white/5 transition-all group flex flex-col items-center gap-2"
+                     >
+                        <Printer className="text-emerald-400 group-hover:scale-110 transition-transform" />
+                        <span className="text-[10px] font-black uppercase tracking-widest text-emerald-400/80">Print Invoice</span>
+                     </button>
+                     <button 
+                       onClick={() => window.open(`${BACKEND_URL}/admin_view_booking.php?booking_id=${bookingId}`, '_blank')}
+                       className="p-6 bg-white/5 hover:bg-white/10 rounded-2xl border border-white/5 transition-all group flex flex-col items-center gap-2"
+                     >
+                        <FileText className="text-emerald-400 group-hover:scale-110 transition-transform" />
+                        <span className="text-[10px] font-black uppercase tracking-widest text-emerald-400/80">View Invoice</span>
+                     </button>
+                     <button 
+                       onClick={resetFlow} 
+                       className="p-6 bg-emerald-500 hover:bg-emerald-600 rounded-2xl transition-all group flex flex-col items-center justify-center gap-2 px-10"
+                     >
+                        <span className="text-[10px] font-black uppercase tracking-widest text-white">New Check-in</span>
+                     </button>
+                  </div>
                  </div>
               </CardContent>
            </Card>

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent } from '../../../components/ui/card';
 import { Button } from '../../../components/ui/button';
 import { Badge } from '../../../components/ui/badge';
+import { API_BASE_URL } from '../../../lib/api';
+
 
 interface Room {
   room_number: number;
@@ -32,7 +34,7 @@ export const RoomManagement: React.FC<RoomManagementProps> = ({ onAddRoom }) => 
   // Fetch categories from backend
   const fetchCategories = async () => {
     try {
-      const res = await fetch('http://localhost:8001/api/index.php/rooms/categories');
+      const res = await fetch(`${API_BASE_URL}/rooms/categories`);
       const data = await res.json();
       if (Array.isArray(data)) {
         setCategories(data);
@@ -48,7 +50,7 @@ export const RoomManagement: React.FC<RoomManagementProps> = ({ onAddRoom }) => 
   useEffect(() => {
     const fetchRooms = async () => {
       try {
-        const response = await fetch('http://localhost:8001/api/index.php/rooms/list');
+        const response = await fetch(`${API_BASE_URL}/rooms/list`);
         const data = await response.json();
         setRooms(data);
       } catch (err) {
@@ -63,7 +65,7 @@ export const RoomManagement: React.FC<RoomManagementProps> = ({ onAddRoom }) => 
   const handleCreateCategory = async () => {
     if (!newCategoryName.trim()) return;
     try {
-      const response = await fetch('http://localhost:8001/api/index.php/rooms/createCategory', {
+      const response = await fetch(`${API_BASE_URL}/rooms/createCategory`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
@@ -88,7 +90,7 @@ export const RoomManagement: React.FC<RoomManagementProps> = ({ onAddRoom }) => 
   const toggleStatus = async (room: Room) => {
     const newStatus = room.status === 'available' ? 'occupied' : 'available';
     try {
-      const response = await fetch('http://localhost:8001/api/index.php/rooms/updateStatus', {
+      const response = await fetch(`${API_BASE_URL}/rooms/updateStatus`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ room_number: room.room_number, status: newStatus }),
@@ -103,7 +105,7 @@ export const RoomManagement: React.FC<RoomManagementProps> = ({ onAddRoom }) => 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:8001/api/index.php/rooms/create', {
+      const response = await fetch(`${API_BASE_URL}/rooms/create`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

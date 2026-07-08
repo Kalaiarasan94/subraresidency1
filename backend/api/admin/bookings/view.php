@@ -9,7 +9,7 @@ $stmt = $db->prepare("SELECT b.*, bd.guests, bd.country, bd.address, bd.addition
 $stmt->execute([$booking_id]);
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 if (!$row) { http_response_code(404); echo json_encode(['status'=>'error','message'=>'not found']); exit; }
-$roomStmt = $db->prepare("SELECT r.* FROM booking_rooms br JOIN rooms r ON r.id = br.room_id WHERE br.booking_id = ?");
+$roomStmt = $db->prepare("SELECT r.* FROM booking_rooms br JOIN rooms_new r ON r.id = br.room_id WHERE br.booking_id = ?");
 $roomStmt->execute([$row['id']]);
 $rooms = $roomStmt->fetchAll(PDO::FETCH_ASSOC);
 $row['rooms']=$rooms;

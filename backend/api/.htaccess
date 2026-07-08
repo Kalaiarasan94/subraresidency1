@@ -1,0 +1,9 @@
+# Ensures extra path segments (e.g. index.php/rooms/list) reach PHP as PATH_INFO.
+# Needed for the single-front-controller routing in index.php.
+<IfModule mod_php7.c>
+  AcceptPathInfo On
+</IfModule>
+<IfModule mod_php.c>
+  AcceptPathInfo On
+</IfModule>
+AcceptPathInfo On

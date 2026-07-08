@@ -10,6 +10,7 @@ import {
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   BarChart, Bar, Cell, PieChart, Pie
 } from 'recharts';
+import { API_BASE_URL } from '../../../lib/api';
 
 export const AdminAnalyticsView = () => {
   const [loading, setLoading] = useState(true);
@@ -21,7 +22,7 @@ export const AdminAnalyticsView = () => {
 
   const fetchData = async () => {
      try {
-       const resp = await fetch('http://localhost:8001/api/index.php/dashboard/admin');
+       const resp = await fetch(`${API_BASE_URL}/dashboard/admin`);
        const json = await resp.json();
        if (json.status === 'success') {
          setData(json.data);

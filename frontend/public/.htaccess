@@ -1,0 +1,15 @@
+# Subra Residency - SPA routing for Apache/LiteSpeed (Hostinger)
+# Serves index.html for any path that isn't a real file/folder, so React Router
+# (BrowserRouter) can handle client-side routes like /rooms, /admin, /reception
+# without a 404 on refresh or direct link.
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Don't rewrite requests for the backend API or existing files/directories
+  RewriteCond %{REQUEST_URI} !^/backend/
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^ index.html [L]
+</IfModule>

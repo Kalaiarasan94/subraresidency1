@@ -1,0 +1,2 @@
+rooms count: 1
+rooms_new count: 5

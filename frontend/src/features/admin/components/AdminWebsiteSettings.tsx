@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../..
 import { Button } from '../../../components/ui/button';
 import { Input } from '../../../components/ui/input';
 import { Textarea } from '../../../components/ui/textarea';
+import { API_BASE_URL } from '../../../lib/api';
 
 interface WebsiteSettingsProps {
   onBack: () => void;
@@ -21,7 +22,7 @@ export const AdminWebsiteSettings: React.FC<WebsiteSettingsProps> = ({ onBack })
 
   const fetchSettings = async () => {
     try {
-      const response = await fetch('http://localhost:8001/api/index.php/settings');
+      const response = await fetch(`${API_BASE_URL}/settings`);
       const data = await response.json();
       setSettings(data);
     } catch (error) {
@@ -36,7 +37,7 @@ export const AdminWebsiteSettings: React.FC<WebsiteSettingsProps> = ({ onBack })
     setSaving(true);
     setMessage(null);
     try {
-      const response = await fetch('http://localhost:8001/api/index.php/settings', {
+      const response = await fetch(`${API_BASE_URL}/settings`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

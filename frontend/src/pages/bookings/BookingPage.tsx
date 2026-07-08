@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '../../components/ui/button';
 import { Card, CardContent } from '../../components/ui/card';
 import { 
   CheckCircle2, Download, CreditCard, ArrowLeft, Calendar, 
-  Users, Phone, Mail, MapPin, Globe, QrCode, FileText, Check, Loader2, Building
+  Users, Phone, Mail, MapPin, Globe, QrCode, Check, Loader2, Building
 } from 'lucide-react';
 import { fetchBookingById, createBooking, createPaymentOrder, verifyPayment } from '../../lib/api';
 import html2canvas from 'html2canvas';
@@ -57,7 +57,7 @@ export default function BookingPage() {
   useEffect(() => {
     const id = bookingId || state?.bookingIdFromQuery;
     if (id) {
-      QRCode.toDataURL(id, { width: 300, margin: 2 })
+      QRCode.toDataURL(`${window.location.origin}/checkin-confirm/${id}`, { width: 300, margin: 2 })
         .then((url) => setQrDataUrl(url))
         .catch((err) => console.error('Error generating QR:', err));
     }
@@ -143,9 +143,15 @@ export default function BookingPage() {
       const bid = bookingResp.booking_id;
 
       // 2. Request a Razorpay order from the backend
-      const orderResp = await createPaymentOrder({ booking_id: bid, amount: totalAmount });
+      let orderResp = null;
+      try {
+        orderResp = await createPaymentOrder({ booking_id: bid, amount: totalAmount });
+      } catch (err) {
+        console.error("Razorpay order creation error:", err);
+      }
+
       if (!orderResp || orderResp.status !== 'success') {
-        alert('Failed to generate a secure payment order.');
+        alert(orderResp?.message || 'Unable to start the payment. Please try again in a moment or contact reception.');
         setIsSubmitting(false);
         return;
       }

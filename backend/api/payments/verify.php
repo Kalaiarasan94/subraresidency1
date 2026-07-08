@@ -101,9 +101,43 @@ if (!empty($input['razorpay_payment_id']) && !empty($input['razorpay_order_id'])
         $room_id = null;
         if ($assignedRoom) {
             $room_id = $assignedRoom['room_id'];
+            
+            // Double check if assigned room is still available for these dates!
+            $checkAvail = $db->prepare("
+                SELECT id FROM room_availability 
+                WHERE room_id = ? AND status IN ('Booked', 'Maintenance') 
+                AND date >= ? AND date < ?
+            ");
+            $checkAvail->execute([$room_id, $booking['check_in_date'], $booking['check_out_date']]);
+            if ($checkAvail->rowCount() > 0) {
+                // Already booked! Reassign to another room inside rooms_new for this category
+                $catStmt = $db->prepare("SELECT category_id FROM rooms_new WHERE id = ?");
+                $catStmt->execute([$room_id]);
+                $catRow = $catStmt->fetch(PDO::FETCH_ASSOC);
+                $category_id = $catRow ? $catRow['category_id'] : null;
+                
+                if ($category_id) {
+                    $availStmt = $db->prepare("
+                        SELECT r.id FROM rooms_new r
+                        WHERE r.category_id = ? AND r.status != 'Maintenance'
+                        AND r.id NOT IN (
+                            SELECT ra.room_id FROM room_availability ra 
+                            WHERE ra.status IN ('Booked', 'Maintenance')
+                            AND ra.date >= ? AND ra.date < ?
+                        )
+                        ORDER BY r.room_number ASC
+                        LIMIT 1
+                    ");
+                    $availStmt->execute([$category_id, $booking['check_in_date'], $booking['check_out_date']]);
+                    if ($newRoomRow = $availStmt->fetch(PDO::FETCH_ASSOC)) {
+                        $room_id = $newRoomRow['id'];
+                        $db->prepare("UPDATE booking_rooms SET room_id = ? WHERE booking_id = ?")->execute([$room_id, $bookingDbId]);
+                    }
+                }
+            }
         } else {
-            // Assign first available room
-            $roomAssign = $db->query("SELECT id FROM rooms WHERE status = 'available' LIMIT 1");
+            // Assign first available room from rooms_new
+            $roomAssign = $db->query("SELECT id FROM rooms_new WHERE status != 'Maintenance' LIMIT 1");
             if ($roomAssignRow = $roomAssign->fetch(PDO::FETCH_ASSOC)) {
                 $room_id = $roomAssignRow['id'];
                 $db->prepare("INSERT INTO booking_rooms (booking_id, room_id, price_at_booking) VALUES (?, ?, ?)")
@@ -112,8 +146,8 @@ if (!empty($input['razorpay_payment_id']) && !empty($input['razorpay_order_id'])
         }
 
         if ($room_id) {
-            // Mark room as booked
-            $db->prepare("UPDATE rooms SET status = 'booked' WHERE id = ?")->execute([$room_id]);
+            // Room availability is blocked for the booked dates, but the physical room status 
+            // remains 'Available' until the guest actually checks in at the hotel.
 
             // Sync availability
             $startTs = strtotime($booking['check_in_date']);
@@ -138,7 +172,7 @@ if (!empty($input['razorpay_payment_id']) && !empty($input['razorpay_order_id'])
             $detailsQuery = $db->prepare("
                 SELECT rc.name as room_category_name
                 FROM booking_rooms br
-                JOIN rooms r ON r.id = br.room_id
+                JOIN rooms_new r ON r.id = br.room_id
                 JOIN room_categories rc ON rc.id = r.category_id
                 WHERE br.booking_id = ?
                 LIMIT 1

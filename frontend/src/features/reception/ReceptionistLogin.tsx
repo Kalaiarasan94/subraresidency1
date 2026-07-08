@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Card, CardContent } from '../../components/ui/card';
 import { Button } from '../../components/ui/button';
 import { Hotel, User, Lock, ArrowRight, Shield } from 'lucide-react';
+import { API_BASE_URL } from '../../lib/api';
 
 export const ReceptionistLogin = ({ onLogin }: any) => {
   const [username, setUsername] = useState('');
@@ -15,7 +16,7 @@ export const ReceptionistLogin = ({ onLogin }: any) => {
     setError('');
     
     try {
-      const resp = await fetch('http://localhost:8001/api/index.php/auth/receptionist/login', {
+      const resp = await fetch(`${API_BASE_URL}/auth/receptionist/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password })

@@ -3,26 +3,85 @@ import { Card, CardContent } from '../../../components/ui/card';
 import { Button } from '../../../components/ui/button';
 import { 
   Search, Filter, Globe, UserCheck, 
-  Settings, MoreVertical, Download, PlusSquare
+  Settings, Download, PlusSquare
 } from 'lucide-react';
-import { fetchAdminBookings } from '../../../lib/api';
+import { fetchAdminBookings, cancelBooking, BACKEND_URL } from '../../../lib/api';
 
 export const BookingManagement = () => {
   const [filterSource, setFilterSource] = useState('All');
+  const [searchTerm, setSearchTerm] = useState('');
   const [bookings, setBookings] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
+
+  const mapStatus = (s: string) => {
+    if (!s) return 'Pending';
+    const lower = s.toLowerCase();
+    if (lower === 'pending') return 'Pending';
+    if (lower === 'confirmed') return 'Confirmed';
+    if (lower === 'checked-in' || lower === 'stay-in') return 'Stay-in';
+    if (lower === 'checked-out') return 'Checked-out';
+    if (lower === 'cancelled') return 'Cancelled';
+    return s;
+  };
+
+  const mapSource = (s: string) => {
+    if (!s) return 'Online';
+    const lower = s.toLowerCase();
+    if (lower === 'website' || lower === 'online') return 'Online';
+    if (lower === 'walk-in' || lower === 'walkin' || lower === 'reception' || lower === 'manual') return 'Walk-in';
+    return 'Walk-in';
+  };
 
   useEffect(() => {
     setLoading(true);
     fetchAdminBookings(100, 0).then((res: any) => {
       setLoading(false);
-      if (res && res.status === 'success') setBookings(res.bookings.map((b: any) => ({ id: b.booking_id, guest: b.guest_name, room: b.rooms ? b.rooms.map((r:any)=>r.room_number).join(', ') : '', date: b.check_in_date + ' - ' + b.check_out_date, amount: '₹' + (b.paid_amount || b.total_amount), source: b.source || 'Website', status: b.status })));
+      if (res && res.status === 'success') {
+        setBookings(res.bookings.map((b: any) => ({ 
+          id: b.booking_id, 
+          guest: b.guest_name, 
+          room: b.rooms ? b.rooms.map((r: any) => r.room_number).join(', ') : '', 
+          date: b.check_in_date + ' - ' + b.check_out_date, 
+          amount: '₹' + (b.paid_amount || b.total_amount), 
+          source: mapSource(b.booking_source || b.source || 'Online'), 
+          status: mapStatus(b.status) 
+        })));
+      }
     }).catch(() => setLoading(false));
   }, []);
 
-  const filteredBookings = filterSource === 'All' 
-    ? bookings 
-    : bookings.filter(b => b.source === filterSource);
+  const handleCancel = async (bookingId: string) => {
+    if (!window.confirm(`Are you sure you want to cancel booking ${bookingId}? This will release the room reservation dates.`)) {
+      return;
+    }
+    
+    try {
+      const res = await cancelBooking(bookingId);
+      if (res && res.status === 'success') {
+        alert('Booking cancelled and room dates released successfully!');
+        // Update local state is cancelled
+        setBookings(prev => prev.map(b => b.id === bookingId ? { ...b, status: 'Cancelled' } : b));
+      } else {
+        alert(res?.message || 'Failed to cancel booking.');
+      }
+    } catch (e) {
+      console.error(e);
+      alert('An error occurred while cancelling the booking.');
+    }
+  };
+
+  const filteredBookings = bookings.filter(b => {
+    const matchesSource = filterSource === 'All' || b.source === filterSource;
+    if (!matchesSource) return false;
+    
+    if (!searchTerm.trim()) return true;
+    const term = searchTerm.toLowerCase();
+    return (
+      (b.guest && b.guest.toLowerCase().includes(term)) ||
+      (b.id && b.id.toLowerCase().includes(term)) ||
+      (b.room && b.room.toLowerCase().includes(term))
+    );
+  });
 
   return (
     <div className="space-y-8 font-sans">
@@ -46,7 +105,7 @@ export const BookingManagement = () => {
          {[
            { label: 'Site Bookings', source: 'Online', icon: Globe, color: 'text-blue-600', bg: 'bg-blue-50' },
            { label: 'Walk-in Sessions', source: 'Walk-in', icon: UserCheck, color: 'text-emerald-600', bg: 'bg-emerald-50' },
-           { label: 'Manual Entries', source: 'Manual', icon: Settings, color: 'text-amber-600', bg: 'bg-amber-50' },
+           { label: 'Total Bookings', source: 'All', icon: Settings, color: 'text-amber-600', bg: 'bg-amber-50' },
          ].map((stat, i) => (
            <Card key={i} className="border-none shadow-sm hover:translate-y-[-2px] transition-all cursor-pointer overflow-hidden" onClick={() => setFilterSource(stat.source)}>
              <CardContent className="p-6">
@@ -58,7 +117,7 @@ export const BookingManagement = () => {
                 </div>
                 <h4 className="text-sm font-bold text-slate-500 uppercase tracking-widest">{stat.label}</h4>
                 <p className="text-2xl font-bold text-slate-900 mt-1">
-                   {bookings.filter(b => b.source === stat.source).length} Active
+                   {stat.source === 'All' ? bookings.length : bookings.filter(b => b.source === stat.source).length} Active
                 </p>
              </CardContent>
            </Card>
@@ -68,7 +127,7 @@ export const BookingManagement = () => {
       {/* Filter Bar */}
       <div className="flex items-center gap-4 bg-white p-2 border border-slate-200 rounded-2xl shadow-sm">
          <div className="flex p-1 bg-slate-50 rounded-xl">
-            {['All', 'Online', 'Walk-in', 'Manual'].map(s => (
+            {['All', 'Online', 'Walk-in'].map(s => (
                <button 
                  key={s} 
                  onClick={() => setFilterSource(s)}
@@ -82,7 +141,12 @@ export const BookingManagement = () => {
          </div>
          <div className="flex-grow relative">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300" size={16} />
-            <input className="w-full bg-transparent border-none outline-none pl-12 text-sm font-medium text-slate-600" placeholder="Search guests, IDs, or rooms..." />
+            <input 
+               value={searchTerm}
+               onChange={(e) => setSearchTerm(e.target.value)}
+               className="w-full bg-transparent border-none outline-none pl-12 text-sm font-medium text-slate-600" 
+               placeholder="Search guests, IDs, or rooms..." 
+             />
          </div>
          <Button variant="ghost" className="p-3 text-slate-400"><Filter size={18}/></Button>
       </div>
@@ -146,10 +210,20 @@ export const BookingManagement = () => {
                     </td>
               <td className="px-8 py-5 text-right">
                 <div className="flex items-center justify-end gap-3">
-                 <button onClick={() => window.open(`/backend/admin_view_booking.php?booking_id=${bk.id}`, '_blank')} className="px-3 py-2 bg-emerald-50 text-emerald-700 rounded-md text-sm font-bold">View</button>
-                 <button className="p-2 text-slate-300 hover:text-slate-600 transition-colors">
-                  <MoreVertical size={18} />
-                 </button>
+                  <button 
+                    onClick={() => window.open(`${BACKEND_URL}/admin_view_booking.php?booking_id=${bk.id}`, '_blank')} 
+                    className="px-3.5 py-2 bg-emerald-50 text-emerald-700 rounded-xl text-xs font-bold hover:bg-emerald-100/70 transition-all hover:scale-105 active:scale-95"
+                  >
+                    View
+                  </button>
+                  {bk.status.toLowerCase() !== 'cancelled' && (
+                    <button 
+                      onClick={() => handleCancel(bk.id)} 
+                      className="px-3.5 py-2 bg-rose-50 text-rose-700 rounded-xl text-xs font-bold hover:bg-rose-100 transition-all hover:scale-105 active:scale-95 border border-rose-100"
+                    >
+                      Cancel
+                    </button>
+                  )}
                 </div>
               </td>
                   </tr>

@@ -1,20 +1,24 @@
 import { useState } from 'react';
 import { 
-  Users, Layout, Mail, Hotel, 
-  Settings, Shield, ChevronRight, 
+  Users, Layout, Mail, ChevronRight, 
   ArrowRight, UserCheck, Settings2,
-  Lock, Database, Bell, FileText,
+  Lock, Bell, FileText,
   DollarSign, MapPin, Globe, Share2, Code
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '../../../components/ui/card';
 import { Button } from '../../../components/ui/button';
 import { AdminWebsiteSettings } from './AdminWebsiteSettings';
+import { AdminUsersView } from './AdminUsersView';
 
 export const AdminSettingsView = () => {
   const [activeSection, setActiveSection] = useState<'main' | 'website' | 'users' | 'email' | 'rooms' | 'security'>('main');
 
   if (activeSection === 'website') {
     return <AdminWebsiteSettings onBack={() => setActiveSection('main')} />;
+  }
+
+  if (activeSection === 'users') {
+    return <AdminUsersView onBack={() => setActiveSection('main')} />;
   }
 
   return (
@@ -67,47 +71,6 @@ export const AdminSettingsView = () => {
           action="Manage Emails"
           onAction={() => setActiveSection('email')}
         />
-
-        {/* 4. Room & Pricing */}
-        <SettingsCard 
-          title="Room & Pricing"
-          icon={Hotel}
-          links={[
-            { label: 'Room Types', icon: Hotel },
-            { label: 'Pricing Management', icon: DollarSign },
-            { label: 'Taxes & Charges', icon: FileText },
-            { label: 'Season & Offers', icon: StarIcon }
-          ]}
-          action="Manage Pricing"
-          onAction={() => setActiveSection('rooms')}
-        />
-
-        {/* 5. Other Management */}
-        <SettingsCard 
-          title="Other Management"
-          icon={Settings}
-          links={[
-            { label: 'Guests', icon: Users },
-            { label: 'Documents', icon: FileText },
-            { label: 'Amenities', icon: Settings2 },
-            { label: 'Hotel Information', icon: MapPin }
-          ]}
-          action="Manage All"
-        />
-
-        {/* 6. Backups & Security */}
-        <SettingsCard 
-          title="Backups & Security"
-          icon={Shield}
-          links={[
-            { label: 'Database Backup', icon: Database },
-            { label: 'System Logs', icon: FileText },
-            { label: 'Activity Logs', icon: HistoryIcon },
-            { label: 'Security Settings', icon: Lock }
-          ]}
-          action="Manage Security"
-          onAction={() => setActiveSection('security')}
-        />
       </div>
     </div>
   );
@@ -148,10 +111,4 @@ const SettingsCard = ({ title, icon: Icon, links, action, onAction }: any) => (
   </Card>
 );
 
-const StarIcon = ({ size }: any) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-);
 
-const HistoryIcon = ({ size }: any) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></svg>
-);

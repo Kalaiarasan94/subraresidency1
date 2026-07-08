@@ -10,6 +10,9 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 // Global error handler for debugging 500 errors
 set_error_handler(function($errno, $errstr, $errfile, $errline) {
+    if (!(error_reporting() & $errno)) {
+        return false;
+    }
     $msg = "Error [$errno] $errstr in $errfile on line $errline";
     $log_file = __DIR__ . '/../logs/payment.log';
     if (!file_exists(dirname($log_file))) mkdir(dirname($log_file), 0777, true);
@@ -64,26 +67,41 @@ switch ($resource) {
         } elseif ($action == 'details') {
             $id = $_GET['id'] ?? null;
             $controller->getRoomById($id);
+        } elseif ($action == 'subRooms') {
+            $categoryId = $_GET['category_id'] ?? null;
+            $controller->getSubRooms($categoryId);
         } elseif ($action == 'updateStatus') {
             $controller->updateStatus();
         } elseif ($action == 'updateDetails') {
             $controller->updateRoomDetails();
+        } elseif ($action == 'uploadGalleryImage') {
+            $controller->uploadGalleryImage();
+        } elseif ($action == 'deleteGalleryImage') {
+            $controller->deleteGalleryImage();
         } elseif ($action == 'availabilityList') {
             include_once __DIR__ . '/admin/rooms/availability_list.php';
         } elseif ($action == 'availabilityBooking') {
             include_once __DIR__ . '/admin/rooms/availability_booking.php';
         } elseif ($action == 'availabilityUpdate') {
             include_once __DIR__ . '/admin/rooms/availability_update.php';
+        } elseif ($action == 'checkAvailability') {
+            include_once __DIR__ . '/admin/rooms/check_availability.php';
         }
         break;
 
     case 'admin':
-        // further nested: /admin/bookings/list
+        // further nested: /admin/bookings/list, /admin/bookings/cancel
         $sub = $parts[1] ?? '';
         $subAction = $parts[2] ?? '';
         if ($sub === 'bookings') {
             if ($subAction === 'list') {
                 include_once __DIR__ . '/admin/bookings/list.php';
+            } elseif ($subAction === 'cancel') {
+                include_once __DIR__ . '/admin/bookings/cancel.php';
+            } elseif ($subAction === 'checkin') {
+                include_once __DIR__ . '/admin/bookings/checkin.php';
+            } elseif ($subAction === 'view') {
+                include_once __DIR__ . '/admin/bookings/view.php';
             }
         }
         break;
@@ -97,6 +115,8 @@ switch ($resource) {
             include_once __DIR__ . '/admin/rooms/booking_view.php';
         } elseif ($action == 'qrScan') {
             include_once __DIR__ . '/bookings/qr_scan.php';
+        } elseif ($action == 'sendConfirmation') {
+            $controller->sendConfirmation();
         }
         break;
 
@@ -144,6 +164,10 @@ switch ($resource) {
             $controller->getSettlements();
         } elseif ($action == 'logs') {
             $controller->getStayLogs();
+        } elseif ($action == 'updatePaymentStatus') {
+            $controller->updatePaymentStatus();
+        } elseif ($action == 'deletePayment') {
+            $controller->deletePayment();
         }
         break;
 
@@ -154,6 +178,20 @@ switch ($resource) {
             $controller->getAllSettings();
         } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $controller->updateSettings();
+        }
+        break;
+
+    case 'users':
+        include_once __DIR__ . '/../controllers/UserController.php';
+        $controller = new UserController();
+        if ($action == 'list') {
+            $controller->getUsers();
+        } elseif ($action == 'create') {
+            $controller->createUser();
+        } elseif ($action == 'update') {
+            $controller->updateUser();
+        } elseif ($action == 'delete') {
+            $controller->deleteUser();
         }
         break;
 

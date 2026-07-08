@@ -21,10 +21,13 @@ export const CustomerPortal = () => {
     guests: '2 Guests'
   });
 
-  const handleBookRoom = (room: any) => {
+  const handleBookRoom = (room: any, dates?: { checkIn: string; checkOut: string }) => {
     setDetailedRoom(null);
-    // Navigate to the full-page booking flow passing room and current searchFilters state
-    navigate('/bookings', { state: { room, searchFilters } });
+    // Dates picked directly on the room detail page (if any) override the top-bar search filters
+    const effectiveFilters = dates ? { ...searchFilters, ...dates } : searchFilters;
+    if (dates) setSearchFilters(effectiveFilters);
+    // Navigate to the full-page booking flow passing room and the effective search filters
+    navigate('/bookings', { state: { room, searchFilters: effectiveFilters } });
   };
 
   const handleRoomClick = (room: any) => {
@@ -50,7 +53,7 @@ export const CustomerPortal = () => {
           <RoomDetailPage 
             room={detailedRoom} 
             onBack={() => setDetailedRoom(null)} 
-            onBook={() => handleBookRoom(detailedRoom)}
+            onBook={(dates) => handleBookRoom(detailedRoom, dates)}
             searchFilters={searchFilters}
           />
         ) : (

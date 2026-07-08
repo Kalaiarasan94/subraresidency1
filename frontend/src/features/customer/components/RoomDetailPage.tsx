@@ -1,7 +1,7 @@
 // react hooks imported below (useState, useEffect)
-import { 
-  ShieldCheck, ArrowLeft, Star, MapPin, 
-  Info, CheckCircle2, User, Bed, Ruler
+import {
+  ShieldCheck, ArrowLeft, Star, MapPin,
+  Info, CheckCircle2, User, Bed, Ruler, Calendar, AlertTriangle
 } from 'lucide-react';
 import { Button } from '../../../components/ui/button';
 import { Card, CardContent } from '../../../components/ui/card';
@@ -12,9 +12,11 @@ import { fetchRoomAvailability } from '../../../lib/api';
 interface Props {
   room: any;
   onBack: () => void;
-  onBook: () => void;
+  onBook: (dates: { checkIn: string; checkOut: string }) => void;
   searchFilters?: any;
 }
+
+const toISODate = (d: Date) => d.toISOString().slice(0, 10);
 
 // Helper: prevent double-₹ and format consistently
 const formatPrice = (val: any): string => {
@@ -30,14 +32,59 @@ export const RoomDetailPage: React.FC<Props> = ({ room, onBack, onBook, searchFi
 
   const [availability, setAvailability] = useState<any>({});
 
+  const today = toISODate(new Date());
+  const tomorrow = (() => {
+    const d = new Date();
+    d.setDate(d.getDate() + 1);
+    return toISODate(d);
+  })();
+
+  // Dates are editable right here, whether or not the guest already searched from the top bar —
+  // seeded from searchFilters when available, otherwise today/tomorrow.
+  const [localCheckIn, setLocalCheckIn] = useState(searchFilters?.checkIn || today);
+  const [localCheckOut, setLocalCheckOut] = useState(searchFilters?.checkOut || tomorrow);
+
+  const minCheckOut = (() => {
+    const d = new Date(localCheckIn || today);
+    d.setDate(d.getDate() + 1);
+    return toISODate(d);
+  })();
+
+  const handleCheckInChange = (value: string) => {
+    setLocalCheckIn(value);
+    if (localCheckOut && localCheckOut <= value) {
+      const d = new Date(value);
+      d.setDate(d.getDate() + 1);
+      setLocalCheckOut(toISODate(d));
+    }
+  };
+
+  // Calendar window starts from the guest's selected check-in date (falls back to today)
+  const calendarStart = (() => {
+    const d = localCheckIn ? new Date(localCheckIn) : new Date();
+    return isNaN(d.getTime()) ? new Date() : d;
+  })();
+
+  // Nights = difference between selected check-in/check-out (minimum 1)
+  const nights = (() => {
+    if (!localCheckIn || !localCheckOut) return 1;
+    const inD = new Date(localCheckIn);
+    const outD = new Date(localCheckOut);
+    const diff = Math.round((outD.getTime() - inD.getTime()) / 86400000);
+    return diff > 0 ? diff : 1;
+  })();
+
+  // Fetch window covers at least 14 days, or the full stay if longer, so validation below is accurate
+  const calendarDays = Math.max(14, nights + 1);
+
   useEffect(() => {
     const load = async () => {
       if (!room || !room.id) return;
-      const start = new Date();
-      const end = new Date();
-      end.setDate(end.getDate() + 13); // next 14 days
-      const startStr = start.toISOString().slice(0,10);
-      const endStr = end.toISOString().slice(0,10);
+      const start = new Date(calendarStart);
+      const end = new Date(calendarStart);
+      end.setDate(end.getDate() + calendarDays - 1);
+      const startStr = toISODate(start);
+      const endStr = toISODate(end);
       const data = await fetchRoomAvailability(room.id, startStr, endStr);
       const map: any = {};
       if (Array.isArray(data)) {
@@ -46,12 +93,39 @@ export const RoomDetailPage: React.FC<Props> = ({ room, onBack, onBook, searchFi
       setAvailability(map);
     };
     load();
-  }, [room]);
+  }, [room, localCheckIn, calendarDays]);
+
+  // Block reservation if any night of the selected stay is already Booked/Maintenance
+  const blockedDates: string[] = (() => {
+    if (!localCheckIn || !localCheckOut) return [];
+    const blocked: string[] = [];
+    const d = new Date(localCheckIn);
+    const end = new Date(localCheckOut);
+    while (d < end) {
+      const key = toISODate(d);
+      const status = availability[key];
+      if (status === 'Booked' || status === 'Maintenance') blocked.push(key);
+      d.setDate(d.getDate() + 1);
+    }
+    return blocked;
+  })();
+  const isStayBlocked = blockedDates.length > 0;
 
   // --- Dynamic data mapping from Admin DB ---
   const title = room.title || room.room_name || 'Luxury Sanctuary';
   const price = formatPrice(room.price || room.base_price);
-  const numericRate = parseInt(String(room.base_price || room.price_24h || room.price || '3500').replace(/[^0-9]/g, ''), 10) || 3500;
+  // parseFloat (not a digit-stripping regex) so "2700.00" reads as 2700, not 270000
+  const numericRate = Math.round(parseFloat(String(room.base_price || room.price_24h || room.price || '3500')) || 3500);
+
+  const roomFeeTotal = numericRate * nights;
+  const cleaningFee = 500;
+  const serviceFee = 850;
+  const grandTotal = roomFeeTotal + cleaningFee + serviceFee;
+
+  const handleReserve = () => {
+    if (isStayBlocked) return;
+    onBook({ checkIn: localCheckIn, checkOut: localCheckOut });
+  };
 
   // Images
   const mainImage = room.featured_image || room.image || 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&q=80';
@@ -96,8 +170,9 @@ export const RoomDetailPage: React.FC<Props> = ({ room, onBack, onBook, searchFi
               <p className="text-sm font-bold text-catalogue-green uppercase">{title}</p>
             </div>
             <Button
-              onClick={onBook}
-              className="bg-catalogue-green text-white hover:bg-catalogue-gold font-bold uppercase tracking-widest text-[11px] px-8 py-6 rounded-xl shadow-lg"
+              onClick={handleReserve}
+              disabled={isStayBlocked}
+              className="bg-catalogue-green text-white hover:bg-catalogue-gold font-bold uppercase tracking-widest text-[11px] px-8 py-6 rounded-xl shadow-lg disabled:opacity-40 disabled:hover:bg-catalogue-green"
             >
               Reserve Now
             </Button>
@@ -122,24 +197,24 @@ export const RoomDetailPage: React.FC<Props> = ({ room, onBack, onBook, searchFi
         </div>
 
         {/* Gallery */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-16 h-[550px]">
-          <div className="md:col-span-2 h-full rounded-2xl overflow-hidden group border border-slate-100 shadow-sm relative">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-16 h-[550px] min-h-0">
+          <div className="md:col-span-2 h-full min-h-0 rounded-2xl overflow-hidden group border border-slate-100 shadow-sm relative">
             <img src={galleryImages[0]} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" alt="Main" />
             <div className="absolute inset-0 bg-black/5" />
           </div>
-          <div className="grid grid-rows-2 h-full gap-4">
-            <div className="rounded-2xl overflow-hidden group border border-slate-100 shadow-sm">
+          <div className="grid grid-rows-2 h-full min-h-0 gap-4">
+            <div className="min-h-0 rounded-2xl overflow-hidden group border border-slate-100 shadow-sm">
               <img src={galleryImages[1] || galleryImages[0]} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Detail 1" />
             </div>
-            <div className="rounded-2xl overflow-hidden group border border-slate-100 shadow-sm">
+            <div className="min-h-0 rounded-2xl overflow-hidden group border border-slate-100 shadow-sm">
               <img src={galleryImages[2] || galleryImages[0]} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Detail 2" />
             </div>
           </div>
-          <div className="grid grid-rows-2 h-full gap-4">
-            <div className="rounded-2xl overflow-hidden group border border-slate-100 shadow-sm">
+          <div className="grid grid-rows-2 h-full min-h-0 gap-4">
+            <div className="min-h-0 rounded-2xl overflow-hidden group border border-slate-100 shadow-sm">
               <img src={galleryImages[3] || galleryImages[0]} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Detail 3" />
             </div>
-            <div className="rounded-2xl overflow-hidden group border border-slate-100 shadow-sm relative">
+            <div className="min-h-0 rounded-2xl overflow-hidden group border border-slate-100 shadow-sm relative">
               <img src={galleryImages[4] || galleryImages[0]} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Detail 4" />
               <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                 <span className="text-white font-bold text-xs uppercase tracking-widest">Show All</span>
@@ -244,14 +319,32 @@ export const RoomDetailPage: React.FC<Props> = ({ room, onBack, onBook, searchFi
                   </div>
 
                   <div className="bg-slate-50 rounded-2xl p-4 border border-slate-100">
-                    <div className="grid grid-cols-2 pb-4 mb-4 border-b border-slate-200">
+                    <div className="grid grid-cols-2 gap-3 pb-4 mb-4 border-b border-slate-200">
                       <div className="space-y-1">
                         <p className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">Check-In</p>
-                        <p className="text-xs font-bold text-slate-800 font-sans">{searchFilters?.checkIn || 'Select Date'}</p>
+                        <div className="relative">
+                          <Calendar size={12} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-catalogue-gold pointer-events-none" />
+                          <input
+                            type="date"
+                            value={localCheckIn}
+                            min={today}
+                            onChange={(e) => handleCheckInChange(e.target.value)}
+                            className="w-full bg-white border border-slate-200 rounded-lg py-2 pl-7 pr-1 text-[11px] font-bold text-slate-800 font-sans focus:outline-none focus:ring-2 focus:ring-catalogue-gold/30"
+                          />
+                        </div>
                       </div>
-                      <div className="space-y-1 border-l border-slate-200 pl-4">
+                      <div className="space-y-1">
                         <p className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">Check-Out</p>
-                        <p className="text-xs font-bold text-slate-800 font-sans">{searchFilters?.checkOut || 'Select Date'}</p>
+                        <div className="relative">
+                          <Calendar size={12} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-catalogue-gold pointer-events-none" />
+                          <input
+                            type="date"
+                            value={localCheckOut}
+                            min={minCheckOut}
+                            onChange={(e) => setLocalCheckOut(e.target.value)}
+                            className="w-full bg-white border border-slate-200 rounded-lg py-2 pl-7 pr-1 text-[11px] font-bold text-slate-800 font-sans focus:outline-none focus:ring-2 focus:ring-catalogue-gold/30"
+                          />
+                        </div>
                       </div>
                     </div>
                     <div className="space-y-1">
@@ -259,12 +352,12 @@ export const RoomDetailPage: React.FC<Props> = ({ room, onBack, onBook, searchFi
                       <p className="text-xs font-bold text-slate-800 font-sans tabular-nums">{searchFilters?.guests || `${adults} Guests`}</p>
                     </div>
                     <div className="mt-4">
-                      <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-3">Availability (next 14 days)</p>
+                      <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-3">Availability (14 days from check-in)</p>
 
                       {/* 14-day grid: two rows of 7 */}
                       <div className="grid grid-cols-7 gap-2">
                         {Array.from({ length: 14 }).map((_, i) => {
-                          const d = new Date();
+                          const d = new Date(calendarStart);
                           d.setDate(d.getDate() + i);
                           const key = d.toISOString().slice(0, 10);
                           const status = (availability && availability[key]) || 'Available';
@@ -318,29 +411,39 @@ export const RoomDetailPage: React.FC<Props> = ({ room, onBack, onBook, searchFi
                     </div>
                   </div>
 
+                  {isStayBlocked && (
+                    <div className="flex items-start gap-3 bg-rose-50 border border-rose-200 rounded-xl p-4">
+                      <AlertTriangle size={16} className="text-rose-500 shrink-0 mt-0.5" />
+                      <p className="text-xs font-bold text-rose-700 leading-relaxed">
+                        This room isn't available for every night of your selected stay. Please choose different dates.
+                      </p>
+                    </div>
+                  )}
+
                   <Button
-                    onClick={onBook}
-                    className="w-full bg-catalogue-green hover:bg-catalogue-gold text-white font-bold uppercase tracking-[0.3em] py-10 rounded-2xl shadow-xl transition-all active:scale-95 text-xs"
+                    onClick={handleReserve}
+                    disabled={isStayBlocked}
+                    className="w-full bg-catalogue-green hover:bg-catalogue-gold text-white font-bold uppercase tracking-[0.3em] py-10 rounded-2xl shadow-xl transition-all active:scale-95 text-xs disabled:opacity-40 disabled:hover:bg-catalogue-green disabled:cursor-not-allowed"
                   >
-                    Begin Reservation
+                    {isStayBlocked ? 'Unavailable For These Dates' : 'Begin Reservation'}
                   </Button>
 
                   <div className="space-y-4 pt-4 text-[11px] font-bold text-slate-500 uppercase tracking-widest">
                     <div className="flex justify-between">
-                      <span>Room Fee</span>
-                      <span className="text-slate-800 font-bold font-sans tabular-nums">{price}</span>
+                      <span>Room Fee {nights > 1 ? `(${nights} nights)` : ''}</span>
+                      <span className="text-slate-800 font-bold font-sans tabular-nums">₹{roomFeeTotal.toLocaleString('en-IN')}</span>
                     </div>
                     <div className="flex justify-between">
                       <span>Cleaning</span>
-                      <span className="text-slate-800 font-bold font-sans tabular-nums">₹500</span>
+                      <span className="text-slate-800 font-bold font-sans tabular-nums">₹{cleaningFee.toLocaleString('en-IN')}</span>
                     </div>
                     <div className="flex justify-between pb-4 border-b border-slate-100">
                       <span>Service</span>
-                      <span className="text-slate-800 font-bold font-sans tabular-nums">₹850</span>
+                      <span className="text-slate-800 font-bold font-sans tabular-nums">₹{serviceFee.toLocaleString('en-IN')}</span>
                     </div>
                     <div className="flex justify-between items-center pt-4">
                       <span className="text-sm font-bold text-catalogue-green">Total</span>
-                      <span className="text-lg font-black text-catalogue-green font-sans tabular-nums">₹{(numericRate + 1350).toLocaleString('en-IN')}</span>
+                      <span className="text-lg font-black text-catalogue-green font-sans tabular-nums">₹{grandTotal.toLocaleString('en-IN')}</span>
                     </div>
                   </div>
                 </CardContent>

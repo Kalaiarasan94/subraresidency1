@@ -28,9 +28,9 @@ class DashboardController {
             $monthly_revenue = $this->db->query("SELECT SUM(amount) FROM payments WHERE MONTH(payment_date) = '$thisMonth' AND YEAR(payment_date) = '$thisYear' AND status = 'success'")->fetchColumn() ?? 0;
             
             $rooms_total = $this->db->query("SELECT COUNT(*) FROM rooms_new")->fetchColumn();
-            $rooms_available = $this->db->query("SELECT COUNT(*) FROM rooms_new WHERE status = 'available'")->fetchColumn();
-            $rooms_occupied = $this->db->query("SELECT COUNT(*) FROM rooms_new WHERE status = 'booked'")->fetchColumn();
-            $rooms_maintenance = $this->db->query("SELECT COUNT(*) FROM rooms_new WHERE status = 'maintenance'")->fetchColumn();
+            $rooms_available = $this->db->query("SELECT COUNT(*) FROM rooms_new WHERE status = 'Available'")->fetchColumn();
+            $rooms_occupied = $this->db->query("SELECT COUNT(*) FROM rooms_new WHERE status = 'Occupied'")->fetchColumn();
+            $rooms_maintenance = $this->db->query("SELECT COUNT(*) FROM rooms_new WHERE status = 'Maintenance'")->fetchColumn();
             
             $confirmed_bookings = $this->db->query("SELECT COUNT(*) FROM bookings WHERE status = 'confirmed'")->fetchColumn();
             $cancelled_bookings = $this->db->query("SELECT COUNT(*) FROM bookings WHERE status = 'cancelled'")->fetchColumn();
@@ -117,11 +117,16 @@ class DashboardController {
             $maintenance = $this->db->query("SELECT COUNT(*) FROM rooms_new WHERE status = 'Maintenance'")->fetchColumn();
             $total_rooms = $this->db->query("SELECT COUNT(*) FROM rooms_new")->fetchColumn();
 
-            // 2. RECENT ONLINE BOOKINGS
-            $recent_stmt = $this->db->query("SELECT booking_id, guest_name, check_in_date, room_id, status 
-                                             FROM bookings 
-                                             WHERE booking_source = 'Online' OR booking_source = 'Website'
-                                             ORDER BY created_at DESC LIMIT 5");
+            // 2. RECENT ONLINE BOOKINGS (join rooms via booking_rooms)
+            $recent_stmt = $this->db->query("
+                SELECT b.booking_id, b.guest_name, b.check_in_date, b.status,
+                       r.room_number AS room_id
+                FROM bookings b
+                LEFT JOIN booking_rooms br ON br.booking_id = b.id
+                LEFT JOIN rooms_new r ON r.id = br.room_id
+                WHERE b.booking_source = 'Online' OR b.booking_source = 'Website'
+                ORDER BY b.created_at DESC LIMIT 5
+            ");
             $recent_bookings = $recent_stmt->fetchAll(PDO::FETCH_ASSOC);
 
             // 3. ROOM DISTRIBUTION

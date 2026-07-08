@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Card, CardContent } from '../../../components/ui/card';
 import { Search, User, Phone, Mail, Calendar, ExternalLink } from 'lucide-react';
+import { API_BASE_URL } from '../../../lib/api';
 
 export const GuestDirectory = () => {
   const [guests, setGuests] = useState<any[]>([]);
@@ -10,7 +11,7 @@ export const GuestDirectory = () => {
   useEffect(() => {
     const fetchGuests = async () => {
       try {
-        const resp = await fetch('http://localhost:8001/api/index.php/management/guests');
+        const resp = await fetch(`${API_BASE_URL}/management/guests`);
         const json = await resp.json();
         if (json.status === 'success') {
           setGuests(json.data);

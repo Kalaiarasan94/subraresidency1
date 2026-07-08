@@ -1,6 +1,5 @@
 <?php
 header("Access-Control-Allow-Origin: *");
-header("Content-Length: 0"); // For pre-flight if needed but usually just * is fine
 header("Content-Type: application/json; charset=UTF-8");
 
 include_once __DIR__ . '/../../config/db.php';
@@ -25,8 +24,8 @@ $currency = $input['currency'] ?? 'INR';
 // Load keys from env file
 $env = @parse_ini_file(__DIR__ . '/../../.env');
 if (!$env) $env = [];
-$key_id = $env['RAZORPAY_KEY_ID'] ?? 'rzp_test_T39EAKfhTXbEkR';
-$key_secret = $env['RAZORPAY_KEY_SECRET'] ?? 'hqkqX0BRo10gzkQ5CrG7r0RP';
+$key_id = $env['RAZORPAY_KEY_ID'] ?? '';
+$key_secret = $env['RAZORPAY_KEY_SECRET'] ?? '';
 
 if (!$key_id || !$key_secret) {
     http_response_code(500);

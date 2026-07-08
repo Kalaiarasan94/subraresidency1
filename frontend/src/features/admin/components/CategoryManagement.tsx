@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Card, CardContent } from '../../../components/ui/card';
 import { Button } from '../../../components/ui/button';
+import { API_BASE_URL } from '../../../lib/api';
 
 interface Props {
   onAddRoom?: () => void;
@@ -12,7 +13,7 @@ export const CategoryManagement: React.FC<Props> = ({ onAddRoom, onEditRoom }) =
 
   const fetchCategories = async () => {
     try {
-      const res = await fetch('http://localhost:8001/api/index.php/rooms/categories');
+      const res = await fetch(`${API_BASE_URL}/rooms/categories`);
       if (res.status === 404) {
           setCategories([]);
           return;

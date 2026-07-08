@@ -1,9 +1,9 @@
 <?php
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
-include_once __DIR__ . '/../../config/db.php';
+include_once __DIR__ . '/../../../config/db.php';
 
-$booking_id = $_GET['booking_id'] ?? null;
+$booking_id = $_GET['booking_id'] ?? $_GET['id'] ?? null;
 if (!$booking_id) {
     http_response_code(400);
     echo json_encode(['status' => 'error', 'message' => 'booking_id required']);
@@ -21,12 +21,15 @@ if (!$row) {
 }
 
 // fetch assigned rooms
-$roomStmt = $db->prepare("SELECT r.* FROM booking_rooms br JOIN rooms r ON r.id = br.room_id WHERE br.booking_id = ?");
+$roomStmt = $db->prepare("SELECT r.* FROM booking_rooms br JOIN rooms_new r ON r.id = br.room_id WHERE br.booking_id = ?");
 $roomStmt->execute([$row['id']]);
 $rooms = $roomStmt->fetchAll(PDO::FETCH_ASSOC);
 
 $row['rooms'] = $rooms;
+$row['phone_number'] = $row['guest_phone'] ?? '';
+$row['guests_count'] = $row['guests'] ?? '2 Guests';
+$row['room_category'] = isset($rooms[0]) ? $rooms[0]['room_name'] : 'Luxury Suite';
 
-echo json_encode(['status' => 'success', 'booking' => $row]);
+echo json_encode(['status' => 'success', 'booking' => $row, 'data' => $row]);
 
 ?>

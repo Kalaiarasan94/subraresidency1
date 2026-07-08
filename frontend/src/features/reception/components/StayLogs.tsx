@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Card, CardContent } from '../../../components/ui/card';
 import { Hotel, LogIn, LogOut, Clock, Phone } from 'lucide-react';
+import { API_BASE_URL, BACKEND_URL } from '../../../lib/api';
 
 const statusConfig: Record<string, { bg: string; text: string; label: string }> = {
   'checked-in':   { bg: 'bg-emerald-100', text: 'text-emerald-700', label: 'Checked In'   },
@@ -19,7 +20,7 @@ export const StayLogs = () => {
   useEffect(() => {
     const fetchLogs = async () => {
       try {
-        const resp = await fetch('http://localhost:8001/api/index.php/management/logs');
+        const resp = await fetch(`${API_BASE_URL}/management/logs`);
         const json = await resp.json();
         if (json.status === 'success') setLogs(json.data);
       } catch (err) {
@@ -114,9 +115,12 @@ export const StayLogs = () => {
                       <p className="font-black text-slate-800 uppercase tracking-tight leading-tight">
                         {log.guest_name}
                       </p>
-                      <p className="text-[10px] font-bold text-emerald-600 uppercase tracking-widest mt-1">
+                      <button
+                        onClick={() => window.open(`${BACKEND_URL}/admin_view_booking.php?booking_id=${log.booking_id}`, '_blank')}
+                        className="text-[10px] font-black text-emerald-600 hover:text-emerald-800 hover:underline uppercase tracking-widest mt-1 text-left block"
+                      >
                         {log.booking_id}
-                      </p>
+                      </button>
                     </div>
                   </div>
 

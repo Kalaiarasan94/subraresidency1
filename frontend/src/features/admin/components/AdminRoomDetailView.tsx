@@ -1,17 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   ArrowLeft, Star, MapPin, 
-  CheckCircle2, Globe, Save, Loader2, Camera, Info
+  CheckCircle2, Globe, Save, Loader2, Camera, Info,
+  Trash2, Plus, Crown
 } from 'lucide-react';
 import { Button } from '../../../components/ui/button';
 import { Card, CardContent } from '../../../components/ui/card';
-import { updateRoomDetails } from '../../../lib/api';
+import { updateRoomDetails, uploadGalleryImage, deleteGalleryImage, BACKEND_URL } from '../../../lib/api';
 
 interface Props {
   room: any;
   onBack: () => void;
   onRefresh: () => void;
 }
+
+const ALL_AVAILABLE_AMENITIES = [
+  "High-Speed WiFi",
+  "Smart TV",
+  "Mini Fridge",
+  "Room Service",
+  "Workspace",
+  "Temple View",
+  "Air Conditioning",
+  "Tea/Coffee Maker",
+  "Iron & Board",
+  "Balcony",
+  "In-room Safe",
+  "Hair Dryer",
+  "Mini Bar",
+  "Daily Housekeeping",
+  "Hot Water",
+  "Attached Bathroom"
+];
 
 export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onRefresh }) => {
   const [isSaving, setIsSaving] = useState(false);
@@ -22,11 +42,95 @@ export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onRefresh }
     full_description: room.full_description || room.description || '',
     house_rules: room.house_rules || '',
     status: room.status || 'Available',
-    featured_image: room.image?.split('localhost:8001')[1] || room.image || '',
+    featured_image: room.image 
+      ? room.image.replace('http://localhost:8001', '').replace(/https?:\/\/[^\/]+/i, '').replace(/^\/subraresidency1\/backend/i, '') 
+      : '',
     max_adults: room.adults || '',
     bed_type: room.bed_type || '',
     room_size: room.size || ''
   });
+
+  const [galleryList, setGalleryList] = useState<string[]>(
+    room.images && room.images.length > 0 ? room.images : (room.image ? [room.image] : [])
+  );
+  const [isUploading, setIsUploading] = useState(false);
+
+  const [customAmenity, setCustomAmenity] = useState('');
+  const [selectedAmenities, setSelectedAmenities] = useState<string[]>(room.amenities || []);
+  const [availableAmenities, setAvailableAmenities] = useState<string[]>(() => {
+    return Array.from(new Set([...ALL_AVAILABLE_AMENITIES, ...(room.amenities || [])]));
+  });
+
+  useEffect(() => {
+    setGalleryList(room.images && room.images.length > 0 ? room.images : (room.image ? [room.image] : []));
+    setSelectedAmenities(room.amenities || []);
+    setAvailableAmenities(Array.from(new Set([...ALL_AVAILABLE_AMENITIES, ...(room.amenities || [])])));
+  }, [room]);
+
+  const handleAddCustomAmenity = () => {
+    if (!customAmenity.trim()) return;
+    const name = customAmenity.trim();
+    if (!availableAmenities.includes(name)) {
+      setAvailableAmenities(prev => [...prev, name]);
+    }
+    if (!selectedAmenities.includes(name)) {
+      setSelectedAmenities(prev => [...prev, name]);
+    }
+    setCustomAmenity('');
+  };
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files || e.target.files.length === 0) return;
+    const file = e.target.files[0];
+    setIsUploading(true);
+    try {
+      const result = await uploadGalleryImage(room.id, file);
+      if (result && result.image_path) {
+        const newUrl = `${BACKEND_URL}${result.image_path}`;
+        setGalleryList(prev => [...prev, newUrl]);
+      } else {
+        alert(result?.message || "Failed to upload image.");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Error uploading image.");
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
+  const handleImageDelete = async (imagePath: string) => {
+    if (!confirm("Are you sure you want to delete this image from the gallery?")) return;
+    try {
+      const result = await deleteGalleryImage(room.id, imagePath);
+      if (result && result.message) {
+        setGalleryList(prev => prev.filter(img => img !== imagePath));
+        
+        const cleanPath = imagePath.replace('http://localhost:8001', '').replace(BACKEND_URL, '');
+        const currentFeatured = formData.featured_image.replace('http://localhost:8001', '').replace(BACKEND_URL, '');
+        if (cleanPath === currentFeatured) {
+          const remaining = galleryList.filter(img => img !== imagePath);
+          const nextFeatured = remaining.length > 0 
+            ? remaining[0].replace('http://localhost:8001', '').replace(BACKEND_URL, '')
+            : '';
+          setFormData(prev => ({ ...prev, featured_image: nextFeatured }));
+        }
+      } else {
+        alert("Failed to delete image.");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Error deleting image.");
+    }
+  };
+
+  const handleSetFeatured = (imagePath: string) => {
+    let relativePath = imagePath.replace('http://localhost:8001', '').replace(BACKEND_URL, '');
+    if (relativePath && !relativePath.startsWith('/')) {
+      relativePath = '/' + relativePath;
+    }
+    setFormData(prev => ({ ...prev, featured_image: relativePath }));
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -36,7 +140,10 @@ export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onRefresh }
   const handleSave = async () => {
     setIsSaving(true);
     try {
-      const result = await updateRoomDetails(formData);
+      const result = await updateRoomDetails({
+        ...formData,
+        amenities: selectedAmenities
+      });
       if (result && result.message) {
         alert("Changes saved successfully!");
         onRefresh();
@@ -50,8 +157,6 @@ export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onRefresh }
       setIsSaving(false);
     }
   };
-
-  const galleryImages = room.images && room.images.length > 0 ? room.images : [room.image];
 
   return (
     <div className="bg-white min-h-screen rounded-3xl border border-slate-200 overflow-hidden shadow-sm font-sans relative">
@@ -134,26 +239,111 @@ export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onRefresh }
         <div className="space-y-4 mb-12">
             <div className="flex items-center justify-between">
                 <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2"><Camera size={14}/> Image Gallery Configuration</h3>
-                <div className="flex gap-2">
+                <div className="flex gap-3 items-center">
+                    <span className="text-[10px] font-black text-slate-400 uppercase">Featured Path:</span>
                     <input 
                         name="featured_image"
                         value={formData.featured_image}
                         onChange={handleChange}
-                        className="text-xs font-medium text-slate-600 bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 w-80 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                        placeholder="path/to/featured_image.jpg"
+                        className="text-xs font-bold text-slate-700 bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 w-80 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                        placeholder="e.g. /uploads/rooms/room_1.png"
                     />
+                    <label className="bg-[#0b336b] hover:bg-black text-white text-[10px] font-black uppercase px-4 py-2.5 rounded-lg active:scale-95 transition-all cursor-pointer flex items-center gap-2">
+                        <Plus size={12} /> Add Photo
+                        <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
+                    </label>
                 </div>
             </div>
             
             <div className="grid grid-cols-4 gap-3 h-80 rounded-2xl overflow-hidden border border-slate-100 shadow-sm relative group">
-               <div className="col-span-2 row-span-2 overflow-hidden bg-slate-100 relative">
-                    <img src={galleryImages[0]} className="w-full h-full object-cover" alt="Primary" />
-                    <div className="absolute inset-x-0 bottom-0 bg-black/50 text-white text-[10px] font-bold p-2 text-center uppercase tracking-widest">Primary Featured Image</div>
+               {isUploading && (
+                  <div className="absolute inset-0 bg-white/80 z-20 flex flex-col items-center justify-center gap-2 rounded-2xl">
+                     <Loader2 className="animate-spin text-emerald-600" size={24} />
+                     <span className="text-[10px] font-black text-emerald-800 uppercase tracking-widest">Uploading Photo...</span>
+                  </div>
+               )}
+
+               {/* Left Main (Featured Image Panel) */}
+               <div className="col-span-2 row-span-2 overflow-hidden bg-slate-100 relative group/cell border-2 border-emerald-500 rounded-xl">
+                 {(() => {
+                   const featuredFullUrl = formData.featured_image 
+                     ? (formData.featured_image.startsWith('http') ? formData.featured_image : `${BACKEND_URL}${formData.featured_image}`)
+                     : (galleryList[0] || '');
+
+                   return featuredFullUrl ? (
+                     <>
+                       <img src={featuredFullUrl} className="w-full h-full object-cover" alt="Primary" />
+                       <div className="absolute top-3 left-3 bg-emerald-600 text-white text-[9px] font-black uppercase px-2.5 py-1 rounded-full shadow-md flex items-center gap-1">
+                         <Crown size={10} className="fill-white" /> Featured Primary
+                       </div>
+                       
+                       <div className="absolute inset-0 bg-black/45 opacity-0 group-hover/cell:opacity-100 transition-opacity flex items-center justify-center gap-3">
+                         <button 
+                           onClick={() => handleImageDelete(featuredFullUrl)}
+                           className="bg-rose-600 hover:bg-rose-700 text-white p-2.5 rounded-full shadow-lg transition-transform hover:scale-110"
+                           title="Delete Image"
+                         >
+                           <Trash2 size={16} />
+                         </button>
+                       </div>
+                     </>
+                   ) : (
+                     <label className="w-full h-full flex flex-col items-center justify-center border-2 border-dashed border-slate-300 rounded-xl cursor-pointer hover:bg-slate-50 transition-colors">
+                       <Plus size={24} className="text-slate-400 mb-1" />
+                       <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Upload Main Image</span>
+                       <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
+                     </label>
+                   );
+                 })()}
                </div>
-               <div className="overflow-hidden bg-slate-100"><img src={galleryImages[1] || galleryImages[0]} className="w-full h-full object-cover" alt="G1" /></div>
-               <div className="overflow-hidden bg-slate-100"><img src={galleryImages[2] || galleryImages[0]} className="w-full h-full object-cover" alt="G2" /></div>
-               <div className="overflow-hidden bg-slate-100"><img src={galleryImages[3] || galleryImages[0]} className="w-full h-full object-cover" alt="G3" /></div>
-               <div className="overflow-hidden bg-slate-100 opacity-50"><img src={galleryImages[4] || galleryImages[0]} className="w-full h-full object-cover" alt="G4" /></div>
+
+               {/* Right Panels (remaining slots 1 to 4) */}
+               {(() => {
+                 const featuredClean = formData.featured_image.replace('http://localhost:8001', '').replace(BACKEND_URL, '').split('?')[0];
+                 const otherImages = galleryList.filter(img => {
+                   const cleanImg = img.replace('http://localhost:8001', '').replace(BACKEND_URL, '').split('?')[0];
+                   return cleanImg !== featuredClean;
+                 });
+
+                 const displayImages = [
+                   otherImages[0] || null,
+                   otherImages[1] || null,
+                   otherImages[2] || null,
+                   otherImages[3] || null
+                 ];
+
+                 return displayImages.map((imgUrl, idx) => (
+                   <div key={idx} className="overflow-hidden bg-slate-100 relative group/cell rounded-xl border border-slate-200 min-h-[140px]">
+                     {imgUrl ? (
+                       <>
+                         <img src={imgUrl} className="w-full h-full object-cover" alt={`Gallery ${idx + 1}`} />
+                         <div className="absolute inset-0 bg-black/55 opacity-0 group-hover/cell:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                           <button 
+                             onClick={() => handleSetFeatured(imgUrl)}
+                             className="bg-emerald-600 hover:bg-emerald-700 text-white p-2 rounded-full shadow-lg transition-transform hover:scale-110"
+                             title="Set as Featured"
+                           >
+                             <Crown size={12} />
+                           </button>
+                           <button 
+                             onClick={() => handleImageDelete(imgUrl)}
+                             className="bg-rose-600 hover:bg-rose-700 text-white p-2 rounded-full shadow-lg transition-transform hover:scale-110"
+                             title="Delete Image"
+                           >
+                             <Trash2 size={12} />
+                           </button>
+                         </div>
+                       </>
+                     ) : (
+                       <label className="w-full h-full flex flex-col items-center justify-center border border-dashed border-slate-250 hover:border-emerald-400 hover:bg-emerald-50/20 rounded-xl cursor-pointer transition-all">
+                         <Plus size={16} className="text-slate-400" />
+                         <span className="text-[8px] font-black text-slate-400 uppercase tracking-wider mt-1">Add Photo</span>
+                         <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
+                       </label>
+                     )}
+                   </div>
+                 ));
+               })()}
             </div>
         </div>
 
@@ -172,17 +362,53 @@ export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onRefresh }
              </section>
 
              <section className="pb-12 border-b border-slate-100">
-                <h3 className="text-sm font-bold text-emerald-600 uppercase tracking-widest mb-6">Amenity Highlights</h3>
-                <div className="grid grid-cols-2 gap-y-4">
-                  {(room.amenities || []).map((amenity: any, i: number) => (
-                    <div key={i} className="flex items-center gap-3 text-slate-700">
-                       <CheckCircle2 size={18} className="text-emerald-500" />
-                       <span className="font-bold text-sm tracking-tight">{amenity}</span>
-                    </div>
-                  ))}
-                  <div className="col-span-2 mt-4 p-4 bg-amber-50 rounded-xl border border-amber-100 text-xs text-amber-700 font-bold italic">
-                      Amenities are currently read-only. Use the Category Manager to globalize these changes.
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                  <h3 className="text-sm font-bold text-emerald-600 uppercase tracking-widest">Amenity Highlights</h3>
+                  
+                  <div className="flex gap-2">
+                    <input 
+                      type="text"
+                      placeholder="Add custom amenity..."
+                      value={customAmenity}
+                      onChange={(e) => setCustomAmenity(e.target.value)}
+                      onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); handleAddCustomAmenity(); } }}
+                      className="text-xs font-bold text-slate-700 bg-slate-50 border border-slate-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 w-44"
+                    />
+                    <button 
+                      type="button"
+                      onClick={handleAddCustomAmenity}
+                      className="bg-emerald-900 hover:bg-black text-white text-[10px] font-black uppercase px-3 py-1.5 rounded-lg active:scale-95 transition-all"
+                    >
+                      Add
+                    </button>
                   </div>
+                </div>
+
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                  {availableAmenities.map((amenity: string, i: number) => {
+                    const isSelected = selectedAmenities.includes(amenity);
+                    return (
+                      <button
+                        key={i}
+                        type="button"
+                        onClick={() => {
+                          if (isSelected) {
+                            setSelectedAmenities(prev => prev.filter(a => a !== amenity));
+                          } else {
+                            setSelectedAmenities(prev => [...prev, amenity]);
+                          }
+                        }}
+                        className={`flex items-center gap-3 px-4 py-3 rounded-xl border-2 text-left transition-all duration-200 active:scale-95 ${
+                          isSelected 
+                            ? 'border-emerald-600 bg-emerald-50 text-slate-900 font-bold' 
+                            : 'border-slate-100 hover:border-slate-200 text-slate-500 font-medium'
+                        }`}
+                      >
+                         <CheckCircle2 size={16} className={isSelected ? 'text-emerald-600 fill-emerald-50' : 'text-slate-300'} />
+                         <span className="text-xs tracking-tight">{amenity}</span>
+                      </button>
+                    );
+                  })}
                 </div>
              </section>
 

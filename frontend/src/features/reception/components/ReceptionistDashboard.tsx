@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent } from '../../../components/ui/card';
 import { 
   Users, LogIn, LogOut, 
@@ -7,6 +7,7 @@ import {
   MessageSquare
 } from 'lucide-react';
 import { ResponsiveContainer, PieChart as RePie, Pie, Cell, Tooltip } from 'recharts';
+import { API_BASE_URL } from '../../../lib/api';
 
 const StatCard = ({ label, value, icon: Icon, color, trend }: any) => (
   <Card className="border-none shadow-sm hover:shadow-md transition-all group overflow-hidden bg-white">
@@ -46,7 +47,7 @@ export const ReceptionistDashboard = () => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const resp = await fetch('http://localhost:8001/api/index.php/dashboard/receptionist');
+        const resp = await fetch(`${API_BASE_URL}/dashboard/receptionist`);
         const json = await resp.json();
         if (json.status === 'success') {
           setData(json.data);
@@ -138,24 +139,28 @@ export const ReceptionistDashboard = () => {
           </div>
           <CardContent className="flex-grow flex flex-col p-6">
             <div className="h-[300px] w-full relative">
-              <ResponsiveContainer width="100%" height="100%">
-                <RePie>
-                  <Pie
-                    data={roomData}
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={60}
-                    outerRadius={80}
-                    paddingAngle={5}
-                    dataKey="value"
-                  >
-                    {roomData.map((entry: any, index: number) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
-                    ))}
-                  </Pie>
-                  <Tooltip />
-                </RePie>
-              </ResponsiveContainer>
+              {roomData.length > 0 ? (
+                <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+                  <RePie>
+                    <Pie
+                      data={roomData}
+                      cx="50%"
+                      cy="50%"
+                      innerRadius={60}
+                      outerRadius={80}
+                      paddingAngle={5}
+                      dataKey="value"
+                    >
+                      {roomData.map((entry: any, index: number) => (
+                        <Cell key={`cell-${index}`} fill={entry.color} />
+                      ))}
+                    </Pie>
+                    <Tooltip />
+                  </RePie>
+                </ResponsiveContainer>
+              ) : (
+                <div className="h-full flex items-center justify-center text-slate-300 text-xs font-black uppercase tracking-widest">Loading chart…</div>
+              )}
               <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
                 <span className="text-3xl font-black text-slate-800">{stats.total_rooms}</span>
                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Total Rooms</span>

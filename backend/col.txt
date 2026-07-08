@@ -1,0 +1,11 @@
+Field	Type	Null	Key	Default	Extra
+id	int(11)	NO	PRI	NULL	auto_increment
+booking_id	int(11)	YES	MUL	NULL	
+guest_name	varchar(255)	YES		NULL	
+guest_email	varchar(255)	YES		NULL	
+guest_phone	varchar(50)	YES		NULL	
+guests	varchar(50)	YES		NULL	
+country	varchar(100)	YES			
+address	text	YES		''	
+additional_notes	text	YES		NULL	
+created_at	timestamp	NO		current_timestamp()	

@@ -3,9 +3,9 @@ import {
   Users, Hotel, Calendar, CreditCard, 
   TrendingUp, Mail, 
   Settings, Shield, Layout, 
-  FileText, BarChart3, PieChart as PieIcon,
+  FileText, PieChart as PieIcon,
   CheckCircle,
-  AlertCircle, History, Package, LayoutDashboard, LogOut
+  AlertCircle, History, LayoutDashboard, LogOut
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '../../../components/ui/card';
 import { Button } from '../../../components/ui/button';
@@ -13,6 +13,8 @@ import {
   AreaChart, Area, Tooltip, ResponsiveContainer,
   PieChart, Pie, Cell
 } from 'recharts';
+import { API_BASE_URL } from '../../../lib/api';
+
 
 interface DashboardStats {
   stats: {
@@ -48,7 +50,13 @@ interface DashboardStats {
   }>;
 }
 
-export const AdminDashboardView = ({ activeSubTab = 'overview' }: { activeSubTab?: string }) => {
+export const AdminDashboardView = ({ 
+  activeSubTab = 'overview',
+  onNavigate
+}: { 
+  activeSubTab?: string;
+  onNavigate?: (tabName: string) => void;
+}) => {
   const [data, setData] = useState<DashboardStats | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -58,7 +66,7 @@ export const AdminDashboardView = ({ activeSubTab = 'overview' }: { activeSubTab
 
   const fetchData = async () => {
      try {
-       const resp = await fetch('http://localhost:8001/api/index.php/dashboard/admin');
+       const resp = await fetch(`${API_BASE_URL}/dashboard/admin`);
        const json = await resp.json();
        if (json.status === 'success') {
          setData(json.data);
@@ -134,7 +142,7 @@ export const AdminDashboardView = ({ activeSubTab = 'overview' }: { activeSubTab
               <Card className="lg:col-span-2 border-none shadow-sm overflow-hidden">
                  <CardHeader className="pb-2 flex flex-row items-center justify-between">
                     <CardTitle className="text-xs font-black uppercase text-slate-400">Recent Bookings</CardTitle>
-                    <Button variant="link" className="text-[10px] uppercase font-bold text-emerald-700 p-0 h-auto">View All</Button>
+                    <Button variant="link" className="text-[10px] uppercase font-bold text-emerald-700 p-0 h-auto" onClick={() => onNavigate?.('bookings')}>View All</Button>
                  </CardHeader>
                  <CardContent className="p-0">
                     <table className="w-full text-[11px]">
@@ -172,11 +180,11 @@ export const AdminDashboardView = ({ activeSubTab = 'overview' }: { activeSubTab
         <div className="space-y-6 animate-in slide-in-from-bottom-4 duration-500">
           <div className="bg-[#0b336b] text-white p-3 rounded-t-xl -mx-8 -mt-8 mb-8 flex items-center justify-between">
             <h2 className="text-sm font-black uppercase tracking-wider flex items-center gap-2 px-4">
-              Booking & Room Management
+              Booking &amp; Room Management
             </h2>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
              {/* All Bookings */}
              <ManagementBox 
                title="All Bookings" 
@@ -189,19 +197,7 @@ export const AdminDashboardView = ({ activeSubTab = 'overview' }: { activeSubTab
                  { label: `Pending (${data.stats.pending_bookings})`, icon: History, color: 'text-amber-500' },
                ]}
                footer="VIEW ALL"
-             />
-
-             {/* Room Management */}
-             <ManagementBox 
-               title="Room Management" 
-               items={[
-                 { label: 'Room Types', icon: Package },
-                 { label: `All Rooms (${data.stats.total_rooms})`, icon: Hotel },
-                 { label: `Available Rooms (${data.stats.available_rooms})`, icon: CheckCircle },
-                 { label: `Booked Rooms (${data.stats.occupied_rooms})`, icon: Calendar },
-                 { label: `Maintenance Rooms (${data.stats.maintenance_rooms})`, icon: AlertCircle },
-               ]}
-               footer="MANAGE ROOMS"
+               onFooterClick={() => onNavigate?.('bookings')}
              />
 
              {/* Room Availability Form - Interactive */}
@@ -250,39 +246,27 @@ export const AdminDashboardView = ({ activeSubTab = 'overview' }: { activeSubTab
                    </div>
                 </CardContent>
                 <div className="p-4 pt-0">
-                  <Button className="w-full bg-[#0b336b] hover:bg-black text-white text-[10px] font-black uppercase h-11 rounded-xl shadow-lg shadow-blue-900/10 active:scale-95 transition-all">
+                  <Button onClick={() => onNavigate?.('calendar')} className="w-full bg-[#0b336b] hover:bg-black text-white text-[10px] font-black uppercase h-11 rounded-xl shadow-lg shadow-blue-900/10 active:scale-95 transition-all">
                     Search Availability
                   </Button>
                 </div>
              </Card>
-
-             {/* Room Status Live */}
-             <Card className="border-none shadow-sm flex flex-col h-full">
-                <CardHeader className="pb-4"><CardTitle className="text-xs font-black uppercase text-[#0b336b] text-center">Room Status (Live)</CardTitle></CardHeader>
-                <CardContent className="grid grid-cols-2 gap-2 flex-grow overflow-y-auto max-h-[350px] custom-scrollbar pr-2">
-                   {data.rooms_grid.map((r: any) => (
-                      <StatusBox key={r.number} label={r.number} info={r.category} status={r.status === 'booked' ? 'occupied' : r.status} />
-                   ))}
-                </CardContent>
-                <div className="p-4">
-                  <Button className="w-full bg-[#0b336b] hover:bg-black text-white text-[10px] font-black uppercase h-10 tracking-widest">VIEW ALL ROOMS</Button>
-                </div>
-             </Card>
-
-             {/* Reports & Analytics */}
-             <ManagementBox 
-               title="Reports & Analytics" 
-               items={[
-                 { label: 'Booking Report', icon: FileText },
-                 { label: 'Revenue Report', icon: TrendingUp },
-                 { label: 'Occupancy Report', icon: PieIcon },
-                 { label: 'Payment Report', icon: CreditCard },
-                 { label: 'Cancellation Report', icon: AlertCircle },
-                 { label: 'Guest Report', icon: Users },
-               ]}
-               footer="VIEW REPORTS"
-             />
           </div>
+
+          {/* Reports & Analytics */}
+          <ManagementBox 
+            title="Reports &amp; Analytics" 
+            items={[
+              { label: 'Booking Report', icon: FileText },
+              { label: 'Revenue Report', icon: TrendingUp },
+              { label: 'Occupancy Report', icon: PieIcon },
+              { label: 'Payment Report', icon: CreditCard },
+              { label: 'Cancellation Report', icon: AlertCircle },
+              { label: 'Guest Report', icon: Users },
+            ]}
+            footer="VIEW REPORTS"
+            onFooterClick={() => onNavigate?.('reports')}
+          />
         </div>
       )}
 
@@ -341,7 +325,7 @@ export const AdminDashboardView = ({ activeSubTab = 'overview' }: { activeSubTab
                    </div>
                 </CardContent>
                 <div className="p-4 flex justify-center">
-                  <Button className="bg-[#0b336b] hover:bg-black text-white text-[10px] font-black uppercase h-9 px-10 rounded">VIEW ALL TRANSACTIONS</Button>
+                  <Button onClick={() => onNavigate?.('bookings')} className="bg-[#0b336b] hover:bg-black text-white text-[10px] font-black uppercase h-9 px-10 rounded">VIEW ALL TRANSACTIONS</Button>
                 </div>
              </Card>
 
@@ -468,7 +452,7 @@ export const AdminDashboardView = ({ activeSubTab = 'overview' }: { activeSubTab
 };
 
 
-const ManagementBox = ({ title, items, footer }: any) => (
+const ManagementBox = ({ title, items, footer, onFooterClick }: any) => (
   <Card className="border-none shadow-sm flex flex-col h-full bg-white">
     <CardHeader className="pb-4"><CardTitle className="text-xs font-black uppercase text-[#0b336b] text-center">{title}</CardTitle></CardHeader>
     <CardContent className="p-0 flex-grow">
@@ -477,26 +461,14 @@ const ManagementBox = ({ title, items, footer }: any) => (
             <div className={`p-1.5 rounded-lg ${it.active ? 'bg-emerald-100 text-emerald-700' : 'text-slate-400 group-hover:text-emerald-600'}`}>
                {it.icon ? <it.icon size={14} /> : <div className="w-3.5 h-3.5 flex items-center justify-center font-black text-[10px]">●</div>}
             </div>
-            <span className={`text-[11px] font-bold ${it.active ? 'text-emerald-900' : it.color || 'text-slate-600'}`}>{it.label}</span>
+            <span className={`text-[11px] font-bold ${it.active ? 'text-emerald-950' : it.color || 'text-slate-600'}`}>{it.label}</span>
          </div>
        ))}
     </CardContent>
     <div className="p-4">
-       <Button className="w-full bg-[#0b336b] hover:bg-black text-white text-[9px] font-black uppercase h-9 rounded">{footer}</Button>
+       <Button onClick={onFooterClick} className="w-full bg-[#0b336b] hover:bg-black text-white text-[9px] font-black uppercase h-9 rounded">{footer}</Button>
     </div>
   </Card>
-);
-
-const StatusBox = ({ label, info, status }: any) => (
-  <div className={`p-3 rounded-xl border border-slate-100 text-center transition-all cursor-pointer shadow-sm flex flex-col items-center justify-center gap-1 ${
-    status === 'available' ? 'bg-emerald-50 text-emerald-900' :
-    status === 'occupied' ? 'bg-rose-50 text-rose-900' :
-    'bg-amber-50 text-amber-900'
-  }`}>
-    <div className="text-sm font-black">{label}</div>
-    <div className="text-[8px] font-bold uppercase opacity-60 leading-tight">{info}</div>
-    <div className="text-[10px] font-black uppercase tracking-tighter mt-1">{status}</div>
-  </div>
 );
 
 const PaymentStat = ({ icon: Icon, label, value, color }: any) => (

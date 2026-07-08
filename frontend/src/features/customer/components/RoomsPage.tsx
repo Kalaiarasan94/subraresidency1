@@ -14,34 +14,42 @@ export const RoomsPage = ({
   onBookRoom, 
   onRoomClick,
   searchFilters,
-  setSearchFilters
+  setSearchFilters: _setSearchFilters
 }: { 
   onBookRoom: (room: any) => void;
   onRoomClick: (room: any) => void;
   searchFilters?: any;
   setSearchFilters?: (filters: any) => void;
 }) => {
-  const [allRooms, setAllRooms] = useState<any[]>(ROOMS_DATA);
   const [displayRooms, setDisplayRooms] = useState<any[]>(ROOMS_DATA);
 
   useEffect(() => {
     const loadRooms = async () => {
       try {
         const data = await fetchRoomCategories();
-        if (data && Array.isArray(data) && data.length > 0) {
-          setAllRooms(data);
-          setDisplayRooms(data);
-        } else {
-          setAllRooms(ROOMS_DATA);
-          setDisplayRooms(ROOMS_DATA);
+        const baseRooms = (data && Array.isArray(data) && data.length > 0) ? data : ROOMS_DATA;
+
+        if (searchFilters?.checkIn && searchFilters?.checkOut) {
+          const apiBase = import.meta.env.VITE_API_BASE_URL || 'http://localhost/subraresidency1/backend/api/index.php';
+          const response = await fetch(`${apiBase}/rooms/checkAvailability?checkin=${searchFilters.checkIn}&checkout=${searchFilters.checkOut}`);
+          if (response.ok) {
+            const result = await response.json();
+            if (result && result.status === 'success' && Array.isArray(result.rooms)) {
+              const availableCategoryIds = new Set(result.rooms.map((r: any) => Number(r.category_id)));
+              const filtered = baseRooms.filter((room: any) => availableCategoryIds.has(Number(room.id)));
+              setDisplayRooms(filtered);
+              return;
+            }
+          }
         }
+        setDisplayRooms(baseRooms);
       } catch (err) {
-        setAllRooms(ROOMS_DATA);
+        console.error('Failed to load available rooms', err);
         setDisplayRooms(ROOMS_DATA);
       }
     };
     loadRooms();
-  }, []);
+  }, [searchFilters]);
 
   // Helper to format price without double rupee
   const formatPrice = (price: any) => {

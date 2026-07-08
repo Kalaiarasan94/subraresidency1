@@ -154,11 +154,11 @@ export const AdminPortal = () => {
         </header>
 
         <div className="p-8 max-w-7xl mx-auto pb-20">
-          {activeTab === 'dashboard' && <AdminDashboardView activeSubTab={dashboardView} />}
+          {activeTab === 'dashboard' && <AdminDashboardView activeSubTab={dashboardView} onNavigate={setActiveTab} />}
           
-          {activeTab === 'reports' && <AdminDashboardView activeSubTab="finance" />}
-          {activeTab === 'booking_mgmt' && <AdminDashboardView activeSubTab="rooms" />}
-          {activeTab === 'bookings' && <AdminDashboardView activeSubTab="finance" />}
+          {activeTab === 'reports' && <AdminDashboardView activeSubTab="finance" onNavigate={setActiveTab} />}
+          {activeTab === 'booking_mgmt' && <AdminDashboardView activeSubTab="rooms" onNavigate={setActiveTab} />}
+          {activeTab === 'bookings' && <AdminDashboardView activeSubTab="finance" onNavigate={setActiveTab} />}
           {activeTab === 'website' && <AdminSettingsView />}
 
           {activeTab === 'rooms' && (

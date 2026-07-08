@@ -2,12 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Button } from '../../../components/ui/button';
 import { CheckCircle2, MapPin, BedDouble, Images, BadgeIndianRupee, Settings } from 'lucide-react';
+import { API_DIR_URL } from '../../../lib/api';
 
 interface CreateRoomForm {
   room_name: string;
-  room_number: string;
   room_code: string;
-  category_id: string;
   floor_number: number;
   base_price: number;
   price_12_hours?: number;
@@ -50,10 +49,36 @@ interface CreateRoomProps {
   onCancel?: () => void;
 }
 
+// The list endpoint (`rooms/categories`) returns a different shape than the form fields
+// (e.g. `title` not `room_name`, `price_24h` not `base_price`) — translate for edit mode.
+const mapCategoryToForm = (cat: any): Partial<CreateRoomForm> => ({
+  room_name: cat.title ?? cat.room_name,
+  room_code: cat.room_code ?? '',
+  base_price: cat.price_24h ?? cat.base_price,
+  price_12_hours: cat.price_12h,
+  price_24_hours: cat.price_24h,
+  max_adults: cat.adults ?? cat.max_adults ?? 2,
+  max_children: cat.children ?? cat.max_children ?? 0,
+  max_guests: cat.max_guests ?? 0,
+  room_size: cat.size ?? cat.room_size,
+  bed_type: cat.bed_type,
+  number_of_beds: cat.beds_count ?? cat.number_of_beds,
+  balcony: !!cat.balcony,
+  air_conditioning: cat.ac ?? cat.air_conditioning ?? true,
+  smoking_allowed: !!cat.smoking,
+  amenities: cat.amenities ?? [],
+  short_description: cat.description ?? cat.short_description ?? '',
+  full_description: cat.full_description ?? '',
+  highlights: cat.highlights ?? '',
+  house_rules: cat.house_rules ?? '',
+  status: cat.status ?? 'Available',
+  show_on_website: cat.show_on_website ?? true,
+});
+
 export const CreateRoom: React.FC<CreateRoomProps> = ({ initialData, onSuccess, onCancel }) => {
   const isEditMode = !!initialData;
   const { register, handleSubmit, formState: { }, trigger, reset } = useForm<CreateRoomForm>({
-    defaultValues: initialData || {
+    defaultValues: initialData ? mapCategoryToForm(initialData) : {
       status: 'Available',
       show_on_website: true,
       max_adults: 2,
@@ -64,9 +89,22 @@ export const CreateRoom: React.FC<CreateRoomProps> = ({ initialData, onSuccess, 
     }
   });
 
+  const [subRoomCount, setSubRoomCount] = useState(5);
+  const [roomNumbers, setRoomNumbers] = useState<string[]>(Array(5).fill(''));
+
+  const handleSubRoomCountChange = (count: number) => {
+    const safeCount = Math.max(1, Math.min(50, count || 1));
+    setSubRoomCount(safeCount);
+    setRoomNumbers((prev) => {
+      const next = [...prev];
+      while (next.length < safeCount) next.push('');
+      return next.slice(0, safeCount);
+    });
+  };
+
   useEffect(() => {
     if (initialData) {
-      reset(initialData);
+      reset(mapCategoryToForm(initialData));
       if (initialData.image) setFeaturedPreview(initialData.image);
     }
   }, [initialData, reset]);
@@ -87,13 +125,18 @@ export const CreateRoom: React.FC<CreateRoomProps> = ({ initialData, onSuccess, 
 
   const nextStep = async () => {
     let fieldsToValidate: any[] = [];
-    if (currentStep === 1) fieldsToValidate = ['room_name', 'room_number'];
+    if (currentStep === 1) fieldsToValidate = ['room_name'];
     if (currentStep === 2) fieldsToValidate = ['base_price'];
-    
+
     if (fieldsToValidate.length > 0) {
       const isValid = await trigger(fieldsToValidate as any);
       if (!isValid) return;
     }
+    if (currentStep === 1 && !isEditMode && roomNumbers.some((n) => !n.trim())) {
+      setSubmitError('Please fill in a room number for every physical room in this category.');
+      return;
+    }
+    setSubmitError('');
     setCurrentStep((prev) => Math.min(prev + 1, STEPS.length));
   };
 
@@ -102,7 +145,7 @@ export const CreateRoom: React.FC<CreateRoomProps> = ({ initialData, onSuccess, 
   const onSubmit = async (data: CreateRoomForm) => {
     setIsSubmitting(true);
     setSubmitError('');
-    
+
     try {
       const formData = new FormData();
       Object.keys(data).forEach((key) => {
@@ -115,16 +158,17 @@ export const CreateRoom: React.FC<CreateRoomProps> = ({ initialData, onSuccess, 
         }
       });
       if (featuredFile) formData.append('featured_image', featuredFile);
+      if (!isEditMode) formData.append('room_numbers', JSON.stringify(roomNumbers.map((n) => n.trim())));
 
       if (isEditMode) formData.append('id', initialData.id);
 
-      const apiUrl = isEditMode 
-        ? 'http://localhost:8001/api/admin/rooms/update.php'
-        : 'http://localhost:8001/api/admin/rooms/create.php';
+      const apiUrl = isEditMode
+        ? `${API_DIR_URL}/admin/rooms/update.php`
+        : `${API_DIR_URL}/admin/rooms/create.php`;
 
       const response = await fetch(apiUrl, { method: 'POST', body: formData });
       const result = await response.json();
-      
+
       if (!response.ok || !result.success) throw new Error(result.message || 'Error');
 
       setSuccessMessage('Successfully Saved!');
@@ -156,26 +200,50 @@ export const CreateRoom: React.FC<CreateRoomProps> = ({ initialData, onSuccess, 
             <div className="space-y-6 animate-in slide-in-from-right-4">
               <div className="grid grid-cols-2 gap-8">
                 <div className="space-y-2">
-                  <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">Public Room Name</label>
+                  <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">Category Name</label>
                   <input {...register('room_name', { required: true })} className="w-full border border-slate-200 p-4 rounded-xl outline-none focus:border-emerald-600 bg-slate-50" placeholder="e.g. Heritage Suite" />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">Room Number</label>
-                  <input {...register('room_number', { required: true })} className="w-full border border-slate-200 p-4 rounded-xl outline-none focus:border-emerald-600 bg-slate-50" placeholder="101" />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">Category</label>
-                  <select {...register('category_id')} className="w-full border border-slate-200 p-4 rounded-xl outline-none bg-slate-50">
-                    <option value="1">Standard Config</option>
-                    <option value="2">Executive Config</option>
-                    <option value="3">Gold Config</option>
-                  </select>
                 </div>
                 <div className="space-y-2">
                   <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">Internal ID Code</label>
                   <input {...register('room_code')} className="w-full border border-slate-200 p-4 rounded-xl outline-none bg-slate-50" placeholder="SR-101" />
                 </div>
+                {!isEditMode && (
+                  <div className="space-y-2">
+                    <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">Number of Physical Rooms</label>
+                    <input
+                      type="number"
+                      min={1}
+                      max={50}
+                      value={subRoomCount}
+                      onChange={(e) => handleSubRoomCountChange(parseInt(e.target.value, 10))}
+                      className="w-full border border-slate-200 p-4 rounded-xl outline-none focus:border-emerald-600 bg-slate-50"
+                    />
+                    <p className="text-[10px] text-slate-400">How many actual physical rooms exist under this category (e.g. 5).</p>
+                  </div>
+                )}
               </div>
+
+              {!isEditMode && (
+                <div className="space-y-3 pt-2">
+                  <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">Room Numbers ({roomNumbers.length})</label>
+                  <div className="grid grid-cols-3 gap-4">
+                    {roomNumbers.map((num, idx) => (
+                      <input
+                        key={idx}
+                        value={num}
+                        onChange={(e) => {
+                          const next = [...roomNumbers];
+                          next[idx] = e.target.value;
+                          setRoomNumbers(next);
+                        }}
+                        placeholder={`Room ${idx + 1} number`}
+                        className="w-full border border-slate-200 p-3 rounded-xl outline-none focus:border-emerald-600 bg-slate-50 text-sm"
+                      />
+                    ))}
+                  </div>
+                  <p className="text-[10px] text-slate-400">Each entry becomes a bookable physical room (e.g. SD-01, SD-02...) under this category.</p>
+                </div>
+              )}
             </div>
           )}
 

@@ -12,6 +12,8 @@ import { OfflineBookingFlow } from './components/OfflineBookingFlow';
 import { GuestDirectory } from './components/GuestDirectory';
 import { Settlements } from './components/Settlements';
 import { StayLogs } from './components/StayLogs';
+import { API_BASE_URL } from '../../lib/api';
+
 
 const SidebarItem = ({ activeTab, id, icon: Icon, label, onClick, isSidebarOpen }: any) => (
   <button
@@ -28,10 +30,52 @@ const SidebarItem = ({ activeTab, id, icon: Icon, label, onClick, isSidebarOpen 
 );
 
 export const ReceptionPortal = () => {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<any>(() => {
+    const saved = localStorage.getItem('reception_user');
+    try {
+      return saved ? JSON.parse(saved) : null;
+    } catch (e) {
+      return null;
+    }
+  });
   const [activeTab, setActiveTab] = useState('dashboard');
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [notifications, setNotifications] = useState<any[]>([]);
+  const [prefillBookingId, setPrefillBookingId] = useState<string | null>(null);
+
+  // Persistence
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem('reception_user', JSON.stringify(user));
+    } else {
+      localStorage.removeItem('reception_user');
+    }
+  }, [user]);
+
+  // Inactivity Logout (30 minutes)
+  useEffect(() => {
+    if (!user) return;
+
+    let timeoutId: any;
+    const INACTIVITY_LIMIT = 30 * 60 * 1000;
+
+    const resetTimer = () => {
+      if (timeoutId) clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        setUser(null);
+      }, INACTIVITY_LIMIT);
+    };
+
+    const activityEvents = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart'];
+    activityEvents.forEach(evt => document.addEventListener(evt, resetTimer));
+
+    resetTimer();
+
+    return () => {
+      activityEvents.forEach(evt => document.removeEventListener(evt, resetTimer));
+      if (timeoutId) clearTimeout(timeoutId);
+    };
+  }, [user]);
 
   // Polling for notifications (QR Scans)
   useEffect(() => {
@@ -39,7 +83,7 @@ export const ReceptionPortal = () => {
     
     const fetchNotifs = async () => {
       try {
-        const resp = await fetch('http://localhost:8001/api/index.php/receptionist/notifications');
+        const resp = await fetch(`${API_BASE_URL}/receptionist/notifications`);
         const data = await resp.json();
         if (data.status === 'success') {
           setNotifications(data.notifications);
@@ -56,9 +100,24 @@ export const ReceptionPortal = () => {
 
   const markRead = async () => {
      try {
-       await fetch('http://localhost:8001/api/index.php/receptionist/markRead', { method: 'POST' });
+       await fetch(`${API_BASE_URL}/receptionist/markRead`, { method: 'POST' });
        setNotifications([]);
      } catch (err) {}
+  };
+
+  const openNotification = (n: any) => {
+    if (n.type === 'QR_SCAN') {
+      try {
+        const parsed = typeof n.data === 'string' ? JSON.parse(n.data) : n.data;
+        if (parsed?.booking_id) {
+          setPrefillBookingId(parsed.booking_id);
+          setActiveTab('online_checkin');
+        }
+      } catch (err) {
+        console.error('Failed to parse notification data', err);
+      }
+    }
+    markRead();
   };
 
   if (!user) {
@@ -149,7 +208,7 @@ export const ReceptionPortal = () => {
                    <p className="text-[9px] font-black text-emerald-500 uppercase tracking-[0.3em] mb-4">Urgent Operations</p>
                    <div className="space-y-3">
                       {notifications.map((n, i) => (
-                        <div key={i} className="p-4 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 transition-all cursor-pointer group">
+                        <div key={i} onClick={() => openNotification(n)} className="p-4 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 transition-all cursor-pointer group">
                            <div className="flex items-start gap-3">
                               <div className="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400 shrink-0">
                                  {n.type === 'QR_SCAN' ? <Smartphone size={16} /> : <CheckCircle size={16} />}
@@ -180,7 +239,12 @@ export const ReceptionPortal = () => {
 
         <div className="p-10 max-w-7xl mx-auto pb-32">
           {activeTab === 'dashboard'      && <ReceptionistDashboard />}
-          {activeTab === 'online_checkin' && <OnlineCheckInFlow />}
+          {activeTab === 'online_checkin' && (
+            <OnlineCheckInFlow
+              prefillBookingId={prefillBookingId}
+              onPrefillConsumed={() => setPrefillBookingId(null)}
+            />
+          )}
           {activeTab === 'offline_booking' && <OfflineBookingFlow />}
           {activeTab === 'guests'          && <GuestDirectory />}
           {activeTab === 'transactions'    && <Settlements />}

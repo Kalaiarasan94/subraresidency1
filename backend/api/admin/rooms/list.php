@@ -30,7 +30,7 @@ try {
             'adults' => $row['max_adults'],
             'children' => $row['max_children'],
             'description' => $row['short_description'],
-            'image' => $row['featured_image'] ? 'http://localhost:8001' . $row['featured_image'] : '',
+            'image' => $row['featured_image'] ?: '',
             'status' => $row['status']
         ];
     }
