@@ -9371,3 +9371,20 @@ Stack trace:
 [2026-07-08 19:43:54] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
 [2026-07-08 19:43:55] INDEX.PHP REACHED
 [2026-07-08 19:43:55] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-09 10:00:51] INDEX.PHP REACHED
+[2026-07-09 10:00:51] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-09 10:00:51] INDEX.PHP REACHED
+[2026-07-09 10:00:51] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-09 10:00:52] INDEX.PHP REACHED
+[2026-07-09 10:00:52] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-09 10:00:52] INDEX.PHP REACHED
+[2026-07-09 10:00:52] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-09 10:00:54] INDEX.PHP REACHED
+[2026-07-09 10:00:54] REQUEST: POST /api/index.php/rooms/uploadGalleryImage (Path: /rooms/uploadGalleryImage)
+[2026-07-09 10:00:57] INDEX.PHP REACHED
+[2026-07-09 10:00:57] INDEX.PHP REACHED
+[2026-07-09 10:00:57] REQUEST: POST /api/index.php/rooms/updateDetails (Path: /rooms/updateDetails)
+[2026-07-09 10:00:57] INDEX.PHP REACHED
+[2026-07-09 10:00:57] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-09 10:00:57] INDEX.PHP REACHED
+[2026-07-09 10:00:57] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
