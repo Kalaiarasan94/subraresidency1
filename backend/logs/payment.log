@@ -9388,3 +9388,269 @@ Stack trace:
 [2026-07-09 10:00:57] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
 [2026-07-09 10:00:57] INDEX.PHP REACHED
 [2026-07-09 10:00:57] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-09 09:55:29] INDEX.PHP REACHED
+[2026-07-09 09:55:29] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-09 09:55:29] Fatal Error: Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php:37
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(60): RoomController->getCategories()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 37
+[2026-07-09 09:55:29] INDEX.PHP REACHED
+[2026-07-09 09:55:29] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-09 09:55:29] Fatal Error: Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php:37
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(60): RoomController->getCategories()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 37
+[2026-07-09 09:55:37] INDEX.PHP REACHED
+[2026-07-09 09:55:37] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-09 09:55:37] Fatal Error: Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php:37
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(60): RoomController->getCategories()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 37
+[2026-07-09 09:55:37] INDEX.PHP REACHED
+[2026-07-09 09:55:37] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-09 09:55:37] Fatal Error: Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php:37
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(60): RoomController->getCategories()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 37
+[2026-07-09 09:55:37] INDEX.PHP REACHED
+[2026-07-09 09:55:37] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-09&checkout=2026-07-10 (Path: /rooms/checkAvailability)
+[2026-07-09 09:55:37] Fatal Error: Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\subraresidency1\backend\api\admin\rooms\check_availability.php:42
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(88): include_once()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\api\admin\rooms\check_availability.php on line 42
+[2026-07-09 09:55:37] INDEX.PHP REACHED
+[2026-07-09 09:55:37] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-09&checkout=2026-07-10 (Path: /rooms/checkAvailability)
+[2026-07-09 09:55:37] Fatal Error: Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\subraresidency1\backend\api\admin\rooms\check_availability.php:42
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(88): include_once()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\api\admin\rooms\check_availability.php on line 42
+[2026-07-09 09:55:40] INDEX.PHP REACHED
+[2026-07-09 09:55:40] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-09 09:55:40] Fatal Error: Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php:37
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(60): RoomController->getCategories()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 37
+[2026-07-09 09:55:40] INDEX.PHP REACHED
+[2026-07-09 09:55:40] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-09 09:55:40] Fatal Error: Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php:37
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(60): RoomController->getCategories()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 37
+[2026-07-09 09:55:40] INDEX.PHP REACHED
+[2026-07-09 09:55:40] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-09&checkout=2026-07-10 (Path: /rooms/checkAvailability)
+[2026-07-09 09:55:40] Fatal Error: Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\subraresidency1\backend\api\admin\rooms\check_availability.php:42
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(88): include_once()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\api\admin\rooms\check_availability.php on line 42
+[2026-07-09 09:55:40] INDEX.PHP REACHED
+[2026-07-09 09:55:40] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-09&checkout=2026-07-10 (Path: /rooms/checkAvailability)
+[2026-07-09 09:55:40] Fatal Error: Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\subraresidency1\backend\api\admin\rooms\check_availability.php:42
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(88): include_once()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\api\admin\rooms\check_availability.php on line 42
+[2026-07-09 09:56:18] INDEX.PHP REACHED
+[2026-07-09 09:56:18] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-09 09:56:18] Fatal Error: Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php:37
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(60): RoomController->getCategories()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 37
+[2026-07-09 09:56:18] INDEX.PHP REACHED
+[2026-07-09 09:56:18] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-09 09:56:18] Fatal Error: Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php:37
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(60): RoomController->getCategories()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 37
+[2026-07-09 09:56:26] INDEX.PHP REACHED
+[2026-07-09 09:56:26] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-09 09:56:26] Fatal Error: Uncaught Error: Call to a member function query() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php:24
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(152): DashboardController->getAdminStats()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php on line 24
+[2026-07-09 09:56:26] INDEX.PHP REACHED
+[2026-07-09 09:56:26] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-09 09:56:26] Fatal Error: Uncaught Error: Call to a member function query() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php:24
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(152): DashboardController->getAdminStats()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php on line 24
+[2026-07-09 09:56:28] INDEX.PHP REACHED
+[2026-07-09 09:56:28] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-09 09:56:28] Fatal Error: Uncaught Error: Call to a member function query() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php:24
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(152): DashboardController->getAdminStats()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php on line 24
+[2026-07-09 09:56:28] INDEX.PHP REACHED
+[2026-07-09 09:56:28] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-09 09:56:28] Fatal Error: Uncaught Error: Call to a member function query() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php:24
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(152): DashboardController->getAdminStats()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php on line 24
+[2026-07-09 10:00:33] INDEX.PHP REACHED
+[2026-07-09 10:00:33] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-09 10:00:33] Fatal Error: Uncaught Error: Call to a member function query() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php:24
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(152): DashboardController->getAdminStats()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php on line 24
+[2026-07-09 10:00:33] INDEX.PHP REACHED
+[2026-07-09 10:00:33] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-09 10:00:33] Fatal Error: Uncaught Error: Call to a member function query() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php:24
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(152): DashboardController->getAdminStats()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php on line 24
+[2026-07-09 10:00:35] INDEX.PHP REACHED
+[2026-07-09 10:00:35] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-09 10:00:35] Fatal Error: Uncaught Error: Call to a member function query() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php:24
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(152): DashboardController->getAdminStats()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php on line 24
+[2026-07-09 10:00:35] INDEX.PHP REACHED
+[2026-07-09 10:00:35] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-09 10:00:35] Fatal Error: Uncaught Error: Call to a member function query() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php:24
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(152): DashboardController->getAdminStats()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php on line 24
+[2026-07-09 10:00:37] INDEX.PHP REACHED
+[2026-07-09 10:00:37] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-09 10:00:37] Fatal Error: Uncaught Error: Call to a member function query() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php:24
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(152): DashboardController->getAdminStats()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php on line 24
+[2026-07-09 10:00:37] INDEX.PHP REACHED
+[2026-07-09 10:00:37] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-09 10:00:37] Fatal Error: Uncaught Error: Call to a member function query() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php:24
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(152): DashboardController->getAdminStats()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php on line 24
+[2026-07-09 10:00:39] INDEX.PHP REACHED
+[2026-07-09 10:00:39] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-09 10:00:39] Fatal Error: Uncaught Error: Call to a member function query() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php:24
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(152): DashboardController->getAdminStats()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php on line 24
+[2026-07-09 10:00:39] INDEX.PHP REACHED
+[2026-07-09 10:00:39] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-09 10:00:39] Fatal Error: Uncaught Error: Call to a member function query() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php:24
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(152): DashboardController->getAdminStats()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php on line 24
+[2026-07-09 10:01:22] INDEX.PHP REACHED
+[2026-07-09 10:01:22] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-09 10:01:22] Fatal Error: Uncaught Error: Call to a member function query() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php:24
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(152): DashboardController->getAdminStats()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php on line 24
+[2026-07-09 10:01:22] INDEX.PHP REACHED
+[2026-07-09 10:01:22] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-09 10:01:22] Fatal Error: Uncaught Error: Call to a member function query() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php:24
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(152): DashboardController->getAdminStats()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php on line 24
+[2026-07-09 10:01:23] INDEX.PHP REACHED
+[2026-07-09 10:01:23] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-09 10:01:23] Fatal Error: Uncaught Error: Call to a member function query() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php:24
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(152): DashboardController->getAdminStats()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php on line 24
+[2026-07-09 10:01:23] INDEX.PHP REACHED
+[2026-07-09 10:01:23] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-09 10:01:23] Fatal Error: Uncaught Error: Call to a member function query() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php:24
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(152): DashboardController->getAdminStats()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php on line 24
+[2026-07-09 10:01:24] INDEX.PHP REACHED
+[2026-07-09 10:01:24] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-09 10:01:24] Fatal Error: Uncaught Error: Call to a member function query() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php:24
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(152): DashboardController->getAdminStats()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php on line 24
+[2026-07-09 10:01:24] INDEX.PHP REACHED
+[2026-07-09 10:01:24] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-09 10:01:24] Fatal Error: Uncaught Error: Call to a member function query() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php:24
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(152): DashboardController->getAdminStats()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php on line 24
+[2026-07-09 10:01:25] INDEX.PHP REACHED
+[2026-07-09 10:01:25] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-09 10:01:25] Fatal Error: Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php:37
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(60): RoomController->getCategories()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 37
+[2026-07-09 10:01:25] INDEX.PHP REACHED
+[2026-07-09 10:01:25] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-09 10:01:25] Fatal Error: Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php:37
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(60): RoomController->getCategories()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 37
+[2026-07-09 10:01:26] INDEX.PHP REACHED
+[2026-07-09 10:01:26] REQUEST: GET /api/index.php/rooms/list (Path: /rooms/list)
+[2026-07-09 10:01:26] Fatal Error: Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php:256
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(62): RoomController->getAllRooms()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 256
+[2026-07-09 10:01:26] INDEX.PHP REACHED
+[2026-07-09 10:01:26] REQUEST: GET /api/index.php/rooms/list (Path: /rooms/list)
+[2026-07-09 10:01:26] Fatal Error: Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php:256
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(62): RoomController->getAllRooms()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 256
+[2026-07-09 10:01:30] INDEX.PHP REACHED
+[2026-07-09 10:01:30] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-09 10:01:30] Fatal Error: Uncaught Error: Call to a member function query() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php:24
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(152): DashboardController->getAdminStats()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php on line 24
+[2026-07-09 10:01:30] INDEX.PHP REACHED
+[2026-07-09 10:01:30] REQUEST: GET /api/index.php/admin/bookings/list?limit=100&offset=0 (Path: /admin/bookings/list)
+[2026-07-09 10:01:30] Fatal Error: Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\subraresidency1\backend\api\admin\bookings\list.php:11
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(98): include_once()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\api\admin\bookings\list.php on line 11
+[2026-07-09 10:01:30] INDEX.PHP REACHED
+[2026-07-09 10:01:30] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-09 10:01:30] Fatal Error: Uncaught Error: Call to a member function query() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php:24
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(152): DashboardController->getAdminStats()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php on line 24
+[2026-07-09 10:01:30] INDEX.PHP REACHED
+[2026-07-09 10:01:30] REQUEST: GET /api/index.php/admin/bookings/list?limit=100&offset=0 (Path: /admin/bookings/list)
+[2026-07-09 10:01:30] Fatal Error: Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\subraresidency1\backend\api\admin\bookings\list.php:11
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(98): include_once()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\api\admin\bookings\list.php on line 11
