@@ -88,6 +88,8 @@ export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onRefresh }
       if (result && result.image_path) {
         const newUrl = `${BACKEND_URL}${result.image_path}`;
         setGalleryList(prev => [...prev, newUrl]);
+        // First photo added becomes the featured image automatically
+        setFormData(prev => (prev.featured_image ? prev : { ...prev, featured_image: result.image_path }));
       } else {
         alert(result?.message || "Failed to upload image.");
       }

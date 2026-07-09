@@ -336,12 +336,13 @@ class RoomController {
         }
     }
 
-    // Update a room's details directly in rooms_new
+    // Update a category's details in room_categories (id here is a category id —
+    // AdminRoomDetailView.tsx edits the category, not an individual physical sub-room)
     public function updateRoomDetails() {
         $data = json_decode(file_get_contents("php://input"));
         if (empty($data->id)) {
             http_response_code(400);
-            echo json_encode(["message" => "Room ID is required"]);
+            echo json_encode(["message" => "Category ID is required"]);
             return;
         }
 
@@ -349,16 +350,15 @@ class RoomController {
         $fields = [];
         $params = [];
 
-        // Map incoming fields to database columns
+        // Map incoming fields to room_categories columns
         $map = [
-            'room_name' => 'room_name',
-            'room_number' => 'room_number',
-            'base_price' => 'base_price',
+            'room_name' => 'name',
+            'base_price' => 'base_price_24h',
             'full_description' => 'full_description',
-            'short_description' => 'short_description',
+            'short_description' => 'description',
             'house_rules' => 'house_rules',
             'status' => 'status',
-            'max_adults' => 'max_adults',
+            'max_adults' => 'adults_count',
             'bed_type' => 'bed_type',
             'room_size' => 'room_size',
             'featured_image' => 'featured_image'
@@ -377,15 +377,19 @@ class RoomController {
             return;
         }
 
-        $query = "UPDATE rooms_new SET " . implode(', ', $fields) . " WHERE id = :id";
+        $query = "UPDATE room_categories SET " . implode(', ', $fields) . " WHERE id = :id";
         $params[':id'] = $id;
 
         $stmt = $this->db->prepare($query);
         if ($stmt->execute($params)) {
+            // Keep every physical sub-room's denormalized room_name in sync
+            if (isset($data->room_name)) {
+                $this->db->prepare("UPDATE rooms_new SET room_name = ? WHERE category_id = ?")->execute([$data->room_name, $id]);
+            }
             if (isset($data->amenities)) {
-                $this->db->prepare("DELETE FROM room_amenities WHERE room_id = ?")->execute([$id]);
+                $this->db->prepare("DELETE FROM room_amenities WHERE category_id = ?")->execute([$id]);
                 $amenities = is_array($data->amenities) ? $data->amenities : (is_string($data->amenities) ? explode(',', $data->amenities) : []);
-                $stmt_amenity = $this->db->prepare("INSERT INTO room_amenities (room_id, amenity_name) VALUES (?, ?)");
+                $stmt_amenity = $this->db->prepare("INSERT INTO room_amenities (category_id, amenity_name) VALUES (?, ?)");
                 foreach ($amenities as $amenity) {
                     if (trim($amenity)) {
                         $stmt_amenity->execute([$id, trim($amenity)]);
@@ -393,10 +397,10 @@ class RoomController {
                 }
             }
             http_response_code(200);
-            echo json_encode(["message" => "Room updated successfully"]);
+            echo json_encode(["message" => "Category updated successfully"]);
         } else {
             http_response_code(500);
-            echo json_encode(["message" => "Failed to update room"]);
+            echo json_encode(["message" => "Failed to update category"]);
         }
     }
 
@@ -407,10 +411,11 @@ class RoomController {
             mkdir($upload_dir, 0777, true);
         }
 
-        $room_id = $_POST['room_id'] ?? null;
-        if (!$room_id) {
+        // AdminRoomDetailView.tsx sends the category id under the "room_id" field name
+        $category_id = $_POST['room_id'] ?? null;
+        if (!$category_id) {
             http_response_code(400);
-            echo json_encode(["message" => "Room ID is required"]);
+            echo json_encode(["message" => "Category ID is required"]);
             return;
         }
 
@@ -419,33 +424,34 @@ class RoomController {
 
             if ($filename) {
                 $path = '/uploads/rooms/' . $filename;
-                $sort_stmt = $this->db->prepare("SELECT MAX(sort_order) FROM room_images_new WHERE room_id = ?");
-                $sort_stmt->execute([$room_id]);
+                $sort_stmt = $this->db->prepare("SELECT MAX(sort_order) FROM room_images_new WHERE category_id = ?");
+                $sort_stmt->execute([$category_id]);
                 $max_sort = (int)$sort_stmt->fetchColumn();
                 $sort_order = $max_sort + 10;
 
-                $query = "INSERT INTO room_images_new (room_id, image_path, sort_order) VALUES (?, ?, ?)";
+                $query = "INSERT INTO room_images_new (category_id, image_path, sort_order) VALUES (?, ?, ?)";
                 $stmt = $this->db->prepare($query);
-                if ($stmt->execute([$room_id, $path, $sort_order])) {
+                if ($stmt->execute([$category_id, $path, $sort_order])) {
                     http_response_code(200);
                     echo json_encode(["message" => "Image uploaded successfully", "image_path" => $path]);
                     return;
                 }
             }
         }
-        
+
         http_response_code(500);
         echo json_encode(["message" => "Failed to upload image"]);
     }
 
     public function deleteGalleryImage() {
         $data = json_decode(file_get_contents("php://input"));
-        $room_id = $data->room_id ?? null;
+        // AdminRoomDetailView.tsx sends the category id under the "room_id" field name
+        $category_id = $data->room_id ?? null;
         $image_path = $data->image_path ?? null;
 
-        if (!$room_id || !$image_path) {
+        if (!$category_id || !$image_path) {
             http_response_code(400);
-            echo json_encode(["message" => "Room ID and image path are required"]);
+            echo json_encode(["message" => "Category ID and image path are required"]);
             return;
         }
 
@@ -453,9 +459,9 @@ class RoomController {
         $clean_path = preg_replace('/https?:\/\/[^\/]+/i', '', $clean_path); // Remove proto + host
         $clean_path = preg_replace('/^\/subraresidency1\/backend/i', '', $clean_path); // Remove subfolders prefix if present
 
-        $query = "DELETE FROM room_images_new WHERE room_id = ? AND image_path = ?";
+        $query = "DELETE FROM room_images_new WHERE category_id = ? AND image_path = ?";
         $stmt = $this->db->prepare($query);
-        if ($stmt->execute([$room_id, $clean_path])) {
+        if ($stmt->execute([$category_id, $clean_path])) {
             $file_path = __DIR__ . '/../..' . $clean_path;
             if (file_exists($file_path)) {
                 unlink($file_path);
