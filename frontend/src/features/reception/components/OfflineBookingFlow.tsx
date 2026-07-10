@@ -451,7 +451,7 @@ export const OfflineBookingFlow = () => {
                        <div className="mt-10">
                           <button 
                             onClick={handleReset}
-                            className="bg-[#0b3a24] text-white px-10 py-5 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] shadow-xl hover:bg-black transition-all"
+                            className="bg-[#0b3a24] text-white px-10 py-5 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] shadow-xl hover:bg-[#082819] hover:shadow-emerald-900/20 active:scale-95 transition-all"
                           >
                              Start New Registration
                           </button>
@@ -473,7 +473,7 @@ export const OfflineBookingFlow = () => {
                     {currentStep < steps.length - 2 && (
                       <Button 
                         onClick={handleNext}
-                        className="bg-[#0b3a24] text-white font-black px-12 rounded-xl py-6 h-auto uppercase tracking-[0.2em] shadow-xl hover:bg-black transition-all"
+                        className="bg-[#0b3a24] text-white font-black px-12 rounded-xl py-6 h-auto uppercase tracking-[0.2em] shadow-xl hover:bg-[#082819] hover:shadow-emerald-900/20 active:scale-95 transition-all"
                       >
                          Next Step
                       </Button>
@@ -482,7 +482,7 @@ export const OfflineBookingFlow = () => {
                       <Button 
                         disabled={isSubmitting}
                         onClick={handleCreateOfflineBooking}
-                        className="bg-[#0b3a24] text-white font-black px-12 rounded-xl py-6 h-auto uppercase tracking-[0.2em] shadow-xl hover:bg-emerald-700 transition-all flex items-center gap-2"
+                        className="bg-[#0b3a24] text-white font-black px-12 rounded-xl py-6 h-auto uppercase tracking-[0.2em] shadow-xl hover:bg-[#082819] hover:shadow-emerald-900/20 active:scale-95 transition-all flex items-center gap-2"
                       >
                          {isSubmitting && <Loader2 className="animate-spin" size={16} />}
                          Complete Folio

@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../..
 import { Button } from '../../../components/ui/button';
 import { Input } from '../../../components/ui/input';
 import { Textarea } from '../../../components/ui/textarea';
-import { API_BASE_URL } from '../../../lib/api';
+import { API_BASE_URL, BACKEND_URL } from '../../../lib/api';
 
 interface WebsiteSettingsProps {
   onBack: () => void;
@@ -15,6 +15,37 @@ export const AdminWebsiteSettings: React.FC<WebsiteSettingsProps> = ({ onBack })
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
+  const [uploadingBanner, setUploadingBanner] = useState(false);
+
+  const handleBannerUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files || e.target.files.length === 0) return;
+    const file = e.target.files[0];
+    
+    setUploadingBanner(true);
+    setMessage(null);
+    
+    const formData = new FormData();
+    formData.append('banner', file);
+    
+    try {
+      const response = await fetch(`${API_BASE_URL}/settings/uploadBanner`, {
+        method: 'POST',
+        body: formData
+      });
+      const data = await response.json();
+      if (data && data.status === 'success') {
+        handleChange('popup_banner_image', data.image_path);
+        setMessage({ type: 'success', text: 'Banner image uploaded successfully! Remember to save changes.' });
+      } else {
+        throw new Error(data.message || 'Upload failed');
+      }
+    } catch (error: any) {
+      console.error('Error uploading banner:', error);
+      setMessage({ type: 'error', text: error.message || 'Failed to upload banner.' });
+    } finally {
+      setUploadingBanner(false);
+    }
+  };
 
   useEffect(() => {
     fetchSettings();
@@ -65,8 +96,8 @@ export const AdminWebsiteSettings: React.FC<WebsiteSettingsProps> = ({ onBack })
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center p-20 space-y-4">
-        <Loader2 className="w-10 h-10 text-emerald-600 animate-spin" />
-        <p className="text-emerald-900 font-bold uppercase tracking-widest text-xs">Loading Settings...</p>
+        <Loader2 className="w-10 h-10 text-indigo-600 animate-spin" />
+        <p className="text-indigo-900 font-bold uppercase tracking-widest text-xs">Loading Settings...</p>
       </div>
     );
   }
@@ -91,7 +122,7 @@ export const AdminWebsiteSettings: React.FC<WebsiteSettingsProps> = ({ onBack })
         <Button 
           disabled={saving}
           onClick={handleSave}
-          className="bg-emerald-900 hover:bg-black text-white text-xs font-black uppercase tracking-widest px-8 h-12 shadow-xl shadow-emerald-900/20"
+          className="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black uppercase tracking-widest px-8 h-12 shadow-xl shadow-indigo-500/10"
         >
           {saving ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Save className="w-4 h-4 mr-2" />}
           Save Changes
@@ -99,7 +130,7 @@ export const AdminWebsiteSettings: React.FC<WebsiteSettingsProps> = ({ onBack })
       </div>
 
       {message && (
-        <div className={`p-4 rounded-xl flex items-center gap-3 ${message.type === 'success' ? 'bg-emerald-50 text-emerald-700 border border-emerald-100' : 'bg-rose-50 text-rose-700 border border-rose-100'}`}>
+        <div className={`p-4 rounded-xl flex items-center gap-3 ${message.type === 'success' ? 'bg-indigo-50 text-indigo-800 border border-indigo-150' : 'bg-rose-50 text-rose-700 border border-rose-100'}`}>
           {message.type === 'success' ? <CheckCircle2 size={18} /> : <AlertCircle size={18} />}
           <span className="text-sm font-bold uppercase tracking-tight">{message.text}</span>
         </div>
@@ -110,7 +141,7 @@ export const AdminWebsiteSettings: React.FC<WebsiteSettingsProps> = ({ onBack })
         <Card className="border-none shadow-xl shadow-slate-200/50">
           <CardHeader className="border-b border-slate-50 pb-6">
             <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-emerald-50 text-emerald-700">
+              <div className="p-2 rounded-lg bg-indigo-50 text-indigo-755">
                 <Globe size={18} />
               </div>
               <div>
@@ -126,7 +157,7 @@ export const AdminWebsiteSettings: React.FC<WebsiteSettingsProps> = ({ onBack })
                 value={settings.site_name || ''} 
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange('site_name', e.target.value)}
                 placeholder="e.g. Subra Residency"
-                className="bg-slate-50 border-none h-12 font-bold focus-visible:ring-emerald-600/20"
+                className="bg-slate-50 border-none h-12 font-bold focus-visible:ring-indigo-600/20"
               />
             </div>
             <div className="space-y-2">
@@ -135,7 +166,7 @@ export const AdminWebsiteSettings: React.FC<WebsiteSettingsProps> = ({ onBack })
                 value={settings.site_description || ''} 
                 onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => handleChange('site_description', e.target.value)}
                 placeholder="Briefly describe your residency..."
-                className="bg-slate-50 border-none min-h-[100px] font-medium focus-visible:ring-emerald-600/20"
+                className="bg-slate-50 border-none min-h-[100px] font-medium focus-visible:ring-indigo-600/20"
               />
             </div>
             <div className="grid grid-cols-2 gap-6">
@@ -163,7 +194,7 @@ export const AdminWebsiteSettings: React.FC<WebsiteSettingsProps> = ({ onBack })
         <Card className="border-none shadow-xl shadow-slate-200/50">
           <CardHeader className="border-b border-slate-50 pb-6">
             <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-emerald-50 text-emerald-700">
+              <div className="p-2 rounded-lg bg-indigo-50 text-indigo-755">
                 <Phone size={18} />
               </div>
               <div>
@@ -213,7 +244,7 @@ export const AdminWebsiteSettings: React.FC<WebsiteSettingsProps> = ({ onBack })
         <Card className="border-none shadow-xl shadow-slate-200/50">
           <CardHeader className="border-b border-slate-50 pb-6">
             <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-emerald-50 text-emerald-700">
+              <div className="p-2 rounded-lg bg-indigo-50 text-indigo-755">
                 <Share2 size={18} />
               </div>
               <div>
@@ -246,7 +277,7 @@ export const AdminWebsiteSettings: React.FC<WebsiteSettingsProps> = ({ onBack })
         <Card className="border-none shadow-xl shadow-slate-200/50">
           <CardHeader className="border-b border-slate-50 pb-6">
             <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-emerald-50 text-emerald-700">
+              <div className="p-2 rounded-lg bg-indigo-50 text-indigo-755">
                 <Share2 size={18} />
               </div>
               <div>
@@ -279,6 +310,78 @@ export const AdminWebsiteSettings: React.FC<WebsiteSettingsProps> = ({ onBack })
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange('social_twitter', e.target.value)}
                 className="bg-slate-50 border-none h-12 font-medium"
               />
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Promotional Popup Banner */}
+        <Card className="border-none shadow-xl shadow-slate-200/50">
+          <CardHeader className="border-b border-slate-50 pb-6">
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-lg bg-indigo-50 text-indigo-700">
+                <Globe size={18} />
+              </div>
+              <div>
+                <CardTitle className="text-sm font-black uppercase tracking-wider">Promotional Popup Banner</CardTitle>
+                <CardDescription className="text-xs font-medium">Configure a floating offer/festival banner on the home page.</CardDescription>
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent className="p-8 space-y-6">
+            <div className="flex items-center justify-between p-4 bg-slate-50 rounded-2xl border border-slate-100">
+              <div className="space-y-0.5 text-left">
+                <label className="text-xs font-black uppercase text-slate-700 tracking-wider">Enable Banner</label>
+                <p className="text-[10px] text-slate-400 font-bold uppercase tracking-tight">Show floating banner to visitors</p>
+              </div>
+              <input
+                type="checkbox"
+                checked={settings.popup_banner_enabled === 'true'}
+                onChange={(e) => handleChange('popup_banner_enabled', e.target.checked ? 'true' : 'false')}
+                className="w-10 h-5 accent-indigo-600 cursor-pointer"
+              />
+            </div>
+            
+            <div className="space-y-2 text-left">
+              <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest block">Redirect Link (Optional)</label>
+              <Input 
+                value={settings.popup_banner_link || ''} 
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange('popup_banner_link', e.target.value)}
+                placeholder="e.g. /rooms or https://..."
+                className="bg-slate-50 border-none h-12 font-bold"
+              />
+            </div>
+
+            <div className="space-y-3 text-left">
+              <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest block">Banner Image</label>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
+                {settings.popup_banner_image && (
+                  <div className="relative aspect-[16/10] overflow-hidden rounded-2xl border border-slate-100 bg-slate-50">
+                    <img 
+                      src={`${BACKEND_URL}${settings.popup_banner_image}`}
+                      alt="Banner Preview" 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                )}
+                <div className="space-y-2">
+                  <div className="relative flex items-center justify-center border-2 border-dashed border-slate-200 hover:border-indigo-500 rounded-2xl p-6 transition-all group">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleBannerUpload}
+                      disabled={uploadingBanner}
+                      className="absolute inset-0 opacity-0 cursor-pointer disabled:cursor-not-allowed"
+                    />
+                    <div className="text-center space-y-1">
+                      <Save className="mx-auto w-6 h-6 text-slate-400 group-hover:text-indigo-600 transition-colors" />
+                      <p className="text-[10px] font-black uppercase text-slate-500 tracking-wider">
+                        {uploadingBanner ? 'Uploading...' : 'Upload Image'}
+                      </p>
+                    </div>
+                  </div>
+                  <p className="text-[8px] font-bold text-slate-400 uppercase tracking-widest text-center">WebP recommended. Max 2MB.</p>
+                </div>
+              </div>
             </div>
           </CardContent>
         </Card>

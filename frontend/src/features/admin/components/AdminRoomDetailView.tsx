@@ -6,7 +6,7 @@ import {
 } from 'lucide-react';
 import { Button } from '../../../components/ui/button';
 import { Card, CardContent } from '../../../components/ui/card';
-import { updateRoomDetails, uploadGalleryImage, deleteGalleryImage, BACKEND_URL } from '../../../lib/api';
+import { updateRoomDetails, uploadGalleryImage, deleteGalleryImage, BACKEND_URL, addSubRoom, updateSubRoom, deleteSubRoom, API_BASE_URL } from '../../../lib/api';
 
 interface Props {
   room: any;
@@ -60,6 +60,100 @@ export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onRefresh }
   const [availableAmenities, setAvailableAmenities] = useState<string[]>(() => {
     return Array.from(new Set([...ALL_AVAILABLE_AMENITIES, ...(room.amenities || [])]));
   });
+
+  const [subRooms, setSubRooms] = useState<any[]>([]);
+  const [loadingSubRooms, setLoadingSubRooms] = useState(true);
+
+  const [newRoomNumber, setNewRoomNumber] = useState('');
+  const [newFloorNumber, setNewFloorNumber] = useState('1');
+  const [editingSubRoomId, setEditingSubRoomId] = useState<number | null>(null);
+  const [editRoomNumber, setEditRoomNumber] = useState('');
+  const [editFloorNumber, setEditFloorNumber] = useState('1');
+  const [isActionSubRoom, setIsActionSubRoom] = useState(false);
+
+  const loadSubRooms = async () => {
+    setLoadingSubRooms(true);
+    try {
+      const response = await fetch(`${API_BASE_URL}/rooms/subRooms?category_id=${room.id}`);
+      const json = await response.json();
+      if (json.status === 'success' && Array.isArray(json.rooms)) {
+        setSubRooms(json.rooms);
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoadingSubRooms(false);
+    }
+  };
+
+  useEffect(() => {
+    loadSubRooms();
+  }, [room.id]);
+
+  const handleAddSubRoom = async () => {
+    if (!newRoomNumber.trim()) return;
+    setIsActionSubRoom(true);
+    try {
+      const res = await addSubRoom({
+        category_id: room.id,
+        room_number: newRoomNumber.trim(),
+        floor_number: newFloorNumber
+      });
+      if (res && res.status === 'success') {
+        setNewRoomNumber('');
+        setNewFloorNumber('1');
+        await loadSubRooms();
+      } else {
+        alert(res?.message || 'Failed to add room number.');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Error adding room number.');
+    } finally {
+      setIsActionSubRoom(false);
+    }
+  };
+
+  const handleUpdateSubRoom = async (id: number) => {
+    if (!editRoomNumber.trim()) return;
+    setIsActionSubRoom(true);
+    try {
+      const res = await updateSubRoom({
+        id,
+        room_number: editRoomNumber.trim(),
+        floor_number: editFloorNumber
+      });
+      if (res && res.status === 'success') {
+        setEditingSubRoomId(null);
+        await loadSubRooms();
+      } else {
+        alert(res?.message || 'Failed to update room number.');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Error updating room number.');
+    } finally {
+      setIsActionSubRoom(false);
+    }
+  };
+
+  const handleDeleteSubRoom = async (id: number) => {
+    if (!window.confirm('Are you sure you want to delete this room number?')) return;
+    setIsActionSubRoom(true);
+    try {
+      const res = await deleteSubRoom(id);
+      if (res && res.status === 'success') {
+        await loadSubRooms();
+      } else {
+        alert(res?.message || 'Failed to delete room number.');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Error deleting room number.');
+    } finally {
+      setIsActionSubRoom(false);
+    }
+  };
 
   useEffect(() => {
     setGalleryList(room.images && room.images.length > 0 ? room.images : (room.image ? [room.image] : []));
@@ -247,10 +341,10 @@ export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onRefresh }
                         name="featured_image"
                         value={formData.featured_image}
                         onChange={handleChange}
-                        className="text-xs font-bold text-slate-700 bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 w-80 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                        className="text-xs font-bold text-slate-700 bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 w-80 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                         placeholder="e.g. /uploads/rooms/room_1.png"
                     />
-                    <label className="bg-[#0b336b] hover:bg-black text-white text-[10px] font-black uppercase px-4 py-2.5 rounded-lg active:scale-95 transition-all cursor-pointer flex items-center gap-2">
+                    <label className="bg-[#0b336b] hover:bg-[#072145] text-white text-[10px] font-black uppercase px-4 py-2.5 rounded-lg active:scale-95 transition-all cursor-pointer flex items-center gap-2">
                         <Plus size={12} /> Add Photo
                         <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
                     </label>
@@ -322,7 +416,7 @@ export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onRefresh }
                          <div className="absolute inset-0 bg-black/55 opacity-0 group-hover/cell:opacity-100 transition-opacity flex items-center justify-center gap-2">
                            <button 
                              onClick={() => handleSetFeatured(imgUrl)}
-                             className="bg-emerald-600 hover:bg-emerald-700 text-white p-2 rounded-full shadow-lg transition-transform hover:scale-110"
+                             className="bg-indigo-600 hover:bg-indigo-700 text-white p-2 rounded-full shadow-lg transition-transform hover:scale-110"
                              title="Set as Featured"
                            >
                              <Crown size={12} />
@@ -337,7 +431,7 @@ export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onRefresh }
                          </div>
                        </>
                      ) : (
-                       <label className="w-full h-full flex flex-col items-center justify-center border border-dashed border-slate-250 hover:border-emerald-400 hover:bg-emerald-50/20 rounded-xl cursor-pointer transition-all">
+                       <label className="w-full h-full flex flex-col items-center justify-center border border-dashed border-slate-250 hover:border-indigo-400 hover:bg-indigo-50/20 rounded-xl cursor-pointer transition-all">
                          <Plus size={16} className="text-slate-400" />
                          <span className="text-[8px] font-black text-slate-400 uppercase tracking-wider mt-1">Add Photo</span>
                          <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
@@ -352,20 +446,20 @@ export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onRefresh }
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-16">
           <div className="lg:col-span-2 space-y-12">
              <section className="pb-12 border-b border-slate-100">
-                <h3 className="text-sm font-bold text-emerald-600 uppercase tracking-widest mb-4">Official Public Description</h3>
+                <h3 className="text-sm font-bold text-[#4f46e5] uppercase tracking-widest mb-4">Official Public Description</h3>
                 <textarea 
                     name="full_description"
                     value={formData.full_description}
                     onChange={handleChange}
                     rows={8}
-                    className="w-full p-6 text-slate-700 leading-relaxed text-lg whitespace-pre-wrap font-medium bg-slate-50 rounded-2xl border-2 border-transparent hover:border-slate-200 focus:border-emerald-500 focus:bg-white focus:outline-none transition-all shadow-inner"
+                    className="w-full p-6 text-slate-700 leading-relaxed text-lg whitespace-pre-wrap font-medium bg-slate-50 rounded-2xl border-2 border-transparent hover:border-slate-200 focus:border-indigo-500 focus:bg-white focus:outline-none transition-all shadow-inner"
                     placeholder="Describe this sanctuary for your guests..."
                 />
              </section>
 
              <section className="pb-12 border-b border-slate-100">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-                  <h3 className="text-sm font-bold text-emerald-600 uppercase tracking-widest">Amenity Highlights</h3>
+                  <h3 className="text-sm font-bold text-[#4f46e5] uppercase tracking-widest">Amenity Highlights</h3>
                   
                   <div className="flex gap-2">
                     <input 
@@ -374,12 +468,12 @@ export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onRefresh }
                       value={customAmenity}
                       onChange={(e) => setCustomAmenity(e.target.value)}
                       onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); handleAddCustomAmenity(); } }}
-                      className="text-xs font-bold text-slate-700 bg-slate-50 border border-slate-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 w-44"
+                      className="text-xs font-bold text-slate-700 bg-slate-50 border border-slate-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 w-44"
                     />
                     <button 
                       type="button"
                       onClick={handleAddCustomAmenity}
-                      className="bg-emerald-900 hover:bg-black text-white text-[10px] font-black uppercase px-3 py-1.5 rounded-lg active:scale-95 transition-all"
+                      className="bg-[#4f46e5] hover:bg-[#3b35b3] text-white text-[10px] font-black uppercase px-3 py-1.5 rounded-lg active:scale-95 transition-all shadow-sm"
                     >
                       Add
                     </button>
@@ -402,11 +496,11 @@ export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onRefresh }
                         }}
                         className={`flex items-center gap-3 px-4 py-3 rounded-xl border-2 text-left transition-all duration-200 active:scale-95 ${
                           isSelected 
-                            ? 'border-emerald-600 bg-emerald-50 text-slate-900 font-bold' 
+                            ? 'border-[#4f46e5] bg-indigo-50/50 text-slate-900 font-bold' 
                             : 'border-slate-100 hover:border-slate-200 text-slate-500 font-medium'
                         }`}
                       >
-                         <CheckCircle2 size={16} className={isSelected ? 'text-emerald-600 fill-emerald-50' : 'text-slate-300'} />
+                         <CheckCircle2 size={16} className={isSelected ? 'text-[#4f46e5] fill-indigo-50' : 'text-slate-300'} />
                          <span className="text-xs tracking-tight">{amenity}</span>
                       </button>
                     );
@@ -415,7 +509,7 @@ export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onRefresh }
              </section>
 
              <section className="pb-12 border-b border-slate-100">
-                <h3 className="text-sm font-bold text-emerald-600 uppercase tracking-widest mb-4">Internal Specs</h3>
+                <h3 className="text-sm font-bold text-[#4f46e5] uppercase tracking-widest mb-4">Internal Specs</h3>
                 <div className="grid grid-cols-3 gap-8 p-6 bg-slate-50 rounded-2xl border border-slate-100">
                    <div className="text-center">
                       <p className="text-[10px] text-slate-400 font-bold uppercase mb-1">Max Adults</p>
@@ -424,7 +518,7 @@ export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onRefresh }
                         type="number"
                         value={formData.max_adults || room.adults}
                         onChange={handleChange}
-                        className="text-xl font-bold text-slate-800 bg-transparent text-center border-b border-transparent hover:border-slate-300 focus:outline-none focus:border-emerald-500 w-16"
+                        className="text-xl font-bold text-slate-800 bg-transparent text-center border-b border-transparent hover:border-slate-300 focus:outline-none focus:border-indigo-500 w-16"
                       />
                    </div>
                    <div className="text-center border-x border-slate-200 px-4">
@@ -433,7 +527,7 @@ export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onRefresh }
                         name="bed_type"
                         value={formData.bed_type || room.bed_type}
                         onChange={handleChange}
-                        className="text-xl font-bold text-slate-800 bg-transparent text-center border-b border-transparent hover:border-slate-300 focus:outline-none focus:border-emerald-500 w-full"
+                        className="text-xl font-bold text-slate-800 bg-transparent text-center border-b border-transparent hover:border-slate-300 focus:outline-none focus:border-indigo-500 w-full"
                       />
                    </div>
                    <div className="text-center">
@@ -442,19 +536,140 @@ export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onRefresh }
                         name="room_size"
                         value={formData.room_size || room.size}
                         onChange={handleChange}
-                        className="text-xl font-bold text-slate-800 bg-transparent text-center border-b border-transparent hover:border-slate-300 focus:outline-none focus:border-emerald-500 w-20"
+                        className="text-xl font-bold text-slate-800 bg-transparent text-center border-b border-transparent hover:border-slate-300 focus:outline-none focus:border-indigo-500 w-20"
                       />
                    </div>
+                 </div>
+              </section>
+
+             <section className="pb-12 border-b border-slate-100">
+                <h3 className="text-sm font-bold text-[#4f46e5] uppercase tracking-widest mb-4 flex items-center justify-between">
+                  <span>Assigned Room Numbers</span>
+                  <span className="text-[10px] text-slate-400 font-bold lowercase">({subRooms.length} rooms)</span>
+                </h3>
+
+                <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100 space-y-4">
+                  {/* Add sub-room form */}
+                  <div className="flex flex-col sm:flex-row gap-3 items-end bg-white p-4 rounded-xl border border-slate-200">
+                    <div className="flex-1 space-y-1 w-full">
+                      <label className="block text-[8px] font-black text-slate-400 uppercase tracking-wider">New Room Number</label>
+                      <input
+                        type="text"
+                        value={newRoomNumber}
+                        onChange={(e) => setNewRoomNumber(e.target.value)}
+                        placeholder="e.g. 101"
+                        className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-xs font-bold text-slate-800 focus:bg-white focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                      />
+                    </div>
+                    <div className="w-full sm:w-28 space-y-1">
+                      <label className="block text-[8px] font-black text-slate-400 uppercase tracking-wider">Floor</label>
+                      <input
+                        type="text"
+                        value={newFloorNumber}
+                        onChange={(e) => setNewFloorNumber(e.target.value)}
+                        placeholder="e.g. 1"
+                        className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-xs font-bold text-slate-800 focus:bg-white focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                      />
+                    </div>
+                    <Button
+                      onClick={handleAddSubRoom}
+                      disabled={isActionSubRoom || !newRoomNumber.trim()}
+                      className="bg-[#4f46e5] hover:bg-[#3b35b3] text-white text-[10px] font-bold uppercase tracking-wider h-10 px-4 rounded-lg flex items-center gap-1.5 w-full sm:w-auto shadow-md"
+                    >
+                      <Plus size={14} /> Add Room
+                    </Button>
+                  </div>
+
+                  {/* List of sub-rooms */}
+                  {loadingSubRooms ? (
+                    <p className="text-[10px] text-slate-500 animate-pulse text-center py-4 font-bold">Loading rooms list...</p>
+                  ) : subRooms.length > 0 ? (
+                    <div className="divide-y divide-slate-100 bg-white border border-slate-200 rounded-xl overflow-hidden">
+                      {subRooms.map((subRoom) => {
+                        const isEditing = editingSubRoomId === subRoom.id;
+                        return (
+                          <div key={subRoom.id} className="p-4 flex items-center justify-between gap-4">
+                            {isEditing ? (
+                              <div className="flex flex-1 flex-col sm:flex-row gap-2 items-end">
+                                <div className="flex-1 space-y-1 w-full">
+                                  <label className="block text-[8px] font-black text-slate-400 uppercase tracking-wider">Room Number</label>
+                                  <input
+                                    type="text"
+                                    value={editRoomNumber}
+                                    onChange={(e) => setEditRoomNumber(e.target.value)}
+                                    className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs font-bold text-slate-800 focus:bg-white focus:outline-none"
+                                  />
+                                </div>
+                                <div className="w-full sm:w-20 space-y-1">
+                                  <label className="block text-[8px] font-black text-slate-400 uppercase tracking-wider">Floor</label>
+                                  <input
+                                    type="text"
+                                    value={editFloorNumber}
+                                    onChange={(e) => setEditFloorNumber(e.target.value)}
+                                    className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs font-bold text-slate-800 focus:bg-white focus:outline-none"
+                                  />
+                                </div>
+                                <div className="flex gap-1.5 w-full sm:w-auto mt-2 sm:mt-0">
+                                  <Button
+                                    onClick={() => handleUpdateSubRoom(subRoom.id)}
+                                    disabled={isActionSubRoom}
+                                    className="bg-indigo-600 hover:bg-indigo-700 text-white text-[9px] font-bold uppercase h-8 px-2.5 rounded shadow-sm"
+                                  >
+                                    Save
+                                  </Button>
+                                  <Button
+                                    onClick={() => setEditingSubRoomId(null)}
+                                    className="bg-slate-100 hover:bg-slate-200 text-slate-700 text-[9px] font-bold uppercase h-8 px-2.5 rounded"
+                                  >
+                                    Cancel
+                                  </Button>
+                                </div>
+                              </div>
+                            ) : (
+                              <>
+                                <div className="flex items-center gap-3">
+                                  <div className="w-2.5 h-2.5 rounded-full bg-indigo-500 animate-pulse" />
+                                  <div>
+                                    <p className="text-xs font-bold text-slate-800">Room {subRoom.room_number}</p>
+                                    <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mt-0.5">Floor {subRoom.floor_number || '1'}</p>
+                                  </div>
+                                </div>
+                                <div className="flex items-center gap-1.5">
+                                  <Button
+                                    onClick={() => {
+                                      setEditingSubRoomId(subRoom.id);
+                                      setEditRoomNumber(subRoom.room_number);
+                                      setEditFloorNumber(subRoom.floor_number || '1');
+                                    }}
+                                    className="bg-white text-slate-600 hover:bg-slate-50 hover:text-slate-900 border border-slate-200 text-[9px] font-bold uppercase h-8 px-2.5 rounded shadow-sm"
+                                  >
+                                    Edit
+                                  </Button>
+                                  <Button
+                                    onClick={() => handleDeleteSubRoom(subRoom.id)}
+                                    disabled={isActionSubRoom}
+                                    className="bg-rose-50 hover:bg-rose-100 text-rose-650 border border-rose-200 text-[9px] font-bold uppercase h-8 px-2.5 rounded shadow-sm"
+                                  >
+                                    Delete
+                                  </Button>
+                                </div>
+                              </>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  ) : (
+                    <p className="text-xs text-slate-400 text-center py-6 border border-dashed border-slate-200 rounded-xl bg-white italic">No room numbers assigned yet. Add one above.</p>
+                  )}
                 </div>
              </section>
-          </div>
-
-          <div className="lg:col-span-1">
-             <Card className="rounded-3xl shadow-xl border-emerald-100 bg-emerald-50/30 overflow-hidden sticky top-28">
+          </div>           <div className="lg:col-span-1">
+             <Card className="rounded-3xl shadow-xl border-indigo-100 bg-indigo-50/20 overflow-hidden sticky top-28">
                 <CardContent className="p-8 space-y-6">
-                   <h3 className="text-xs font-bold text-emerald-700 uppercase tracking-widest mb-4 border-b border-emerald-100 pb-2 flex items-center justify-between">
+                   <h3 className="text-xs font-bold text-indigo-700 uppercase tracking-widest mb-4 border-b border-indigo-150 pb-2 flex items-center justify-between">
                        Status & Rules
-                       <span className="animate-pulse bg-emerald-500 h-2 w-2 rounded-full"></span>
+                       <span className="animate-pulse bg-indigo-500 h-2 w-2 rounded-full"></span>
                    </h3>
                    
                    <div className="space-y-4">
@@ -464,7 +679,7 @@ export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onRefresh }
                             name="status"
                             value={formData.status}
                             onChange={handleChange}
-                            className={`text-sm font-black uppercase tracking-wider bg-transparent focus:outline-none border-none cursor-pointer ${formData.status === 'Available' ? 'text-emerald-600' : 'text-amber-600'}`}
+                            className={`text-sm font-black uppercase tracking-wider bg-transparent focus:outline-none border-none cursor-pointer ${formData.status === 'Available' ? 'text-indigo-650' : 'text-amber-600'}`}
                          >
                             <option value="Available">Available</option>
                             <option value="Booked">Booked</option>
@@ -480,7 +695,7 @@ export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onRefresh }
                             value={formData.house_rules}
                             onChange={handleChange}
                             rows={4}
-                            className="w-full text-sm font-medium text-slate-600 leading-relaxed bg-slate-50 p-3 rounded-xl border border-transparent focus:border-emerald-500 focus:bg-white focus:outline-none transition-all italic"
+                            className="w-full text-sm font-medium text-slate-600 leading-relaxed bg-slate-50 p-3 rounded-xl border border-transparent focus:border-indigo-500 focus:bg-white focus:outline-none transition-all italic"
                             placeholder="e.g. No loud music. Check-out by 11 AM."
                          />
                       </div>
@@ -489,7 +704,7 @@ export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onRefresh }
                    <Button 
                      onClick={handleSave}
                      disabled={isSaving}
-                     className="w-full bg-emerald-900 hover:bg-emerald-800 text-white font-bold uppercase tracking-widest py-8 rounded-2xl shadow-xl h-auto transition-all active:scale-95 group"
+                     className="w-full bg-[#4f46e5] hover:bg-[#3b35b3] text-white font-bold uppercase tracking-widest py-8 rounded-2xl shadow-xl h-auto transition-all active:scale-95 group shadow-indigo-500/20"
                    >
                      {isSaving ? (
                         <span className="flex items-center gap-3">
@@ -498,7 +713,7 @@ export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onRefresh }
                      ) : (
                         <span className="flex flex-col items-center">
                             <span className="text-sm">Save Sanctuary Update</span>
-                            <span className="text-[9px] text-emerald-300 font-black mt-1 group-hover:text-white">FORCE GLOBAL SYNC</span>
+                            <span className="text-[9px] text-indigo-200 font-black mt-1 group-hover:text-white">FORCE GLOBAL SYNC</span>
                         </span>
                      )}
                    </Button>

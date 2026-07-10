@@ -50,4 +50,27 @@ class SettingsController {
             echo json_encode(["message" => "Error updating settings", "error" => $e->getMessage()]);
         }
     }
+
+    public function uploadBanner() {
+        $upload_dir = __DIR__ . '/../uploads/banners/';
+        if (!file_exists($upload_dir)) {
+            mkdir($upload_dir, 0777, true);
+        }
+
+        include_once __DIR__ . '/../utils/ImageUploader.php';
+
+        if (isset($_FILES['banner']) && $_FILES['banner']['error'] === UPLOAD_ERR_OK) {
+            $filename = ImageUploader::saveAsWebp($_FILES['banner'], $upload_dir, 'banner');
+            if ($filename) {
+                $path = '/uploads/banners/' . $filename;
+                $this->settings->update('popup_banner_image', $path);
+                http_response_code(200);
+                echo json_encode(["status" => "success", "message" => "Banner uploaded successfully", "image_path" => $path]);
+                return;
+            }
+        }
+        http_response_code(400);
+        echo json_encode(["status" => "error", "message" => "Failed to upload banner image"]);
+    }
 }
+?>

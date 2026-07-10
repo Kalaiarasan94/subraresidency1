@@ -282,3 +282,19 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+.admin-portal-theme h1,
+.admin-portal-theme h2,
+.admin-portal-theme h3,
+.admin-portal-theme h4,
+.admin-portal-theme h5,
+.admin-portal-theme h6,
+.reception-portal-theme h1,
+.reception-portal-theme h2,
+.reception-portal-theme h3,
+.reception-portal-theme h4,
+.reception-portal-theme h5,
+.reception-portal-theme h6 {
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif !important;
+}
+

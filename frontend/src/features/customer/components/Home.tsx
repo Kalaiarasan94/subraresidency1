@@ -11,7 +11,7 @@ import { AvailabilityBar } from './AvailabilityBar';
 import { OrnateDivider } from './OrnateDivider';
 import { SectionWrapper, DecorativeLayout } from './Layout';
 import { HeroSky } from './HeroSky';
-import { fetchRoomCategories } from '../../../lib/api';
+import { fetchRoomCategories, API_BASE_URL, BACKEND_URL } from '../../../lib/api';
 
 export const Home = ({ 
   onBookRoom, 
@@ -26,6 +26,12 @@ export const Home = ({
 }) => {
   const navigate = useNavigate();
   const [rooms, setRooms] = useState<any[]>(ROOMS_DATA);
+  const [bannerSettings, setBannerSettings] = useState<{
+    enabled: boolean;
+    imageUrl: string;
+    linkUrl: string;
+  }>({ enabled: false, imageUrl: '', linkUrl: '' });
+  const [isBannerClosed, setIsBannerClosed] = useState(false);
 
   useEffect(() => {
     const loadRooms = async () => {
@@ -35,6 +41,25 @@ export const Home = ({
       }
     };
     loadRooms();
+  }, []);
+
+  useEffect(() => {
+    const loadBannerSettings = async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/settings`);
+        const data = await response.json();
+        if (data) {
+          setBannerSettings({
+            enabled: data.popup_banner_enabled === 'true',
+            imageUrl: data.popup_banner_image || '',
+            linkUrl: data.popup_banner_link || '',
+          });
+        }
+      } catch (error) {
+        console.error('Error loading banner settings:', error);
+      }
+    };
+    loadBannerSettings();
   }, []);
 
   // Helper to format price without double rupee
@@ -50,6 +75,33 @@ export const Home = ({
         {/* Hero Section */}
         <section className="relative min-h-[86vh] flex flex-col items-center justify-start overflow-hidden pt-16 md:pt-20 pb-10">
           <HeroSky />
+          
+          {bannerSettings.enabled && bannerSettings.imageUrl && !isBannerClosed && (
+            <div className="absolute top-4 right-4 md:top-6 md:right-16 z-30 max-w-[280px] sm:max-w-[340px] bg-white rounded-3xl overflow-hidden shadow-2xl border-4 border-white ring-1 ring-slate-100 group animate-in fade-in slide-in-from-top-4 duration-500">
+              <button 
+                onClick={() => setIsBannerClosed(true)}
+                className="absolute top-2 right-2 w-8 h-8 rounded-full bg-slate-900/60 text-white flex items-center justify-center hover:bg-slate-900 transition-colors z-50 cursor-pointer text-sm font-bold"
+              >
+                ×
+              </button>
+              {bannerSettings.linkUrl ? (
+                <a href={bannerSettings.linkUrl} target="_blank" rel="noopener noreferrer" className="block overflow-hidden">
+                  <img 
+                    src={`${BACKEND_URL}${bannerSettings.imageUrl}`} 
+                    alt="Promotional Offer" 
+                    className="w-full h-auto object-cover hover:scale-105 transition-transform duration-500" 
+                  />
+                </a>
+              ) : (
+                <img 
+                  src={`${BACKEND_URL}${bannerSettings.imageUrl}`} 
+                  alt="Promotional Offer" 
+                  className="w-full h-auto object-cover" 
+                />
+              )}
+            </div>
+          )}
+
           <motion.div variants={heroStagger} initial="initial" animate="animate" className="relative z-10 space-y-4 md:space-y-5 max-w-5xl px-6 text-center">
             <motion.h1 variants={heroItem} className="font-playfair text-4xl md:text-6xl text-catalogue-green font-black tracking-tight leading-none drop-shadow-sm">WELCOME</motion.h1>
             <motion.p variants={heroItem} className="font-playfair text-xl md:text-3xl text-catalogue-green italic tracking-widest uppercase">TO A STAY THAT FEELS LIKE</motion.p>

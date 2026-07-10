@@ -94,7 +94,7 @@ const SettingsCard = ({ title, icon: Icon, links, action, onAction }: any) => (
             onClick={onAction}
             className="flex items-center gap-4 px-6 py-4 cursor-pointer hover:bg-slate-50 transition-colors group"
           >
-            <div className="p-1.5 rounded-md bg-slate-50 text-slate-400 group-hover:text-emerald-600 group-hover:bg-emerald-50 transition-all">
+            <div className="p-1.5 rounded-md bg-slate-50 text-slate-400 group-hover:text-indigo-600 group-hover:bg-indigo-50 transition-all">
               <link.icon size={14} />
             </div>
             <span className="text-[11px] font-black uppercase tracking-widest text-slate-600 group-hover:text-slate-900">{link.label}</span>
@@ -104,7 +104,7 @@ const SettingsCard = ({ title, icon: Icon, links, action, onAction }: any) => (
       </div>
     </CardContent>
     <div className="p-4 bg-slate-50/50 mt-auto">
-      <Button onClick={onAction} className="w-full bg-emerald-900 hover:bg-black text-white text-[10px] font-black uppercase tracking-widest h-10 shadow-lg shadow-emerald-900/10 active:scale-95 transition-all">
+      <Button onClick={onAction} className="w-full bg-indigo-600 hover:bg-indigo-700 text-white text-[10px] font-black uppercase tracking-widest h-10 shadow-lg shadow-indigo-500/10 active:scale-95 transition-all">
         {action} <ArrowRight size={12} className="ml-2" />
       </Button>
     </div>

@@ -21,13 +21,18 @@ export const CustomerPortal = () => {
     guests: '2 Guests'
   });
 
-  const handleBookRoom = (room: any, dates?: { checkIn: string; checkOut: string }) => {
+  const handleBookRoom = (room: any, dates?: { checkIn: string; checkOut: string; room_id?: number; room_number?: string }) => {
     setDetailedRoom(null);
     // Dates picked directly on the room detail page (if any) override the top-bar search filters
     const effectiveFilters = dates ? { ...searchFilters, ...dates } : searchFilters;
     if (dates) setSearchFilters(effectiveFilters);
+    
+    const roomWithSelection = dates?.room_id 
+      ? { ...room, selected_room_id: dates.room_id, selected_room_number: dates.room_number }
+      : room;
+
     // Navigate to the full-page booking flow passing room and the effective search filters
-    navigate('/bookings', { state: { room, searchFilters: effectiveFilters } });
+    navigate('/bookings', { state: { room: roomWithSelection, searchFilters: effectiveFilters } });
   };
 
   const handleRoomClick = (room: any) => {

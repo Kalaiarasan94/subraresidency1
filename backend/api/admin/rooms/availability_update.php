@@ -29,6 +29,7 @@ try {
     }
 
     // Normalize status
+    $status = ucfirst(strtolower($status));
     $allowed = ['Available','Booked','Maintenance'];
     if (!in_array($status, $allowed)) {
         http_response_code(400);

@@ -81,15 +81,15 @@ export const AdminDashboardView = ({
   if (loading) return (
     <div className="flex items-center justify-center h-[60vh]">
       <div className="flex flex-col items-center gap-4">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-emerald-600"></div>
-        <p className="text-emerald-900 font-bold animate-pulse uppercase tracking-widest text-[10px]">Synchronizing System Data...</p>
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-600"></div>
+        <p className="text-indigo-900 font-bold animate-pulse uppercase tracking-widest text-[10px]">Synchronizing System Data...</p>
       </div>
     </div>
   );
 
   if (!data) return <div className="p-10 text-rose-600 font-bold">Error: Connection to Management API lost.</div>;
 
-  const COLORS = ['#0f3a20', '#cda052', '#3b82f6', '#ef4444'];
+  const COLORS = ['#4f46e5', '#8b5cf6', '#6366f1', '#06b6d4'];
 
   return (
     <div className="animate-in fade-in duration-700">
@@ -98,8 +98,8 @@ export const AdminDashboardView = ({
       {activeSubTab === 'overview' && (
         <div className="space-y-8 animate-in slide-in-from-bottom-4 duration-500">
           <div className="space-y-6">
-            <h2 className="text-[11px] font-black text-emerald-900 uppercase tracking-[0.3em] flex items-center gap-3">
-              <div className="w-8 h-[2px] bg-emerald-900"></div>
+            <h2 className="text-xs font-black text-slate-800 uppercase tracking-widest flex items-center gap-3">
+              <div className="w-8 h-[2px] bg-indigo-600"></div>
               Dashboard Overview
             </h2>
             
@@ -115,53 +115,84 @@ export const AdminDashboardView = ({
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-              <Card className="lg:col-span-1 border-none shadow-sm">
-                 <CardHeader className="pb-2"><CardTitle className="text-xs font-black uppercase text-slate-400">Booking Chart</CardTitle></CardHeader>
+              <Card className="lg:col-span-1 border border-slate-100/80 shadow-sm rounded-2xl overflow-hidden bg-white hover:shadow-md transition-all duration-300">
+                 <CardHeader className="pb-2"><CardTitle className="text-[10px] font-black tracking-widest uppercase text-slate-400">Booking Chart</CardTitle></CardHeader>
                  <CardContent className="h-48 px-0">
                     <ResponsiveContainer width="100%" height="100%">
-                      <AreaChart data={data.chart_data}>
-                        <Area type="monotone" dataKey="bookings" stroke="#0f3a20" fill="#0f3a2010" strokeWidth={2} />
+                      <AreaChart data={data.chart_data} margin={{ top: 10, right: 10, left: 10, bottom: 0 }}>
+                        <defs>
+                          <linearGradient id="colorBookings" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="5%" stopColor="#4f46e5" stopOpacity={0.25}/>
+                            <stop offset="95%" stopColor="#4f46e5" stopOpacity={0.01}/>
+                          </linearGradient>
+                        </defs>
+                        <Area type="monotone" dataKey="bookings" stroke="#4f46e5" fill="url(#colorBookings)" strokeWidth={2.5} />
+                        <Tooltip 
+                          contentStyle={{ 
+                            backgroundColor: '#0f172a', 
+                            borderRadius: '12px', 
+                            border: 'none', 
+                            color: '#fff', 
+                            fontSize: '10px',
+                            fontWeight: 'bold',
+                            boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)'
+                          }} 
+                        />
                       </AreaChart>
                     </ResponsiveContainer>
                  </CardContent>
               </Card>
 
-              <Card className="lg:col-span-1 border-none shadow-sm">
-                 <CardHeader className="pb-2"><CardTitle className="text-xs font-black uppercase text-slate-400">Revenue Overview</CardTitle></CardHeader>
+              <Card className="lg:col-span-1 border border-slate-100/80 shadow-sm rounded-2xl overflow-hidden bg-white hover:shadow-md transition-all duration-300">
+                 <CardHeader className="pb-2"><CardTitle className="text-[10px] font-black tracking-widest uppercase text-slate-400">Revenue Overview</CardTitle></CardHeader>
                  <CardContent className="h-48 flex items-center justify-center">
                     <ResponsiveContainer width="100%" height="100%">
                       <PieChart>
                         <Pie data={data.revenue_overview} innerRadius={40} outerRadius={55} paddingAngle={5} dataKey="value">
                           {data.revenue_overview.map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
                         </Pie>
+                        <Tooltip 
+                          contentStyle={{ 
+                            backgroundColor: '#0f172a', 
+                            borderRadius: '12px', 
+                            border: 'none', 
+                            color: '#fff', 
+                            fontSize: '10px',
+                            fontWeight: 'bold'
+                          }} 
+                        />
                       </PieChart>
                     </ResponsiveContainer>
                  </CardContent>
               </Card>
 
-              <Card className="lg:col-span-2 border-none shadow-sm overflow-hidden">
-                 <CardHeader className="pb-2 flex flex-row items-center justify-between">
-                    <CardTitle className="text-xs font-black uppercase text-slate-400">Recent Bookings</CardTitle>
-                    <Button variant="link" className="text-[10px] uppercase font-bold text-emerald-700 p-0 h-auto" onClick={() => onNavigate?.('bookings')}>View All</Button>
+              <Card className="lg:col-span-2 border border-slate-100/80 shadow-sm rounded-2xl overflow-hidden bg-white hover:shadow-md transition-all duration-300">
+                 <CardHeader className="pb-2 flex flex-row items-center justify-between border-b border-slate-50">
+                    <CardTitle className="text-[10px] font-black tracking-widest uppercase text-slate-400">Recent Bookings</CardTitle>
+                    <Button variant="link" className="text-[9px] uppercase font-black tracking-widest text-indigo-650 hover:text-indigo-800 p-0 h-auto" onClick={() => onNavigate?.('bookings')}>View All</Button>
                  </CardHeader>
                  <CardContent className="p-0">
-                    <table className="w-full text-[11px]">
-                       <thead className="bg-slate-50 text-slate-400 uppercase font-black">
+                    <table className="w-full text-[11px] text-left">
+                       <thead className="bg-slate-50/60 text-slate-450 uppercase font-black text-[9px] tracking-widest border-b border-slate-100">
                           <tr>
-                            <th className="text-left px-4 py-2">ID</th>
-                            <th className="text-left px-4 py-2">Guest</th>
-                            <th className="text-left px-4 py-2">Check-in</th>
-                            <th className="text-right px-4 py-2">Status</th>
+                            <th className="px-6 py-4">ID</th>
+                            <th className="px-6 py-4">Guest</th>
+                            <th className="px-6 py-4">Check-in</th>
+                            <th className="text-right px-6 py-4">Status</th>
                           </tr>
                        </thead>
-                       <tbody>
+                       <tbody className="divide-y divide-slate-100/60">
                           {data.recent_bookings.map(b => (
-                            <tr key={b.booking_id} className="border-t border-slate-50">
-                              <td className="px-4 py-2 font-bold text-slate-900">{b.booking_id}</td>
-                              <td className="px-4 py-2 text-slate-600">{b.guest_name}</td>
-                              <td className="px-4 py-2 text-slate-400">{b.check_in_date}</td>
-                              <td className="px-4 py-2 text-right">
-                                 <span className={`px-2 py-0.5 rounded-full text-[9px] font-black uppercase ${b.status === 'confirmed' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'}`}>
+                            <tr key={b.booking_id} className="hover:bg-slate-50/40 transition-colors">
+                              <td className="px-6 py-4.5 font-extrabold text-slate-800">{b.booking_id}</td>
+                              <td className="px-6 py-4.5 text-slate-655 font-semibold">{b.guest_name}</td>
+                              <td className="px-6 py-4.5 text-slate-400 font-bold font-sans">{b.check_in_date}</td>
+                              <td className="px-6 py-4.5 text-right">
+                                 <span className={`px-3 py-1 rounded-full text-[8px] font-black border uppercase tracking-wider ${
+                                   b.status === 'confirmed' 
+                                     ? 'bg-indigo-50 border-indigo-150 text-indigo-700' 
+                                     : 'bg-amber-50 border-amber-200 text-amber-700'
+                                 }`}>
                                    {b.status}
                                  </span>
                               </td>
@@ -178,8 +209,8 @@ export const AdminDashboardView = ({
 
       {activeSubTab === 'rooms' && (
         <div className="space-y-6 animate-in slide-in-from-bottom-4 duration-500">
-          <div className="bg-[#0b336b] text-white p-3 rounded-t-xl -mx-8 -mt-8 mb-8 flex items-center justify-between">
-            <h2 className="text-sm font-black uppercase tracking-wider flex items-center gap-2 px-4">
+          <div className="bg-gradient-to-r from-slate-900 to-indigo-950 text-white p-5 rounded-2xl mb-8 flex items-center justify-between shadow-md shadow-indigo-950/15">
+            <h2 className="text-xs font-black uppercase tracking-[0.2em] flex items-center gap-2 px-2">
               Booking &amp; Room Management
             </h2>
           </div>
@@ -201,15 +232,15 @@ export const AdminDashboardView = ({
              />
 
              {/* Room Availability Form - Interactive */}
-             <Card className="border-none shadow-sm flex flex-col h-full bg-white group hover:shadow-md transition-all">
+             <Card className="border border-slate-100 shadow-sm flex flex-col h-full bg-white group hover:shadow-md transition-all rounded-2xl">
                 <CardHeader className="pb-4 flex flex-row items-center justify-between">
-                  <CardTitle className="text-xs font-black uppercase text-[#0b336b]">Room Search</CardTitle>
-                  <Calendar size={14} className="text-emerald-500" />
+                  <CardTitle className="text-xs font-black uppercase text-indigo-650 tracking-wider">Room Search</CardTitle>
+                  <Calendar size={14} className="text-indigo-500" />
                 </CardHeader>
                 <CardContent className="space-y-4 flex-grow px-6">
                    <div className="space-y-1.5">
                       <label className="text-[9px] font-black uppercase text-slate-400 tracking-wider">Accommodation Type</label>
-                      <select className="w-full bg-slate-50 border border-slate-100 rounded-xl p-3 text-xs font-bold text-slate-700 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all outline-none appearance-none">
+                      <select className="w-full bg-slate-50 border border-slate-100 rounded-xl p-3 text-xs font-bold text-slate-700 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all outline-none appearance-none">
                          <option>Standard Deluxe</option>
                          <option>Heritage Suite</option>
                          <option>Royal Temple View</option>
@@ -220,33 +251,33 @@ export const AdminDashboardView = ({
                       <div className="space-y-1.5">
                         <label className="text-[9px] font-black uppercase text-slate-400 tracking-wider">Arrival Date</label>
                         <div className="relative group/input">
-                          <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within/input:text-emerald-500 transition-colors">
+                          <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within/input:text-indigo-500 transition-colors">
                             <Calendar size={14} />
                           </div>
                           <input 
                             type="date" 
                             defaultValue={new Date().toISOString().split('T')[0]} 
-                            className="w-full bg-white border border-slate-200 rounded-xl py-3 pl-10 pr-4 text-xs font-bold text-slate-700 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all" 
+                            className="w-full bg-white border border-slate-200 rounded-xl py-3 pl-10 pr-4 text-xs font-bold text-slate-700 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all" 
                           />
                         </div>
                       </div>
                       <div className="space-y-1.5">
                         <label className="text-[9px] font-black uppercase text-slate-400 tracking-wider">Departure Date</label>
                         <div className="relative group/input">
-                          <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within/input:text-emerald-500 transition-colors">
+                          <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within/input:text-indigo-500 transition-colors">
                             <Calendar size={14} />
                           </div>
                           <input 
                             type="date" 
                             defaultValue={new Date(Date.now() + 86400000).toISOString().split('T')[0]} 
-                            className="w-full bg-white border border-slate-200 rounded-xl py-3 pl-10 pr-4 text-xs font-bold text-slate-700 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all" 
+                            className="w-full bg-white border border-slate-200 rounded-xl py-3 pl-10 pr-4 text-xs font-bold text-slate-700 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all" 
                           />
                         </div>
                       </div>
                    </div>
                 </CardContent>
                 <div className="p-4 pt-0">
-                  <Button onClick={() => onNavigate?.('calendar')} className="w-full bg-[#0b336b] hover:bg-black text-white text-[10px] font-black uppercase h-11 rounded-xl shadow-lg shadow-blue-900/10 active:scale-95 transition-all">
+                  <Button onClick={() => onNavigate?.('calendar')} className="w-full bg-indigo-600 hover:bg-indigo-700 text-white text-[10px] font-black uppercase h-11 rounded-xl shadow-lg shadow-indigo-500/10 active:scale-95 transition-all">
                     Search Availability
                   </Button>
                 </div>
@@ -272,89 +303,89 @@ export const AdminDashboardView = ({
 
       {activeSubTab === 'finance' && (
         <div className="space-y-6 animate-in slide-in-from-bottom-4 duration-500">
-          <div className="bg-[#0b336b] text-white p-3 rounded-t-xl -mx-8 -mt-8 mb-8 flex items-center justify-between">
-            <h2 className="text-sm font-black uppercase tracking-wider px-4">
+          <div className="bg-gradient-to-r from-slate-900 to-indigo-950 text-white p-5 rounded-2xl mb-8 flex items-center justify-between shadow-md shadow-indigo-950/15">
+            <h2 className="text-xs font-black uppercase tracking-[0.2em] px-2">
               Payments, Accounts & Transactions
             </h2>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
              {/* Payment Overview */}
-             <Card className="lg:col-span-3 border-none shadow-sm flex flex-col">
-                <CardHeader className="pb-4"><CardTitle className="text-sm font-black text-[#0b336b]">Payment Overview</CardTitle></CardHeader>
+             <Card className="lg:col-span-3 border border-slate-100 shadow-sm flex flex-col rounded-2xl bg-white">
+                <CardHeader className="pb-4"><CardTitle className="text-xs font-black uppercase text-indigo-650 tracking-wider">Payment Overview</CardTitle></CardHeader>
                 <CardContent className="space-y-6 flex-grow">
-                   <PaymentStat icon={Calendar} label="Today's Collections" value={`₹ ${data.stats.today_revenue.toLocaleString()}`} color="text-emerald-600" />
-                   <PaymentStat icon={Calendar} label="This Month Collections" value={`₹ ${data.stats.monthly_revenue.toLocaleString()}`} color="text-blue-600" />
+                   <PaymentStat icon={Calendar} label="Today's Collections" value={`₹ ${data.stats.today_revenue.toLocaleString()}`} color="text-indigo-600" />
+                   <PaymentStat icon={Calendar} label="This Month Collections" value={`₹ ${data.stats.monthly_revenue.toLocaleString()}`} color="text-violet-600" />
                    <PaymentStat icon={Calendar} label="Total Collections (All Time)" value={`₹ ${data.stats.total_revenue.toLocaleString()}`} color="text-emerald-700" />
                 </CardContent>
              </Card>
 
              {/* Recent Transactions */}
-             <Card className="lg:col-span-6 border-none shadow-sm overflow-hidden flex flex-col">
-                <CardHeader className="pb-4"><CardTitle className="text-sm font-black text-[#0b336b]">Recent Transactions</CardTitle></CardHeader>
+             <Card className="lg:col-span-6 border border-slate-100 shadow-sm overflow-hidden flex flex-col rounded-2xl bg-white">
+                <CardHeader className="pb-4"><CardTitle className="text-xs font-black uppercase text-indigo-650 tracking-wider">Recent Transactions</CardTitle></CardHeader>
                 <CardContent className="p-0 flex-grow">
                    <div className="overflow-x-auto">
-                     <table className="w-full text-[11px]">
-                       <thead className="bg-slate-50 text-slate-400 uppercase font-bold border-b border-slate-100">
-                          <tr>
-                            <th className="text-left px-4 py-3">Transaction ID</th>
-                            <th className="text-left px-4 py-3">Booking ID</th>
-                            <th className="text-left px-4 py-3">Guest Name</th>
-                            <th className="text-right px-4 py-3">Amount</th>
-                            <th className="text-center px-4 py-3">Method</th>
-                            <th className="text-center px-4 py-3">Date</th>
-                            <th className="text-right px-4 py-3">Status</th>
-                          </tr>
-                       </thead>
-                       <tbody className="divide-y divide-slate-50">
-                          {data.recent_bookings.map((t: any, i: number) => (
-                            <tr key={i} className="hover:bg-slate-50 transition-colors">
-                              <td className="px-4 py-3 text-slate-400 font-medium">TXN{t.booking_id}</td>
-                              <td className="px-4 py-3 font-bold text-slate-600">{t.booking_id}</td>
-                              <td className="px-4 py-3 font-bold text-slate-900">{t.guest_name}</td>
-                              <td className="px-4 py-3 text-right font-bold text-emerald-900">₹ {parseFloat(t.total_amount).toLocaleString()}</td>
-                              <td className="px-4 py-3 text-center"><span className="text-[9px] uppercase font-bold text-slate-500">{t.method || 'UPI'}</span></td>
-                              <td className="px-4 py-3 text-center text-slate-500 whitespace-nowrap">{new Date(t.check_in_date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}</td>
-                              <td className="px-4 py-3 text-right">
-                                <span className="px-2 py-0.5 bg-emerald-50 text-emerald-600 rounded text-[9px] font-black uppercase">{t.status}</span>
-                              </td>
-                            </tr>
-                          ))}
-                       </tbody>
-                     </table>
+                      <table className="w-full text-[11px] text-left">
+                        <thead className="bg-slate-50 text-slate-455 uppercase font-black text-[9px] tracking-wider border-b border-slate-100">
+                           <tr>
+                             <th className="px-5 py-3">Transaction ID</th>
+                             <th className="px-5 py-3">Booking ID</th>
+                             <th className="px-5 py-3">Guest Name</th>
+                             <th className="text-right px-5 py-3">Amount</th>
+                             <th className="text-center px-5 py-3">Method</th>
+                             <th className="text-center px-5 py-3">Date</th>
+                             <th className="text-right px-5 py-3">Status</th>
+                           </tr>
+                        </thead>
+                        <tbody className="divide-y divide-slate-100/60">
+                           {data.recent_bookings.map((t: any, i: number) => (
+                             <tr key={i} className="hover:bg-slate-50/40 transition-colors">
+                               <td className="px-5 py-3.5 text-slate-400 font-medium font-sans">TXN{t.booking_id}</td>
+                               <td className="px-5 py-3.5 font-extrabold text-slate-650">{t.booking_id}</td>
+                               <td className="px-5 py-3.5 font-bold text-slate-900">{t.guest_name}</td>
+                               <td className="px-5 py-3.5 text-right font-extrabold text-indigo-950">₹ {parseFloat(t.total_amount).toLocaleString()}</td>
+                               <td className="px-5 py-3.5 text-center"><span className="text-[9px] uppercase font-black text-slate-505">{t.method || 'UPI'}</span></td>
+                               <td className="px-5 py-3.5 text-center text-slate-500 whitespace-nowrap font-sans">{new Date(t.check_in_date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}</td>
+                               <td className="px-5 py-3.5 text-right">
+                                 <span className="px-3 py-1 bg-emerald-50 border border-emerald-150 text-emerald-700 rounded-full text-[8px] font-black uppercase tracking-wider">{t.status}</span>
+                               </td>
+                             </tr>
+                           ))}
+                        </tbody>
+                      </table>
                    </div>
                 </CardContent>
                 <div className="p-4 flex justify-center">
-                  <Button onClick={() => onNavigate?.('bookings')} className="bg-[#0b336b] hover:bg-black text-white text-[10px] font-black uppercase h-9 px-10 rounded">VIEW ALL TRANSACTIONS</Button>
+                  <Button onClick={() => onNavigate?.('bookings')} className="bg-indigo-600 hover:bg-indigo-700 text-white text-[10px] font-black uppercase h-10 px-10 rounded-xl shadow-lg shadow-indigo-500/10 active:scale-95 transition-all">VIEW ALL TRANSACTIONS</Button>
                 </div>
              </Card>
 
              {/* Accounts Summary */}
-             <Card className="lg:col-span-3 border-none shadow-sm flex flex-col">
+             <Card className="lg:col-span-3 border border-slate-100 shadow-sm flex flex-col rounded-2xl bg-white">
                 <CardHeader className="pb-4 flex flex-row items-center justify-between">
-                  <CardTitle className="text-sm font-black text-[#0b336b]">Accounts Summary</CardTitle>
+                  <CardTitle className="text-xs font-black uppercase text-indigo-650 tracking-wider">Accounts Summary</CardTitle>
                 </CardHeader>
                 <CardContent className="flex flex-col h-full gap-6">
                    <div className="flex-grow space-y-6">
                       <div>
                         <p className="text-[10px] font-black text-slate-400 uppercase mb-1">Total Revenue</p>
-                        <p className="text-lg font-black text-emerald-700">₹ {data.stats.total_revenue.toLocaleString()}</p>
+                        <p className="text-lg font-black text-indigo-955 font-sans">₹ {data.stats.total_revenue.toLocaleString()}</p>
                       </div>
                       <div>
                         <p className="text-[10px] font-black text-slate-400 uppercase mb-1">Total Expenses (Est.)</p>
-                        <p className="text-lg font-black text-rose-600">₹ {(data.stats.total_revenue * 0.35).toLocaleString()}</p>
+                        <p className="text-lg font-black text-rose-600 font-sans">₹ {(data.stats.total_revenue * 0.35).toLocaleString()}</p>
                       </div>
                       <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
                         <div>
                           <p className="text-[10px] font-black text-slate-400 uppercase mb-1">Net Profit</p>
-                          <p className="text-lg font-black text-emerald-900">₹ {(data.stats.total_revenue * 0.65).toLocaleString()}</p>
+                          <p className="text-lg font-black text-emerald-750 font-sans">₹ {(data.stats.total_revenue * 0.65).toLocaleString()}</p>
                         </div>
                         <div className="relative w-16 h-16">
                            <ResponsiveContainer width={64} height={64}>
                               <PieChart>
                                 <Pie data={[{v:65},{v:35}]} innerRadius={0} outerRadius={32} dataKey="v">
-                                  <Cell fill="#1a5d2a" />
-                                  <Cell fill="#94a3b8" />
+                                  <Cell fill="#059669" />
+                                  <Cell fill="#cbd5e1" />
                                 </Pie>
                               </PieChart>
                            </ResponsiveContainer>
@@ -365,16 +396,16 @@ export const AdminDashboardView = ({
                    
                    {/* Payment Methods Chart */}
                    <div className="pt-4 border-t border-slate-100">
-                      <p className="text-xs font-black text-[#0b336b] mb-4 text-center">Payment Methods</p>
+                      <p className="text-xs font-black text-indigo-655 mb-4 text-center tracking-wide uppercase">Payment Methods</p>
                       <div className="flex items-center gap-4">
                         <div className="w-24 h-24 relative">
                           <ResponsiveContainer width="100%" height="100%">
                             <PieChart>
                               <Pie data={[{v:55},{v:25},{v:15},{v:5}]} innerRadius={30} outerRadius={45} dataKey="v" paddingAngle={2}>
-                                <Cell fill="#0b336b" />
-                                <Cell fill="#fca311" />
-                                <Cell fill="#1a5d2a" />
-                                <Cell fill="#5bba6f" />
+                                <Cell fill="#4f46e5" />
+                                <Cell fill="#8b5cf6" />
+                                <Cell fill="#06b6d4" />
+                                <Cell fill="#cbd5e1" />
                               </Pie>
                               <Tooltip />
                             </PieChart>
@@ -385,10 +416,10 @@ export const AdminDashboardView = ({
                           </div>
                         </div>
                         <div className="flex-grow space-y-1">
-                           <LegendItem color="bg-[#0b336b]" label="UPI" percent="55%" />
-                           <LegendItem color="bg-[#fca311]" label="Card" percent="25%" />
-                           <LegendItem color="bg-[#1a5d2a]" label="Net Banking" percent="15%" />
-                           <LegendItem color="bg-[#5bba6f]" label="Cash" percent="5%" />
+                           <LegendItem color="bg-[#4f46e5]" label="UPI" percent="55%" />
+                           <LegendItem color="bg-[#8b5cf6]" label="Card" percent="25%" />
+                           <LegendItem color="bg-[#06b6d4]" label="Net Banking" percent="15%" />
+                           <LegendItem color="bg-[#cbd5e1]" label="Cash" percent="5%" />
                         </div>
                       </div>
                    </div>
@@ -400,8 +431,8 @@ export const AdminDashboardView = ({
 
       {activeSubTab === 'settings' && (
         <div className="space-y-6 animate-in slide-in-from-bottom-4 duration-500">
-          <h2 className="text-[11px] font-black text-emerald-900 uppercase tracking-[0.3em] flex items-center gap-3">
-            <div className="w-8 h-[2px] bg-emerald-900"></div>
+          <h2 className="text-[11px] font-black text-indigo-950 uppercase tracking-[0.3em] flex items-center gap-3">
+            <div className="w-8 h-[2px] bg-indigo-600"></div>
             System Management & Settings
           </h2>
 
@@ -453,20 +484,20 @@ export const AdminDashboardView = ({
 
 
 const ManagementBox = ({ title, items, footer, onFooterClick }: any) => (
-  <Card className="border-none shadow-sm flex flex-col h-full bg-white">
-    <CardHeader className="pb-4"><CardTitle className="text-xs font-black uppercase text-[#0b336b] text-center">{title}</CardTitle></CardHeader>
+  <Card className="border border-slate-100 shadow-sm flex flex-col h-full bg-white rounded-2xl">
+    <CardHeader className="pb-4"><CardTitle className="text-xs font-black uppercase text-indigo-650 tracking-wider text-center">{title}</CardTitle></CardHeader>
     <CardContent className="p-0 flex-grow">
        {items.map((it: any, i: number) => (
-         <div key={i} className={`flex items-center gap-3 p-3 px-6 border-b border-slate-50 hover:bg-slate-50 transition-colors cursor-pointer group ${it.active ? 'bg-emerald-50/50' : ''}`}>
-            <div className={`p-1.5 rounded-lg ${it.active ? 'bg-emerald-100 text-emerald-700' : 'text-slate-400 group-hover:text-emerald-600'}`}>
-               {it.icon ? <it.icon size={14} /> : <div className="w-3.5 h-3.5 flex items-center justify-center font-black text-[10px]">●</div>}
-            </div>
-            <span className={`text-[11px] font-bold ${it.active ? 'text-emerald-950' : it.color || 'text-slate-600'}`}>{it.label}</span>
-         </div>
+          <div key={i} className={`flex items-center gap-3 p-3 px-6 border-b border-slate-50 hover:bg-slate-55 transition-colors cursor-pointer group ${it.active ? 'bg-indigo-50/30' : ''}`}>
+             <div className={`p-1.5 rounded-lg ${it.active ? 'bg-indigo-100 text-indigo-700' : 'text-slate-400 group-hover:text-indigo-600'}`}>
+                {it.icon ? <it.icon size={14} /> : <div className="w-3.5 h-3.5 flex items-center justify-center font-black text-[10px]">●</div>}
+             </div>
+             <span className={`text-[11px] font-bold ${it.active ? 'text-indigo-950 font-extrabold' : it.color || 'text-slate-600'}`}>{it.label}</span>
+          </div>
        ))}
     </CardContent>
     <div className="p-4">
-       <Button onClick={onFooterClick} className="w-full bg-[#0b336b] hover:bg-black text-white text-[9px] font-black uppercase h-9 rounded">{footer}</Button>
+       <Button onClick={onFooterClick} className="w-full bg-indigo-600 hover:bg-indigo-700 text-white text-[9px] font-black uppercase h-9 rounded-xl shadow-md shadow-indigo-500/10 active:scale-95 transition-all">{footer}</Button>
     </div>
   </Card>
 );
@@ -484,42 +515,58 @@ const PaymentStat = ({ icon: Icon, label, value, color }: any) => (
 );
 
 const LegendItem = ({ color, label, percent }: any) => (
-  <div className="flex items-center justify-between gap-3 group cursor-pointer hover:bg-slate-50 p-1 rounded transition-colors">
+  <div className="flex items-center justify-between gap-3 group cursor-pointer hover:bg-slate-55 p-1 rounded transition-colors">
     <div className="flex items-center gap-2">
       <div className={`w-2 h-2 rounded-full ${color}`}></div>
-      <span className="text-[10px] font-bold text-slate-600">{label}</span>
+      <span className="text-[10px] font-bold text-slate-655">{label}</span>
     </div>
     <span className="text-[10px] font-black text-slate-400">{percent}</span>
   </div>
 );
 
-const MiniStat = ({ icon: Icon, label, value, color }: any) => (
-  <div className="bg-white p-3 rounded-xl border border-slate-100 flex flex-col justify-between shadow-sm">
-    <div className={`w-8 h-8 rounded-lg ${color} flex items-center justify-center mb-2`}>
-      <Icon size={14} />
+const MiniStat = ({ icon: Icon, label, value, color }: any) => {
+  const colorMap: any = {
+    'bg-blue-50 text-blue-600': { border: 'border-blue-100/60', text: 'text-blue-600', bg: 'bg-blue-50/50' },
+    'bg-emerald-50 text-emerald-600': { border: 'border-emerald-100/60', text: 'text-emerald-650', bg: 'bg-emerald-50/50' },
+    'bg-amber-50 text-amber-600': { border: 'border-amber-100/60', text: 'text-amber-655', bg: 'bg-amber-50/50' },
+    'bg-purple-50 text-purple-600': { border: 'border-purple-100/60', text: 'text-purple-600', bg: 'bg-purple-50/50' },
+    'bg-slate-50 text-slate-600': { border: 'border-slate-200/60', text: 'text-slate-705', bg: 'bg-slate-50/50' },
+    'bg-teal-50 text-teal-600': { border: 'border-teal-100/60', text: 'text-teal-655', bg: 'bg-teal-50/50' },
+    'bg-orange-50 text-orange-600': { border: 'border-orange-100/60', text: 'text-orange-655', bg: 'bg-orange-50/50' },
+    'bg-rose-50 text-rose-600': { border: 'border-rose-100/60', text: 'text-rose-655', bg: 'bg-rose-50/50' },
+  };
+  
+  const style = colorMap[color] || { border: 'border-slate-100', text: 'text-slate-655', bg: 'bg-slate-50' };
+
+  return (
+    <div className={`relative overflow-hidden bg-white p-5 rounded-2xl border ${style.border} flex flex-col justify-between shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group`}>
+      <div className={`absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r ${color.includes('blue') ? 'from-blue-500 to-indigo-500' : color.includes('emerald') ? 'from-emerald-500 to-teal-500' : color.includes('amber') ? 'from-amber-500 to-yellow-500' : color.includes('purple') ? 'from-purple-500 to-violet-500' : color.includes('teal') ? 'from-teal-500 to-emerald-500' : color.includes('orange') ? 'from-orange-500 to-amber-500' : color.includes('rose') ? 'from-rose-500 to-red-500' : 'from-slate-400 to-slate-500'}`} />
+      <div className={`w-9 h-9 rounded-xl ${style.bg} ${style.text} flex items-center justify-center mb-3.5 group-hover:scale-110 transition-transform`}>
+        <Icon size={16} />
+      </div>
+      <div className="space-y-1.5 z-10">
+        <h4 className="text-xl font-extrabold text-slate-900 tracking-tight leading-none font-sans">{value}</h4>
+        <p className="text-[8.5px] font-extrabold uppercase text-slate-400 tracking-wider leading-tight">{label}</p>
+      </div>
     </div>
-    <div className="space-y-1">
-      <h4 className="text-lg font-black text-slate-800 tracking-tight leading-none">{value}</h4>
-      <p className="text-[10px] font-black uppercase text-slate-400 whitespace-nowrap overflow-hidden text-ellipsis">{label}</p>
-    </div>
-  </div>
-);
+  );
+};
 
 const SettingsGroup = ({ title, icon: Icon, links, action, onActionClick }: any) => (
-  <Card className="border-none shadow-sm h-fit">
+  <Card className="border border-slate-100 shadow-sm h-fit rounded-2xl bg-white">
     <CardHeader className="pb-1 py-1"><CardTitle className="text-[10px] font-black uppercase text-slate-400 tracking-wider flex items-center gap-2">
-       <Icon size={12} className="text-emerald-700" /> {title}
+       <Icon size={12} className="text-indigo-650" /> {title}
     </CardTitle></CardHeader>
     <CardContent className="pb-3 px-3">
        <div className="space-y-1.5 pt-2">
           {links.map((link: string, i: number) => (
-            <div key={i} className="flex items-center gap-2 cursor-pointer hover:bg-slate-50 p-1 rounded group">
-               <div className="w-1.5 h-1.5 rounded-full bg-slate-200 group-hover:bg-emerald-500 transition-colors"></div>
-               <span className="text-[11px] font-bold text-slate-600">{link}</span>
+            <div key={i} className="flex items-center gap-2 cursor-pointer hover:bg-slate-55 p-1 rounded group">
+               <div className="w-1.5 h-1.5 rounded-full bg-slate-200 group-hover:bg-indigo-600 transition-colors"></div>
+               <span className="text-[11px] font-bold text-slate-655">{link}</span>
             </div>
           ))}
        </div>
-       <Button onClick={onActionClick} className="w-full mt-4 bg-emerald-900 hover:bg-black text-white text-[9px] font-black uppercase h-8 py-0 rounded-lg">
+       <Button onClick={onActionClick} className="w-full mt-4 bg-indigo-600 hover:bg-indigo-700 text-white text-[9px] font-black uppercase h-8 py-0 rounded-lg active:scale-95 transition-all shadow-sm">
           {action}
        </Button>
     </CardContent>

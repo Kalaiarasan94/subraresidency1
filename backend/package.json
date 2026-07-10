@@ -4,7 +4,7 @@
   "description": "PHP Backend for Subra Residency",
   "main": "api/index.php",
   "scripts": {
-    "start": "php -S localhost:8001"
+    "start": "C:\\xampp\\php\\php.exe -S localhost:8001"
   },
   "keywords": [
     "php",

@@ -9654,3 +9654,1236 @@ Stack trace:
 #0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(98): include_once()
 #1 {main}
   thrown in C:\xampp\htdocs\subraresidency1\backend\api\admin\bookings\list.php on line 11
+[2026-07-09 10:03:24] INDEX.PHP REACHED
+[2026-07-09 10:03:24] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-09 10:03:24] Fatal Error: Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php:37
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(60): RoomController->getCategories()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 37
+[2026-07-09 10:03:24] INDEX.PHP REACHED
+[2026-07-09 10:03:24] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-09 10:03:24] Fatal Error: Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php:37
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(60): RoomController->getCategories()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 37
+[2026-07-09 10:03:25] INDEX.PHP REACHED
+[2026-07-09 10:03:25] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-09 10:03:25] Fatal Error: Uncaught Error: Call to a member function query() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php:24
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(152): DashboardController->getAdminStats()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php on line 24
+[2026-07-09 10:03:25] INDEX.PHP REACHED
+[2026-07-09 10:03:25] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-09 10:03:25] Fatal Error: Uncaught Error: Call to a member function query() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php:24
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(152): DashboardController->getAdminStats()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php on line 24
+[2026-07-09 10:03:26] INDEX.PHP REACHED
+[2026-07-09 10:03:26] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-09 10:03:26] Fatal Error: Uncaught Error: Call to a member function query() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php:24
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(152): DashboardController->getAdminStats()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php on line 24
+[2026-07-09 10:03:26] INDEX.PHP REACHED
+[2026-07-09 10:03:26] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-09 10:03:26] Fatal Error: Uncaught Error: Call to a member function query() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php:24
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(152): DashboardController->getAdminStats()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php on line 24
+[2026-07-09 10:03:42] INDEX.PHP REACHED
+[2026-07-09 10:03:42] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-09 10:03:42] Fatal Error: Uncaught Error: Call to a member function query() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php:24
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(152): DashboardController->getAdminStats()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php on line 24
+[2026-07-09 10:03:42] INDEX.PHP REACHED
+[2026-07-09 10:03:42] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-09 10:03:42] Fatal Error: Uncaught Error: Call to a member function query() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php:24
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(152): DashboardController->getAdminStats()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php on line 24
+[2026-07-09 10:03:43] INDEX.PHP REACHED
+[2026-07-09 10:03:43] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-09 10:03:43] Fatal Error: Uncaught Error: Call to a member function query() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php:24
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(152): DashboardController->getAdminStats()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php on line 24
+[2026-07-09 10:03:43] INDEX.PHP REACHED
+[2026-07-09 10:03:43] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-09 10:03:43] Fatal Error: Uncaught Error: Call to a member function query() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php:24
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(152): DashboardController->getAdminStats()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php on line 24
+[2026-07-09 10:03:44] INDEX.PHP REACHED
+[2026-07-09 10:03:44] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-09 10:03:44] Fatal Error: Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php:37
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(60): RoomController->getCategories()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 37
+[2026-07-09 10:03:44] INDEX.PHP REACHED
+[2026-07-09 10:03:44] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-09 10:03:44] Fatal Error: Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php:37
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(60): RoomController->getCategories()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 37
+[2026-07-09 10:03:46] INDEX.PHP REACHED
+[2026-07-09 10:03:46] REQUEST: GET /api/index.php/rooms/list (Path: /rooms/list)
+[2026-07-09 10:03:46] Fatal Error: Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php:256
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(62): RoomController->getAllRooms()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 256
+[2026-07-09 10:03:46] INDEX.PHP REACHED
+[2026-07-09 10:03:46] REQUEST: GET /api/index.php/rooms/list (Path: /rooms/list)
+[2026-07-09 10:03:46] Fatal Error: Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php:256
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(62): RoomController->getAllRooms()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 256
+[2026-07-09 10:03:47] INDEX.PHP REACHED
+[2026-07-09 10:03:47] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-09 10:03:47] Fatal Error: Uncaught Error: Call to a member function query() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php:24
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(152): DashboardController->getAdminStats()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php on line 24
+[2026-07-09 10:03:47] INDEX.PHP REACHED
+[2026-07-09 10:03:47] REQUEST: GET /api/index.php/admin/bookings/list?limit=100&offset=0 (Path: /admin/bookings/list)
+[2026-07-09 10:03:47] Fatal Error: Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\subraresidency1\backend\api\admin\bookings\list.php:11
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(98): include_once()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\api\admin\bookings\list.php on line 11
+[2026-07-09 10:03:47] INDEX.PHP REACHED
+[2026-07-09 10:03:47] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-09 10:03:47] Fatal Error: Uncaught Error: Call to a member function query() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php:24
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(152): DashboardController->getAdminStats()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php on line 24
+[2026-07-09 10:03:47] INDEX.PHP REACHED
+[2026-07-09 10:03:47] REQUEST: GET /api/index.php/admin/bookings/list?limit=100&offset=0 (Path: /admin/bookings/list)
+[2026-07-09 10:03:47] Fatal Error: Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\subraresidency1\backend\api\admin\bookings\list.php:11
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(98): include_once()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\api\admin\bookings\list.php on line 11
+[2026-07-09 10:04:06] INDEX.PHP REACHED
+[2026-07-09 10:04:06] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-09 10:04:06] Fatal Error: Uncaught Error: Call to a member function query() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php:24
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(152): DashboardController->getAdminStats()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php on line 24
+[2026-07-09 10:04:06] INDEX.PHP REACHED
+[2026-07-09 10:04:06] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-09 10:04:06] Fatal Error: Uncaught Error: Call to a member function query() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php:24
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(152): DashboardController->getAdminStats()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php on line 24
+[2026-07-09 10:04:28] INDEX.PHP REACHED
+[2026-07-09 10:04:28] INDEX.PHP REACHED
+[2026-07-09 10:04:28] REQUEST: POST /api/index.php/auth/receptionist/login (Path: /auth/receptionist/login)
+[2026-07-09 10:04:28] Fatal Error: Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\AuthController.php:28
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(136): AuthController->login('receptionist')
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\AuthController.php on line 28
+[2026-07-09 10:04:52] INDEX.PHP REACHED
+[2026-07-09 10:04:52] INDEX.PHP REACHED
+[2026-07-09 10:04:52] REQUEST: POST /api/index.php/auth/receptionist/login (Path: /auth/receptionist/login)
+[2026-07-09 10:04:52] Fatal Error: Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\AuthController.php:28
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(136): AuthController->login('receptionist')
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\AuthController.php on line 28
+[2026-07-09 12:25:06] INDEX.PHP REACHED
+[2026-07-09 12:25:06] REQUEST: GET /subraresidency1/backend/api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-09 11:24:05] INDEX.PHP REACHED
+[2026-07-09 11:24:05] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-09 11:24:05] Database Connection error: could not find driver
+[2026-07-09 11:24:05] Fatal Error: Uncaught Error: Call to a member function query() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php:24
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(152): DashboardController->getAdminStats()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php on line 24
+[2026-07-09 11:24:05] INDEX.PHP REACHED
+[2026-07-09 11:24:05] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-09 11:24:05] Database Connection error: could not find driver
+[2026-07-09 11:24:05] Fatal Error: Uncaught Error: Call to a member function query() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php:24
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(152): DashboardController->getAdminStats()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php on line 24
+[2026-07-09 11:24:07] INDEX.PHP REACHED
+[2026-07-09 11:24:07] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-09 11:24:07] Database Connection error: could not find driver
+[2026-07-09 11:24:07] Fatal Error: Uncaught Error: Call to a member function query() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php:24
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(152): DashboardController->getAdminStats()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php on line 24
+[2026-07-09 11:24:07] INDEX.PHP REACHED
+[2026-07-09 11:24:07] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-09 11:24:07] Database Connection error: could not find driver
+[2026-07-09 11:24:07] Fatal Error: Uncaught Error: Call to a member function query() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php:24
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(152): DashboardController->getAdminStats()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\DashboardController.php on line 24
+[2026-07-09 13:24:51] INDEX.PHP REACHED
+[2026-07-09 13:24:51] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-09 13:25:26] INDEX.PHP REACHED
+[2026-07-09 13:25:26] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-09 13:25:26] INDEX.PHP REACHED
+[2026-07-09 13:25:26] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-09 13:25:26] INDEX.PHP REACHED
+[2026-07-09 13:25:26] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-09 13:25:26] INDEX.PHP REACHED
+[2026-07-09 13:25:26] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-09 13:25:28] INDEX.PHP REACHED
+[2026-07-09 13:25:28] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-09 13:25:28] INDEX.PHP REACHED
+[2026-07-09 13:25:28] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-09 13:25:30] INDEX.PHP REACHED
+[2026-07-09 13:25:30] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-09 13:25:30] INDEX.PHP REACHED
+[2026-07-09 13:25:30] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-09 13:25:31] INDEX.PHP REACHED
+[2026-07-09 13:25:31] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-09 13:25:31] INDEX.PHP REACHED
+[2026-07-09 13:25:31] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-09 13:25:31] INDEX.PHP REACHED
+[2026-07-09 13:25:31] REQUEST: GET /api/index.php/rooms/list (Path: /rooms/list)
+[2026-07-09 13:25:31] INDEX.PHP REACHED
+[2026-07-09 13:25:31] REQUEST: GET /api/index.php/rooms/list (Path: /rooms/list)
+[2026-07-09 13:25:31] INDEX.PHP REACHED
+[2026-07-09 13:25:31] REQUEST: GET /api/index.php/rooms/availabilityList?start=2026-07-09&end=2026-08-08 (Path: /rooms/availabilityList)
+[2026-07-09 13:25:31] INDEX.PHP REACHED
+[2026-07-09 13:25:31] REQUEST: GET /api/index.php/rooms/availabilityList?start=2026-07-09&end=2026-08-08 (Path: /rooms/availabilityList)
+[2026-07-09 13:25:32] INDEX.PHP REACHED
+[2026-07-09 13:25:32] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-09 13:25:32] INDEX.PHP REACHED
+[2026-07-09 13:25:32] REQUEST: GET /api/index.php/admin/bookings/list?limit=100&offset=0 (Path: /admin/bookings/list)
+[2026-07-09 13:25:32] INDEX.PHP REACHED
+[2026-07-09 13:25:32] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-09 13:25:32] INDEX.PHP REACHED
+[2026-07-09 13:25:32] REQUEST: GET /api/index.php/admin/bookings/list?limit=100&offset=0 (Path: /admin/bookings/list)
+[2026-07-09 13:25:53] INDEX.PHP REACHED
+[2026-07-09 13:25:53] INDEX.PHP REACHED
+[2026-07-09 13:25:53] REQUEST: POST /api/index.php/auth/receptionist/login (Path: /auth/receptionist/login)
+[2026-07-09 13:25:53] INDEX.PHP REACHED
+[2026-07-09 13:25:53] REQUEST: GET /api/index.php/dashboard/receptionist (Path: /dashboard/receptionist)
+[2026-07-09 13:25:53] INDEX.PHP REACHED
+[2026-07-09 13:25:53] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-09 13:25:53] INDEX.PHP REACHED
+[2026-07-09 13:25:53] REQUEST: GET /api/index.php/dashboard/receptionist (Path: /dashboard/receptionist)
+[2026-07-09 13:25:58] INDEX.PHP REACHED
+[2026-07-09 13:25:58] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-09 13:25:59] INDEX.PHP REACHED
+[2026-07-09 13:25:59] REQUEST: GET /api/index.php/dashboard/receptionist (Path: /dashboard/receptionist)
+[2026-07-09 13:25:59] INDEX.PHP REACHED
+[2026-07-09 13:25:59] REQUEST: GET /api/index.php/dashboard/receptionist (Path: /dashboard/receptionist)
+[2026-07-09 13:26:03] INDEX.PHP REACHED
+[2026-07-09 13:26:03] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-09 13:26:08] INDEX.PHP REACHED
+[2026-07-09 13:26:08] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-09 13:26:13] INDEX.PHP REACHED
+[2026-07-09 13:26:13] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-09 13:26:18] INDEX.PHP REACHED
+[2026-07-09 13:26:18] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-09 13:26:23] INDEX.PHP REACHED
+[2026-07-09 13:26:23] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-09 13:26:28] INDEX.PHP REACHED
+[2026-07-09 13:26:28] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-09 13:26:33] INDEX.PHP REACHED
+[2026-07-09 13:26:33] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-09 13:26:38] INDEX.PHP REACHED
+[2026-07-09 13:26:38] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-09 13:26:43] INDEX.PHP REACHED
+[2026-07-09 13:26:43] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-09 13:26:48] INDEX.PHP REACHED
+[2026-07-09 13:26:48] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-09 13:26:53] INDEX.PHP REACHED
+[2026-07-09 13:26:53] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-09 13:26:58] INDEX.PHP REACHED
+[2026-07-09 13:26:58] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-09 13:27:04] INDEX.PHP REACHED
+[2026-07-09 13:27:04] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-09 13:27:09] INDEX.PHP REACHED
+[2026-07-09 13:27:09] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-09 13:27:12] INDEX.PHP REACHED
+[2026-07-09 13:27:12] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-09 13:27:12] INDEX.PHP REACHED
+[2026-07-09 13:27:12] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-09 13:27:12] INDEX.PHP REACHED
+[2026-07-09 13:27:12] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-09&checkout=2026-07-10 (Path: /rooms/checkAvailability)
+[2026-07-09 13:27:12] INDEX.PHP REACHED
+[2026-07-09 13:27:12] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-09&checkout=2026-07-10 (Path: /rooms/checkAvailability)
+[2026-07-09 13:27:14] INDEX.PHP REACHED
+[2026-07-09 13:27:14] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-09 13:27:17] INDEX.PHP REACHED
+[2026-07-09 13:27:17] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-09 13:27:17] INDEX.PHP REACHED
+[2026-07-09 13:27:17] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-09 13:27:19] INDEX.PHP REACHED
+[2026-07-09 13:27:19] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-09 13:27:22] INDEX.PHP REACHED
+[2026-07-09 13:27:22] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-09 13:27:22] INDEX.PHP REACHED
+[2026-07-09 13:27:22] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-09 13:27:22] INDEX.PHP REACHED
+[2026-07-09 13:27:22] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-09&checkout=2026-07-10 (Path: /rooms/checkAvailability)
+[2026-07-09 13:27:22] INDEX.PHP REACHED
+[2026-07-09 13:27:22] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-09&checkout=2026-07-10 (Path: /rooms/checkAvailability)
+[2026-07-09 13:27:24] INDEX.PHP REACHED
+[2026-07-09 13:27:24] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-09 13:27:29] INDEX.PHP REACHED
+[2026-07-09 13:27:29] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-09 13:27:29] INDEX.PHP REACHED
+[2026-07-09 13:27:29] REQUEST: GET /api/index.php/rooms/availabilityList?room_id=2&start=2026-07-09&end=2026-07-22 (Path: /rooms/availabilityList)
+[2026-07-09 13:27:29] INDEX.PHP REACHED
+[2026-07-09 13:27:29] REQUEST: GET /api/index.php/rooms/availabilityList?room_id=2&start=2026-07-09&end=2026-07-22 (Path: /rooms/availabilityList)
+[2026-07-09 13:27:34] INDEX.PHP REACHED
+[2026-07-09 13:27:34] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-09 13:27:39] INDEX.PHP REACHED
+[2026-07-09 13:27:39] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-09 13:27:44] INDEX.PHP REACHED
+[2026-07-09 13:27:44] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-09 13:27:47] INDEX.PHP REACHED
+[2026-07-09 13:27:47] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-09 13:27:47] INDEX.PHP REACHED
+[2026-07-09 13:27:47] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-09 13:27:49] INDEX.PHP REACHED
+[2026-07-09 13:27:49] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-09 13:27:49] INDEX.PHP REACHED
+[2026-07-09 13:27:49] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-09 13:27:49] INDEX.PHP REACHED
+[2026-07-09 13:27:49] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-09 13:27:54] INDEX.PHP REACHED
+[2026-07-09 13:27:54] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-09 13:27:59] INDEX.PHP REACHED
+[2026-07-09 13:27:59] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-09 13:28:02] INDEX.PHP REACHED
+[2026-07-09 13:28:02] INDEX.PHP REACHED
+[2026-07-09 13:28:02] REQUEST: POST /api/index.php/rooms/updateDetails (Path: /rooms/updateDetails)
+[2026-07-09 13:28:03] INDEX.PHP REACHED
+[2026-07-09 13:28:03] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-09 13:28:03] INDEX.PHP REACHED
+[2026-07-09 13:28:03] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-09 13:28:08] INDEX.PHP REACHED
+[2026-07-09 13:28:08] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-09 13:28:08] INDEX.PHP REACHED
+[2026-07-09 13:28:08] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-09 13:28:08] INDEX.PHP REACHED
+[2026-07-09 13:28:08] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-09&checkout=2026-07-10 (Path: /rooms/checkAvailability)
+[2026-07-09 13:28:08] INDEX.PHP REACHED
+[2026-07-09 13:28:08] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-09&checkout=2026-07-10 (Path: /rooms/checkAvailability)
+[2026-07-09 13:28:11] INDEX.PHP REACHED
+[2026-07-09 13:28:11] REQUEST: GET /api/index.php/rooms/availabilityList?room_id=4&start=2026-07-09&end=2026-07-22 (Path: /rooms/availabilityList)
+[2026-07-09 13:28:11] INDEX.PHP REACHED
+[2026-07-09 13:28:11] REQUEST: GET /api/index.php/rooms/availabilityList?room_id=4&start=2026-07-09&end=2026-07-22 (Path: /rooms/availabilityList)
+[2026-07-09 13:28:15] INDEX.PHP REACHED
+[2026-07-09 13:28:15] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-09 13:28:18] INDEX.PHP REACHED
+[2026-07-09 13:28:18] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-09 13:28:18] INDEX.PHP REACHED
+[2026-07-09 13:28:18] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-09 13:28:18] INDEX.PHP REACHED
+[2026-07-09 13:28:18] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-09&checkout=2026-07-10 (Path: /rooms/checkAvailability)
+[2026-07-09 13:28:18] INDEX.PHP REACHED
+[2026-07-09 13:28:18] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-09&checkout=2026-07-10 (Path: /rooms/checkAvailability)
+[2026-07-09 13:28:20] INDEX.PHP REACHED
+[2026-07-09 13:28:20] REQUEST: GET /api/index.php/rooms/availabilityList?room_id=4&start=2026-07-09&end=2026-07-22 (Path: /rooms/availabilityList)
+[2026-07-09 13:28:20] INDEX.PHP REACHED
+[2026-07-09 13:28:20] REQUEST: GET /api/index.php/rooms/availabilityList?room_id=4&start=2026-07-09&end=2026-07-22 (Path: /rooms/availabilityList)
+[2026-07-09 13:29:12] INDEX.PHP REACHED
+[2026-07-09 13:29:12] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-09 13:29:12] INDEX.PHP REACHED
+[2026-07-09 13:29:12] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-09 13:29:12] INDEX.PHP REACHED
+[2026-07-09 13:29:12] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-09&checkout=2026-07-10 (Path: /rooms/checkAvailability)
+[2026-07-09 13:29:12] INDEX.PHP REACHED
+[2026-07-09 13:29:12] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-09&checkout=2026-07-10 (Path: /rooms/checkAvailability)
+[2026-07-09 13:29:15] INDEX.PHP REACHED
+[2026-07-09 13:29:15] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-09 13:30:15] INDEX.PHP REACHED
+[2026-07-09 13:30:15] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-09 13:31:15] INDEX.PHP REACHED
+[2026-07-09 13:31:15] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-09 13:32:06] INDEX.PHP REACHED
+[2026-07-09 13:32:06] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-09 13:32:06] INDEX.PHP REACHED
+[2026-07-09 13:32:06] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-09 13:32:09] INDEX.PHP REACHED
+[2026-07-09 13:32:09] REQUEST: GET /api/index.php/rooms/availabilityList?room_id=2&start=2026-07-09&end=2026-07-22 (Path: /rooms/availabilityList)
+[2026-07-09 13:32:09] INDEX.PHP REACHED
+[2026-07-09 13:32:09] REQUEST: GET /api/index.php/rooms/availabilityList?room_id=2&start=2026-07-09&end=2026-07-22 (Path: /rooms/availabilityList)
+[2026-07-09 13:32:15] INDEX.PHP REACHED
+[2026-07-09 13:32:15] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-09 13:33:15] INDEX.PHP REACHED
+[2026-07-09 13:33:15] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-09 13:34:15] INDEX.PHP REACHED
+[2026-07-09 13:34:15] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-09 13:35:15] INDEX.PHP REACHED
+[2026-07-09 13:35:15] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-09 13:36:15] INDEX.PHP REACHED
+[2026-07-09 13:36:15] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-09 13:37:15] INDEX.PHP REACHED
+[2026-07-09 13:37:15] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-09 13:42:14] INDEX.PHP REACHED
+[2026-07-09 13:42:14] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-09 22:31:26] INDEX.PHP REACHED
+[2026-07-09 22:31:26] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 10:08:45] INDEX.PHP REACHED
+[2026-07-10 10:08:45] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-10 10:08:49] INDEX.PHP REACHED
+[2026-07-10 10:08:49] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-10 10:08:50] INDEX.PHP REACHED
+[2026-07-10 10:08:50] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-10 10:08:51] INDEX.PHP REACHED
+[2026-07-10 10:08:51] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-10 10:08:51] INDEX.PHP REACHED
+[2026-07-10 10:08:51] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-10 10:09:00] INDEX.PHP REACHED
+[2026-07-10 10:09:00] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-10 10:09:00] INDEX.PHP REACHED
+[2026-07-10 10:09:00] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-10 10:09:14] INDEX.PHP REACHED
+[2026-07-10 10:09:14] INDEX.PHP REACHED
+[2026-07-10 10:09:14] REQUEST: POST /api/index.php/auth/receptionist/login (Path: /auth/receptionist/login)
+[2026-07-10 10:09:25] INDEX.PHP REACHED
+[2026-07-10 10:09:25] INDEX.PHP REACHED
+[2026-07-10 10:09:25] REQUEST: POST /api/index.php/auth/receptionist/login (Path: /auth/receptionist/login)
+[2026-07-10 10:09:25] INDEX.PHP REACHED
+[2026-07-10 10:09:25] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 10:09:25] INDEX.PHP REACHED
+[2026-07-10 10:09:25] REQUEST: GET /api/index.php/dashboard/receptionist (Path: /dashboard/receptionist)
+[2026-07-10 10:09:25] INDEX.PHP REACHED
+[2026-07-10 10:09:25] REQUEST: GET /api/index.php/dashboard/receptionist (Path: /dashboard/receptionist)
+[2026-07-10 10:09:30] INDEX.PHP REACHED
+[2026-07-10 10:09:30] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 10:09:32] INDEX.PHP REACHED
+[2026-07-10 10:09:32] REQUEST: GET /api/index.php/management/guests (Path: /management/guests)
+[2026-07-10 10:09:32] INDEX.PHP REACHED
+[2026-07-10 10:09:32] REQUEST: GET /api/index.php/management/guests (Path: /management/guests)
+[2026-07-10 10:09:35] INDEX.PHP REACHED
+[2026-07-10 10:09:35] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 10:09:39] INDEX.PHP REACHED
+[2026-07-10 10:09:39] REQUEST: GET /api/index.php/management/settlements (Path: /management/settlements)
+[2026-07-10 10:09:39] INDEX.PHP REACHED
+[2026-07-10 10:09:39] REQUEST: GET /api/index.php/management/settlements (Path: /management/settlements)
+[2026-07-10 10:09:40] INDEX.PHP REACHED
+[2026-07-10 10:09:40] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 10:09:45] INDEX.PHP REACHED
+[2026-07-10 10:09:45] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 10:09:50] INDEX.PHP REACHED
+[2026-07-10 10:09:50] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 10:09:55] INDEX.PHP REACHED
+[2026-07-10 10:09:55] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 10:09:56] INDEX.PHP REACHED
+[2026-07-10 10:09:56] REQUEST: GET /api/index.php/management/logs (Path: /management/logs)
+[2026-07-10 10:09:56] INDEX.PHP REACHED
+[2026-07-10 10:09:56] REQUEST: GET /api/index.php/management/logs (Path: /management/logs)
+[2026-07-10 10:10:00] INDEX.PHP REACHED
+[2026-07-10 10:10:00] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 10:10:01] INDEX.PHP REACHED
+[2026-07-10 10:10:01] REQUEST: GET /api/index.php/dashboard/receptionist (Path: /dashboard/receptionist)
+[2026-07-10 10:10:01] INDEX.PHP REACHED
+[2026-07-10 10:10:01] REQUEST: GET /api/index.php/dashboard/receptionist (Path: /dashboard/receptionist)
+[2026-07-10 10:10:05] INDEX.PHP REACHED
+[2026-07-10 10:10:05] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 10:10:10] INDEX.PHP REACHED
+[2026-07-10 10:10:10] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 10:10:13] INDEX.PHP REACHED
+[2026-07-10 10:10:13] REQUEST: GET /api/index.php/rooms/subRooms?category_id=3 (Path: /rooms/subRooms)
+[2026-07-10 10:10:13] INDEX.PHP REACHED
+[2026-07-10 10:10:13] REQUEST: GET /api/index.php/rooms/availabilityList?room_id=3&start=2026-07-10&end=2026-07-23 (Path: /rooms/availabilityList)
+[2026-07-10 10:10:13] INDEX.PHP REACHED
+[2026-07-10 10:10:13] REQUEST: GET /api/index.php/rooms/subRooms?category_id=3 (Path: /rooms/subRooms)
+[2026-07-10 10:10:13] INDEX.PHP REACHED
+[2026-07-10 10:10:13] REQUEST: GET /api/index.php/rooms/availabilityList?room_id=3&start=2026-07-10&end=2026-07-23 (Path: /rooms/availabilityList)
+[2026-07-10 10:10:13] INDEX.PHP REACHED
+[2026-07-10 10:10:13] REQUEST: GET /api/index.php/rooms/availabilityList?room_id=2&start=2026-07-10&end=2026-07-23 (Path: /rooms/availabilityList)
+[2026-07-10 10:10:16] INDEX.PHP REACHED
+[2026-07-10 10:10:16] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 10:10:21] INDEX.PHP REACHED
+[2026-07-10 10:10:21] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 10:10:22] INDEX.PHP REACHED
+[2026-07-10 10:10:22] REQUEST: GET /api/index.php/rooms/availabilityList?room_id=11&start=2026-07-10&end=2026-07-23 (Path: /rooms/availabilityList)
+[2026-07-10 10:10:24] INDEX.PHP REACHED
+[2026-07-10 10:10:24] REQUEST: GET /api/index.php/rooms/availabilityList?room_id=2&start=2026-07-10&end=2026-07-23 (Path: /rooms/availabilityList)
+[2026-07-10 10:10:26] INDEX.PHP REACHED
+[2026-07-10 10:10:26] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 10:10:26] INDEX.PHP REACHED
+[2026-07-10 10:10:26] REQUEST: GET /api/index.php/rooms/availabilityList?room_id=12&start=2026-07-10&end=2026-07-23 (Path: /rooms/availabilityList)
+[2026-07-10 10:10:31] INDEX.PHP REACHED
+[2026-07-10 10:10:31] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 10:10:36] INDEX.PHP REACHED
+[2026-07-10 10:10:36] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 10:10:41] INDEX.PHP REACHED
+[2026-07-10 10:10:41] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 10:10:46] INDEX.PHP REACHED
+[2026-07-10 10:10:46] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 10:10:51] INDEX.PHP REACHED
+[2026-07-10 10:10:51] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 10:10:56] INDEX.PHP REACHED
+[2026-07-10 10:10:56] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 10:11:01] INDEX.PHP REACHED
+[2026-07-10 10:11:01] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 10:11:06] INDEX.PHP REACHED
+[2026-07-10 10:11:06] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 10:11:12] INDEX.PHP REACHED
+[2026-07-10 10:11:12] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 10:12:12] INDEX.PHP REACHED
+[2026-07-10 10:12:12] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 10:12:20] INDEX.PHP REACHED
+[2026-07-10 10:12:20] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-10 10:12:20] INDEX.PHP REACHED
+[2026-07-10 10:12:20] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-10 10:13:12] INDEX.PHP REACHED
+[2026-07-10 10:13:12] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 10:14:12] INDEX.PHP REACHED
+[2026-07-10 10:14:12] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 10:14:54] INDEX.PHP REACHED
+[2026-07-10 10:14:54] REQUEST: GET /api/index.php/rooms/subRooms?category_id=3 (Path: /rooms/subRooms)
+[2026-07-10 10:15:12] INDEX.PHP REACHED
+[2026-07-10 10:15:12] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 10:16:12] INDEX.PHP REACHED
+[2026-07-10 10:16:12] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 10:17:12] INDEX.PHP REACHED
+[2026-07-10 10:17:12] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 10:18:12] INDEX.PHP REACHED
+[2026-07-10 10:18:12] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 10:19:12] INDEX.PHP REACHED
+[2026-07-10 10:19:12] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 10:20:12] INDEX.PHP REACHED
+[2026-07-10 10:20:12] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 10:21:12] INDEX.PHP REACHED
+[2026-07-10 10:21:12] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 10:22:12] INDEX.PHP REACHED
+[2026-07-10 10:22:12] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 10:23:12] INDEX.PHP REACHED
+[2026-07-10 10:23:12] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 10:24:12] INDEX.PHP REACHED
+[2026-07-10 10:24:12] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 10:25:12] INDEX.PHP REACHED
+[2026-07-10 10:25:12] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 10:26:12] INDEX.PHP REACHED
+[2026-07-10 10:26:12] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 10:27:12] INDEX.PHP REACHED
+[2026-07-10 10:27:12] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 10:28:12] INDEX.PHP REACHED
+[2026-07-10 10:28:12] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 10:29:12] INDEX.PHP REACHED
+[2026-07-10 10:29:12] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 10:30:12] INDEX.PHP REACHED
+[2026-07-10 10:30:12] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 10:31:12] INDEX.PHP REACHED
+[2026-07-10 10:31:12] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 10:32:12] INDEX.PHP REACHED
+[2026-07-10 10:32:12] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 10:33:12] INDEX.PHP REACHED
+[2026-07-10 10:33:12] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 10:34:12] INDEX.PHP REACHED
+[2026-07-10 10:34:12] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 10:35:12] INDEX.PHP REACHED
+[2026-07-10 10:35:12] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 10:36:12] INDEX.PHP REACHED
+[2026-07-10 10:36:12] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 10:37:12] INDEX.PHP REACHED
+[2026-07-10 10:37:12] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 10:38:12] INDEX.PHP REACHED
+[2026-07-10 10:38:12] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 10:39:12] INDEX.PHP REACHED
+[2026-07-10 10:39:12] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 11:04:39] INDEX.PHP REACHED
+[2026-07-10 11:04:39] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-10 11:04:39] INDEX.PHP REACHED
+[2026-07-10 11:04:39] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-10 11:04:39] INDEX.PHP REACHED
+[2026-07-10 11:04:39] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-10 11:04:40] INDEX.PHP REACHED
+[2026-07-10 11:04:40] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-10 11:29:01] INDEX.PHP REACHED
+[2026-07-10 11:29:01] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-10 11:29:01] INDEX.PHP REACHED
+[2026-07-10 11:29:01] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-10 11:29:02] INDEX.PHP REACHED
+[2026-07-10 11:29:02] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-10 11:29:02] INDEX.PHP REACHED
+[2026-07-10 11:29:02] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-10 11:29:03] INDEX.PHP REACHED
+[2026-07-10 11:29:03] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-10 11:29:03] INDEX.PHP REACHED
+[2026-07-10 11:29:03] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-10 11:29:04] INDEX.PHP REACHED
+[2026-07-10 11:29:04] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-10 11:29:04] INDEX.PHP REACHED
+[2026-07-10 11:29:04] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-10 11:29:05] INDEX.PHP REACHED
+[2026-07-10 11:29:05] REQUEST: GET /api/index.php/rooms/list (Path: /rooms/list)
+[2026-07-10 11:29:05] INDEX.PHP REACHED
+[2026-07-10 11:29:05] REQUEST: GET /api/index.php/rooms/list (Path: /rooms/list)
+[2026-07-10 11:29:05] INDEX.PHP REACHED
+[2026-07-10 11:29:05] REQUEST: GET /api/index.php/rooms/availabilityList?start=2026-07-10&end=2026-08-09 (Path: /rooms/availabilityList)
+[2026-07-10 11:29:05] INDEX.PHP REACHED
+[2026-07-10 11:29:05] REQUEST: GET /api/index.php/rooms/availabilityList?start=2026-07-10&end=2026-08-09 (Path: /rooms/availabilityList)
+[2026-07-10 11:29:07] INDEX.PHP REACHED
+[2026-07-10 11:29:07] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-10 11:29:07] INDEX.PHP REACHED
+[2026-07-10 11:29:07] REQUEST: GET /api/index.php/admin/bookings/list?limit=100&offset=0 (Path: /admin/bookings/list)
+[2026-07-10 11:29:07] INDEX.PHP REACHED
+[2026-07-10 11:29:07] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-10 11:29:07] INDEX.PHP REACHED
+[2026-07-10 11:29:07] REQUEST: GET /api/index.php/admin/bookings/list?limit=100&offset=0 (Path: /admin/bookings/list)
+[2026-07-10 11:29:10] INDEX.PHP REACHED
+[2026-07-10 11:29:10] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-10 11:29:10] INDEX.PHP REACHED
+[2026-07-10 11:29:10] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-10 11:29:12] INDEX.PHP REACHED
+[2026-07-10 11:29:12] REQUEST: GET /api/index.php/rooms/list (Path: /rooms/list)
+[2026-07-10 11:29:12] INDEX.PHP REACHED
+[2026-07-10 11:29:12] REQUEST: GET /api/index.php/rooms/list (Path: /rooms/list)
+[2026-07-10 11:29:12] INDEX.PHP REACHED
+[2026-07-10 11:29:12] REQUEST: GET /api/index.php/rooms/availabilityList?start=2026-07-10&end=2026-08-09 (Path: /rooms/availabilityList)
+[2026-07-10 11:29:12] INDEX.PHP REACHED
+[2026-07-10 11:29:12] REQUEST: GET /api/index.php/rooms/availabilityList?start=2026-07-10&end=2026-08-09 (Path: /rooms/availabilityList)
+[2026-07-10 11:29:26] INDEX.PHP REACHED
+[2026-07-10 11:29:26] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-10 11:29:26] INDEX.PHP REACHED
+[2026-07-10 11:29:26] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-10 11:29:27] INDEX.PHP REACHED
+[2026-07-10 11:29:27] REQUEST: GET /api/index.php/rooms/subRooms?category_id=2 (Path: /rooms/subRooms)
+[2026-07-10 11:29:27] INDEX.PHP REACHED
+[2026-07-10 11:29:27] REQUEST: GET /api/index.php/rooms/subRooms?category_id=2 (Path: /rooms/subRooms)
+[2026-07-10 11:29:58] INDEX.PHP REACHED
+[2026-07-10 11:29:58] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-10 11:29:58] INDEX.PHP REACHED
+[2026-07-10 11:29:58] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-10 11:30:02] INDEX.PHP REACHED
+[2026-07-10 11:30:02] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-10 11:30:02] INDEX.PHP REACHED
+[2026-07-10 11:30:02] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-10 11:30:04] INDEX.PHP REACHED
+[2026-07-10 11:30:04] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-10 11:30:04] INDEX.PHP REACHED
+[2026-07-10 11:30:04] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-10 11:30:05] INDEX.PHP REACHED
+[2026-07-10 11:30:05] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-10 11:30:05] INDEX.PHP REACHED
+[2026-07-10 11:30:05] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-10 11:30:15] INDEX.PHP REACHED
+[2026-07-10 11:30:15] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-10 11:30:15] INDEX.PHP REACHED
+[2026-07-10 11:30:15] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-10 11:30:18] INDEX.PHP REACHED
+[2026-07-10 11:30:18] REQUEST: GET /api/index.php/rooms/subRooms?category_id=2 (Path: /rooms/subRooms)
+[2026-07-10 11:30:18] INDEX.PHP REACHED
+[2026-07-10 11:30:18] REQUEST: GET /api/index.php/rooms/subRooms?category_id=2 (Path: /rooms/subRooms)
+[2026-07-10 11:30:44] INDEX.PHP REACHED
+[2026-07-10 11:30:44] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-10 11:30:44] INDEX.PHP REACHED
+[2026-07-10 11:30:44] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-10 11:30:48] INDEX.PHP REACHED
+[2026-07-10 11:30:48] REQUEST: GET /api/index.php/rooms/list (Path: /rooms/list)
+[2026-07-10 11:30:48] INDEX.PHP REACHED
+[2026-07-10 11:30:48] REQUEST: GET /api/index.php/rooms/list (Path: /rooms/list)
+[2026-07-10 11:30:48] INDEX.PHP REACHED
+[2026-07-10 11:30:48] REQUEST: GET /api/index.php/rooms/availabilityList?start=2026-07-10&end=2026-08-09 (Path: /rooms/availabilityList)
+[2026-07-10 11:30:48] INDEX.PHP REACHED
+[2026-07-10 11:30:48] REQUEST: GET /api/index.php/rooms/availabilityList?start=2026-07-10&end=2026-08-09 (Path: /rooms/availabilityList)
+[2026-07-10 11:30:48] INDEX.PHP REACHED
+[2026-07-10 11:30:48] REQUEST: GET /api/index.php/rooms/subRooms?category_id=2 (Path: /rooms/subRooms)
+[2026-07-10 11:30:48] INDEX.PHP REACHED
+[2026-07-10 11:30:48] REQUEST: GET /api/index.php/rooms/subRooms?category_id=2 (Path: /rooms/subRooms)
+[2026-07-10 11:30:49] INDEX.PHP REACHED
+[2026-07-10 11:30:49] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-10 11:30:49] INDEX.PHP REACHED
+[2026-07-10 11:30:49] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-10 11:30:50] INDEX.PHP REACHED
+[2026-07-10 11:30:50] REQUEST: GET /api/index.php/rooms/list (Path: /rooms/list)
+[2026-07-10 11:30:50] INDEX.PHP REACHED
+[2026-07-10 11:30:50] REQUEST: GET /api/index.php/rooms/list (Path: /rooms/list)
+[2026-07-10 11:30:50] INDEX.PHP REACHED
+[2026-07-10 11:30:50] REQUEST: GET /api/index.php/rooms/availabilityList?start=2026-07-10&end=2026-08-09 (Path: /rooms/availabilityList)
+[2026-07-10 11:30:50] INDEX.PHP REACHED
+[2026-07-10 11:30:50] REQUEST: GET /api/index.php/rooms/availabilityList?start=2026-07-10&end=2026-08-09 (Path: /rooms/availabilityList)
+[2026-07-10 11:31:02] INDEX.PHP REACHED
+[2026-07-10 11:31:02] REQUEST: GET /api/index.php/rooms/subRooms?category_id=2 (Path: /rooms/subRooms)
+[2026-07-10 11:31:02] INDEX.PHP REACHED
+[2026-07-10 11:31:02] REQUEST: GET /api/index.php/rooms/subRooms?category_id=2 (Path: /rooms/subRooms)
+[2026-07-10 11:31:15] INDEX.PHP REACHED
+[2026-07-10 11:31:15] INDEX.PHP REACHED
+[2026-07-10 11:31:15] REQUEST: POST /api/index.php/rooms/updateSubRoom (Path: /rooms/updateSubRoom)
+[2026-07-10 11:31:15] INDEX.PHP REACHED
+[2026-07-10 11:31:15] REQUEST: GET /api/index.php/rooms/subRooms?category_id=2 (Path: /rooms/subRooms)
+[2026-07-10 11:32:06] INDEX.PHP REACHED
+[2026-07-10 11:32:06] INDEX.PHP REACHED
+[2026-07-10 11:32:06] REQUEST: POST /api/index.php/rooms/updateSubRoom (Path: /rooms/updateSubRoom)
+[2026-07-10 11:32:06] INDEX.PHP REACHED
+[2026-07-10 11:32:06] REQUEST: GET /api/index.php/rooms/subRooms?category_id=2 (Path: /rooms/subRooms)
+[2026-07-10 09:34:35] Database Connection error: could not find driver
+[2026-07-10 11:40:20] INDEX.PHP REACHED
+[2026-07-10 11:40:20] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-10 11:40:20] INDEX.PHP REACHED
+[2026-07-10 11:40:20] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-10 11:40:26] INDEX.PHP REACHED
+[2026-07-10 11:40:26] REQUEST: GET /api/index.php/rooms/list (Path: /rooms/list)
+[2026-07-10 11:40:26] INDEX.PHP REACHED
+[2026-07-10 11:40:26] REQUEST: GET /api/index.php/rooms/list (Path: /rooms/list)
+[2026-07-10 11:40:26] INDEX.PHP REACHED
+[2026-07-10 11:40:26] REQUEST: GET /api/index.php/rooms/availabilityList?start=2026-07-10&end=2026-08-09 (Path: /rooms/availabilityList)
+[2026-07-10 11:40:26] INDEX.PHP REACHED
+[2026-07-10 11:40:26] REQUEST: GET /api/index.php/rooms/availabilityList?start=2026-07-10&end=2026-08-09 (Path: /rooms/availabilityList)
+[2026-07-10 11:40:37] INDEX.PHP REACHED
+[2026-07-10 11:40:37] REQUEST: GET /api/index.php/rooms/subRooms?category_id=2 (Path: /rooms/subRooms)
+[2026-07-10 11:40:37] INDEX.PHP REACHED
+[2026-07-10 11:40:37] REQUEST: GET /api/index.php/rooms/subRooms?category_id=2 (Path: /rooms/subRooms)
+[2026-07-10 11:40:39] INDEX.PHP REACHED
+[2026-07-10 11:40:39] INDEX.PHP REACHED
+[2026-07-10 11:40:39] REQUEST: POST /api/index.php/rooms/updateDetails (Path: /rooms/updateDetails)
+[2026-07-10 11:40:40] INDEX.PHP REACHED
+[2026-07-10 11:40:40] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-10 11:40:41] INDEX.PHP REACHED
+[2026-07-10 11:40:41] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-10 11:40:44] INDEX.PHP REACHED
+[2026-07-10 11:40:44] REQUEST: GET /api/index.php/rooms/subRooms?category_id=6 (Path: /rooms/subRooms)
+[2026-07-10 11:40:44] INDEX.PHP REACHED
+[2026-07-10 11:40:44] REQUEST: GET /api/index.php/rooms/subRooms?category_id=6 (Path: /rooms/subRooms)
+[2026-07-10 11:42:31] INDEX.PHP REACHED
+[2026-07-10 11:42:31] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-10 11:42:31] INDEX.PHP REACHED
+[2026-07-10 11:42:31] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-10 11:42:33] INDEX.PHP REACHED
+[2026-07-10 11:42:33] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-10 11:42:33] INDEX.PHP REACHED
+[2026-07-10 11:42:33] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-10 11:42:33] INDEX.PHP REACHED
+[2026-07-10 11:42:33] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-10&checkout=2026-07-11 (Path: /rooms/checkAvailability)
+[2026-07-10 11:42:33] INDEX.PHP REACHED
+[2026-07-10 11:42:33] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-10&checkout=2026-07-11 (Path: /rooms/checkAvailability)
+[2026-07-10 11:42:37] INDEX.PHP REACHED
+[2026-07-10 11:42:37] REQUEST: GET /api/index.php/rooms/subRooms?category_id=2 (Path: /rooms/subRooms)
+[2026-07-10 11:42:37] INDEX.PHP REACHED
+[2026-07-10 11:42:37] REQUEST: GET /api/index.php/rooms/availabilityList?room_id=2&start=2026-07-10&end=2026-07-23 (Path: /rooms/availabilityList)
+[2026-07-10 11:42:37] INDEX.PHP REACHED
+[2026-07-10 11:42:37] REQUEST: GET /api/index.php/rooms/subRooms?category_id=2 (Path: /rooms/subRooms)
+[2026-07-10 11:42:37] INDEX.PHP REACHED
+[2026-07-10 11:42:37] REQUEST: GET /api/index.php/rooms/availabilityList?room_id=2&start=2026-07-10&end=2026-07-23 (Path: /rooms/availabilityList)
+[2026-07-10 11:42:37] INDEX.PHP REACHED
+[2026-07-10 11:42:37] REQUEST: GET /api/index.php/rooms/availabilityList?room_id=1&start=2026-07-10&end=2026-07-23 (Path: /rooms/availabilityList)
+[2026-07-10 11:43:08] INDEX.PHP REACHED
+[2026-07-10 11:43:08] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-10 11:43:09] INDEX.PHP REACHED
+[2026-07-10 11:43:09] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-10 11:43:11] INDEX.PHP REACHED
+[2026-07-10 11:43:11] REQUEST: GET /api/index.php/rooms/subRooms?category_id=2 (Path: /rooms/subRooms)
+[2026-07-10 11:43:11] INDEX.PHP REACHED
+[2026-07-10 11:43:11] REQUEST: GET /api/index.php/rooms/subRooms?category_id=2 (Path: /rooms/subRooms)
+[2026-07-10 11:43:28] INDEX.PHP REACHED
+[2026-07-10 11:43:28] INDEX.PHP REACHED
+[2026-07-10 11:43:28] REQUEST: POST /api/index.php/rooms/updateDetails (Path: /rooms/updateDetails)
+[2026-07-10 11:43:29] INDEX.PHP REACHED
+[2026-07-10 11:43:29] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-10 11:43:29] INDEX.PHP REACHED
+[2026-07-10 11:43:29] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-10 11:43:32] INDEX.PHP REACHED
+[2026-07-10 11:43:32] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-10 11:43:32] INDEX.PHP REACHED
+[2026-07-10 11:43:32] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-10 11:43:32] INDEX.PHP REACHED
+[2026-07-10 11:43:32] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-10&checkout=2026-07-11 (Path: /rooms/checkAvailability)
+[2026-07-10 11:43:32] INDEX.PHP REACHED
+[2026-07-10 11:43:32] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-10&checkout=2026-07-11 (Path: /rooms/checkAvailability)
+[2026-07-10 11:43:34] INDEX.PHP REACHED
+[2026-07-10 11:43:34] REQUEST: GET /api/index.php/rooms/subRooms?category_id=2 (Path: /rooms/subRooms)
+[2026-07-10 11:43:34] INDEX.PHP REACHED
+[2026-07-10 11:43:34] REQUEST: GET /api/index.php/rooms/availabilityList?room_id=2&start=2026-07-10&end=2026-07-23 (Path: /rooms/availabilityList)
+[2026-07-10 11:43:34] INDEX.PHP REACHED
+[2026-07-10 11:43:34] REQUEST: GET /api/index.php/rooms/subRooms?category_id=2 (Path: /rooms/subRooms)
+[2026-07-10 11:43:34] INDEX.PHP REACHED
+[2026-07-10 11:43:34] REQUEST: GET /api/index.php/rooms/availabilityList?room_id=2&start=2026-07-10&end=2026-07-23 (Path: /rooms/availabilityList)
+[2026-07-10 11:43:34] INDEX.PHP REACHED
+[2026-07-10 11:43:34] REQUEST: GET /api/index.php/rooms/availabilityList?room_id=1&start=2026-07-10&end=2026-07-23 (Path: /rooms/availabilityList)
+[2026-07-10 11:43:53] INDEX.PHP REACHED
+[2026-07-10 11:43:53] REQUEST: GET /api/index.php/rooms/availabilityList?room_id=1&start=2026-07-18&end=2026-07-31 (Path: /rooms/availabilityList)
+[2026-07-10 11:45:28] INDEX.PHP REACHED
+[2026-07-10 11:45:28] REQUEST: GET /subraresidency1/backend/api/index.php/rooms/subRooms?category_id=2 (Path: /rooms/subRooms)
+[2026-07-10 11:45:29] INDEX.PHP REACHED
+[2026-07-10 11:45:29] REQUEST: GET /subraresidency1/backend/api/index.php/rooms/subRooms?category_id=2 (Path: /rooms/subRooms)
+[2026-07-10 11:45:48] INDEX.PHP REACHED
+[2026-07-10 11:45:48] REQUEST: POST /subraresidency1/backend/api/index.php/rooms/addSubRoom (Path: /rooms/addSubRoom)
+[2026-07-10 11:45:48] INDEX.PHP REACHED
+[2026-07-10 11:45:48] REQUEST: POST /subraresidency1/backend/api/index.php/rooms/addSubRoom (Path: /rooms/addSubRoom)
+[2026-07-10 11:46:29] INDEX.PHP REACHED
+[2026-07-10 11:46:29] REQUEST: POST /subraresidency1/backend/api/index.php/rooms/addSubRoom (Path: /rooms/addSubRoom)
+[2026-07-10 11:46:29] INDEX.PHP REACHED
+[2026-07-10 11:46:29] REQUEST: POST /subraresidency1/backend/api/index.php/rooms/deleteSubRoom (Path: /rooms/deleteSubRoom)
+[2026-07-10 11:46:29] INDEX.PHP REACHED
+[2026-07-10 11:46:29] REQUEST: POST /subraresidency1/backend/api/index.php/rooms/addSubRoom (Path: /rooms/addSubRoom)
+[2026-07-10 11:46:29] INDEX.PHP REACHED
+[2026-07-10 11:46:29] REQUEST: POST /subraresidency1/backend/api/index.php/rooms/deleteSubRoom (Path: /rooms/deleteSubRoom)
+[2026-07-10 11:47:24] INDEX.PHP REACHED
+[2026-07-10 11:47:24] REQUEST: GET /api/index.php/rooms/subRooms?category_id=2 (Path: /rooms/subRooms)
+[2026-07-10 11:47:24] INDEX.PHP REACHED
+[2026-07-10 11:47:24] REQUEST: GET /api/index.php/rooms/subRooms?category_id=2 (Path: /rooms/subRooms)
+[2026-07-10 11:47:31] INDEX.PHP REACHED
+[2026-07-10 11:47:31] REQUEST: POST /api/index.php/rooms/uploadGalleryImage (Path: /rooms/uploadGalleryImage)
+[2026-07-10 11:47:31] Fatal Error: Allowed memory size of 536870912 bytes exhausted (tried to allocate 400000000 bytes) in C:\xampp\htdocs\subraresidency1\backend\utils\ImageUploader.php on line 20
+[2026-07-10 11:47:43] INDEX.PHP REACHED
+[2026-07-10 11:47:43] INDEX.PHP REACHED
+[2026-07-10 11:47:43] REQUEST: POST /api/index.php/rooms/deleteGalleryImage (Path: /rooms/deleteGalleryImage)
+[2026-07-10 11:48:05] INDEX.PHP REACHED
+[2026-07-10 11:48:05] REQUEST: POST /api/index.php/rooms/uploadGalleryImage (Path: /rooms/uploadGalleryImage)
+[2026-07-10 11:48:09] INDEX.PHP REACHED
+[2026-07-10 11:48:09] INDEX.PHP REACHED
+[2026-07-10 11:48:09] REQUEST: POST /api/index.php/rooms/updateDetails (Path: /rooms/updateDetails)
+[2026-07-10 11:48:11] INDEX.PHP REACHED
+[2026-07-10 11:48:11] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-10 11:48:11] INDEX.PHP REACHED
+[2026-07-10 11:48:11] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-10 11:48:14] INDEX.PHP REACHED
+[2026-07-10 11:48:14] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-10 11:48:14] INDEX.PHP REACHED
+[2026-07-10 11:48:14] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-10 11:48:14] INDEX.PHP REACHED
+[2026-07-10 11:48:14] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-10&checkout=2026-07-11 (Path: /rooms/checkAvailability)
+[2026-07-10 11:48:14] INDEX.PHP REACHED
+[2026-07-10 11:48:14] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-10&checkout=2026-07-11 (Path: /rooms/checkAvailability)
+[2026-07-10 11:48:17] INDEX.PHP REACHED
+[2026-07-10 11:48:17] REQUEST: GET /api/index.php/rooms/subRooms?category_id=2 (Path: /rooms/subRooms)
+[2026-07-10 11:48:17] INDEX.PHP REACHED
+[2026-07-10 11:48:17] REQUEST: GET /api/index.php/rooms/availabilityList?room_id=2&start=2026-07-10&end=2026-07-23 (Path: /rooms/availabilityList)
+[2026-07-10 11:48:17] INDEX.PHP REACHED
+[2026-07-10 11:48:17] REQUEST: GET /api/index.php/rooms/subRooms?category_id=2 (Path: /rooms/subRooms)
+[2026-07-10 11:48:17] INDEX.PHP REACHED
+[2026-07-10 11:48:17] REQUEST: GET /api/index.php/rooms/availabilityList?room_id=2&start=2026-07-10&end=2026-07-23 (Path: /rooms/availabilityList)
+[2026-07-10 11:48:17] INDEX.PHP REACHED
+[2026-07-10 11:48:17] REQUEST: GET /api/index.php/rooms/availabilityList?room_id=1&start=2026-07-10&end=2026-07-23 (Path: /rooms/availabilityList)
+[2026-07-10 11:48:26] INDEX.PHP REACHED
+[2026-07-10 11:48:26] REQUEST: GET /api/index.php/rooms/subRooms?category_id=2 (Path: /rooms/subRooms)
+[2026-07-10 11:48:26] INDEX.PHP REACHED
+[2026-07-10 11:48:26] REQUEST: GET /api/index.php/rooms/subRooms?category_id=2 (Path: /rooms/subRooms)
+[2026-07-10 11:55:13] INDEX.PHP REACHED
+[2026-07-10 11:55:13] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-10 11:55:13] INDEX.PHP REACHED
+[2026-07-10 11:55:13] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-10 11:55:46] INDEX.PHP REACHED
+[2026-07-10 11:55:46] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-10 11:55:46] INDEX.PHP REACHED
+[2026-07-10 11:55:46] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-10 11:55:49] INDEX.PHP REACHED
+[2026-07-10 11:55:49] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-10 11:55:49] INDEX.PHP REACHED
+[2026-07-10 11:55:49] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-10 11:55:51] INDEX.PHP REACHED
+[2026-07-10 11:55:51] REQUEST: GET /api/index.php/rooms/subRooms?category_id=2 (Path: /rooms/subRooms)
+[2026-07-10 11:55:51] INDEX.PHP REACHED
+[2026-07-10 11:55:51] REQUEST: GET /api/index.php/rooms/subRooms?category_id=2 (Path: /rooms/subRooms)
+[2026-07-10 11:56:56] INDEX.PHP REACHED
+[2026-07-10 11:56:56] INDEX.PHP REACHED
+[2026-07-10 11:56:56] REQUEST: POST /api/index.php/auth/receptionist/login (Path: /auth/receptionist/login)
+[2026-07-10 11:56:56] INDEX.PHP REACHED
+[2026-07-10 11:56:56] REQUEST: GET /api/index.php/dashboard/receptionist (Path: /dashboard/receptionist)
+[2026-07-10 11:56:56] INDEX.PHP REACHED
+[2026-07-10 11:56:56] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 11:56:56] INDEX.PHP REACHED
+[2026-07-10 11:56:56] REQUEST: GET /api/index.php/dashboard/receptionist (Path: /dashboard/receptionist)
+[2026-07-10 11:57:01] INDEX.PHP REACHED
+[2026-07-10 11:57:01] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 11:57:06] INDEX.PHP REACHED
+[2026-07-10 11:57:06] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 11:57:11] INDEX.PHP REACHED
+[2026-07-10 11:57:11] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 11:57:16] INDEX.PHP REACHED
+[2026-07-10 11:57:16] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 11:57:18] INDEX.PHP REACHED
+[2026-07-10 11:57:18] REQUEST: GET /api/index.php/management/settlements (Path: /management/settlements)
+[2026-07-10 11:57:18] INDEX.PHP REACHED
+[2026-07-10 11:57:18] REQUEST: GET /api/index.php/management/settlements (Path: /management/settlements)
+[2026-07-10 11:57:21] INDEX.PHP REACHED
+[2026-07-10 11:57:21] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 11:57:26] INDEX.PHP REACHED
+[2026-07-10 11:57:26] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 11:57:31] INDEX.PHP REACHED
+[2026-07-10 11:57:31] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 11:57:36] INDEX.PHP REACHED
+[2026-07-10 11:57:36] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 11:57:37] INDEX.PHP REACHED
+[2026-07-10 11:57:37] REQUEST: GET /api/index.php/management/logs (Path: /management/logs)
+[2026-07-10 11:57:37] INDEX.PHP REACHED
+[2026-07-10 11:57:37] REQUEST: GET /api/index.php/management/logs (Path: /management/logs)
+[2026-07-10 11:57:41] INDEX.PHP REACHED
+[2026-07-10 11:57:41] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 11:57:43] INDEX.PHP REACHED
+[2026-07-10 11:57:43] REQUEST: GET /api/index.php/management/guests (Path: /management/guests)
+[2026-07-10 11:57:43] INDEX.PHP REACHED
+[2026-07-10 11:57:43] REQUEST: GET /api/index.php/management/guests (Path: /management/guests)
+[2026-07-10 11:57:44] INDEX.PHP REACHED
+[2026-07-10 11:57:44] REQUEST: GET /api/index.php/dashboard/receptionist (Path: /dashboard/receptionist)
+[2026-07-10 11:57:44] INDEX.PHP REACHED
+[2026-07-10 11:57:44] REQUEST: GET /api/index.php/dashboard/receptionist (Path: /dashboard/receptionist)
+[2026-07-10 11:57:46] INDEX.PHP REACHED
+[2026-07-10 11:57:46] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 11:57:51] INDEX.PHP REACHED
+[2026-07-10 11:57:51] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 11:57:56] INDEX.PHP REACHED
+[2026-07-10 11:57:56] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 11:58:01] INDEX.PHP REACHED
+[2026-07-10 11:58:01] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 11:58:06] INDEX.PHP REACHED
+[2026-07-10 11:58:06] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 11:58:11] INDEX.PHP REACHED
+[2026-07-10 11:58:11] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 11:58:16] INDEX.PHP REACHED
+[2026-07-10 11:58:16] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 11:58:21] INDEX.PHP REACHED
+[2026-07-10 11:58:21] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 11:58:27] INDEX.PHP REACHED
+[2026-07-10 11:58:27] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 11:58:32] INDEX.PHP REACHED
+[2026-07-10 11:58:32] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 11:58:37] INDEX.PHP REACHED
+[2026-07-10 11:58:37] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 11:58:42] INDEX.PHP REACHED
+[2026-07-10 11:58:42] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 11:58:47] INDEX.PHP REACHED
+[2026-07-10 11:58:47] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 11:58:52] INDEX.PHP REACHED
+[2026-07-10 11:58:52] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 11:58:57] INDEX.PHP REACHED
+[2026-07-10 11:58:57] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 11:59:02] INDEX.PHP REACHED
+[2026-07-10 11:59:02] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 11:59:07] INDEX.PHP REACHED
+[2026-07-10 11:59:07] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 11:59:12] INDEX.PHP REACHED
+[2026-07-10 11:59:12] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 11:59:17] INDEX.PHP REACHED
+[2026-07-10 11:59:17] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 11:59:22] INDEX.PHP REACHED
+[2026-07-10 11:59:22] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:00:12] INDEX.PHP REACHED
+[2026-07-10 12:00:12] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:01:12] INDEX.PHP REACHED
+[2026-07-10 12:01:12] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:01:41] INDEX.PHP REACHED
+[2026-07-10 12:01:41] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:01:46] INDEX.PHP REACHED
+[2026-07-10 12:01:46] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:01:51] INDEX.PHP REACHED
+[2026-07-10 12:01:51] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:01:52] INDEX.PHP REACHED
+[2026-07-10 12:01:52] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-11&checkout=2026-07-18 (Path: /rooms/checkAvailability)
+[2026-07-10 12:01:56] INDEX.PHP REACHED
+[2026-07-10 12:01:56] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:02:01] INDEX.PHP REACHED
+[2026-07-10 12:02:01] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:02:06] INDEX.PHP REACHED
+[2026-07-10 12:02:06] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:02:11] INDEX.PHP REACHED
+[2026-07-10 12:02:11] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:02:16] INDEX.PHP REACHED
+[2026-07-10 12:02:16] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:02:21] INDEX.PHP REACHED
+[2026-07-10 12:02:21] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:02:26] INDEX.PHP REACHED
+[2026-07-10 12:02:26] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:02:31] INDEX.PHP REACHED
+[2026-07-10 12:02:31] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:02:36] INDEX.PHP REACHED
+[2026-07-10 12:02:36] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:02:41] INDEX.PHP REACHED
+[2026-07-10 12:02:41] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:02:46] INDEX.PHP REACHED
+[2026-07-10 12:02:46] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:02:49] INDEX.PHP REACHED
+[2026-07-10 12:02:49] REQUEST: GET /api/index.php/dashboard/receptionist (Path: /dashboard/receptionist)
+[2026-07-10 12:02:49] INDEX.PHP REACHED
+[2026-07-10 12:02:49] REQUEST: GET /api/index.php/dashboard/receptionist (Path: /dashboard/receptionist)
+[2026-07-10 12:02:51] INDEX.PHP REACHED
+[2026-07-10 12:02:51] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:02:56] INDEX.PHP REACHED
+[2026-07-10 12:02:56] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:03:01] INDEX.PHP REACHED
+[2026-07-10 12:03:01] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:03:07] INDEX.PHP REACHED
+[2026-07-10 12:03:07] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:03:12] INDEX.PHP REACHED
+[2026-07-10 12:03:12] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:03:17] INDEX.PHP REACHED
+[2026-07-10 12:03:17] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:03:22] INDEX.PHP REACHED
+[2026-07-10 12:03:22] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:03:27] INDEX.PHP REACHED
+[2026-07-10 12:03:27] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:03:32] INDEX.PHP REACHED
+[2026-07-10 12:03:32] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:03:37] INDEX.PHP REACHED
+[2026-07-10 12:03:37] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:03:42] INDEX.PHP REACHED
+[2026-07-10 12:03:42] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:03:47] INDEX.PHP REACHED
+[2026-07-10 12:03:47] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:03:52] INDEX.PHP REACHED
+[2026-07-10 12:03:52] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:03:57] INDEX.PHP REACHED
+[2026-07-10 12:03:57] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:04:02] INDEX.PHP REACHED
+[2026-07-10 12:04:02] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:04:12] INDEX.PHP REACHED
+[2026-07-10 12:04:12] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-10 12:04:12] INDEX.PHP REACHED
+[2026-07-10 12:04:12] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:04:12] INDEX.PHP REACHED
+[2026-07-10 12:04:12] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-10 12:04:12] INDEX.PHP REACHED
+[2026-07-10 12:04:12] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-10&checkout=2026-07-11 (Path: /rooms/checkAvailability)
+[2026-07-10 12:04:12] INDEX.PHP REACHED
+[2026-07-10 12:04:12] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-10&checkout=2026-07-11 (Path: /rooms/checkAvailability)
+[2026-07-10 12:04:22] INDEX.PHP REACHED
+[2026-07-10 12:04:22] INDEX.PHP REACHED
+[2026-07-10 12:04:22] REQUEST: POST /api/index.php/bookings/create (Path: /bookings/create)
+[2026-07-10 12:04:24][Mailer] Brevo API Error (HTTP 401): {"message":"Key not found","code":"unauthorized"}
+
+[2026-07-10 12:04:24] INDEX.PHP REACHED
+[2026-07-10 12:04:24] INDEX.PHP REACHED
+[2026-07-10 12:04:24] REQUEST: POST /api/index.php/payments/createOrder (Path: /payments/createOrder)
+[2026-07-10 12:04:24] CRITICAL: create_order.php reached!
+[2026-07-10 12:04:24] CRITICAL: Input: {"booking_id":"HBK20260710ACE7","amount":3850}
+[2026-07-10 12:04:24] DEBUG: Debug Mail Triggered for ID: HBK20260710ACE7
+[2026-07-10 12:04:24] DEBUG: Sending Mail to bhalaramsembu@gmail.com
+[2026-07-10 12:04:26][Mailer] Brevo API Error (HTTP 401): {"message":"Key not found","code":"unauthorized"}
+
+[2026-07-10 12:06:55] INDEX.PHP REACHED
+[2026-07-10 12:06:55] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-10 12:06:55] INDEX.PHP REACHED
+[2026-07-10 12:06:55] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-10 12:07:02] INDEX.PHP REACHED
+[2026-07-10 12:07:02] REQUEST: GET /api/index.php/rooms/subRooms?category_id=2 (Path: /rooms/subRooms)
+[2026-07-10 12:07:02] INDEX.PHP REACHED
+[2026-07-10 12:07:02] REQUEST: GET /api/index.php/rooms/availabilityList?room_id=2&start=2026-07-10&end=2026-07-23 (Path: /rooms/availabilityList)
+[2026-07-10 12:07:02] INDEX.PHP REACHED
+[2026-07-10 12:07:02] REQUEST: GET /api/index.php/rooms/subRooms?category_id=2 (Path: /rooms/subRooms)
+[2026-07-10 12:07:02] INDEX.PHP REACHED
+[2026-07-10 12:07:02] REQUEST: GET /api/index.php/rooms/availabilityList?room_id=2&start=2026-07-10&end=2026-07-23 (Path: /rooms/availabilityList)
+[2026-07-10 12:07:02] INDEX.PHP REACHED
+[2026-07-10 12:07:02] REQUEST: GET /api/index.php/rooms/availabilityList?room_id=1&start=2026-07-10&end=2026-07-23 (Path: /rooms/availabilityList)
+[2026-07-10 12:07:22] INDEX.PHP REACHED
+[2026-07-10 12:07:22] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-10 12:07:22] INDEX.PHP REACHED
+[2026-07-10 12:07:22] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-10 12:07:31] INDEX.PHP REACHED
+[2026-07-10 12:07:31] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-10 12:07:31] INDEX.PHP REACHED
+[2026-07-10 12:07:31] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-10 12:07:36] INDEX.PHP REACHED
+[2026-07-10 12:07:36] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-10 12:07:36] INDEX.PHP REACHED
+[2026-07-10 12:07:36] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-10 12:07:45] INDEX.PHP REACHED
+[2026-07-10 12:07:45] REQUEST: GET /api/index.php/dashboard/receptionist (Path: /dashboard/receptionist)
+[2026-07-10 12:07:45] INDEX.PHP REACHED
+[2026-07-10 12:07:45] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:07:45] INDEX.PHP REACHED
+[2026-07-10 12:07:45] REQUEST: GET /api/index.php/dashboard/receptionist (Path: /dashboard/receptionist)
+[2026-07-10 12:07:45] INDEX.PHP REACHED
+[2026-07-10 12:07:45] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:07:50] INDEX.PHP REACHED
+[2026-07-10 12:07:50] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:07:55] INDEX.PHP REACHED
+[2026-07-10 12:07:55] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:08:00] INDEX.PHP REACHED
+[2026-07-10 12:08:00] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:08:02] INDEX.PHP REACHED
+[2026-07-10 12:08:02] REQUEST: GET /api/index.php/bookings/view?booking_id=HBK20260710ACE7 (Path: /bookings/view)
+[2026-07-10 12:08:05] INDEX.PHP REACHED
+[2026-07-10 12:08:05] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:08:05] INDEX.PHP REACHED
+[2026-07-10 12:08:05] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-10&checkout=2026-07-11 (Path: /rooms/checkAvailability)
+[2026-07-10 12:08:10] INDEX.PHP REACHED
+[2026-07-10 12:08:10] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:08:15] INDEX.PHP REACHED
+[2026-07-10 12:08:15] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:08:20] INDEX.PHP REACHED
+[2026-07-10 12:08:20] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:08:26] INDEX.PHP REACHED
+[2026-07-10 12:08:26] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:08:31] INDEX.PHP REACHED
+[2026-07-10 12:08:31] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:08:36] INDEX.PHP REACHED
+[2026-07-10 12:08:36] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:08:41] INDEX.PHP REACHED
+[2026-07-10 12:08:41] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:08:46] INDEX.PHP REACHED
+[2026-07-10 12:08:46] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:08:51] INDEX.PHP REACHED
+[2026-07-10 12:08:51] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:08:56] INDEX.PHP REACHED
+[2026-07-10 12:08:56] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:09:01] INDEX.PHP REACHED
+[2026-07-10 12:09:01] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:09:06] INDEX.PHP REACHED
+[2026-07-10 12:09:06] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:09:11] INDEX.PHP REACHED
+[2026-07-10 12:09:11] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:09:16] INDEX.PHP REACHED
+[2026-07-10 12:09:16] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:09:21] INDEX.PHP REACHED
+[2026-07-10 12:09:21] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:10:12] INDEX.PHP REACHED
+[2026-07-10 12:10:12] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:10:30] INDEX.PHP REACHED
+[2026-07-10 12:10:30] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:10:36] INDEX.PHP REACHED
+[2026-07-10 12:10:36] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:10:41] INDEX.PHP REACHED
+[2026-07-10 12:10:41] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:10:46] INDEX.PHP REACHED
+[2026-07-10 12:10:46] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:10:51] INDEX.PHP REACHED
+[2026-07-10 12:10:51] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:10:56] INDEX.PHP REACHED
+[2026-07-10 12:10:56] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:11:01] INDEX.PHP REACHED
+[2026-07-10 12:11:01] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:11:06] INDEX.PHP REACHED
+[2026-07-10 12:11:06] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:11:11] INDEX.PHP REACHED
+[2026-07-10 12:11:11] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:11:16] INDEX.PHP REACHED
+[2026-07-10 12:11:16] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:11:21] INDEX.PHP REACHED
+[2026-07-10 12:11:21] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:11:26] INDEX.PHP REACHED
+[2026-07-10 12:11:26] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:11:31] INDEX.PHP REACHED
+[2026-07-10 12:11:31] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:12:12] INDEX.PHP REACHED
+[2026-07-10 12:12:12] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:13:12] INDEX.PHP REACHED
+[2026-07-10 12:13:12] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:14:12] INDEX.PHP REACHED
+[2026-07-10 12:14:12] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:15:12] INDEX.PHP REACHED
+[2026-07-10 12:15:12] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:16:12] INDEX.PHP REACHED
+[2026-07-10 12:16:12] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:17:12] INDEX.PHP REACHED
+[2026-07-10 12:17:12] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:18:12] INDEX.PHP REACHED
+[2026-07-10 12:18:12] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:19:12] INDEX.PHP REACHED
+[2026-07-10 12:19:12] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:20:12] INDEX.PHP REACHED
+[2026-07-10 12:20:12] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:20:27] INDEX.PHP REACHED
+[2026-07-10 12:20:27] REQUEST: GET /api/index.php/settings (Path: /settings)
+[2026-07-10 12:20:27] INDEX.PHP REACHED
+[2026-07-10 12:20:27] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-10 12:20:57] INDEX.PHP REACHED
+[2026-07-10 12:20:57] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:21:01] INDEX.PHP REACHED
+[2026-07-10 12:21:01] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:21:06] INDEX.PHP REACHED
+[2026-07-10 12:21:06] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:21:11] INDEX.PHP REACHED
+[2026-07-10 12:21:11] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:21:16] INDEX.PHP REACHED
+[2026-07-10 12:21:16] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:21:21] INDEX.PHP REACHED
+[2026-07-10 12:21:21] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:21:26] INDEX.PHP REACHED
+[2026-07-10 12:21:26] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:21:31] INDEX.PHP REACHED
+[2026-07-10 12:21:31] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:21:36] INDEX.PHP REACHED
+[2026-07-10 12:21:36] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:21:41] INDEX.PHP REACHED
+[2026-07-10 12:21:41] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:21:46] INDEX.PHP REACHED
+[2026-07-10 12:21:46] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:21:51] INDEX.PHP REACHED
+[2026-07-10 12:21:51] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:21:57] INDEX.PHP REACHED
+[2026-07-10 12:21:57] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:22:01] INDEX.PHP REACHED
+[2026-07-10 12:22:01] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:22:05] INDEX.PHP REACHED
+[2026-07-10 12:22:05] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:22:10] INDEX.PHP REACHED
+[2026-07-10 12:22:10] REQUEST: GET /api/index.php/bookings/view?booking_id=HBK20260710ACE7 (Path: /bookings/view)
+[2026-07-10 12:22:10] Fatal Error: Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'bd.children' in 'field list' in C:\xampp\htdocs\subraresidency1\backend\api\admin\rooms\booking_view.php:15
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\admin\rooms\booking_view.php(15): PDOStatement->execute(Array)
+#1 C:\xampp\htdocs\subraresidency1\backend\api\index.php(123): include_once('C:\\xampp\\htdocs...')
+#2 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\api\admin\rooms\booking_view.php on line 15
+[2026-07-10 12:22:10] INDEX.PHP REACHED
+[2026-07-10 12:22:10] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:22:12] INDEX.PHP REACHED
+[2026-07-10 12:22:12] REQUEST: GET /api/index.php/bookings/view?booking_id=HBK20260710ACE7 (Path: /bookings/view)
+[2026-07-10 12:22:12] Fatal Error: Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'bd.children' in 'field list' in C:\xampp\htdocs\subraresidency1\backend\api\admin\rooms\booking_view.php:15
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\admin\rooms\booking_view.php(15): PDOStatement->execute(Array)
+#1 C:\xampp\htdocs\subraresidency1\backend\api\index.php(123): include_once('C:\\xampp\\htdocs...')
+#2 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\api\admin\rooms\booking_view.php on line 15
+[2026-07-10 12:22:13] INDEX.PHP REACHED
+[2026-07-10 12:22:13] REQUEST: GET /api/index.php/bookings/view?booking_id=HBK20260710ACE7 (Path: /bookings/view)
+[2026-07-10 12:22:13] Fatal Error: Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'bd.children' in 'field list' in C:\xampp\htdocs\subraresidency1\backend\api\admin\rooms\booking_view.php:15
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\admin\rooms\booking_view.php(15): PDOStatement->execute(Array)
+#1 C:\xampp\htdocs\subraresidency1\backend\api\index.php(123): include_once('C:\\xampp\\htdocs...')
+#2 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\api\admin\rooms\booking_view.php on line 15
+[2026-07-10 12:22:16] INDEX.PHP REACHED
+[2026-07-10 12:22:16] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:22:19] INDEX.PHP REACHED
+[2026-07-10 12:22:19] REQUEST: GET /api/index.php/bookings/view?booking_id=HBK20260710ACE7 (Path: /bookings/view)
+[2026-07-10 12:22:19] Fatal Error: Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'bd.children' in 'field list' in C:\xampp\htdocs\subraresidency1\backend\api\admin\rooms\booking_view.php:15
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\admin\rooms\booking_view.php(15): PDOStatement->execute(Array)
+#1 C:\xampp\htdocs\subraresidency1\backend\api\index.php(123): include_once('C:\\xampp\\htdocs...')
+#2 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\api\admin\rooms\booking_view.php on line 15
+[2026-07-10 12:22:20] INDEX.PHP REACHED
+[2026-07-10 12:22:20] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:22:26] INDEX.PHP REACHED
+[2026-07-10 12:22:26] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:22:31] INDEX.PHP REACHED
+[2026-07-10 12:22:31] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:22:36] INDEX.PHP REACHED
+[2026-07-10 12:22:36] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:22:41] INDEX.PHP REACHED
+[2026-07-10 12:22:41] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:22:46] INDEX.PHP REACHED
+[2026-07-10 12:22:46] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:22:50] INDEX.PHP REACHED
+[2026-07-10 12:22:50] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:22:55] INDEX.PHP REACHED
+[2026-07-10 12:22:55] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-10 12:22:56] INDEX.PHP REACHED
+[2026-07-10 12:22:56] REQUEST: GET /api/index.php/bookings/view?booking_id=HBK20260710ACE7 (Path: /bookings/view)
+[2026-07-10 12:22:56] Fatal Error: Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'bd.children' in 'field list' in C:\xampp\htdocs\subraresidency1\backend\api\admin\rooms\booking_view.php:15
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\admin\rooms\booking_view.php(15): PDOStatement->execute(Array)
+#1 C:\xampp\htdocs\subraresidency1\backend\api\index.php(123): include_once('C:\\xampp\\htdocs...')
+#2 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\api\admin\rooms\booking_view.php on line 15
+[2026-07-10 12:23:01] INDEX.PHP REACHED
+[2026-07-10 12:23:01] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)

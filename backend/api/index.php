@@ -70,6 +70,12 @@ switch ($resource) {
         } elseif ($action == 'subRooms') {
             $categoryId = $_GET['category_id'] ?? null;
             $controller->getSubRooms($categoryId);
+        } elseif ($action == 'addSubRoom') {
+            $controller->addSubRoom();
+        } elseif ($action == 'updateSubRoom') {
+            $controller->updateSubRoom();
+        } elseif ($action == 'deleteSubRoom') {
+            $controller->deleteSubRoom();
         } elseif ($action == 'updateStatus') {
             $controller->updateStatus();
         } elseif ($action == 'updateDetails') {
@@ -102,6 +108,8 @@ switch ($resource) {
                 include_once __DIR__ . '/admin/bookings/checkin.php';
             } elseif ($subAction === 'view') {
                 include_once __DIR__ . '/admin/bookings/view.php';
+            } elseif ($subAction === 'updateGuests') {
+                include_once __DIR__ . '/admin/bookings/update_guests.php';
             }
         }
         break;
@@ -174,7 +182,9 @@ switch ($resource) {
     case 'settings':
         include_once __DIR__ . '/../controllers/SettingsController.php';
         $controller = new SettingsController();
-        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+        if ($action === 'uploadBanner') {
+            $controller->uploadBanner();
+        } elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $controller->getAllSettings();
         } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $controller->updateSettings();

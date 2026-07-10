@@ -20,6 +20,9 @@ export const RoomCalendar = () => {
   const [showModal, setShowModal] = useState<'actions' | 'booking' | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('All Categories');
+  const [rangeStart, setRangeStart] = useState('');
+  const [rangeEnd, setRangeEnd] = useState('');
+  const [isUpdatingStatus, setIsUpdatingStatus] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   // Generate 31 days from startDate
@@ -92,6 +95,10 @@ export const RoomCalendar = () => {
       note
     });
 
+    const dateStr = date.toLocaleDateString('en-CA');
+    setRangeStart(dateStr);
+    setRangeEnd(dateStr);
+
     if (note && note.startsWith('booking:')) {
       const bookingId = note.replace('booking:', '');
       setLoadingBooking(true);
@@ -114,22 +121,26 @@ export const RoomCalendar = () => {
     }
   };
 
-  const handleStatusChange = async (roomId: number, date: Date, newStatus: string) => {
-    const dateStr = date.toISOString().split('T')[0];
-    const res = await updateRoomAvailability({ room_id: roomId, date: dateStr, status: newStatus });
-    if (res && res.success) {
-      // Local update
-      setAvailability(prev => {
-        const existing = prev.findIndex(a => Number(a.room_id) === Number(roomId) && a.date === dateStr);
-        if (existing > -1) {
-          const updated = [...prev];
-          updated[existing] = { ...updated[existing], status: newStatus };
-          return updated;
-        } else {
-          return [...prev, { room_id: roomId, date: dateStr, status: newStatus }];
-        }
+  const handleStatusChangeRange = async (roomId: number, startStr: string, endStr: string, newStatus: string) => {
+    setIsUpdatingStatus(true);
+    try {
+      const res = await updateRoomAvailability({
+        room_id: roomId,
+        date: startStr,
+        end_date: endStr,
+        status: newStatus
       });
-      setShowModal(null);
+      if (res && res.success) {
+        await loadData();
+        setShowModal(null);
+      } else {
+        alert(res?.message || 'Failed to update availability.');
+      }
+    } catch (e) {
+      console.error(e);
+      alert('Error updating availability.');
+    } finally {
+      setIsUpdatingStatus(false);
     }
   };
 
@@ -145,11 +156,11 @@ export const RoomCalendar = () => {
       <div className="bg-[#0b336b] text-white p-4 rounded-xl flex items-center justify-between shadow-lg">
         <div className="flex items-center gap-4">
           <div className="bg-white/10 p-2 rounded-lg">
-            <Clock size={20} className="text-emerald-400" />
+            <Clock size={20} className="text-indigo-400" />
           </div>
           <div>
             <h2 className="text-lg font-black uppercase tracking-widest">Live Inventory Timeline</h2>
-            <p className="text-[10px] font-bold text-emerald-300 uppercase tracking-[0.2em]">Real-time Room Status & Availability</p>
+            <p className="text-[10px] font-bold text-indigo-300 uppercase tracking-[0.2em]">Real-time Room Status & Availability</p>
           </div>
         </div>
 
@@ -172,20 +183,20 @@ export const RoomCalendar = () => {
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center gap-4">
           <div className="relative group">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-emerald-600 transition-colors" size={14} />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-indigo-600 transition-colors" size={14} />
             <input 
               type="text" 
               placeholder="Filter rooms..." 
               value={searchTerm}
               onChange={e => setSearchTerm(e.target.value)}
-              className="pl-10 pr-4 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-600 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 w-64 shadow-sm"
+              className="pl-10 pr-4 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 w-64 shadow-sm"
             />
           </div>
           <div className="relative">
             <select
               value={categoryFilter}
               onChange={e => setCategoryFilter(e.target.value)}
-              className="flex items-center gap-2 bg-white px-3 py-2 rounded-xl border border-slate-200 shadow-sm cursor-pointer hover:bg-slate-50 transition-all text-[10px] font-black uppercase text-slate-600 tracking-wider appearance-none pr-8 focus:outline-none focus:ring-2 focus:ring-emerald-500/20"
+              className="flex items-center gap-2 bg-white px-3 py-2 rounded-xl border border-slate-200 shadow-sm cursor-pointer hover:bg-slate-55 transition-all text-[10px] font-black uppercase text-slate-600 tracking-wider appearance-none pr-8 focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
             >
               {uniqueCategories.map(cat => (
                 <option key={cat} value={cat}>{cat}</option>
@@ -316,7 +327,7 @@ export const RoomCalendar = () => {
               {showModal === 'booking' ? (
                 loadingBooking ? (
                   <div className="py-8 flex flex-col items-center justify-center gap-3">
-                    <RefreshCw size={24} className="text-emerald-600 animate-spin" />
+                    <RefreshCw size={24} className="text-indigo-600 animate-spin" />
                     <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest animate-pulse">Loading Details...</span>
                   </div>
                 ) : activeBookingDetails?.error ? (
@@ -326,14 +337,14 @@ export const RoomCalendar = () => {
                 ) : (
                   <div className="space-y-4">
                     {/* Stay Dates */}
-                    <div className="flex gap-4 p-3 bg-emerald-50/40 rounded-xl border border-emerald-100/50">
+                    <div className="flex gap-4 p-3 bg-indigo-50/40 rounded-xl border border-indigo-100/50">
                       <div className="flex-1">
-                        <span className="text-[8px] font-black uppercase text-emerald-600 block tracking-wider">CHECK IN</span>
+                        <span className="text-[8px] font-black uppercase text-indigo-600 block tracking-wider">CHECK IN</span>
                         <span className="text-xs font-bold text-slate-700">{activeBookingDetails?.check_in_date}</span>
                       </div>
-                      <div className="w-px bg-emerald-250/20 self-stretch" />
+                      <div className="w-px bg-indigo-250/20 self-stretch" />
                       <div className="flex-1">
-                        <span className="text-[8px] font-black uppercase text-emerald-600 block tracking-wider">CHECK OUT</span>
+                        <span className="text-[8px] font-black uppercase text-indigo-600 block tracking-wider">CHECK OUT</span>
                         <span className="text-xs font-bold text-slate-700">{activeBookingDetails?.check_out_date}</span>
                       </div>
                     </div>
@@ -389,41 +400,62 @@ export const RoomCalendar = () => {
                 )
               ) : (
                 <div className="space-y-4">
-                  <div className="p-3 bg-slate-50 rounded-xl border border-slate-150 flex gap-3 text-slate-650 text-[10px] leading-relaxed font-bold">
-                    <span>💡</span>
-                    <span>
-                      Modifying availability status for <strong>{selectedCell.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</strong>.
-                    </span>
+                  <div className="p-3 bg-slate-50 rounded-xl border border-slate-150 flex flex-col gap-2 text-slate-655 text-[10px] leading-relaxed font-bold">
+                    <div className="flex items-center gap-2">
+                      <span>💡</span>
+                      <span>Modifying availability for Room {selectedCell.roomNumber}</span>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3 p-3 bg-slate-50 rounded-xl border border-slate-100">
+                    <div className="space-y-1">
+                      <label className="block text-[8px] font-black text-slate-400 uppercase tracking-wider">Start Date</label>
+                      <input
+                        type="date"
+                        value={rangeStart}
+                        onChange={(e) => setRangeStart(e.target.value)}
+                        className="w-full bg-white border border-slate-200 rounded-lg p-2 text-xs font-bold text-slate-800 focus:outline-none focus:ring-1 focus:ring-[#0b336b]/30"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="block text-[8px] font-black text-slate-400 uppercase tracking-wider">End Date</label>
+                      <input
+                        type="date"
+                        value={rangeEnd}
+                        min={rangeStart}
+                        onChange={(e) => setRangeEnd(e.target.value)}
+                        className="w-full bg-white border border-slate-200 rounded-lg p-2 text-xs font-bold text-slate-800 focus:outline-none focus:ring-1 focus:ring-[#0b336b]/30"
+                      />
+                    </div>
                   </div>
 
                   <div className="flex flex-col gap-2 pt-1">
                     <button
-                      onClick={() => handleStatusChange(selectedCell.roomId, selectedCell.date, 'available')}
-                      className={`flex items-center justify-between p-3 rounded-xl border-2 transition-all text-left ${
-                        selectedCell.status === 'available'
-                          ? 'border-emerald-600 bg-emerald-50 text-emerald-800 font-bold'
-                          : 'border-slate-100 hover:border-slate-200 text-slate-600 font-medium'
-                      }`}
+                      disabled={isUpdatingStatus}
+                      onClick={() => handleStatusChangeRange(selectedCell.roomId, rangeStart, rangeEnd, 'Available')}
+                      className="flex items-center justify-between p-3 rounded-xl border-2 border-emerald-600/30 bg-emerald-50 hover:bg-emerald-100/50 text-emerald-800 transition-all text-left font-bold disabled:opacity-50"
                     >
-                      <span className="text-xs">Set Room as Available</span>
+                      <span className="text-xs">Set as Available</span>
                       <div className="w-3.5 h-3.5 rounded-full border-4 border-emerald-500 bg-white" />
                     </button>
 
                     <button
-                      onClick={() => handleStatusChange(selectedCell.roomId, selectedCell.date, 'maintenance')}
-                      className={`flex items-center justify-between p-3 rounded-xl border-2 transition-all text-left ${
-                        selectedCell.status === 'maintenance'
-                          ? 'border-amber-500 bg-amber-50 text-amber-800 font-bold'
-                          : 'border-slate-100 hover:border-slate-200 text-slate-600 font-medium'
-                      }`}
+                      disabled={isUpdatingStatus}
+                      onClick={() => handleStatusChangeRange(selectedCell.roomId, rangeStart, rangeEnd, 'Maintenance')}
+                      className="flex items-center justify-between p-3 rounded-xl border-2 border-amber-500/30 bg-amber-50 hover:bg-amber-100/50 text-amber-800 transition-all text-left font-bold disabled:opacity-50"
                     >
                       <span className="text-xs">Mark under Maintenance</span>
                       <div className="w-3.5 h-3.5 rounded-full border-4 border-amber-500 bg-white" />
                     </button>
-                    
-                    <div className="p-3 text-[9px] text-slate-400 text-center italic border-t border-slate-50 mt-1 uppercase font-bold tracking-tight">
-                      For reservation entries, schedule in the Booking tab.
-                    </div>
+
+                    <button
+                      disabled={isUpdatingStatus}
+                      onClick={() => handleStatusChangeRange(selectedCell.roomId, rangeStart, rangeEnd, 'Booked')}
+                      className="flex items-center justify-between p-3 rounded-xl border-2 border-rose-500/30 bg-rose-50 hover:bg-rose-100/50 text-rose-800 transition-all text-left font-bold disabled:opacity-50"
+                    >
+                      <span className="text-xs">Mark as Booked</span>
+                      <div className="w-3.5 h-3.5 rounded-full border-4 border-rose-500 bg-white" />
+                    </button>
                   </div>
                 </div>
               )}
@@ -433,7 +465,7 @@ export const RoomCalendar = () => {
             <div className="p-4 bg-slate-50 border-t border-slate-100 flex justify-end">
               <Button 
                 onClick={() => setShowModal(null)}
-                className="bg-[#0b336b] hover:bg-black text-[10px] uppercase font-black tracking-widest text-white px-5 py-2 rounded-lg shadow transition-all active:scale-95"
+                className="bg-[#0b336b] hover:bg-[#072145] text-[10px] uppercase font-black tracking-widest text-white px-5 py-2 rounded-lg shadow-md transition-all active:scale-95"
               >
                 Close
               </Button>

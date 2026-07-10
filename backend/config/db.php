@@ -24,7 +24,9 @@ class Database {
             $this->conn->exec("set names utf8");
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch(PDOException $exception) {
-            error_log("Connection error: " . $exception->getMessage());
+            $log_file = __DIR__ . '/../logs/payment.log';
+            if (!file_exists(dirname($log_file))) @mkdir(dirname($log_file), 0777, true);
+            @error_log("[" . date('Y-m-d H:i:s') . "] Database Connection error: " . $exception->getMessage() . "\n", 3, $log_file);
         }
         return $this->conn;
     }

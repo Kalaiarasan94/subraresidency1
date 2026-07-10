@@ -44,6 +44,9 @@ export const OnlineCheckInFlow = ({ prefillBookingId, onPrefillConsumed }: Onlin
   const [loadingRooms, setLoadingRooms] = useState(false);
   const [isFinalizing, setIsFinalizing] = useState(false);
   const [guestEmail, setGuestEmail] = useState('');
+  const [editableGuests, setEditableGuests] = useState(1);
+  const [editableChildren, setEditableChildren] = useState(0);
+  const [isUpdatingGuests, setIsUpdatingGuests] = useState(false);
   
   // Interactive doc verification states
   const [verifiedDocs, setVerifiedDocs] = useState<string[]>(['Aadhar Card']);
@@ -94,21 +97,27 @@ export const OnlineCheckInFlow = ({ prefillBookingId, onPrefillConsumed }: Onlin
            setLoading(false);
            return;
          }
-         setBookingData({
-            id: json.data.booking_id,
-            guest: json.data.guest_name,
-            phone: json.data.phone_number || 'N/A',
-            checkin: json.data.check_in_date,
-            checkout: json.data.check_out_date,
-            category: json.data.room_category || 'N/A',
-            guests: json.data.guests_count || 1,
-            total: `₹ ${json.data.total_amount}`,
-            paid: `₹ ${json.data.total_amount}`,
-            status: json.data.status
-         });
-         setGuestEmail(json.data.guest_email || '');
-         setPaymentStatusOverride(json.data.payment_status === 'success' ? 'success' : 'pending');
-         handleNext();
+          setBookingData({
+             id: json.data.booking_id,
+             guest: json.data.guest_name,
+             phone: json.data.phone_number || 'N/A',
+             checkin: json.data.check_in_date,
+             checkout: json.data.check_out_date,
+             category: json.data.room_category || 'N/A',
+             category_id: json.data.rooms?.[0]?.category_id,
+             base_price: json.data.rooms?.[0]?.base_price,
+             guests: json.data.guests_count || '1 Guest',
+             children: json.data.children_count || 0,
+             total: `₹ ${json.data.total_amount}`,
+             paid: `₹ ${json.data.total_amount}`,
+             status: json.data.status
+          });
+          const numericGuests = parseInt(json.data.guests_count) || 1;
+          setEditableGuests(numericGuests);
+          setEditableChildren(parseInt(json.data.children_count) || 0);
+          setGuestEmail(json.data.guest_email || '');
+          setPaymentStatusOverride(json.data.payment_status === 'success' ? 'success' : 'pending');
+          handleNext();
        } else {
          setError('Reservation not found. Please verify the ID.');
        }
@@ -116,6 +125,38 @@ export const OnlineCheckInFlow = ({ prefillBookingId, onPrefillConsumed }: Onlin
        setError('Connection failed. Server might be offline.');
     } finally {
        setLoading(false);
+    }
+  };
+
+  const handleSaveGuestsAndProceed = async () => {
+    if (!bookingData) return;
+    setIsUpdatingGuests(true);
+    try {
+      const resp = await fetch(`${API_BASE_URL}/admin/bookings/updateGuests`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          booking_id: bookingData.id,
+          guests: `${editableGuests} Guests`,
+          children: editableChildren
+        })
+      });
+      const json = await resp.json();
+      if (json.status === 'success') {
+        setBookingData((prev: any) => ({
+          ...prev,
+          guests: `${editableGuests} Guests`,
+          children: editableChildren
+        }));
+        handleNext();
+      } else {
+        alert(json.message || "Failed to update guest details.");
+      }
+    } catch (e) {
+      console.error(e);
+      alert("Error saving guest details.");
+    } finally {
+      setIsUpdatingGuests(false);
     }
   };
 
@@ -270,9 +311,7 @@ export const OnlineCheckInFlow = ({ prefillBookingId, onPrefillConsumed }: Onlin
               </div>
             </CardContent>
           </Card>
-        )}
-
-        {currentStep === 1 && bookingData && (
+        )}        {currentStep === 1 && bookingData && (
           <Card className="border-none shadow-2xl rounded-[2rem] overflow-hidden bg-white animate-in zoom-in-95 duration-300">
              <div className="bg-emerald-950 p-8 text-white flex justify-between items-center bg-[#0b3a24]">
                 <div>
@@ -282,29 +321,62 @@ export const OnlineCheckInFlow = ({ prefillBookingId, onPrefillConsumed }: Onlin
                  <div className="bg-emerald-900/50 p-4 rounded-2xl border border-white/10 text-right">
                    <p className="text-[10px] font-black uppercase text-emerald-400 tracking-widest mb-1">Status</p>
                    <span className="bg-emerald-500 text-white px-3 py-1 rounded-full text-[10px] font-black uppercase">{bookingData.status}</span>
-                </div>
+                 </div>
              </div>
-             <CardContent className="p-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                {[
-                  { label: 'Guest Name', value: bookingData.guest, icon: UserCheck },
-                  { label: 'Phone Number', value: bookingData.phone, icon: Smartphone },
-                  { label: 'Stay Duration', value: `${bookingData.checkin} - ${bookingData.checkout}`, icon: Calendar },
-                  { label: 'Category', value: bookingData.category, icon: Hotel },
-                  { label: 'Guests', value: bookingData.guests, icon: Users },
-                  { label: 'Total', value: bookingData.total, icon: CreditCard, color: 'text-emerald-700 font-bold' },
-                ].map((item, i) => (
-                  <div key={i} className="space-y-1">
-                    <p className="text-[9px] font-black uppercase text-slate-400 tracking-widest flex items-center gap-2">
-                       <item.icon size={10} /> {item.label}
-                    </p>
-                    <p className={`text-sm font-black ${item.color || 'text-slate-800'}`}>{item.value}</p>
-                  </div>
-                ))}
+             <CardContent className="p-8 space-y-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                   {[
+                     { label: 'Guest Name', value: bookingData.guest, icon: UserCheck },
+                     { label: 'Phone Number', value: bookingData.phone, icon: Smartphone },
+                     { label: 'Stay Duration', value: `${bookingData.checkin} - ${bookingData.checkout}`, icon: Calendar },
+                     { label: 'Category', value: bookingData.category, icon: Hotel },
+                     { label: 'Total', value: bookingData.total, icon: CreditCard, color: 'text-emerald-700 font-bold' },
+                   ].map((item, i) => (
+                     <div key={i} className="space-y-1">
+                       <p className="text-[9px] font-black uppercase text-slate-400 tracking-widest flex items-center gap-2">
+                          <item.icon size={10} /> {item.label}
+                       </p>
+                       <p className={`text-sm font-black ${item.color || 'text-slate-800'}`}>{item.value}</p>
+                     </div>
+                   ))}
+                </div>
+
+                <div className="border-t border-slate-100 pt-6">
+                   <h4 className="text-xs font-black uppercase text-slate-500 tracking-widest mb-4">Edit Occupancy Details</h4>
+                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 bg-slate-50 p-6 rounded-2xl border border-slate-100/80 text-left">
+                      <div className="space-y-2">
+                         <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest block">Adults (Guests)</label>
+                         <input
+                            type="number"
+                            min="1"
+                            max="10"
+                            value={editableGuests}
+                            onChange={(e) => setEditableGuests(Math.max(1, parseInt(e.target.value) || 1))}
+                            className="w-full bg-white border border-slate-200 rounded-xl py-3 px-4 text-sm font-black text-slate-800 focus:outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 transition-all"
+                         />
+                      </div>
+                      <div className="space-y-2">
+                         <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest block">Children</label>
+                         <input
+                            type="number"
+                            min="0"
+                            max="10"
+                            value={editableChildren}
+                            onChange={(e) => setEditableChildren(Math.max(0, parseInt(e.target.value) || 0))}
+                            className="w-full bg-white border border-slate-200 rounded-xl py-3 px-4 text-sm font-black text-slate-800 focus:outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 transition-all"
+                         />
+                      </div>
+                   </div>
+                </div>
              </CardContent>
              <div className="p-8 pt-0 flex justify-end gap-4">
                 <Button variant="ghost" onClick={handleBack} className="text-slate-400 font-black uppercase text-[10px] tracking-widest">Wrong Booking?</Button>
-                <Button onClick={handleNext} className="bg-[#0b3a24] text-white font-black px-10 rounded-xl py-6 h-auto uppercase tracking-widest hover:bg-black transition-all flex items-center gap-2">
-                   Proceed to Verification <ChevronRight size={16} />
+                <Button 
+                   onClick={handleSaveGuestsAndProceed} 
+                   disabled={isUpdatingGuests}
+                   className="bg-[#0b3a24] text-white font-black px-10 rounded-xl py-6 h-auto uppercase tracking-widest hover:bg-[#082819] hover:shadow-lg hover:shadow-emerald-900/20 active:scale-95 transition-all flex items-center gap-2"
+                >
+                   {isUpdatingGuests ? 'Saving...' : 'Proceed to Verification'} <ChevronRight size={16} />
                 </Button>
              </div>
           </Card>
@@ -362,7 +434,7 @@ export const OnlineCheckInFlow = ({ prefillBookingId, onPrefillConsumed }: Onlin
                   <Button
                      onClick={handleNext}
                      disabled={verifiedDocs.includes('Other Proofs') && !otherProofName.trim()}
-                     className="bg-[#0b3a24] hover:bg-black text-white font-black px-12 rounded-xl py-6 h-auto uppercase tracking-widest transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-[#0b3a24]"
+                     className="bg-[#0b3a24] hover:bg-[#082819] hover:shadow-lg hover:shadow-emerald-900/20 active:scale-95 text-white font-black px-12 rounded-xl py-6 h-auto uppercase tracking-widest transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-[#0b3a24]"
                   >
                      Approve & Continue
                   </Button>
@@ -371,47 +443,63 @@ export const OnlineCheckInFlow = ({ prefillBookingId, onPrefillConsumed }: Onlin
           </Card>
         )}
 
-        {currentStep === 3 && (
-          <Card className="border-none shadow-2xl rounded-[2rem] overflow-hidden bg-white">
-             <CardContent className="p-12 space-y-10">
-                <div className="flex justify-between items-start">
-                   <h3 className="text-2xl font-black text-slate-800 uppercase tracking-tighter">Room Allocation</h3>
-                   <div className="bg-emerald-50 p-4 rounded-2xl flex items-center gap-3">
-                      <Hotel className="text-emerald-600" size={24} />
-                      <p className="text-lg font-black text-emerald-700">{availableRooms.length} Available Rooms</p>
+        {currentStep === 3 && (() => {
+           const filteredRooms = availableRooms.filter((room: any) => {
+              if (!bookingData) return true;
+              const roomCategory = String(room.category || room.category_name || room.room_name || '').toLowerCase().trim();
+              const bookedCategory = String(bookingData.category || '').toLowerCase().trim();
+              const isCategoryMatch = roomCategory === bookedCategory;
+
+              const roomPrice = Number(room.base_price || room.price || 0);
+              const bookedPrice = Number(bookingData.base_price || 0);
+              const isPriceMatch = bookedPrice === 0 || roomPrice === bookedPrice;
+
+              return isCategoryMatch && isPriceMatch;
+           });
+
+           return (
+             <Card className="border-none shadow-2xl rounded-[2rem] overflow-hidden bg-white">
+                <CardContent className="p-12 space-y-10">
+                   <div className="flex justify-between items-start">
+                      <h3 className="text-2xl font-black text-slate-800 uppercase tracking-tighter">Room Allocation</h3>
+                      <div className="bg-emerald-50 p-4 rounded-2xl flex items-center gap-3">
+                         <Hotel className="text-emerald-600" size={24} />
+                         <p className="text-lg font-black text-emerald-700">{filteredRooms.length} Available Rooms</p>
+                      </div>
                    </div>
-                </div>
-                {loadingRooms ? (
-                  <div className="flex flex-col items-center justify-center py-20 gap-4">
-                     <Loader2 className="animate-spin text-emerald-600" size={36} />
-                     <span className="text-xs font-black uppercase tracking-widest text-slate-400">Scanning available rooms for this stay window...</span>
-                  </div>
-                ) : (
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                     {availableRooms.map(room => (
-                       <button 
-                         key={room.id} 
-                         onClick={() => { setSelectedRoom(room); handleNext(); }} 
-                         className="p-8 rounded-3xl border-2 border-slate-100 bg-white hover:border-emerald-500 hover:shadow-xl transition-all group overflow-hidden"
-                       >
-                          <p className="text-3xl font-black text-slate-800 group-hover:text-emerald-700 transition-colors uppercase">{room.room_number}</p>
-                          <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-2">{room.category || room.room_name}</p>
-                       </button>
-                     ))}
-                     {availableRooms.length === 0 && (
-                       <div className="col-span-full text-center py-16 space-y-3">
-                         <p className="font-black text-slate-400 uppercase tracking-widest">No rooms available for this date range.</p>
-                         <p className="text-xs text-slate-300 font-medium">All rooms may be occupied — check the Room Calendar.</p>
-                       </div>
-                     )}
-                  </div>
-                )}
-                <div className="flex justify-between pt-8 border-t border-slate-100 w-full">
-                   <button onClick={handleBack} className="text-xs font-black text-slate-400 uppercase tracking-widest hover:text-slate-600 transition-colors">Go Back</button>
-                </div>
-             </CardContent>
-          </Card>
-        )}
+                   {loadingRooms ? (
+                     <div className="flex flex-col items-center justify-center py-20 gap-4">
+                        <Loader2 className="animate-spin text-emerald-600" size={36} />
+                        <span className="text-xs font-black uppercase tracking-widest text-slate-400">Scanning available rooms for this stay window...</span>
+                     </div>
+                   ) : (
+                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        {filteredRooms.map(room => (
+                          <button 
+                            key={room.id} 
+                            onClick={() => { setSelectedRoom(room); handleNext(); }} 
+                            className="p-8 rounded-3xl border-2 border-slate-100 bg-white hover:border-emerald-500 hover:shadow-xl transition-all group overflow-hidden text-left"
+                          >
+                             <p className="text-3xl font-black text-slate-800 group-hover:text-emerald-700 transition-colors uppercase">{room.room_number}</p>
+                             <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-2">{room.category || room.category_name || room.room_name}</p>
+                             <p className="text-xs font-bold text-emerald-600 mt-1">₹{room.base_price || room.price}</p>
+                          </button>
+                        ))}
+                        {filteredRooms.length === 0 && (
+                          <div className="col-span-full text-center py-16 space-y-3">
+                            <p className="font-black text-slate-400 uppercase tracking-widest">No rooms of category "{bookingData.category}" at price ₹{bookingData.base_price} available for this date range.</p>
+                            <p className="text-xs text-slate-300 font-medium">All matching rooms may be occupied.</p>
+                          </div>
+                        )}
+                     </div>
+                   )}
+                   <div className="flex justify-between pt-8 border-t border-slate-100 w-full">
+                      <button onClick={handleBack} className="text-xs font-black text-slate-400 uppercase tracking-widest hover:text-slate-600 transition-colors">Go Back</button>
+                   </div>
+                </CardContent>
+             </Card>
+           );
+        })()}
 
         {currentStep === 4 && (
           <Card className="border-none shadow-2xl rounded-[2rem] overflow-hidden bg-white">
@@ -473,7 +561,7 @@ export const OnlineCheckInFlow = ({ prefillBookingId, onPrefillConsumed }: Onlin
                      <Button 
                        onClick={() => handleSelectRoomAndCheckin(selectedRoom?.id)} 
                        disabled={!selectedRoom}
-                       className="bg-[#0b3a24] hover:bg-black text-white font-black px-12 rounded-xl py-6 h-auto uppercase tracking-widest shadow-xl shadow-[#0b3a24]/10 transition-all disabled:opacity-40"
+                       className="bg-[#0b3a24] hover:bg-[#082819] text-white font-black px-12 rounded-xl py-6 h-auto uppercase tracking-widest shadow-xl shadow-emerald-900/20 active:scale-95 transition-all disabled:opacity-40"
                      >
                         Finalize Check-in & Confirm
                      </Button>

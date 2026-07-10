@@ -94,7 +94,7 @@ export const BookingManagement = () => {
            <Button variant="outline" className="border-slate-200 text-slate-600 font-bold px-6 py-2.5 h-auto rounded-xl flex items-center gap-2">
              <Download size={16} /> Export Logs
            </Button>
-           <Button className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-8 py-2.5 h-auto rounded-xl flex items-center gap-2 shadow-sm">
+           <Button className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-8 py-2.5 h-auto rounded-xl flex items-center gap-2 shadow-sm">
              <PlusSquare size={16} /> New Reservation
            </Button>
         </div>
@@ -104,7 +104,7 @@ export const BookingManagement = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
          {[
            { label: 'Site Bookings', source: 'Online', icon: Globe, color: 'text-blue-600', bg: 'bg-blue-50' },
-           { label: 'Walk-in Sessions', source: 'Walk-in', icon: UserCheck, color: 'text-emerald-600', bg: 'bg-emerald-50' },
+           { label: 'Walk-in Sessions', source: 'Walk-in', icon: UserCheck, color: 'text-indigo-600', bg: 'bg-indigo-50' },
            { label: 'Total Bookings', source: 'All', icon: Settings, color: 'text-amber-600', bg: 'bg-amber-50' },
          ].map((stat, i) => (
            <Card key={i} className="border-none shadow-sm hover:translate-y-[-2px] transition-all cursor-pointer overflow-hidden" onClick={() => setFilterSource(stat.source)}>
@@ -113,7 +113,7 @@ export const BookingManagement = () => {
                    <div className={`p-2 rounded-lg ${stat.bg} ${stat.color}`}>
                       <stat.icon size={20} />
                    </div>
-                   {filterSource === stat.source && <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />}
+                   {filterSource === stat.source && <div className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse" />}
                 </div>
                 <h4 className="text-sm font-bold text-slate-500 uppercase tracking-widest">{stat.label}</h4>
                 <p className="text-2xl font-bold text-slate-900 mt-1">
@@ -132,7 +132,7 @@ export const BookingManagement = () => {
                  key={s} 
                  onClick={() => setFilterSource(s)}
                  className={`px-6 py-2 rounded-lg text-xs font-bold uppercase tracking-widest transition-all ${
-                   filterSource === s ? 'bg-white text-emerald-700 shadow-sm' : 'text-slate-400 hover:text-slate-600'
+                   filterSource === s ? 'bg-white text-indigo-700 shadow-sm' : 'text-slate-400 hover:text-slate-600'
                  }`}
                >
                  {s} {s === 'All' ? 'Sources' : ''}
@@ -177,7 +177,7 @@ export const BookingManagement = () => {
                        <div className="flex items-center gap-2">
                           <div className={`p-1.5 rounded-md ${
                             bk.source === 'Online' ? 'bg-blue-50 text-blue-600' :
-                            bk.source === 'Walk-in' ? 'bg-emerald-50 text-emerald-600' : 'bg-amber-50 text-amber-600'
+                            bk.source === 'Walk-in' ? 'bg-indigo-50 text-indigo-600' : 'bg-amber-50 text-amber-600'
                           }`}>
                             {bk.source === 'Online' ? <Globe size={14} /> : 
                              bk.source === 'Walk-in' ? <UserCheck size={14} /> : <Settings size={14} />}
@@ -198,11 +198,11 @@ export const BookingManagement = () => {
                        <p className="text-xs font-medium text-slate-500">{bk.date}</p>
                     </td>
                     <td className="px-8 py-5">
-                       <p className="text-sm font-bold text-emerald-700">{bk.amount}</p>
+                       <p className="text-sm font-bold text-indigo-700">{bk.amount}</p>
                     </td>
                     <td className="px-8 py-5">
                        <span className={`text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-tighter ${
-                         bk.status === 'Stay-in' ? 'bg-emerald-100 text-emerald-700' :
+                         bk.status === 'Stay-in' ? 'bg-indigo-100 text-indigo-700' :
                          bk.status === 'Confirmed' ? 'bg-blue-100 text-blue-700' : 'bg-slate-100 text-slate-500'
                        }`}>
                          {bk.status}
@@ -212,7 +212,7 @@ export const BookingManagement = () => {
                 <div className="flex items-center justify-end gap-3">
                   <button 
                     onClick={() => window.open(`${BACKEND_URL}/admin_view_booking.php?booking_id=${bk.id}`, '_blank')} 
-                    className="px-3.5 py-2 bg-emerald-50 text-emerald-700 rounded-xl text-xs font-bold hover:bg-emerald-100/70 transition-all hover:scale-105 active:scale-95"
+                    className="px-3.5 py-2 bg-indigo-50 text-indigo-700 rounded-xl text-xs font-bold hover:bg-indigo-100/70 transition-all hover:scale-105 active:scale-95"
                   >
                     View
                   </button>

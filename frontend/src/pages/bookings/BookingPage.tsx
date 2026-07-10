@@ -131,6 +131,7 @@ export default function BookingPage() {
         address: bookingDetails.address,
         specialRequests: bookingDetails.specialRequests,
         category_id: room.id,
+        room_id: room.selected_room_id || undefined,
         amount: totalAmount
       });
 

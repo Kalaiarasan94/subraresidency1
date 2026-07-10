@@ -11,7 +11,7 @@ if (!$booking_id) {
 }
 
 $db = (new Database())->getConnection();
-$stmt = $db->prepare("SELECT b.*, bd.guests, bd.country, bd.address, bd.additional_notes, p.transaction_id, p.amount as paid_amount FROM bookings b LEFT JOIN booking_details bd ON bd.booking_id = b.id LEFT JOIN payments p ON p.booking_id = b.id WHERE b.booking_id = ? LIMIT 1");
+$stmt = $db->prepare("SELECT b.*, bd.guests, bd.children, bd.country, bd.address, bd.additional_notes, p.transaction_id, p.amount as paid_amount FROM bookings b LEFT JOIN booking_details bd ON bd.booking_id = b.id LEFT JOIN payments p ON p.booking_id = b.id WHERE b.booking_id = ? LIMIT 1");
 $stmt->execute([$booking_id]);
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 if (!$row) {
@@ -28,6 +28,7 @@ $rooms = $roomStmt->fetchAll(PDO::FETCH_ASSOC);
 $row['rooms'] = $rooms;
 $row['phone_number'] = $row['guest_phone'] ?? '';
 $row['guests_count'] = $row['guests'] ?? '2 Guests';
+$row['children_count'] = $row['children'] ?? 0;
 $row['room_category'] = isset($rooms[0]) ? $rooms[0]['room_name'] : 'Luxury Suite';
 
 echo json_encode(['status' => 'success', 'booking' => $row, 'data' => $row]);

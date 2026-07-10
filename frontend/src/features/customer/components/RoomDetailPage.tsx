@@ -7,12 +7,12 @@ import { Button } from '../../../components/ui/button';
 import { Card, CardContent } from '../../../components/ui/card';
 import { Badge } from '../../../components/ui/badge';
 import { useState, useEffect } from 'react';
-import { fetchRoomAvailability } from '../../../lib/api';
+import { fetchRoomAvailability, API_BASE_URL } from '../../../lib/api';
 
 interface Props {
   room: any;
   onBack: () => void;
-  onBook: (dates: { checkIn: string; checkOut: string }) => void;
+  onBook: (dates: { checkIn: string; checkOut: string; room_id?: number; room_number?: string }) => void;
   searchFilters?: any;
 }
 
@@ -31,6 +31,9 @@ export const RoomDetailPage: React.FC<Props> = ({ room, onBack, onBook, searchFi
   }, []);
 
   const [availability, setAvailability] = useState<any>({});
+  const [subRooms, setSubRooms] = useState<any[]>([]);
+  const [selectedSubRoomId, setSelectedSubRoomId] = useState<number | null>(null);
+  const [loadingSubRooms, setLoadingSubRooms] = useState(true);
 
   const today = toISODate(new Date());
   const tomorrow = (() => {
@@ -77,15 +80,39 @@ export const RoomDetailPage: React.FC<Props> = ({ room, onBack, onBook, searchFi
   // Fetch window covers at least 14 days, or the full stay if longer, so validation below is accurate
   const calendarDays = Math.max(14, nights + 1);
 
+  // Fetch sub-rooms for the category
+  useEffect(() => {
+    const fetchSubRooms = async () => {
+      if (!room || !room.id) return;
+      setLoadingSubRooms(true);
+      try {
+        const response = await fetch(`${API_BASE_URL}/rooms/subRooms?category_id=${room.id}`);
+        const json = await response.json();
+        if (json.status === 'success' && Array.isArray(json.rooms)) {
+          setSubRooms(json.rooms);
+          if (json.rooms.length > 0) {
+            setSelectedSubRoomId(json.rooms[0].id);
+          }
+        }
+      } catch (err) {
+        console.error('Failed to fetch sub-rooms', err);
+      } finally {
+        setLoadingSubRooms(false);
+      }
+    };
+    fetchSubRooms();
+  }, [room.id]);
+
   useEffect(() => {
     const load = async () => {
-      if (!room || !room.id) return;
+      const targetId = selectedSubRoomId || room.id;
+      if (!targetId) return;
       const start = new Date(calendarStart);
       const end = new Date(calendarStart);
       end.setDate(end.getDate() + calendarDays - 1);
       const startStr = toISODate(start);
       const endStr = toISODate(end);
-      const data = await fetchRoomAvailability(room.id, startStr, endStr);
+      const data = await fetchRoomAvailability(targetId, startStr, endStr);
       const map: any = {};
       if (Array.isArray(data)) {
         data.forEach((d: any) => { map[d.date] = d.status; });
@@ -93,7 +120,7 @@ export const RoomDetailPage: React.FC<Props> = ({ room, onBack, onBook, searchFi
       setAvailability(map);
     };
     load();
-  }, [room, localCheckIn, calendarDays]);
+  }, [room, selectedSubRoomId, localCheckIn, calendarDays]);
 
   // Block reservation if any night of the selected stay is already Booked/Maintenance
   const blockedDates: string[] = (() => {
@@ -124,7 +151,13 @@ export const RoomDetailPage: React.FC<Props> = ({ room, onBack, onBook, searchFi
 
   const handleReserve = () => {
     if (isStayBlocked) return;
-    onBook({ checkIn: localCheckIn, checkOut: localCheckOut });
+    const selectedRoomNumber = subRooms.find(r => Number(r.id) === Number(selectedSubRoomId))?.room_number || '';
+    onBook({ 
+      checkIn: localCheckIn, 
+      checkOut: localCheckOut,
+      room_id: selectedSubRoomId || undefined,
+      room_number: selectedRoomNumber || undefined
+    });
   };
 
   // Images
@@ -347,10 +380,11 @@ export const RoomDetailPage: React.FC<Props> = ({ room, onBack, onBook, searchFi
                         </div>
                       </div>
                     </div>
-                    <div className="space-y-1">
+                     <div className="space-y-1">
                       <p className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">Guests</p>
-                      <p className="text-xs font-bold text-slate-800 font-sans tabular-nums">{searchFilters?.guests || `${adults} Guests`}</p>
+                      <p className="text-xs font-bold text-slate-800 font-sans tabular-nums">{adults} Guests + {kids} Kids</p>
                     </div>
+
                     <div className="mt-4">
                       <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-3">Availability (14 days from check-in)</p>
 
@@ -363,10 +397,10 @@ export const RoomDetailPage: React.FC<Props> = ({ room, onBack, onBook, searchFi
                           const status = (availability && availability[key]) || 'Available';
 
                           const bgClass = status === 'Available'
-                            ? 'bg-emerald-50 border-emerald-200'
+                            ? 'bg-emerald-50 border-emerald-250/30'
                             : status === 'Maintenance'
-                              ? 'bg-amber-50 border-amber-200'
-                              : 'bg-rose-50 border-rose-200';
+                              ? 'bg-amber-50 border-amber-250/30'
+                              : 'bg-rose-50 border-rose-250/30';
 
                           const textClass = status === 'Available'
                             ? 'text-emerald-700'
@@ -382,12 +416,12 @@ export const RoomDetailPage: React.FC<Props> = ({ room, onBack, onBook, searchFi
                             <div
                               key={key}
                               title={`${weekday} ${day} ${month} — ${status}`}
-                              className={`p-2 rounded-lg border ${bgClass} shadow-sm flex flex-col items-center justify-center text-center`}>
+                              className={`p-2 rounded-lg border ${bgClass} shadow-sm flex flex-col items-center justify-center text-center gap-1`}>
                               <div className={`text-[10px] font-semibold ${textClass}`}>{weekday}</div>
-                              <div className={`text-lg font-black ${textClass}`}>{day}</div>
-                              <div className={`text-[10px] mt-1 px-2 py-0.5 rounded-full font-bold ${textClass} ${status === 'Available' ? 'bg-emerald-100' : status === 'Maintenance' ? 'bg-amber-100' : 'bg-rose-100'}`}>
-                                {status}
-                              </div>
+                              <div className={`text-base font-black ${textClass}`}>{day}</div>
+                              <div className={`w-2.5 h-2.5 rounded-full mt-0.5 ${
+                                status === 'Available' ? 'bg-emerald-500' : status === 'Maintenance' ? 'bg-amber-500' : 'bg-rose-500'
+                              }`} />
                             </div>
                           );
                         })}

@@ -181,8 +181,14 @@ class RoomController {
             SELECT r.id, r.room_number, r.floor_number, r.status,
                    b.guest_name, b.check_in_date, b.check_out_date, b.booking_id
             FROM rooms_new r
-            LEFT JOIN booking_rooms br ON br.room_id = r.id
-            LEFT JOIN bookings b ON b.id = br.booking_id AND b.status IN ('confirmed', 'checked-in')
+            LEFT JOIN (
+                SELECT br2.room_id, b2.guest_name, b2.check_in_date, b2.check_out_date, b2.id as booking_id
+                FROM booking_rooms br2
+                JOIN bookings b2 ON b2.id = br2.booking_id
+                WHERE b2.status IN ('confirmed', 'checked-in')
+                  AND CURDATE() >= b2.check_in_date 
+                  AND CURDATE() < b2.check_out_date
+            ) b ON b.room_id = r.id
             WHERE r.category_id = ?
             ORDER BY r.room_number ASC
         ";
@@ -192,6 +198,109 @@ class RoomController {
 
         http_response_code(200);
         echo json_encode(["status" => "success", "rooms" => $rows]);
+    }
+
+    public function addSubRoom() {
+        try {
+            $data = json_decode(file_get_contents('php://input'));
+            if (!isset($data->category_id) || !isset($data->room_number)) {
+                http_response_code(400);
+                echo json_encode(["status" => "error", "message" => "category_id and room_number are required."]);
+                return;
+            }
+            
+            // Get category name
+            $stmt = $this->db->prepare("SELECT name FROM room_categories WHERE id = ?");
+            $stmt->execute([$data->category_id]);
+            $cat = $stmt->fetch(PDO::FETCH_ASSOC);
+            $roomName = $cat ? $cat['name'] : 'Room';
+
+            $floor = $data->floor_number ?? '1';
+            
+            $insert = $this->db->prepare("
+                INSERT INTO rooms_new (room_name, room_number, category_id, floor_number, status)
+                VALUES (?, ?, ?, ?, 'Available')
+            ");
+            $insert->execute([$roomName, $data->room_number, $data->category_id, $floor]);
+
+            // Sync sub_room_count in room_categories
+            $updateCount = $this->db->prepare("
+                UPDATE room_categories rc
+                SET sub_room_count = (SELECT COUNT(*) FROM rooms_new WHERE category_id = rc.id AND status != 'Inactive')
+                WHERE rc.id = ?
+            ");
+            $updateCount->execute([$data->category_id]);
+            
+            echo json_encode(["status" => "success", "message" => "Sub-room added successfully."]);
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode(["status" => "error", "message" => $e->getMessage()]);
+        }
+    }
+
+    public function updateSubRoom() {
+        try {
+            $data = json_decode(file_get_contents('php://input'));
+            if (!isset($data->id) || !isset($data->room_number)) {
+                http_response_code(400);
+                echo json_encode(["status" => "error", "message" => "id and room_number are required."]);
+                return;
+            }
+            
+            $floor = $data->floor_number ?? '1';
+            
+            $update = $this->db->prepare("
+                UPDATE rooms_new 
+                SET room_number = ?, floor_number = ?
+                WHERE id = ?
+            ");
+            $update->execute([$data->room_number, $floor, $data->id]);
+            
+            echo json_encode(["status" => "success", "message" => "Sub-room updated successfully."]);
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode(["status" => "error", "message" => $e->getMessage()]);
+        }
+    }
+
+    public function deleteSubRoom() {
+        try {
+            $data = json_decode(file_get_contents('php://input'));
+            $id = $data->id ?? $_GET['id'] ?? null;
+            if (!$id) {
+                http_response_code(400);
+                echo json_encode(["status" => "error", "message" => "id is required."]);
+                return;
+            }
+            
+            // Get category_id before deletion to sync count
+            $getCat = $this->db->prepare("SELECT category_id FROM rooms_new WHERE id = ?");
+            $getCat->execute([$id]);
+            $catId = $getCat->fetchColumn();
+
+            $delete = $this->db->prepare("DELETE FROM rooms_new WHERE id = ?");
+            $delete->execute([$id]);
+
+            if ($catId) {
+                // Sync sub_room_count in room_categories
+                $updateCount = $this->db->prepare("
+                    UPDATE room_categories rc
+                    SET sub_room_count = (SELECT COUNT(*) FROM rooms_new WHERE category_id = rc.id AND status != 'Inactive')
+                    WHERE rc.id = ?
+                ");
+                $updateCount->execute([$catId]);
+            }
+            
+            echo json_encode(["status" => "success", "message" => "Sub-room deleted successfully."]);
+        } catch (Exception $e) {
+            if (strpos($e->getMessage(), 'a foreign key constraint fails') !== false) {
+                http_response_code(400);
+                echo json_encode(["status" => "error", "message" => "Cannot delete room number because it is associated with existing bookings or transactions."]);
+            } else {
+                http_response_code(500);
+                echo json_encode(["status" => "error", "message" => $e->getMessage()]);
+            }
+        }
     }
 
         // Create a new room – match DB schema (category_id, no price column)

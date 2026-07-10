@@ -208,3 +208,45 @@ export const checkAvailability = async (checkin: string, checkout: string) => {
     }
 };
 
+export const addSubRoom = async (payload: { category_id: number; room_number: string; floor_number?: string }) => {
+    try {
+        const response = await fetch(`${API_BASE_URL}/rooms/addSubRoom`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        return await response.json();
+    } catch (error) {
+        console.error('API Error:', error);
+        return null;
+    }
+};
+
+export const updateSubRoom = async (payload: { id: number; room_number: string; floor_number?: string }) => {
+    try {
+        const response = await fetch(`${API_BASE_URL}/rooms/updateSubRoom`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        return await response.json();
+    } catch (error) {
+        console.error('API Error:', error);
+        return null;
+    }
+};
+
+export const deleteSubRoom = async (id: number) => {
+    try {
+        const response = await fetch(`${API_BASE_URL}/rooms/deleteSubRoom`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id })
+        });
+        return await response.json();
+    } catch (error) {
+        console.error('API Error:', error);
+        return null;
+    }
+};
+

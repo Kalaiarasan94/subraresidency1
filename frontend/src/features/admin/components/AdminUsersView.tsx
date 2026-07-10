@@ -194,7 +194,7 @@ export const AdminUsersView: React.FC<AdminUsersViewProps> = ({ onBack }) => {
         </div>
         <Button 
           onClick={handleOpenCreateModal}
-          className="bg-[#0b3a24] hover:bg-black text-white text-xs font-black uppercase tracking-widest px-6 h-12 shadow-xl shadow-emerald-900/10"
+          className="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black uppercase tracking-widest px-6 h-12 shadow-xl shadow-indigo-500/10"
         >
           <UserPlus className="w-4 h-4 mr-2" />
           Add User
@@ -203,7 +203,7 @@ export const AdminUsersView: React.FC<AdminUsersViewProps> = ({ onBack }) => {
 
       {/* Notices */}
       {successMsg && (
-        <div className="p-4 bg-emerald-50 border border-emerald-100 text-emerald-800 rounded-xl flex items-center gap-3 font-semibold text-xs tracking-wide">
+        <div className="p-4 bg-indigo-50 border border-indigo-100 text-indigo-850 rounded-xl flex items-center gap-3 font-semibold text-xs tracking-wide">
           <CheckCircle size={16} />
           {successMsg}
         </div>
@@ -212,8 +212,8 @@ export const AdminUsersView: React.FC<AdminUsersViewProps> = ({ onBack }) => {
       {/* Users table/card list */}
       {loading ? (
         <div className="flex flex-col items-center justify-center p-20 space-y-4">
-          <Loader2 className="w-10 h-10 text-emerald-600 animate-spin" />
-          <p className="text-emerald-950 font-black uppercase tracking-widest text-[10px]">Loading Accounts...</p>
+          <Loader2 className="w-10 h-10 text-indigo-600 animate-spin" />
+          <p className="text-indigo-950 font-black uppercase tracking-widest text-[10px]">Loading Accounts...</p>
         </div>
       ) : (
         <Card className="border-none shadow-xl shadow-slate-200/50 overflow-hidden bg-white">
@@ -240,7 +240,7 @@ export const AdminUsersView: React.FC<AdminUsersViewProps> = ({ onBack }) => {
                         <Badge className={`rounded-full px-3 py-1 font-bold text-[9px] uppercase tracking-wider ${
                           user.role === 'admin' 
                             ? 'bg-amber-50 text-amber-700 border border-amber-100' 
-                            : 'bg-emerald-50 text-emerald-700 border border-emerald-100'
+                            : 'bg-indigo-50 text-indigo-750 border border-indigo-150'
                         }`}>
                           <Shield size={10} className="mr-1 inline-block" />
                           {user.role}
@@ -256,7 +256,7 @@ export const AdminUsersView: React.FC<AdminUsersViewProps> = ({ onBack }) => {
                           variant="ghost" 
                           size="icon" 
                           onClick={() => handleOpenEditModal(user)} 
-                          className="h-8 w-8 text-slate-450 hover:text-emerald-700 hover:bg-emerald-50 rounded-full"
+                          className="h-8 w-8 text-slate-450 hover:text-indigo-700 hover:bg-indigo-50 rounded-full"
                         >
                           <Edit size={14} />
                         </Button>
@@ -324,7 +324,7 @@ export const AdminUsersView: React.FC<AdminUsersViewProps> = ({ onBack }) => {
                   value={fullName}
                   onChange={e => setFullName(e.target.value)}
                   placeholder="e.g. John Doe"
-                  className="bg-slate-50 border-none h-12 font-bold focus-visible:ring-emerald-700/20"
+                  className="bg-slate-50 border-none h-12 font-bold focus-visible:ring-indigo-700/20"
                   required
                 />
               </div>
@@ -339,7 +339,7 @@ export const AdminUsersView: React.FC<AdminUsersViewProps> = ({ onBack }) => {
                     value={email}
                     onChange={e => setEmail(e.target.value)}
                     placeholder="john@subraresidency.com"
-                    className="bg-slate-50 border-none h-12 pl-12 font-bold focus-visible:ring-emerald-700/20"
+                    className="bg-slate-50 border-none h-12 pl-12 font-bold focus-visible:ring-indigo-700/20"
                     required
                   />
                 </div>
@@ -352,7 +352,7 @@ export const AdminUsersView: React.FC<AdminUsersViewProps> = ({ onBack }) => {
                   value={username}
                   onChange={e => setUsername(e.target.value)}
                   placeholder="e.g. johndoe"
-                  className="bg-slate-50 border-none h-12 font-bold focus-visible:ring-emerald-700/20"
+                  className="bg-slate-50 border-none h-12 font-bold focus-visible:ring-indigo-700/20"
                   required
                 />
               </div>
@@ -361,7 +361,7 @@ export const AdminUsersView: React.FC<AdminUsersViewProps> = ({ onBack }) => {
               <div className="space-y-2">
                 <div className="flex justify-between items-center">
                   <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest">Password</label>
-                  {editingUser && <span className="text-[9px] font-bold text-emerald-700 uppercase tracking-widest select-none">(Optional - Fill to Change)</span>}
+                  {editingUser && <span className="text-[9px] font-bold text-indigo-700 uppercase tracking-widest select-none">(Optional - Fill to Change)</span>}
                 </div>
                 <div className="relative">
                   <Key className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
@@ -370,7 +370,7 @@ export const AdminUsersView: React.FC<AdminUsersViewProps> = ({ onBack }) => {
                     value={password}
                     onChange={e => setPassword(e.target.value)}
                     placeholder={editingUser ? "••••••••" : "Password password"}
-                    className="bg-slate-50 border-none h-12 pl-12 font-bold focus-visible:ring-emerald-700/20"
+                    className="bg-slate-50 border-none h-12 pl-12 font-bold focus-visible:ring-indigo-700/20"
                     required={!editingUser}
                   />
                 </div>
@@ -385,7 +385,7 @@ export const AdminUsersView: React.FC<AdminUsersViewProps> = ({ onBack }) => {
                     onClick={() => setRole('receptionist')}
                     className={`h-14 font-black uppercase tracking-wider text-xs border rounded-xl flex items-center justify-center gap-2 transition-all ${
                       role === 'receptionist'
-                        ? 'border-emerald-600 bg-emerald-50 text-emerald-800 ring-2 ring-emerald-500/20'
+                        ? 'border-indigo-650 bg-indigo-50 text-indigo-800 ring-2 ring-indigo-500/20'
                         : 'border-slate-100 bg-slate-50 text-slate-600 hover:bg-slate-100'
                     }`}
                   >
@@ -420,7 +420,7 @@ export const AdminUsersView: React.FC<AdminUsersViewProps> = ({ onBack }) => {
                 <Button 
                   type="submit" 
                   disabled={saving}
-                  className="bg-[#0b3a24] hover:bg-black text-white text-xs font-black uppercase tracking-widest px-8 h-12 flex items-center justify-center"
+                  className="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black uppercase tracking-widest px-8 h-12 flex items-center justify-center"
                 >
                   {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Save Parameters'}
                 </Button>

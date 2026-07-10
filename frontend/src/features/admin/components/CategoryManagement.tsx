@@ -40,7 +40,7 @@ export const CategoryManagement: React.FC<Props> = ({ onAddRoom, onEditRoom }) =
           <h1 className="text-2xl font-bold text-slate-800">Room Management</h1>
           <p className="text-sm text-slate-500 font-medium">Control inventory, pricing, and visibility.</p>
         </div>
-        <Button onClick={() => onAddRoom?.()} className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6 py-2 rounded-lg text-sm h-auto">
+        <Button onClick={() => onAddRoom?.()} className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-2 rounded-lg text-sm h-auto shadow-sm">
           + Add New Room
         </Button>
       </div>
@@ -57,7 +57,7 @@ export const CategoryManagement: React.FC<Props> = ({ onAddRoom, onEditRoom }) =
               <div className="absolute top-2 right-2">
                  <Button 
                    onClick={() => onEditRoom?.(cat)}
-                   className="bg-white text-emerald-600 hover:bg-emerald-600 hover:text-white border border-emerald-600 font-bold text-[10px] px-3 py-1.5 h-auto rounded-md shadow-sm"
+                   className="bg-white text-indigo-600 hover:bg-indigo-600 hover:text-white border border-indigo-150 font-bold text-[10px] px-3 py-1.5 h-auto rounded-md shadow-sm"
                  >
                    Edit
                  </Button>
@@ -65,7 +65,7 @@ export const CategoryManagement: React.FC<Props> = ({ onAddRoom, onEditRoom }) =
             </div>
             <CardContent className="p-5">
               <h3 className="text-lg font-bold text-slate-800 mb-1">{cat.title || cat.room_name}</h3>
-              <p className="text-emerald-600 font-bold text-sm mb-4">{cat.price || cat.base_price} / Night</p>
+              <p className="text-indigo-650 font-bold text-sm mb-4">₹{Number(cat.price || cat.base_price).toLocaleString('en-IN')} / Night</p>
               
               <div className="grid grid-cols-3 gap-2 border-y border-slate-50 py-3 mb-4">
                  <div className="text-center">
@@ -78,7 +78,7 @@ export const CategoryManagement: React.FC<Props> = ({ onAddRoom, onEditRoom }) =
                  </div>
                  <div className="text-center">
                     <p className="text-[10px] text-slate-400 font-bold uppercase">Status</p>
-                    <p className="text-xs font-bold text-emerald-500 uppercase">Live</p>
+                    <p className="text-xs font-bold text-indigo-600 uppercase">Live</p>
                  </div>
               </div>
               
