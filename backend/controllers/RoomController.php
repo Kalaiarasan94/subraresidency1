@@ -78,6 +78,8 @@ class RoomController {
                 "children" => $row['children_count'],
                 "max_guests" => $row['max_guests'],
                 "size" => $row['room_size'],
+                "floor" => $row['floor_number'] ?? '3',
+                "floor_number" => $row['floor_number'] ?? '3',
                 "bed_type" => $row['bed_type'],
                 "beds_count" => $row['number_of_beds'],
                 "amenities" => $amenities,
@@ -92,6 +94,8 @@ class RoomController {
                 "smoking" => (bool)$row['smoking_allowed'],
                 "show_on_website" => (bool)$row['show_on_website'],
                 "status" => $row['status'],
+                "maintenance_start" => $row['maintenance_start'],
+                "maintenance_end" => $row['maintenance_end'],
                 "total_rooms" => $total_rooms,
                 "available_rooms" => $available_rooms,
                 "fully_booked" => $available_rooms === 0
@@ -178,7 +182,7 @@ class RoomController {
             return;
         }
         $query = "
-            SELECT r.id, r.room_number, r.floor_number, r.status,
+            SELECT r.id, r.room_number, r.room_name, r.floor_number, r.status,
                    b.guest_name, b.check_in_date, b.check_out_date, b.booking_id
             FROM rooms_new r
             LEFT JOIN (
@@ -213,7 +217,7 @@ class RoomController {
             $stmt = $this->db->prepare("SELECT name FROM room_categories WHERE id = ?");
             $stmt->execute([$data->category_id]);
             $cat = $stmt->fetch(PDO::FETCH_ASSOC);
-            $roomName = $cat ? $cat['name'] : 'Room';
+            $roomName = isset($data->room_name) && trim($data->room_name) !== '' ? trim($data->room_name) : ($cat ? $cat['name'] : 'Room');
 
             $floor = $data->floor_number ?? '1';
             
@@ -248,13 +252,23 @@ class RoomController {
             }
             
             $floor = $data->floor_number ?? '1';
+            $roomName = isset($data->room_name) ? trim($data->room_name) : null;
             
-            $update = $this->db->prepare("
-                UPDATE rooms_new 
-                SET room_number = ?, floor_number = ?
-                WHERE id = ?
-            ");
-            $update->execute([$data->room_number, $floor, $data->id]);
+            if ($roomName !== null && $roomName !== '') {
+                $update = $this->db->prepare("
+                    UPDATE rooms_new 
+                    SET room_number = ?, floor_number = ?, room_name = ?
+                    WHERE id = ?
+                ");
+                $update->execute([$data->room_number, $floor, $roomName, $data->id]);
+            } else {
+                $update = $this->db->prepare("
+                    UPDATE rooms_new 
+                    SET room_number = ?, floor_number = ?
+                    WHERE id = ?
+                ");
+                $update->execute([$data->room_number, $floor, $data->id]);
+            }
             
             echo json_encode(["status" => "success", "message" => "Sub-room updated successfully."]);
         } catch (Exception $e) {
@@ -435,6 +449,8 @@ class RoomController {
                 "ac" => (bool)$row['air_conditioning'],
                 "smoking_allowed" => (bool)$row['smoking_allowed'],
                 "status" => $row['status'],
+                "maintenance_start" => $row['maintenance_start'],
+                "maintenance_end" => $row['maintenance_end'],
                 "show_on_website" => (bool)$row['show_on_website']
             ];
             http_response_code(200);
@@ -468,15 +484,21 @@ class RoomController {
             'house_rules' => 'house_rules',
             'status' => 'status',
             'max_adults' => 'adults_count',
+            'max_children' => 'children_count',
+            'floor_number' => 'floor_number',
             'bed_type' => 'bed_type',
             'room_size' => 'room_size',
-            'featured_image' => 'featured_image'
+            'featured_image' => 'featured_image',
+            'maintenance_start' => 'maintenance_start',
+            'maintenance_end' => 'maintenance_end'
         ];
 
         foreach ($map as $apiKey => $dbCol) {
-            if (isset($data->$apiKey)) {
+            if (property_exists($data, $apiKey)) {
+                $val = $data->$apiKey;
+                if ($val === '') $val = null;
                 $fields[] = "$dbCol = :$apiKey";
-                $params[":$apiKey"] = $data->$apiKey;
+                $params[":$apiKey"] = $val;
             }
         }
 
@@ -494,6 +516,16 @@ class RoomController {
             // Keep every physical sub-room's denormalized room_name in sync
             if (isset($data->room_name)) {
                 $this->db->prepare("UPDATE rooms_new SET room_name = ? WHERE category_id = ?")->execute([$data->room_name, $id]);
+            }
+            // Propagate status and maintenance dates to subrooms
+            if (isset($data->status)) {
+                if ($data->status === 'Maintenance') {
+                    $m_start = isset($data->maintenance_start) && $data->maintenance_start !== '' ? $data->maintenance_start : null;
+                    $m_end = isset($data->maintenance_end) && $data->maintenance_end !== '' ? $data->maintenance_end : null;
+                    $this->db->prepare("UPDATE rooms_new SET status = 'Maintenance', maintenance_start = ?, maintenance_end = ? WHERE category_id = ?")->execute([$m_start, $m_end, $id]);
+                } else {
+                    $this->db->prepare("UPDATE rooms_new SET status = ?, maintenance_start = NULL, maintenance_end = NULL WHERE category_id = ?")->execute([$data->status, $id]);
+                }
             }
             if (isset($data->amenities)) {
                 $this->db->prepare("DELETE FROM room_amenities WHERE category_id = ?")->execute([$id]);

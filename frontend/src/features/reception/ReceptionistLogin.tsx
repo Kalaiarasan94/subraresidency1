@@ -36,7 +36,7 @@ export const ReceptionistLogin = ({ onLogin }: any) => {
   };
 
   return (
-    <div className="min-h-screen bg-[#061c12] flex items-center justify-center p-6 relative overflow-hidden">
+    <div className="min-h-screen bg-[#061c12] flex items-center justify-center p-6 relative overflow-hidden reception-portal-theme">
       {/* Abstract Background Decoration */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-[120px] -mr-64 -mt-64" />
       <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-emerald-500/5 rounded-full blur-[120px] -ml-64 -mb-64" />

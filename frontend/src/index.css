@@ -298,3 +298,25 @@
   font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif !important;
 }
 
+/* Disable ornate styles for admin and receptionist portals to keep them clean and professional */
+.admin-portal-theme .ornate-shape,
+.reception-portal-theme .ornate-shape,
+.admin-portal-theme button.ornate-shape,
+.reception-portal-theme button.ornate-shape,
+.admin-portal-theme .ornate-border,
+.reception-portal-theme .ornate-border {
+  clip-path: none !important;
+  border-radius: 8px !important;
+}
+
+.admin-portal-theme .ornate-border::before,
+.reception-portal-theme .ornate-border::before {
+  display: none !important;
+}
+
+/* Also ensure normal solid border colors for buttons if they have ornate-border */
+.admin-portal-theme button.ornate-border,
+.reception-portal-theme button.ornate-border {
+  border: 1px solid #e2e8f0 !important;
+}
+

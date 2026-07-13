@@ -62,6 +62,30 @@ export const RoomDetailPage: React.FC<Props> = ({ room, onBack, onBook, searchFi
     }
   };
 
+  const handleDayClick = (dateStr: string) => {
+    const clickedDate = new Date(dateStr);
+    const todayDate = new Date(today);
+    if (clickedDate < todayDate) {
+      alert("Cannot select a past date.");
+      return;
+    }
+
+    // Simple range selector logic
+    if (localCheckIn && (!localCheckOut || dateStr > localCheckIn)) {
+      // If check-out is already set, or we click a date after check-in, set it as check-out.
+      // But if we clicked check-in again, or clicked to reset the check-in
+      if (dateStr === localCheckIn) {
+        return;
+      }
+      setLocalCheckOut(dateStr);
+    } else {
+      setLocalCheckIn(dateStr);
+      const d = new Date(dateStr);
+      d.setDate(d.getDate() + 1);
+      setLocalCheckOut(toISODate(d));
+    }
+  };
+
   // Calendar window starts from the guest's selected check-in date (falls back to today)
   const calendarStart = (() => {
     const d = localCheckIn ? new Date(localCheckIn) : new Date();
@@ -411,18 +435,32 @@ export const RoomDetailPage: React.FC<Props> = ({ room, onBack, onBook, searchFi
                           const weekday = d.toLocaleString('en-IN', { weekday: 'short' });
                           const day = d.getDate();
                           const month = d.toLocaleString('en-IN', { month: 'short' });
+                          const isSelected = key >= localCheckIn && key <= localCheckOut;
+                          const isCheckIn = key === localCheckIn;
+                          const isCheckOut = key === localCheckOut;
 
                           return (
-                            <div
+                            <button
                               key={key}
+                              type="button"
+                              onClick={() => handleDayClick(key)}
                               title={`${weekday} ${day} ${month} — ${status}`}
-                              className={`p-2 rounded-lg border ${bgClass} shadow-sm flex flex-col items-center justify-center text-center gap-1`}>
-                              <div className={`text-[10px] font-semibold ${textClass}`}>{weekday}</div>
+                              className={`p-2 rounded-lg border ${bgClass} shadow-sm flex flex-col items-center justify-center text-center gap-1 transition-all duration-200 active:scale-95 ${
+                                isSelected
+                                  ? 'ring-2 ring-catalogue-gold bg-catalogue-gold/15 border-catalogue-gold'
+                                  : 'hover:border-catalogue-gold/50'
+                              }`}
+                            >
+                              <div className={`text-[10px] font-bold ${textClass}`}>{weekday}</div>
                               <div className={`text-base font-black ${textClass}`}>{day}</div>
-                              <div className={`w-2.5 h-2.5 rounded-full mt-0.5 ${
-                                status === 'Available' ? 'bg-emerald-500' : status === 'Maintenance' ? 'bg-amber-500' : 'bg-rose-500'
-                              }`} />
-                            </div>
+                              <div className="flex items-center gap-1 mt-0.5">
+                                <div className={`w-2.5 h-2.5 rounded-full ${
+                                  status === 'Available' ? 'bg-emerald-500' : status === 'Maintenance' ? 'bg-amber-500' : 'bg-rose-500'
+                                }`} />
+                                {isCheckIn && <span className="text-[8px] font-black text-catalogue-gold uppercase">In</span>}
+                                {isCheckOut && <span className="text-[8px] font-black text-catalogue-gold uppercase">Out</span>}
+                              </div>
+                            </button>
                           );
                         })}
                       </div>

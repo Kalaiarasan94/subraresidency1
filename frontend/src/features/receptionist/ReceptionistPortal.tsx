@@ -103,7 +103,7 @@ export const ReceptionistPortal = () => {
         </header>
 
         <div className="p-8 max-w-7xl mx-auto pb-20">
-          {activeTab === 'dashboard' && <ReceptionistDashboard />}
+          {activeTab === 'dashboard' && <ReceptionistDashboard onNavigate={setActiveTab} />}
           {activeTab === 'online_checkin' && <OnlineCheckInFlow />}
           {activeTab === 'offline_booking' && <OfflineBookingFlow />}
         </div>

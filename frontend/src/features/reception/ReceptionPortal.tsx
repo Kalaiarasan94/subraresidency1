@@ -238,7 +238,7 @@ export const ReceptionPortal = () => {
         </header>
 
         <div className="p-10 max-w-7xl mx-auto pb-32">
-          {activeTab === 'dashboard'      && <ReceptionistDashboard />}
+          {activeTab === 'dashboard'      && <ReceptionistDashboard onNavigate={setActiveTab} />}
           {activeTab === 'online_checkin' && (
             <OnlineCheckInFlow
               prefillBookingId={prefillBookingId}

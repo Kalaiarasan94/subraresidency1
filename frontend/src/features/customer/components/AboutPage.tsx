@@ -13,8 +13,44 @@ import { AvailabilityBar } from './AvailabilityBar';
 import { OrnateDivider } from './OrnateDivider';
 import { SectionWrapper, DecorativeLayout } from './Layout';
 import { HeroSky } from './HeroSky';
+import { API_BASE_URL } from '../../../lib/api';
+
 export const AboutPage = ({ onSelectTemple }: { onSelectTemple: (temple: any) => void }) => {
   const [selectedLocation, setSelectedLocation] = useState('Kumbakonam Railway Station');
+  const [temples, setTemples] = useState<any[]>([]);
+  const [templeSectionDesc, setTempleSectionDesc] = useState("Kumbakonam is surrounded by some of Tamil Nadu's most revered temples, sacred tanks and spiritual landmarks. Guests staying at Subra Residency can easily plan temple visits from the property, as many important temples are located within a short travel distance. Discover the rich spiritual heritage of the region through these iconic destinations.");
+
+  useEffect(() => {
+    const fetchTemples = async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/attractions/list`);
+        const json = await response.json();
+        if (json.status === 'success' && Array.isArray(json.attractions)) {
+          setTemples(json.attractions);
+        } else {
+          setTemples(TEMPLE_DETAILS_DATA);
+        }
+      } catch (err) {
+        console.error(err);
+        setTemples(TEMPLE_DETAILS_DATA);
+      }
+    };
+
+    const fetchSettings = async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/settings`);
+        const json = await response.json();
+        if (json && json.temple_section_desc) {
+          setTempleSectionDesc(json.temple_section_desc);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchTemples();
+    fetchSettings();
+  }, []);
 
   const findDistance = (name: string) => {
     if (name === 'Kumbakonam Railway Station') return '300 meters';
@@ -177,12 +213,12 @@ export const AboutPage = ({ onSelectTemple }: { onSelectTemple: (temple: any) =>
             <h2 className="font-playfair text-3xl md:text-5xl text-catalogue-green font-black uppercase tracking-tight">TEMPLE DETAILS NEAR SUBRA RESIDENCY</h2>
             <p className="font-playfair text-xl text-catalogue-gold italic font-bold">Explore the Sacred Trail Around Kumbakonam</p>
             <p className="font-playfair text-lg text-catalogue-green max-w-4xl mx-auto leading-relaxed font-semibold">
-              Kumbakonam is surrounded by some of Tamil Nadu's most revered temples, sacred tanks and spiritual landmarks. Guests staying at Subra Residency can easily plan temple visits from the property, as many important temples are located within a short travel distance. Discover the rich spiritual heritage of the region through these iconic destinations.
+              {templeSectionDesc}
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {TEMPLE_DETAILS_DATA.map((temple, i) => (
+            {temples.map((temple, i) => (
               <motion.div 
                 key={i} 
                 variants={fadeInUp} 

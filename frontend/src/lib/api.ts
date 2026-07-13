@@ -208,7 +208,7 @@ export const checkAvailability = async (checkin: string, checkout: string) => {
     }
 };
 
-export const addSubRoom = async (payload: { category_id: number; room_number: string; floor_number?: string }) => {
+export const addSubRoom = async (payload: { category_id: number; room_number: string; room_name?: string; floor_number?: string }) => {
     try {
         const response = await fetch(`${API_BASE_URL}/rooms/addSubRoom`, {
             method: 'POST',
@@ -222,7 +222,7 @@ export const addSubRoom = async (payload: { category_id: number; room_number: st
     }
 };
 
-export const updateSubRoom = async (payload: { id: number; room_number: string; floor_number?: string }) => {
+export const updateSubRoom = async (payload: { id: number; room_number: string; room_name?: string; floor_number?: string }) => {
     try {
         const response = await fetch(`${API_BASE_URL}/rooms/updateSubRoom`, {
             method: 'POST',

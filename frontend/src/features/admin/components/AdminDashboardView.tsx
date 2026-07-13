@@ -11,7 +11,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '../../../components/ui
 import { Button } from '../../../components/ui/button';
 import { 
   AreaChart, Area, Tooltip, ResponsiveContainer,
-  PieChart, Pie, Cell
+  PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid
 } from 'recharts';
 import { API_BASE_URL } from '../../../lib/api';
 
@@ -103,29 +103,39 @@ export const AdminDashboardView = ({
               Dashboard Overview
             </h2>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-8 gap-4">
+            {/* Stats Cards Row (2 rows of 4 cards on desktop, spacious) */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               <MiniStat icon={Calendar} label="Total Bookings" value={data.stats.total_bookings} color="bg-blue-50 text-blue-600" />
               <MiniStat icon={Users} label="Today's Bookings" value={data.stats.today_bookings} color="bg-emerald-50 text-emerald-600" />
-              <MiniStat icon={TrendingUp} label="Today's Revenue" value={`₹${data.stats.today_revenue.toLocaleString()}`} color="bg-amber-50 text-amber-600" isMoney />
-              <MiniStat icon={CreditCard} label="This Month" value={`₹${data.stats.monthly_revenue.toLocaleString()}`} color="bg-purple-50 text-purple-600" isMoney />
+              <MiniStat icon={TrendingUp} label="Today's Revenue" value={`₹${data.stats.today_revenue.toLocaleString()}`} color="bg-amber-50 text-amber-600" />
+              <MiniStat icon={CreditCard} label="This Month Revenue" value={`₹${data.stats.monthly_revenue.toLocaleString()}`} color="bg-purple-50 text-purple-600" />
+              
               <MiniStat icon={Hotel} label="Total Rooms" value={data.stats.total_rooms} color="bg-slate-50 text-slate-600" />
-              <MiniStat icon={CheckCircle} label="Available" value={data.stats.available_rooms} color="bg-teal-50 text-teal-600" />
-              <MiniStat icon={AlertCircle} label="Occupied" value={data.stats.occupied_rooms} color="bg-orange-50 text-orange-600" />
-              <MiniStat icon={XCircleIcon} label="Cancelled" value={data.stats.cancelled_bookings} color="bg-rose-50 text-rose-600" />
+              <MiniStat icon={CheckCircle} label="Available Rooms" value={data.stats.available_rooms} color="bg-teal-50 text-teal-600" />
+              <MiniStat icon={AlertCircle} label="Occupied Rooms" value={data.stats.occupied_rooms} color="bg-orange-50 text-orange-600" />
+              <MiniStat icon={XCircleIcon} label="Cancelled Bookings" value={data.stats.cancelled_bookings} color="bg-rose-50 text-rose-600" />
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-              <Card className="lg:col-span-1 border border-slate-100/80 shadow-sm rounded-2xl overflow-hidden bg-white hover:shadow-md transition-all duration-300">
-                 <CardHeader className="pb-2"><CardTitle className="text-[10px] font-black tracking-widest uppercase text-slate-400">Booking Chart</CardTitle></CardHeader>
-                 <CardContent className="h-48 px-0">
+            {/* First Row of Charts (Spacious & Detailed) */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              {/* Booking Trend Chart */}
+              <Card className="lg:col-span-2 border border-slate-100/80 shadow-sm rounded-3xl overflow-hidden bg-white hover:shadow-md transition-all duration-300 p-6 flex flex-col justify-between h-[340px]">
+                 <div className="mb-2">
+                   <h3 className="text-xs font-black tracking-widest uppercase text-slate-400">Booking Trend</h3>
+                   <p className="text-[10px] text-slate-400 mt-0.5">Daily volume over the last 7 days</p>
+                 </div>
+                 <div className="h-[230px] w-full mt-2">
                     <ResponsiveContainer width="100%" height="100%">
-                      <AreaChart data={data.chart_data} margin={{ top: 10, right: 10, left: 10, bottom: 0 }}>
+                      <AreaChart data={data.chart_data} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                         <defs>
                           <linearGradient id="colorBookings" x1="0" y1="0" x2="0" y2="1">
                             <stop offset="5%" stopColor="#4f46e5" stopOpacity={0.25}/>
                             <stop offset="95%" stopColor="#4f46e5" stopOpacity={0.01}/>
                           </linearGradient>
                         </defs>
+                        <CartesianGrid strokeDasharray="3 3" stroke="#f8fafc" vertical={false} />
+                        <XAxis dataKey="day" stroke="#94a3b8" fontSize={9} tickLine={false} axisLine={false} dy={8} />
+                        <YAxis stroke="#94a3b8" fontSize={9} tickLine={false} axisLine={false} width={30} dx={-4} />
                         <Area type="monotone" dataKey="bookings" stroke="#4f46e5" fill="url(#colorBookings)" strokeWidth={2.5} />
                         <Tooltip 
                           contentStyle={{ 
@@ -140,18 +150,23 @@ export const AdminDashboardView = ({
                         />
                       </AreaChart>
                     </ResponsiveContainer>
-                 </CardContent>
+                 </div>
               </Card>
 
-              <Card className="lg:col-span-1 border border-slate-100/80 shadow-sm rounded-2xl overflow-hidden bg-white hover:shadow-md transition-all duration-300">
-                 <CardHeader className="pb-2"><CardTitle className="text-[10px] font-black tracking-widest uppercase text-slate-400">Revenue Overview</CardTitle></CardHeader>
-                 <CardContent className="h-48 flex items-center justify-center">
+              {/* Revenue Breakdown */}
+              <Card className="lg:col-span-1 border border-slate-100/80 shadow-sm rounded-3xl overflow-hidden bg-white hover:shadow-md transition-all duration-300 p-6 flex flex-col justify-between h-[340px]">
+                 <div>
+                   <h3 className="text-xs font-black tracking-widest uppercase text-slate-400">Revenue Overview</h3>
+                   <p className="text-[10px] text-slate-400 mt-0.5">Estimated this month's revenue share</p>
+                 </div>
+                 <div className="h-[140px] flex items-center justify-center relative mt-2">
                     <ResponsiveContainer width="100%" height="100%">
                       <PieChart>
-                        <Pie data={data.revenue_overview} innerRadius={40} outerRadius={55} paddingAngle={5} dataKey="value">
+                        <Pie data={data.revenue_overview} innerRadius={42} outerRadius={56} paddingAngle={4} dataKey="value">
                           {data.revenue_overview.map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
                         </Pie>
                         <Tooltip 
+                          formatter={(value: any) => [`₹${value.toLocaleString('en-IN')}`, 'Amount']}
                           contentStyle={{ 
                             backgroundColor: '#0f172a', 
                             borderRadius: '12px', 
@@ -163,19 +178,44 @@ export const AdminDashboardView = ({
                         />
                       </PieChart>
                     </ResponsiveContainer>
-                 </CardContent>
+                    <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                      <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Total</span>
+                      <span className="text-sm font-black text-slate-800">₹{data.stats.monthly_revenue.toLocaleString('en-IN')}</span>
+                    </div>
+                 </div>
+                 <div className="space-y-2 mt-2 border-t border-slate-100 pt-4">
+                   {(() => {
+                     const totalRev = data.revenue_overview.reduce((sum, item) => sum + item.value, 0) || 1;
+                     return data.revenue_overview.map((item, idx) => (
+                       <div key={idx} className="flex items-center justify-between text-[10px] font-bold text-slate-650">
+                         <div className="flex items-center gap-2">
+                           <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: COLORS[idx % COLORS.length] }} />
+                           <span>{item.name}</span>
+                         </div>
+                         <span className="text-slate-850 font-extrabold">₹{item.value.toLocaleString('en-IN')} ({Math.round(item.value / totalRev * 100)}%)</span>
+                       </div>
+                     ));
+                   })()}
+                 </div>
               </Card>
+            </div>
 
-              <Card className="lg:col-span-2 border border-slate-100/80 shadow-sm rounded-2xl overflow-hidden bg-white hover:shadow-md transition-all duration-300">
-                 <CardHeader className="pb-2 flex flex-row items-center justify-between border-b border-slate-50">
-                    <CardTitle className="text-[10px] font-black tracking-widest uppercase text-slate-400">Recent Bookings</CardTitle>
-                    <Button variant="link" className="text-[9px] uppercase font-black tracking-widest text-indigo-650 hover:text-indigo-800 p-0 h-auto" onClick={() => onNavigate?.('bookings')}>View All</Button>
-                 </CardHeader>
-                 <CardContent className="p-0">
+            {/* Second Row of Operations & Grid (Spacious & Clean) */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              {/* Recent Bookings Table */}
+              <Card className="lg:col-span-2 border border-slate-100/80 shadow-sm rounded-3xl overflow-hidden bg-white hover:shadow-md transition-all duration-300 flex flex-col justify-between h-[380px]">
+                 <div className="p-6 pb-2 flex flex-row items-center justify-between border-b border-slate-50">
+                    <div>
+                      <h3 className="text-xs font-black tracking-widest uppercase text-slate-400">Recent Bookings</h3>
+                      <p className="text-[10px] text-slate-400 mt-0.5">Most recent reservation entries</p>
+                    </div>
+                    <Button variant="link" className="text-[9px] uppercase font-black tracking-widest text-indigo-600 hover:text-indigo-800 p-0 h-auto" onClick={() => onNavigate?.('bookings')}>View All</Button>
+                 </div>
+                 <div className="flex-grow overflow-y-auto">
                     <table className="w-full text-[11px] text-left">
-                       <thead className="bg-slate-50/60 text-slate-450 uppercase font-black text-[9px] tracking-widest border-b border-slate-100">
+                       <thead className="bg-slate-50/60 text-slate-455 uppercase font-black text-[9px] tracking-widest border-b border-slate-100">
                           <tr>
-                            <th className="px-6 py-4">ID</th>
+                            <th className="px-6 py-4">Booking ID</th>
                             <th className="px-6 py-4">Guest</th>
                             <th className="px-6 py-4">Check-in</th>
                             <th className="text-right px-6 py-4">Status</th>
@@ -184,14 +224,16 @@ export const AdminDashboardView = ({
                        <tbody className="divide-y divide-slate-100/60">
                           {data.recent_bookings.map(b => (
                             <tr key={b.booking_id} className="hover:bg-slate-50/40 transition-colors">
-                              <td className="px-6 py-4.5 font-extrabold text-slate-800">{b.booking_id}</td>
-                              <td className="px-6 py-4.5 text-slate-655 font-semibold">{b.guest_name}</td>
-                              <td className="px-6 py-4.5 text-slate-400 font-bold font-sans">{b.check_in_date}</td>
-                              <td className="px-6 py-4.5 text-right">
+                              <td className="px-6 py-4 font-extrabold text-slate-800">{b.booking_id}</td>
+                              <td className="px-6 py-4 text-slate-655 font-bold uppercase tracking-tight">{b.guest_name}</td>
+                              <td className="px-6 py-4 text-slate-400 font-bold font-sans">{b.check_in_date}</td>
+                              <td className="px-6 py-4 text-right">
                                  <span className={`px-3 py-1 rounded-full text-[8px] font-black border uppercase tracking-wider ${
-                                   b.status === 'confirmed' 
-                                     ? 'bg-indigo-50 border-indigo-150 text-indigo-700' 
-                                     : 'bg-amber-50 border-amber-200 text-amber-700'
+                                   b.status === 'confirmed' ? 'bg-indigo-50 border-indigo-150 text-indigo-700' :
+                                   b.status === 'checked-in' ? 'bg-emerald-50 border-emerald-150 text-emerald-700' :
+                                   b.status === 'checked-out' ? 'bg-slate-50 border-slate-200 text-slate-600' :
+                                   b.status === 'pending' ? 'bg-amber-50 border-amber-200 text-amber-700' :
+                                   'bg-rose-50 border-rose-150 text-rose-700'
                                  }`}>
                                    {b.status}
                                  </span>
@@ -200,7 +242,38 @@ export const AdminDashboardView = ({
                           ))}
                        </tbody>
                     </table>
-                 </CardContent>
+                 </div>
+              </Card>
+
+              {/* Live Room Grid */}
+              <Card className="lg:col-span-1 border border-slate-100/80 shadow-sm rounded-3xl overflow-hidden bg-white hover:shadow-md transition-all duration-300 p-6 flex flex-col justify-between h-[380px]">
+                 <div className="mb-2">
+                   <h3 className="text-xs font-black tracking-widest uppercase text-slate-400">Live Occupancy Grid</h3>
+                   <p className="text-[10px] text-slate-400 mt-0.5">Real-time status of all hotel rooms</p>
+                 </div>
+                 <div className="flex-grow overflow-y-auto mt-4 pr-1 custom-scrollbar">
+                    <div className="grid grid-cols-4 sm:grid-cols-5 gap-2">
+                      {data.rooms_grid.map((room, idx) => (
+                        <div 
+                          key={idx}
+                          title={`${room.number} - ${room.category || 'Standard'} (${room.status})`}
+                          className={`flex flex-col items-center justify-center p-2 rounded-xl border text-center transition-all ${
+                            room.status === 'Available' ? 'bg-emerald-50/40 border-emerald-100 text-emerald-800' :
+                            room.status === 'Occupied' ? 'bg-rose-50/40 border-rose-100 text-rose-800' :
+                            'bg-amber-50/40 border-amber-150 text-amber-800'
+                          }`}
+                        >
+                          <span className="text-[10.5px] font-extrabold">{room.number}</span>
+                          <span className="text-[7px] font-black uppercase tracking-wider mt-0.5 opacity-80">{room.status}</span>
+                        </div>
+                      ))}
+                    </div>
+                 </div>
+                 <div className="flex justify-between items-center text-[8px] font-black uppercase tracking-wider text-slate-400 mt-4 border-t border-slate-100 pt-4">
+                   <div className="flex items-center gap-1.5"><div className="w-2 h-2 rounded-full bg-emerald-500"></div> Available</div>
+                   <div className="flex items-center gap-1.5"><div className="w-2 h-2 rounded-full bg-rose-500"></div> Occupied</div>
+                   <div className="flex items-center gap-1.5"><div className="w-2 h-2 rounded-full bg-amber-500"></div> Maint/Clean</div>
+                 </div>
               </Card>
             </div>
           </div>
@@ -234,7 +307,7 @@ export const AdminDashboardView = ({
              {/* Room Availability Form - Interactive */}
              <Card className="border border-slate-100 shadow-sm flex flex-col h-full bg-white group hover:shadow-md transition-all rounded-2xl">
                 <CardHeader className="pb-4 flex flex-row items-center justify-between">
-                  <CardTitle className="text-xs font-black uppercase text-indigo-650 tracking-wider">Room Search</CardTitle>
+                  <CardTitle className="text-xs font-black uppercase text-indigo-600 tracking-wider">Room Search</CardTitle>
                   <Calendar size={14} className="text-indigo-500" />
                 </CardHeader>
                 <CardContent className="space-y-4 flex-grow px-6">
@@ -312,7 +385,7 @@ export const AdminDashboardView = ({
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
              {/* Payment Overview */}
              <Card className="lg:col-span-3 border border-slate-100 shadow-sm flex flex-col rounded-2xl bg-white">
-                <CardHeader className="pb-4"><CardTitle className="text-xs font-black uppercase text-indigo-650 tracking-wider">Payment Overview</CardTitle></CardHeader>
+                <CardHeader className="pb-4"><CardTitle className="text-xs font-black uppercase text-indigo-600 tracking-wider">Payment Overview</CardTitle></CardHeader>
                 <CardContent className="space-y-6 flex-grow">
                    <PaymentStat icon={Calendar} label="Today's Collections" value={`₹ ${data.stats.today_revenue.toLocaleString()}`} color="text-indigo-600" />
                    <PaymentStat icon={Calendar} label="This Month Collections" value={`₹ ${data.stats.monthly_revenue.toLocaleString()}`} color="text-violet-600" />
@@ -322,7 +395,7 @@ export const AdminDashboardView = ({
 
              {/* Recent Transactions */}
              <Card className="lg:col-span-6 border border-slate-100 shadow-sm overflow-hidden flex flex-col rounded-2xl bg-white">
-                <CardHeader className="pb-4"><CardTitle className="text-xs font-black uppercase text-indigo-650 tracking-wider">Recent Transactions</CardTitle></CardHeader>
+                <CardHeader className="pb-4"><CardTitle className="text-xs font-black uppercase text-indigo-600 tracking-wider">Recent Transactions</CardTitle></CardHeader>
                 <CardContent className="p-0 flex-grow">
                    <div className="overflow-x-auto">
                       <table className="w-full text-[11px] text-left">
@@ -363,7 +436,7 @@ export const AdminDashboardView = ({
              {/* Accounts Summary */}
              <Card className="lg:col-span-3 border border-slate-100 shadow-sm flex flex-col rounded-2xl bg-white">
                 <CardHeader className="pb-4 flex flex-row items-center justify-between">
-                  <CardTitle className="text-xs font-black uppercase text-indigo-650 tracking-wider">Accounts Summary</CardTitle>
+                  <CardTitle className="text-xs font-black uppercase text-indigo-600 tracking-wider">Accounts Summary</CardTitle>
                 </CardHeader>
                 <CardContent className="flex flex-col h-full gap-6">
                    <div className="flex-grow space-y-6">
@@ -485,7 +558,7 @@ export const AdminDashboardView = ({
 
 const ManagementBox = ({ title, items, footer, onFooterClick }: any) => (
   <Card className="border border-slate-100 shadow-sm flex flex-col h-full bg-white rounded-2xl">
-    <CardHeader className="pb-4"><CardTitle className="text-xs font-black uppercase text-indigo-650 tracking-wider text-center">{title}</CardTitle></CardHeader>
+    <CardHeader className="pb-4"><CardTitle className="text-xs font-black uppercase text-indigo-600 tracking-wider text-center">{title}</CardTitle></CardHeader>
     <CardContent className="p-0 flex-grow">
        {items.map((it: any, i: number) => (
           <div key={i} className={`flex items-center gap-3 p-3 px-6 border-b border-slate-50 hover:bg-slate-55 transition-colors cursor-pointer group ${it.active ? 'bg-indigo-50/30' : ''}`}>
@@ -555,7 +628,7 @@ const MiniStat = ({ icon: Icon, label, value, color }: any) => {
 const SettingsGroup = ({ title, icon: Icon, links, action, onActionClick }: any) => (
   <Card className="border border-slate-100 shadow-sm h-fit rounded-2xl bg-white">
     <CardHeader className="pb-1 py-1"><CardTitle className="text-[10px] font-black uppercase text-slate-400 tracking-wider flex items-center gap-2">
-       <Icon size={12} className="text-indigo-650" /> {title}
+       <Icon size={12} className="text-indigo-600" /> {title}
     </CardTitle></CardHeader>
     <CardContent className="pb-3 px-3">
        <div className="space-y-1.5 pt-2">

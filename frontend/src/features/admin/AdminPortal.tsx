@@ -172,7 +172,7 @@ export const AdminPortal = () => {
                 <p className="text-xs font-bold text-slate-900 leading-tight">System Admin</p>
                 <p className="text-[9px] text-indigo-600 font-extrabold uppercase tracking-widest mt-1">Active Session</p>
               </div>
-              <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-indigo-650 text-white rounded-xl flex items-center justify-center font-extrabold text-xs shadow-md shadow-indigo-500/20 border border-indigo-400/20">
+              <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-indigo-600 text-white rounded-xl flex items-center justify-center font-extrabold text-xs shadow-md shadow-indigo-500/20 border border-indigo-400/20">
                 AD
               </div>
             </div>

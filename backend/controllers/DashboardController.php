@@ -108,8 +108,8 @@ class DashboardController {
             $today = date('Y-m-d');
 
             // 1. STATS
-            $arrivals = $this->db->query("SELECT COUNT(*) FROM bookings WHERE DATE(check_in_date) = '$today'")->fetchColumn();
-            $departures = $this->db->query("SELECT COUNT(*) FROM bookings WHERE DATE(check_out_date) = '$today'")->fetchColumn();
+            $arrivals = $this->db->query("SELECT COUNT(*) FROM bookings WHERE DATE(check_in_date) = '$today' AND status = 'confirmed'")->fetchColumn();
+            $departures = $this->db->query("SELECT COUNT(*) FROM bookings WHERE DATE(check_out_date) = '$today' AND status IN ('confirmed', 'checked-in')")->fetchColumn();
             $checked_in = $this->db->query("SELECT COUNT(*) FROM bookings WHERE status = 'checked-in'")->fetchColumn();
             
             $available = $this->db->query("SELECT COUNT(*) FROM rooms_new WHERE status = 'Available'")->fetchColumn();
@@ -129,7 +129,18 @@ class DashboardController {
             ");
             $recent_bookings = $recent_stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            // 3. ROOM DISTRIBUTION
+            // 3. DEPARTURES LIST
+            $dep_stmt = $this->db->prepare("
+                SELECT b.booking_id, b.guest_name, r.room_number
+                FROM bookings b
+                LEFT JOIN booking_rooms br ON br.booking_id = b.id
+                LEFT JOIN rooms_new r ON r.id = br.room_id
+                WHERE DATE(b.check_out_date) = ? AND b.status IN ('confirmed', 'checked-in')
+            ");
+            $dep_stmt->execute([$today]);
+            $departures_list = $dep_stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            // 4. ROOM DISTRIBUTION
             $room_data = [
                 ["name" => "Available", "value" => (int)$available, "color" => "#10b981"],
                 ["name" => "Occupied", "value" => (int)$occupied, "color" => "#0b3a24"],
@@ -146,6 +157,7 @@ class DashboardController {
                     "total_rooms" => (int)$total_rooms
                 ],
                 "recent_bookings" => $recent_bookings,
+                "departures_list" => $departures_list,
                 "room_distribution" => $room_data
             ];
 

@@ -294,16 +294,7 @@ export const OnlineCheckInFlow = ({ prefillBookingId, onPrefillConsumed }: Onlin
                       className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl py-5 pl-14 pr-6 text-sm font-black text-slate-800 focus:outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 transition-all uppercase tracking-widest"
                     />
                  </div>
-                 <div className="relative group">
-                    <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-emerald-600 transition-colors" size={20} />
-                    <input 
-                      type="email" 
-                      placeholder="Guest Email Address" 
-                      value={guestEmail}
-                      onChange={(e) => setGuestEmail(e.target.value)}
-                      className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl py-5 pl-14 pr-6 text-sm font-black text-slate-800 focus:outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 transition-all tracking-widest"
-                    />
-                 </div>
+
                  {error && <p className="text-[10px] font-black text-rose-500 uppercase tracking-widest animate-bounce">{error}</p>}
                  <Button disabled={loading} onClick={() => findBooking()} className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-black py-8 rounded-2xl text-lg uppercase tracking-widest shadow-xl shadow-emerald-900/20 active:scale-95 transition-all">
                     {loading ? 'Locating...' : 'Search Booking'}

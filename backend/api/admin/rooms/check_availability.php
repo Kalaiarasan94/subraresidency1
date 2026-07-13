@@ -20,6 +20,7 @@ try {
         SELECT r.id, r.room_number, r.room_name AS category_name, r.category_id, r.base_price, r.floor_number 
         FROM rooms_new r
         WHERE r.status != 'Maintenance'
+          AND (r.maintenance_start IS NULL OR r.maintenance_end IS NULL OR NOT (r.maintenance_start < ? AND r.maintenance_end >= ?))
           AND r.id NOT IN (
               SELECT ra.room_id 
               FROM room_availability ra
@@ -40,7 +41,7 @@ try {
     ";
     
     $stmt = $db->prepare($query);
-    $stmt->execute([$checkin, $checkout, $checkout, $checkin]);
+    $stmt->execute([$checkout, $checkin, $checkin, $checkout, $checkout, $checkin]);
     $rooms = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
     echo json_encode(['status' => 'success', 'rooms' => $rooms]);

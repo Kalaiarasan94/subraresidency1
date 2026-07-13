@@ -191,6 +191,22 @@ switch ($resource) {
         }
         break;
 
+    case 'attractions':
+        include_once __DIR__ . '/../controllers/AttractionController.php';
+        $controller = new AttractionController();
+        if ($action === 'list') {
+            $controller->list();
+        } elseif ($action === 'create') {
+            $controller->create();
+        } elseif ($action === 'update') {
+            $controller->update();
+        } elseif ($action === 'delete') {
+            $controller->delete();
+        } elseif ($action === 'uploadImage') {
+            $controller->uploadImage();
+        }
+        break;
+
     case 'users':
         include_once __DIR__ . '/../controllers/UserController.php';
         $controller = new UserController();

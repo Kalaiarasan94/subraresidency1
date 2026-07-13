@@ -65,7 +65,7 @@ export const CategoryManagement: React.FC<Props> = ({ onAddRoom, onEditRoom }) =
             </div>
             <CardContent className="p-5">
               <h3 className="text-lg font-bold text-slate-800 mb-1">{cat.title || cat.room_name}</h3>
-              <p className="text-indigo-650 font-bold text-sm mb-4">₹{Number(cat.price || cat.base_price).toLocaleString('en-IN')} / Night</p>
+              <p className="text-indigo-600 font-bold text-sm mb-4">₹{Number(cat.price || cat.base_price).toLocaleString('en-IN')} / Night</p>
               
               <div className="grid grid-cols-3 gap-2 border-y border-slate-50 py-3 mb-4">
                  <div className="text-center">
@@ -78,13 +78,19 @@ export const CategoryManagement: React.FC<Props> = ({ onAddRoom, onEditRoom }) =
                  </div>
                  <div className="text-center">
                     <p className="text-[10px] text-slate-400 font-bold uppercase">Status</p>
-                    <p className="text-xs font-bold text-indigo-600 uppercase">Live</p>
+                    <p className={`text-xs font-bold uppercase ${cat.status === 'Maintenance' ? 'text-amber-600 animate-pulse' : 'text-indigo-600'}`}>{cat.status || 'Available'}</p>
                  </div>
               </div>
               
               <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">
                 {cat.description || cat.full_description || "No public description provided for this room configuration."}
               </p>
+
+              {cat.status === 'Maintenance' && cat.maintenance_start && cat.maintenance_end && (
+                 <div className="mt-3 p-2 bg-amber-50 rounded-lg border border-amber-200/60 text-[10px] text-amber-800 font-black tracking-wider uppercase text-center">
+                   🛠️ Maintenance: {cat.maintenance_start} to {cat.maintenance_end}
+                 </div>
+              )}
             </CardContent>
           </Card>
         ))}

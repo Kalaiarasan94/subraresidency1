@@ -385,7 +385,7 @@ export const AdminUsersView: React.FC<AdminUsersViewProps> = ({ onBack }) => {
                     onClick={() => setRole('receptionist')}
                     className={`h-14 font-black uppercase tracking-wider text-xs border rounded-xl flex items-center justify-center gap-2 transition-all ${
                       role === 'receptionist'
-                        ? 'border-indigo-650 bg-indigo-50 text-indigo-800 ring-2 ring-indigo-500/20'
+                        ? 'border-indigo-600 bg-indigo-50 text-indigo-800 ring-2 ring-indigo-500/20'
                         : 'border-slate-100 bg-slate-50 text-slate-600 hover:bg-slate-100'
                     }`}
                   >

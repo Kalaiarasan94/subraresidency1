@@ -46,8 +46,12 @@ export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onRefresh }
       ? room.image.replace('http://localhost:8001', '').replace(/https?:\/\/[^\/]+/i, '').replace(/^\/subraresidency1\/backend/i, '') 
       : '',
     max_adults: room.adults || '',
+    max_children: room.children || '',
+    floor_number: room.floor || room.floor_number || '',
     bed_type: room.bed_type || '',
-    room_size: room.size || ''
+    room_size: room.size || '',
+    maintenance_start: room.maintenance_start || '',
+    maintenance_end: room.maintenance_end || ''
   });
 
   const [galleryList, setGalleryList] = useState<string[]>(
@@ -65,9 +69,11 @@ export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onRefresh }
   const [loadingSubRooms, setLoadingSubRooms] = useState(true);
 
   const [newRoomNumber, setNewRoomNumber] = useState('');
+  const [newRoomName, setNewRoomName] = useState('');
   const [newFloorNumber, setNewFloorNumber] = useState('1');
   const [editingSubRoomId, setEditingSubRoomId] = useState<number | null>(null);
   const [editRoomNumber, setEditRoomNumber] = useState('');
+  const [editRoomName, setEditRoomName] = useState('');
   const [editFloorNumber, setEditFloorNumber] = useState('1');
   const [isActionSubRoom, setIsActionSubRoom] = useState(false);
 
@@ -97,10 +103,12 @@ export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onRefresh }
       const res = await addSubRoom({
         category_id: room.id,
         room_number: newRoomNumber.trim(),
+        room_name: newRoomName.trim(),
         floor_number: newFloorNumber
       });
       if (res && res.status === 'success') {
         setNewRoomNumber('');
+        setNewRoomName('');
         setNewFloorNumber('1');
         await loadSubRooms();
       } else {
@@ -121,6 +129,7 @@ export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onRefresh }
       const res = await updateSubRoom({
         id,
         room_number: editRoomNumber.trim(),
+        room_name: editRoomName.trim(),
         floor_number: editFloorNumber
       });
       if (res && res.status === 'success') {
@@ -159,6 +168,22 @@ export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onRefresh }
     setGalleryList(room.images && room.images.length > 0 ? room.images : (room.image ? [room.image] : []));
     setSelectedAmenities(room.amenities || []);
     setAvailableAmenities(Array.from(new Set([...ALL_AVAILABLE_AMENITIES, ...(room.amenities || [])])));
+    setFormData({
+      id: room.id,
+      room_name: room.title || room.room_name,
+      base_price: room.price_24h || room.price?.replace(/[^0-9]/g, '') || '',
+      full_description: room.full_description || room.description || '',
+      house_rules: room.house_rules || '',
+      status: room.status || 'Available',
+      featured_image: room.image 
+        ? room.image.replace('http://localhost:8001', '').replace(/https?:\/\/[^\/]+/i, '').replace(/^\/subraresidency1\/backend/i, '') 
+        : '',
+      max_adults: room.adults || '',
+      max_children: room.children || '',
+      floor_number: room.floor || room.floor_number || '',
+      bed_type: room.bed_type || '',
+      room_size: room.size || ''
+    });
   }, [room]);
 
   const handleAddCustomAmenity = () => {
@@ -234,6 +259,16 @@ export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onRefresh }
   };
 
   const handleSave = async () => {
+    if (formData.status === 'Maintenance') {
+      if (!formData.maintenance_start || !formData.maintenance_end) {
+        alert("Please select both start date and end date for maintenance.");
+        return;
+      }
+      if (new Date(formData.maintenance_start) > new Date(formData.maintenance_end)) {
+        alert("Maintenance start date cannot be after the end date.");
+        return;
+      }
+    }
     setIsSaving(true);
     try {
       const result = await updateRoomDetails({
@@ -506,37 +541,54 @@ export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onRefresh }
                     );
                   })}
                 </div>
-             </section>
-
-             <section className="pb-12 border-b border-slate-100">
+             </section>              <section className="pb-12 border-b border-slate-100">
                 <h3 className="text-sm font-bold text-[#4f46e5] uppercase tracking-widest mb-4">Internal Specs</h3>
-                <div className="grid grid-cols-3 gap-8 p-6 bg-slate-50 rounded-2xl border border-slate-100">
+                <div className="grid grid-cols-2 md:grid-cols-5 gap-6 p-6 bg-slate-50 rounded-2xl border border-slate-100">
                    <div className="text-center">
                       <p className="text-[10px] text-slate-400 font-bold uppercase mb-1">Max Adults</p>
                       <input 
                         name="max_adults"
                         type="number"
-                        value={formData.max_adults || room.adults}
+                        value={formData.max_adults}
                         onChange={handleChange}
-                        className="text-xl font-bold text-slate-800 bg-transparent text-center border-b border-transparent hover:border-slate-300 focus:outline-none focus:border-indigo-500 w-16"
+                        className="text-lg font-bold text-slate-800 bg-transparent text-center border-b border-transparent hover:border-slate-300 focus:outline-none focus:border-indigo-500 w-12"
                       />
                    </div>
-                   <div className="text-center border-x border-slate-200 px-4">
+                   <div className="text-center border-l border-slate-200 pl-4">
+                      <p className="text-[10px] text-slate-400 font-bold uppercase mb-1">Max Children</p>
+                      <input 
+                        name="max_children"
+                        type="number"
+                        value={formData.max_children}
+                        onChange={handleChange}
+                        className="text-lg font-bold text-slate-800 bg-transparent text-center border-b border-transparent hover:border-slate-300 focus:outline-none focus:border-indigo-500 w-12"
+                      />
+                   </div>
+                   <div className="text-center border-l border-slate-200 pl-4">
                       <p className="text-[10px] text-slate-400 font-bold uppercase mb-1">Bed Configuration</p>
                       <input 
                         name="bed_type"
-                        value={formData.bed_type || room.bed_type}
+                        value={formData.bed_type}
                         onChange={handleChange}
-                        className="text-xl font-bold text-slate-800 bg-transparent text-center border-b border-transparent hover:border-slate-300 focus:outline-none focus:border-indigo-500 w-full"
+                        className="text-lg font-bold text-slate-800 bg-transparent text-center border-b border-transparent hover:border-slate-300 focus:outline-none focus:border-indigo-500 w-full"
                       />
                    </div>
-                   <div className="text-center">
+                   <div className="text-center border-l border-slate-200 pl-4">
                       <p className="text-[10px] text-slate-400 font-bold uppercase mb-1">Area (sq ft)</p>
                       <input 
                         name="room_size"
-                        value={formData.room_size || room.size}
+                        value={formData.room_size}
                         onChange={handleChange}
-                        className="text-xl font-bold text-slate-800 bg-transparent text-center border-b border-transparent hover:border-slate-300 focus:outline-none focus:border-indigo-500 w-20"
+                        className="text-lg font-bold text-slate-800 bg-transparent text-center border-b border-transparent hover:border-slate-300 focus:outline-none focus:border-indigo-500 w-20"
+                      />
+                   </div>
+                   <div className="text-center border-l border-slate-200 pl-4">
+                      <p className="text-[10px] text-slate-400 font-bold uppercase mb-1">Floor</p>
+                      <input 
+                        name="floor_number"
+                        value={formData.floor_number}
+                        onChange={handleChange}
+                        className="text-lg font-bold text-slate-800 bg-transparent text-center border-b border-transparent hover:border-slate-300 focus:outline-none focus:border-indigo-500 w-20"
                       />
                    </div>
                  </div>
@@ -558,6 +610,16 @@ export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onRefresh }
                         value={newRoomNumber}
                         onChange={(e) => setNewRoomNumber(e.target.value)}
                         placeholder="e.g. 101"
+                        className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-xs font-bold text-slate-800 focus:bg-white focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                      />
+                    </div>
+                    <div className="flex-1 space-y-1 w-full">
+                      <label className="block text-[8px] font-black text-slate-400 uppercase tracking-wider">Room Name (Optional)</label>
+                      <input
+                        type="text"
+                        value={newRoomName}
+                        onChange={(e) => setNewRoomName(e.target.value)}
+                        placeholder="e.g. Deluxe Room 101"
                         className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-xs font-bold text-slate-800 focus:bg-white focus:outline-none focus:ring-1 focus:ring-indigo-500"
                       />
                     </div>
@@ -600,6 +662,15 @@ export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onRefresh }
                                     className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs font-bold text-slate-800 focus:bg-white focus:outline-none"
                                   />
                                 </div>
+                                <div className="flex-1 space-y-1 w-full">
+                                  <label className="block text-[8px] font-black text-slate-400 uppercase tracking-wider">Room Name</label>
+                                  <input
+                                    type="text"
+                                    value={editRoomName}
+                                    onChange={(e) => setEditRoomName(e.target.value)}
+                                    className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs font-bold text-slate-800 focus:bg-white focus:outline-none"
+                                  />
+                                </div>
                                 <div className="w-full sm:w-20 space-y-1">
                                   <label className="block text-[8px] font-black text-slate-400 uppercase tracking-wider">Floor</label>
                                   <input
@@ -630,8 +701,8 @@ export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onRefresh }
                                 <div className="flex items-center gap-3">
                                   <div className="w-2.5 h-2.5 rounded-full bg-indigo-500 animate-pulse" />
                                   <div>
-                                    <p className="text-xs font-bold text-slate-800">Room {subRoom.room_number}</p>
-                                    <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mt-0.5">Floor {subRoom.floor_number || '1'}</p>
+                                    <p className="text-xs font-bold text-slate-800">{subRoom.room_name || `Room ${subRoom.room_number}`}</p>
+                                    <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mt-0.5">Room No: {subRoom.room_number} • Floor {subRoom.floor_number || '1'}</p>
                                   </div>
                                 </div>
                                 <div className="flex items-center gap-1.5">
@@ -639,6 +710,7 @@ export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onRefresh }
                                     onClick={() => {
                                       setEditingSubRoomId(subRoom.id);
                                       setEditRoomNumber(subRoom.room_number);
+                                      setEditRoomName(subRoom.room_name || '');
                                       setEditFloorNumber(subRoom.floor_number || '1');
                                     }}
                                     className="bg-white text-slate-600 hover:bg-slate-50 hover:text-slate-900 border border-slate-200 text-[9px] font-bold uppercase h-8 px-2.5 rounded shadow-sm"
@@ -679,7 +751,7 @@ export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onRefresh }
                             name="status"
                             value={formData.status}
                             onChange={handleChange}
-                            className={`text-sm font-black uppercase tracking-wider bg-transparent focus:outline-none border-none cursor-pointer ${formData.status === 'Available' ? 'text-indigo-650' : 'text-amber-600'}`}
+                            className={`text-sm font-black uppercase tracking-wider bg-transparent focus:outline-none border-none cursor-pointer ${formData.status === 'Available' ? 'text-indigo-600' : 'text-amber-600'}`}
                          >
                             <option value="Available">Available</option>
                             <option value="Booked">Booked</option>
@@ -687,6 +759,32 @@ export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onRefresh }
                             <option value="Maintenance">Maintenance</option>
                          </select>
                       </div>
+                      
+                      {formData.status === 'Maintenance' && (
+                          <div className="flex flex-col gap-3 bg-white p-4 rounded-2xl shadow-sm border border-slate-100 animate-in slide-in-from-top duration-350">
+                             <div className="flex flex-col gap-1">
+                                <span className="text-[10px] font-bold text-slate-450 uppercase tracking-widest">Maintenance Start Date</span>
+                                <input 
+                                   type="date"
+                                   name="maintenance_start"
+                                   value={formData.maintenance_start}
+                                   onChange={handleChange}
+                                   className="text-sm font-bold bg-slate-50 p-2.5 rounded-xl border border-slate-200 text-slate-800 focus:bg-white focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                                />
+                             </div>
+                             <div className="flex flex-col gap-1">
+                                <span className="text-[10px] font-bold text-slate-450 uppercase tracking-widest">Maintenance End Date</span>
+                                <input 
+                                   type="date"
+                                   name="maintenance_end"
+                                   value={formData.maintenance_end}
+                                   min={formData.maintenance_start}
+                                   onChange={handleChange}
+                                   className="text-sm font-bold bg-slate-50 p-2.5 rounded-xl border border-slate-200 text-slate-800 focus:bg-white focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                                />
+                             </div>
+                          </div>
+                       )}
                       
                       <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
                          <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">House Rules Summary</p>

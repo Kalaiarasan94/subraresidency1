@@ -3,15 +3,16 @@ import {
   Users, Layout, Mail, ChevronRight, 
   ArrowRight, UserCheck, Settings2,
   Lock, Bell, FileText,
-  DollarSign, MapPin, Globe, Share2, Code
+  DollarSign, MapPin, Globe, Share2, Code, Clock, Car
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '../../../components/ui/card';
 import { Button } from '../../../components/ui/button';
 import { AdminWebsiteSettings } from './AdminWebsiteSettings';
 import { AdminUsersView } from './AdminUsersView';
+import { AdminAttractionsView } from './AdminAttractionsView';
 
 export const AdminSettingsView = () => {
-  const [activeSection, setActiveSection] = useState<'main' | 'website' | 'users' | 'email' | 'rooms' | 'security'>('main');
+  const [activeSection, setActiveSection] = useState<'main' | 'website' | 'users' | 'email' | 'rooms' | 'security' | 'attractions'>('main');
 
   if (activeSection === 'website') {
     return <AdminWebsiteSettings onBack={() => setActiveSection('main')} />;
@@ -19,6 +20,10 @@ export const AdminSettingsView = () => {
 
   if (activeSection === 'users') {
     return <AdminUsersView onBack={() => setActiveSection('main')} />;
+  }
+
+  if (activeSection === 'attractions') {
+    return <AdminAttractionsView onBack={() => setActiveSection('main')} />;
   }
 
   return (
@@ -70,6 +75,19 @@ export const AdminSettingsView = () => {
           ]}
           action="Manage Emails"
           onAction={() => setActiveSection('email')}
+        />
+
+        {/* 4. Spiritual Attractions */}
+        <SettingsCard 
+          title="Spiritual Sights"
+          icon={MapPin}
+          links={[
+            { label: 'Temple Directory', icon: MapPin },
+            { label: 'Suggested Timings', icon: Clock },
+            { label: 'Travel Modes & Map Routes', icon: Car }
+          ]}
+          action="Manage Attractions"
+          onAction={() => setActiveSection('attractions')}
         />
       </div>
     </div>

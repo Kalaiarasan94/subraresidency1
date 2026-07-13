@@ -5,12 +5,12 @@ import {
   Users, LogIn, LogOut, 
   Hotel, ArrowUpRight, Search, 
   Smartphone, PlusCircle, 
-  MessageSquare
+  MessageSquare, X
 } from 'lucide-react';
 import { ResponsiveContainer, PieChart as RePie, Pie, Cell, Tooltip } from 'recharts';
 import { API_BASE_URL } from '../../../lib/api';
 
-const StatCard = ({ label, value, icon: Icon, color, trend }: any) => {
+const StatCard = ({ label, value, icon: Icon, color, trend, onClick }: any) => {
   const colorMap: any = {
     'bg-blue-500': { border: 'border-emerald-100', text: 'text-emerald-800', bg: 'bg-emerald-50/30', topBorder: 'bg-emerald-500' },
     'bg-amber-500': { border: 'border-amber-100', text: 'text-amber-800', bg: 'bg-amber-50/30', topBorder: 'bg-amber-550' },
@@ -21,7 +21,10 @@ const StatCard = ({ label, value, icon: Icon, color, trend }: any) => {
   const style = colorMap[color] || { border: 'border-slate-100', text: 'text-slate-655', bg: 'bg-slate-50', topBorder: 'bg-slate-400' };
 
   return (
-    <Card className={`relative overflow-hidden border ${style.border} ${style.bg} shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 group rounded-2xl`}>
+    <Card 
+      onClick={onClick}
+      className={`relative overflow-hidden border ${style.border} ${style.bg} shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 group rounded-2xl ${onClick ? 'cursor-pointer' : ''}`}
+    >
       <div className={`absolute top-0 left-0 w-full h-[4px] ${style.topBorder}`} />
       <CardContent className="p-6">
         <div className="flex justify-between items-start mb-4">
@@ -66,9 +69,10 @@ const QuickAction = ({ icon: Icon, label, description, color, onClick }: any) =>
   );
 };
 
-export const ReceptionistDashboard = () => {
+export const ReceptionistDashboard = ({ onNavigate }: { onNavigate?: (tab: string) => void }) => {
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [showDeparturesModal, setShowDeparturesModal] = useState(false);
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -96,6 +100,7 @@ export const ReceptionistDashboard = () => {
   const stats = data?.stats || { arrivals: 0, departures: 0, checked_in: 0, available: 0, occupied: 0 };
   const roomData = data?.room_distribution || [];
   const recentBookings = data?.recent_bookings || [];
+  const departuresList = data?.departures_list || [];
 
   // Overriding colors for premium hospitality palette
   const getHospitalityColor = (name: string) => {
@@ -118,7 +123,7 @@ export const ReceptionistDashboard = () => {
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
         <StatCard label="Today's Arrivals" value={stats.arrivals} icon={LogIn} color="bg-blue-500" trend="+2 New" />
-        <StatCard label="Today's Departures" value={stats.departures} icon={LogOut} color="bg-amber-500" />
+        <StatCard label="Today's Departures" value={stats.departures} icon={LogOut} color="bg-amber-500" onClick={() => setShowDeparturesModal(true)} />
         <StatCard label="Current Check-ins" value={stats.checked_in} icon={Users} color="bg-emerald-500" />
         <StatCard label="Available Rooms" value={stats.available} icon={Hotel} color="bg-emerald-700" />
         <StatCard label="Occupied Rooms" value={stats.occupied} icon={Hotel} color="bg-rose-500" />
@@ -236,11 +241,76 @@ export const ReceptionistDashboard = () => {
 
       {/* Quick Actions & Features */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-         <QuickAction icon={Smartphone} label="Scan QR Check-in" description="Instantly verify guest arrivals" color="bg-rose-500" />
-         <QuickAction icon={Search} label="Lookup Reservation" description="Search by ID or Mobile" color="bg-blue-500" />
-         <QuickAction icon={PlusCircle} label="New Registration" description="Process walk-in guests" color="bg-emerald-500" />
-         <QuickAction icon={MessageSquare} label="Guest Comms" description="Send automated updates" color="bg-amber-500" />
+         <QuickAction icon={Smartphone} label="Scan QR Check-in" description="Instantly verify guest arrivals" color="bg-rose-500" onClick={() => onNavigate?.('online_checkin')} />
+         <QuickAction icon={Search} label="Lookup Reservation" description="Search by ID or Mobile" color="bg-blue-500" onClick={() => onNavigate?.('online_checkin')} />
+         <QuickAction icon={PlusCircle} label="New Registration" description="Process walk-in guests" color="bg-emerald-500" onClick={() => onNavigate?.('offline_booking')} />
+         <QuickAction icon={Users} label="Guest Directory" description="Lookup guest files & stay logs" color="bg-amber-500" onClick={() => onNavigate?.('guests')} />
       </div>
+
+      {/* Today's Departures Modal */}
+      {showDeparturesModal && (
+        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[999] flex items-center justify-center p-4 animate-in fade-in duration-300">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden border border-slate-100 flex flex-col animate-in zoom-in-95 duration-200">
+            {/* Modal Header */}
+            <div className="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+              <div>
+                <h3 className="text-xs font-black text-[#0b336b] uppercase tracking-widest">
+                  Today's Departures
+                </h3>
+                <p className="text-[9px] text-slate-400 font-black uppercase mt-1 tracking-tight">
+                  List of guests checking out today
+                </p>
+              </div>
+              <button 
+                onClick={() => setShowDeparturesModal(false)}
+                className="text-slate-400 hover:text-slate-600 p-1.5 hover:bg-slate-100 rounded-lg transition-all"
+              >
+                <X size={16} />
+              </button>
+            </div>
+
+            {/* Modal Content */}
+            <div className="p-5 overflow-y-auto max-h-[60vh] space-y-4">
+              {departuresList.length > 0 ? (
+                <div className="divide-y divide-slate-100 border border-slate-150 rounded-xl overflow-hidden bg-white">
+                  {departuresList.map((dep: any, index: number) => (
+                    <div key={index} className="p-4 flex items-center justify-between hover:bg-slate-50/40 transition-colors">
+                      <div className="flex items-center gap-3">
+                        <div className="p-2 bg-amber-50 text-amber-700 rounded-xl">
+                          <LogOut size={16} />
+                        </div>
+                        <div>
+                          <p className="text-xs font-black text-slate-800 uppercase tracking-wide">{dep.guest_name}</p>
+                          <p className="text-[9px] text-slate-400 font-bold uppercase mt-0.5 tracking-wider">Booking ID: {dep.booking_id}</p>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <span className="text-[10px] font-black px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-700 uppercase tracking-widest font-sans">
+                          Room {dep.room_number || 'N/A'}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="py-12 text-center text-slate-400 text-xs font-bold uppercase tracking-widest italic">
+                  No departures scheduled for today.
+                </div>
+              )}
+            </div>
+
+            {/* Modal Footer */}
+            <div className="p-4 bg-slate-50 border-t border-slate-100 flex justify-end">
+              <Button 
+                onClick={() => setShowDeparturesModal(false)}
+                className="bg-[#0b336b] hover:bg-[#072145] text-[10px] uppercase font-black tracking-widest text-white px-5 py-2 rounded-lg shadow-md transition-all"
+              >
+                Close
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
