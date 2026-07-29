@@ -8,21 +8,24 @@ include_once '../config/db.php';
 include_once '../models/Room.php';
 include_once '../utils/ImageUploader.php';
 
-class RoomController {
+class RoomController
+{
     private $db;
     private $room;
 
-    public function __construct() {
+    public function __construct()
+    {
         $database = new Database();
         $this->db = $database->getConnection();
         $this->room = new Room($this->db);
     }
 
-    private function getBaseUrl() {
+    private function getBaseUrl()
+    {
         $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443)) ? "https://" : "http://";
         $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
         $script_uri = $_SERVER['SCRIPT_NAME'] ?? '';
-        $script_dir = dirname(dirname($script_uri)); 
+        $script_dir = dirname(dirname($script_uri));
         $script_dir = str_replace('\\', '/', $script_dir);
         $script_dir = rtrim($script_dir, '/');
         if (strpos($host, 'localhost') !== false && strpos($script_uri, '/subraresidency1') !== false) {
@@ -31,7 +34,8 @@ class RoomController {
         return $protocol . $host . $script_dir;
     }
 
-    public function getCategories() {
+    public function getCategories()
+    {
         $baseUrl = $this->getBaseUrl();
         $query = "SELECT * FROM room_categories WHERE show_on_website = 1 ORDER BY created_at DESC";
         $stmt = $this->db->prepare($query);
@@ -54,7 +58,7 @@ class RoomController {
             // Sub-room counts: total physical rooms vs currently free (no active/pending booking, not in maintenance)
             $total_stmt = $this->db->prepare("SELECT COUNT(*) FROM rooms_new WHERE category_id = ? AND status != 'Inactive'");
             $total_stmt->execute([$row['id']]);
-            $total_rooms = (int)$total_stmt->fetchColumn();
+            $total_rooms = (int) $total_stmt->fetchColumn();
 
             $avail_stmt = $this->db->prepare("
                 SELECT COUNT(*) FROM rooms_new r
@@ -66,7 +70,7 @@ class RoomController {
                   )
             ");
             $avail_stmt->execute([$row['id']]);
-            $available_rooms = (int)$avail_stmt->fetchColumn();
+            $available_rooms = (int) $avail_stmt->fetchColumn();
 
             $rooms[] = [
                 "id" => $row['id'],
@@ -88,12 +92,15 @@ class RoomController {
                 "highlights" => $row['highlights'],
                 "house_rules" => $row['house_rules'],
                 "image" => $row['featured_image'] ? $baseUrl . $row['featured_image'] : '',
-                "images" => array_map(function($img) use ($baseUrl) { return $baseUrl . $img; }, $gallery),
-                "balcony" => (bool)$row['balcony'],
-                "ac" => (bool)$row['air_conditioning'],
-                "smoking" => (bool)$row['smoking_allowed'],
-                "show_on_website" => (bool)$row['show_on_website'],
-                "status" => $row['status'],
+                "images" => array_map(function ($img) use ($baseUrl) {
+                    return $baseUrl . $img; }, $gallery),
+                "balcony" => (bool) $row['balcony'],
+                "ac" => (bool) $row['air_conditioning'],
+                "smoking" => (bool) $row['smoking_allowed'],
+                "show_on_website" => (bool) $row['show_on_website'],
+                "status" => $row['status'] === 'Inactive' ? 'Cleaning' : ($row['status'] === 'Occupied' ? 'Booked' : $row['status']),
+                "category_tag" => $row['category_tag'] ?? 'Premium',
+                "tag" => $row['category_tag'] ?? 'Premium',
                 "maintenance_start" => $row['maintenance_start'],
                 "maintenance_end" => $row['maintenance_end'],
                 "total_rooms" => $total_rooms,
@@ -107,7 +114,8 @@ class RoomController {
     }
 
     // Create a new room category, plus its physical sub-rooms
-    public function createCategory() {
+    public function createCategory()
+    {
         $data = json_decode(file_get_contents("php://input"));
         if (empty($data->name)) {
             http_response_code(400);
@@ -153,14 +161,16 @@ class RoomController {
                 $amenities = is_array($data->amenities) ? $data->amenities : explode(',', $data->amenities);
                 $stmt_amenity = $this->db->prepare("INSERT INTO room_amenities (category_id, amenity_name) VALUES (?, ?)");
                 foreach ($amenities as $amenity) {
-                    if (trim($amenity)) $stmt_amenity->execute([$catId, trim($amenity)]);
+                    if (trim($amenity))
+                        $stmt_amenity->execute([$catId, trim($amenity)]);
                 }
             }
 
             $insertRoom = $this->db->prepare("INSERT INTO rooms_new (room_name, room_number, category_id, floor_number, status) VALUES (?, ?, ?, ?, 'Available')");
             foreach ($roomNumbers as $roomNumber) {
                 $roomNumber = trim($roomNumber);
-                if ($roomNumber === '') continue;
+                if ($roomNumber === '')
+                    continue;
                 $insertRoom->execute([$data->name, $roomNumber, $catId, $data->floor_number ?? null]);
             }
 
@@ -168,14 +178,55 @@ class RoomController {
             http_response_code(201);
             echo json_encode(["message" => "Category created successfully", "id" => $catId, "title" => $data->name]);
         } catch (Exception $e) {
-            if ($this->db->inTransaction()) $this->db->rollBack();
+            if ($this->db->inTransaction())
+                $this->db->rollBack();
             http_response_code(500);
             echo json_encode(["message" => "Failed to create category: " . $e->getMessage()]);
         }
     }
 
+    public function deleteCategory()
+    {
+        try {
+            $data = json_decode(file_get_contents("php://input"));
+            $id = $data->id ?? $_GET['id'] ?? null;
+            if (!$id) {
+                http_response_code(400);
+                echo json_encode(["status" => "error", "message" => "category id is required."]);
+                return;
+            }
+
+            $this->db->beginTransaction();
+
+            // 1. Delete all rooms associated with this category
+            $deleteRooms = $this->db->prepare("DELETE FROM rooms_new WHERE category_id = ?");
+            $deleteRooms->execute([$id]);
+
+            // 2. Delete all images associated with this category
+            $deleteImages = $this->db->prepare("DELETE FROM room_images_new WHERE category_id = ?");
+            $deleteImages->execute([$id]);
+
+            // 3. Delete all amenities associated with this category
+            $deleteAmenities = $this->db->prepare("DELETE FROM room_amenities WHERE category_id = ?");
+            $deleteAmenities->execute([$id]);
+
+            // 4. Delete the category itself
+            $deleteCat = $this->db->prepare("DELETE FROM room_categories WHERE id = ?");
+            $deleteCat->execute([$id]);
+
+            $this->db->commit();
+            echo json_encode(["status" => "success", "message" => "Room category deleted successfully."]);
+        } catch (Exception $e) {
+            if ($this->db->inTransaction())
+                $this->db->rollBack();
+            http_response_code(500);
+            echo json_encode(["status" => "error", "message" => "Failed to delete category: " . $e->getMessage()]);
+        }
+    }
+
     // List each physical sub-room under a category, with live status and (if occupied) the current guest
-    public function getSubRooms($categoryId) {
+    public function getSubRooms($categoryId)
+    {
         if (!$categoryId) {
             http_response_code(400);
             echo json_encode(["message" => "category_id is required"]);
@@ -204,7 +255,8 @@ class RoomController {
         echo json_encode(["status" => "success", "rooms" => $rows]);
     }
 
-    public function addSubRoom() {
+    public function addSubRoom()
+    {
         try {
             $data = json_decode(file_get_contents('php://input'));
             if (!isset($data->category_id) || !isset($data->room_number)) {
@@ -212,7 +264,7 @@ class RoomController {
                 echo json_encode(["status" => "error", "message" => "category_id and room_number are required."]);
                 return;
             }
-            
+
             // Get category name
             $stmt = $this->db->prepare("SELECT name FROM room_categories WHERE id = ?");
             $stmt->execute([$data->category_id]);
@@ -220,7 +272,7 @@ class RoomController {
             $roomName = isset($data->room_name) && trim($data->room_name) !== '' ? trim($data->room_name) : ($cat ? $cat['name'] : 'Room');
 
             $floor = $data->floor_number ?? '1';
-            
+
             $insert = $this->db->prepare("
                 INSERT INTO rooms_new (room_name, room_number, category_id, floor_number, status)
                 VALUES (?, ?, ?, ?, 'Available')
@@ -234,7 +286,7 @@ class RoomController {
                 WHERE rc.id = ?
             ");
             $updateCount->execute([$data->category_id]);
-            
+
             echo json_encode(["status" => "success", "message" => "Sub-room added successfully."]);
         } catch (Exception $e) {
             http_response_code(500);
@@ -242,7 +294,8 @@ class RoomController {
         }
     }
 
-    public function updateSubRoom() {
+    public function updateSubRoom()
+    {
         try {
             $data = json_decode(file_get_contents('php://input'));
             if (!isset($data->id) || !isset($data->room_number)) {
@@ -250,10 +303,10 @@ class RoomController {
                 echo json_encode(["status" => "error", "message" => "id and room_number are required."]);
                 return;
             }
-            
+
             $floor = $data->floor_number ?? '1';
             $roomName = isset($data->room_name) ? trim($data->room_name) : null;
-            
+
             if ($roomName !== null && $roomName !== '') {
                 $update = $this->db->prepare("
                     UPDATE rooms_new 
@@ -269,7 +322,7 @@ class RoomController {
                 ");
                 $update->execute([$data->room_number, $floor, $data->id]);
             }
-            
+
             echo json_encode(["status" => "success", "message" => "Sub-room updated successfully."]);
         } catch (Exception $e) {
             http_response_code(500);
@@ -277,7 +330,8 @@ class RoomController {
         }
     }
 
-    public function deleteSubRoom() {
+    public function deleteSubRoom()
+    {
         try {
             $data = json_decode(file_get_contents('php://input'));
             $id = $data->id ?? $_GET['id'] ?? null;
@@ -286,7 +340,7 @@ class RoomController {
                 echo json_encode(["status" => "error", "message" => "id is required."]);
                 return;
             }
-            
+
             // Get category_id before deletion to sync count
             $getCat = $this->db->prepare("SELECT category_id FROM rooms_new WHERE id = ?");
             $getCat->execute([$id]);
@@ -304,7 +358,7 @@ class RoomController {
                 ");
                 $updateCount->execute([$catId]);
             }
-            
+
             echo json_encode(["status" => "success", "message" => "Sub-room deleted successfully."]);
         } catch (Exception $e) {
             if (strpos($e->getMessage(), 'a foreign key constraint fails') !== false) {
@@ -317,36 +371,38 @@ class RoomController {
         }
     }
 
-        // Create a new room – match DB schema (category_id, no price column)
-        public function create() {
-            $data = json_decode(file_get_contents("php://input"));
-            if (
-                empty($data->room_number) ||
-                empty($data->category_id) ||
-                empty($data->floor) ||
-                empty($data->status)
-            ) {
-                http_response_code(400);
-                echo json_encode(["message" => "Missing required fields"]);
-                return;
-            }
-            $query = "INSERT INTO rooms (room_number, category_id, floor, status) VALUES (:room_number, :category_id, :floor, :status)";
-            $stmt = $this->db->prepare($query);
-            $stmt->bindParam(":room_number", $data->room_number);
-            $stmt->bindParam(":category_id", $data->category_id);
-            $stmt->bindParam(":floor", $data->floor);
-            $stmt->bindParam(":status", $data->status);
-            if ($stmt->execute()) {
-                http_response_code(201);
-                echo json_encode(["message" => "Room created"]);
-            } else {
-                http_response_code(500);
-                echo json_encode(["message" => "Failed to create room"]);
-            }
+    // Create a new room – match DB schema (category_id, no price column)
+    public function create()
+    {
+        $data = json_decode(file_get_contents("php://input"));
+        if (
+            empty($data->room_number) ||
+            empty($data->category_id) ||
+            empty($data->floor) ||
+            empty($data->status)
+        ) {
+            http_response_code(400);
+            echo json_encode(["message" => "Missing required fields"]);
+            return;
         }
+        $query = "INSERT INTO rooms (room_number, category_id, floor, status) VALUES (:room_number, :category_id, :floor, :status)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(":room_number", $data->room_number);
+        $stmt->bindParam(":category_id", $data->category_id);
+        $stmt->bindParam(":floor", $data->floor);
+        $stmt->bindParam(":status", $data->status);
+        if ($stmt->execute()) {
+            http_response_code(201);
+            echo json_encode(["message" => "Room created"]);
+        } else {
+            http_response_code(500);
+            echo json_encode(["message" => "Failed to create room"]);
+        }
+    }
 
     // Update room availability status
-    public function updateStatus() {
+    public function updateStatus()
+    {
         $data = json_decode(file_get_contents("php://input"));
         if (empty($data->room_number) || empty($data->status)) {
             http_response_code(400);
@@ -368,7 +424,8 @@ class RoomController {
 
 
     // Fetch all physical sub-rooms from rooms_new, joined to their category
-    public function getAllRooms() {
+    public function getAllRooms()
+    {
         $query = "
             SELECT r.id, r.room_name, r.room_number, r.floor_number, r.status,
                    r.category_id, c.name AS category_name, c.base_price_24h
@@ -397,7 +454,8 @@ class RoomController {
     }
 
     // Fetch a single room by ID with all details
-    public function getRoomById($id) {
+    public function getRoomById($id)
+    {
         $baseUrl = $this->getBaseUrl();
         $query = "SELECT * FROM rooms_new WHERE id = ?";
         $stmt = $this->db->prepare($query);
@@ -410,7 +468,7 @@ class RoomController {
             $img_stmt = $this->db->prepare($img_query);
             $img_stmt->execute([$id]);
             $gallery = $img_stmt->fetchAll(PDO::FETCH_COLUMN);
-            
+
             // Get amenities
             $amenities_query = "SELECT amenity_name FROM room_amenities WHERE room_id = ?";
             $amenities_stmt = $this->db->prepare($amenities_query);
@@ -444,14 +502,15 @@ class RoomController {
                 "highlights" => $row['highlights'],
                 "house_rules" => $row['house_rules'],
                 "image" => $row['featured_image'] ? $baseUrl . $row['featured_image'] : '',
-                "images" => array_map(function($img) use ($baseUrl) { return $baseUrl . $img; }, $gallery),
-                "balcony" => (bool)$row['balcony'],
-                "ac" => (bool)$row['air_conditioning'],
-                "smoking_allowed" => (bool)$row['smoking_allowed'],
-                "status" => $row['status'],
+                "images" => array_map(function ($img) use ($baseUrl) {
+                    return $baseUrl . $img; }, $gallery),
+                "balcony" => (bool) $row['balcony'],
+                "ac" => (bool) $row['air_conditioning'],
+                "smoking_allowed" => (bool) $row['smoking_allowed'],
+                "status" => $row['status'] === 'Inactive' ? 'Cleaning' : ($row['status'] === 'Occupied' ? 'Booked' : $row['status']),
                 "maintenance_start" => $row['maintenance_start'],
                 "maintenance_end" => $row['maintenance_end'],
-                "show_on_website" => (bool)$row['show_on_website']
+                "show_on_website" => (bool) $row['show_on_website']
             ];
             http_response_code(200);
             echo json_encode($room);
@@ -463,7 +522,8 @@ class RoomController {
 
     // Update a category's details in room_categories (id here is a category id —
     // AdminRoomDetailView.tsx edits the category, not an individual physical sub-room)
-    public function updateRoomDetails() {
+    public function updateRoomDetails()
+    {
         $data = json_decode(file_get_contents("php://input"));
         if (empty($data->id)) {
             http_response_code(400);
@@ -483,6 +543,7 @@ class RoomController {
             'short_description' => 'description',
             'house_rules' => 'house_rules',
             'status' => 'status',
+            'category_tag' => 'category_tag',
             'max_adults' => 'adults_count',
             'max_children' => 'children_count',
             'floor_number' => 'floor_number',
@@ -496,7 +557,15 @@ class RoomController {
         foreach ($map as $apiKey => $dbCol) {
             if (property_exists($data, $apiKey)) {
                 $val = $data->$apiKey;
-                if ($val === '') $val = null;
+                if ($val === '')
+                    $val = null;
+                if ($apiKey === 'status') {
+                    if ($val === 'Booked') {
+                        $val = 'Available';
+                    } elseif ($val === 'Cleaning') {
+                        $val = 'Inactive';
+                    }
+                }
                 $fields[] = "$dbCol = :$apiKey";
                 $params[":$apiKey"] = $val;
             }
@@ -519,12 +588,18 @@ class RoomController {
             }
             // Propagate status and maintenance dates to subrooms
             if (isset($data->status)) {
-                if ($data->status === 'Maintenance') {
+                $subroom_status = $data->status;
+                if ($subroom_status === 'Booked') {
+                    $subroom_status = 'Occupied';
+                } elseif ($subroom_status === 'Cleaning') {
+                    $subroom_status = 'Inactive';
+                }
+                if ($subroom_status === 'Maintenance') {
                     $m_start = isset($data->maintenance_start) && $data->maintenance_start !== '' ? $data->maintenance_start : null;
                     $m_end = isset($data->maintenance_end) && $data->maintenance_end !== '' ? $data->maintenance_end : null;
                     $this->db->prepare("UPDATE rooms_new SET status = 'Maintenance', maintenance_start = ?, maintenance_end = ? WHERE category_id = ?")->execute([$m_start, $m_end, $id]);
                 } else {
-                    $this->db->prepare("UPDATE rooms_new SET status = ?, maintenance_start = NULL, maintenance_end = NULL WHERE category_id = ?")->execute([$data->status, $id]);
+                    $this->db->prepare("UPDATE rooms_new SET status = ?, maintenance_start = NULL, maintenance_end = NULL WHERE category_id = ?")->execute([$subroom_status, $id]);
                 }
             }
             if (isset($data->amenities)) {
@@ -545,7 +620,8 @@ class RoomController {
         }
     }
 
-    public function uploadGalleryImage() {
+    public function uploadGalleryImage()
+    {
         // Ensure uploads directory exists
         $upload_dir = __DIR__ . '/../uploads/rooms/';
         if (!file_exists($upload_dir)) {
@@ -567,7 +643,7 @@ class RoomController {
                 $path = '/uploads/rooms/' . $filename;
                 $sort_stmt = $this->db->prepare("SELECT MAX(sort_order) FROM room_images_new WHERE category_id = ?");
                 $sort_stmt->execute([$category_id]);
-                $max_sort = (int)$sort_stmt->fetchColumn();
+                $max_sort = (int) $sort_stmt->fetchColumn();
                 $sort_order = $max_sort + 10;
 
                 $query = "INSERT INTO room_images_new (category_id, image_path, sort_order) VALUES (?, ?, ?)";
@@ -584,7 +660,8 @@ class RoomController {
         echo json_encode(["message" => "Failed to upload image"]);
     }
 
-    public function deleteGalleryImage() {
+    public function deleteGalleryImage()
+    {
         $data = json_decode(file_get_contents("php://input"));
         // AdminRoomDetailView.tsx sends the category id under the "room_id" field name
         $category_id = $data->room_id ?? null;

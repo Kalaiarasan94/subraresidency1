@@ -64,6 +64,8 @@ switch ($resource) {
             $controller->create();
         } elseif ($action == 'createCategory') {
             $controller->createCategory();
+        } elseif ($action == 'deleteCategory') {
+            $controller->deleteCategory();
         } elseif ($action == 'details') {
             $id = $_GET['id'] ?? null;
             $controller->getRoomById($id);
@@ -168,6 +170,10 @@ switch ($resource) {
         $controller = new ManagementController();
         if ($action == 'guests') {
             $controller->getGuestDirectory();
+        } elseif ($action == 'guest-bookings') {
+            $controller->getGuestBookings();
+        } elseif ($action == 'vacate') {
+            $controller->vacateBooking();
         } elseif ($action == 'settlements') {
             $controller->getSettlements();
         } elseif ($action == 'logs') {

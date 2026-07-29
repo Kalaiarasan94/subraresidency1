@@ -119,6 +119,7 @@ export const fetchRoomAvailability = async (roomId: number, start?: string, end?
         if (roomId) params.set('room_id', String(roomId));
         if (start) params.set('start', start);
         if (end) params.set('end', end);
+        params.set('_cb', String(Date.now()));
         const response = await fetch(`${API_BASE_URL}/rooms/availabilityList?` + params.toString());
         if (!response.ok) throw new Error('Failed to fetch availability');
         return await response.json();
@@ -158,6 +159,20 @@ export const updateRoomDetails = async (payload: any) => {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
+        });
+        return await response.json();
+    } catch (error) {
+        console.error('API Error:', error);
+        return null;
+    }
+};
+
+export const deleteRoomCategory = async (categoryId: number | string) => {
+    try {
+        const response = await fetch(`${API_BASE_URL}/rooms/deleteCategory`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: categoryId })
         });
         return await response.json();
     } catch (error) {

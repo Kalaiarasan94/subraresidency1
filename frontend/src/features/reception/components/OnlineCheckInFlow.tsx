@@ -98,14 +98,15 @@ export const OnlineCheckInFlow = ({ prefillBookingId, onPrefillConsumed }: Onlin
            return;
          }
           setBookingData({
-             id: json.data.booking_id,
+             id: json.data.booking_id,          // human-readable HBK... id
+             dbId: json.data.id,                // numeric DB row id
              guest: json.data.guest_name,
              phone: json.data.phone_number || 'N/A',
              checkin: json.data.check_in_date,
              checkout: json.data.check_out_date,
              category: json.data.room_category || 'N/A',
-             category_id: json.data.rooms?.[0]?.category_id,
-             base_price: json.data.rooms?.[0]?.base_price,
+             category_id: json.data.category_id || null,
+             base_price: json.data.base_price || json.data.rooms?.[0]?.base_price,
              guests: json.data.guests_count || '1 Guest',
              children: json.data.children_count || 0,
              total: `₹ ${json.data.total_amount}`,
@@ -215,26 +216,24 @@ export const OnlineCheckInFlow = ({ prefillBookingId, onPrefillConsumed }: Onlin
       const fetchRooms = async () => {
         setLoadingRooms(true);
         try {
-          // Use date-aware availability check so we only show rooms free for this stay
-          const checkin = bookingData.checkin || '';
+          const checkin  = bookingData.checkin  || '';
           const checkout = bookingData.checkout || '';
-          const resp = await fetch(
-            `${API_BASE_URL}/rooms/checkAvailability?checkin=${checkin}&checkout=${checkout}`
-          );
+          const params   = new URLSearchParams({ checkin, checkout });
+          // Pass the booking's own DB id so the API excludes it from conflict check
+          if (bookingData.dbId) params.set('booking_id', String(bookingData.dbId));
+          // Filter by category so only matching-category rooms appear
+          if (bookingData.category_id) params.set('category_id', String(bookingData.category_id));
+
+          const resp = await fetch(`${API_BASE_URL}/rooms/checkAvailability?${params}`);
           const json = await resp.json();
           if (json.status === 'success' && Array.isArray(json.rooms)) {
             setAvailableRooms(json.rooms);
           } else {
-            // fallback: all non-maintenance rooms
-            const fallback = await fetch(`${API_BASE_URL}/rooms/list`);
-            const fJson = await fallback.json();
-            const roomsArray = Array.isArray(fJson) ? fJson : (fJson.rooms || fJson.data || []);
-            setAvailableRooms(roomsArray.filter((r: any) =>
-              r.status === 'Available' || r.status === 'available'
-            ));
+            setAvailableRooms([]);
           }
         } catch (err) {
           console.error("Error loading available rooms:", err);
+          setAvailableRooms([]);
         } finally {
           setLoadingRooms(false);
         }
@@ -435,18 +434,8 @@ export const OnlineCheckInFlow = ({ prefillBookingId, onPrefillConsumed }: Onlin
         )}
 
         {currentStep === 3 && (() => {
-           const filteredRooms = availableRooms.filter((room: any) => {
-              if (!bookingData) return true;
-              const roomCategory = String(room.category || room.category_name || room.room_name || '').toLowerCase().trim();
-              const bookedCategory = String(bookingData.category || '').toLowerCase().trim();
-              const isCategoryMatch = roomCategory === bookedCategory;
-
-              const roomPrice = Number(room.base_price || room.price || 0);
-              const bookedPrice = Number(bookingData.base_price || 0);
-              const isPriceMatch = bookedPrice === 0 || roomPrice === bookedPrice;
-
-              return isCategoryMatch && isPriceMatch;
-           });
+           // Rooms are already filtered by category_id from the backend.
+           const filteredRooms = availableRooms;
 
            return (
              <Card className="border-none shadow-2xl rounded-[2rem] overflow-hidden bg-white">
@@ -472,14 +461,14 @@ export const OnlineCheckInFlow = ({ prefillBookingId, onPrefillConsumed }: Onlin
                             className="p-8 rounded-3xl border-2 border-slate-100 bg-white hover:border-emerald-500 hover:shadow-xl transition-all group overflow-hidden text-left"
                           >
                              <p className="text-3xl font-black text-slate-800 group-hover:text-emerald-700 transition-colors uppercase">{room.room_number}</p>
-                             <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-2">{room.category || room.category_name || room.room_name}</p>
+                             <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-2">{room.category_label || room.category || room.category_name || room.room_name}</p>
                              <p className="text-xs font-bold text-emerald-600 mt-1">₹{room.base_price || room.price}</p>
                           </button>
                         ))}
                         {filteredRooms.length === 0 && (
                           <div className="col-span-full text-center py-16 space-y-3">
-                            <p className="font-black text-slate-400 uppercase tracking-widest">No rooms of category "{bookingData.category}" at price ₹{bookingData.base_price} available for this date range.</p>
-                            <p className="text-xs text-slate-300 font-medium">All matching rooms may be occupied.</p>
+                            <p className="font-black text-slate-400 uppercase tracking-widest">No rooms of category "{bookingData?.category}" available for these dates.</p>
+                            <p className="text-xs text-slate-300 font-medium">All matching rooms may be occupied or under maintenance.</p>
                           </div>
                         )}
                      </div>
@@ -491,6 +480,7 @@ export const OnlineCheckInFlow = ({ prefillBookingId, onPrefillConsumed }: Onlin
              </Card>
            );
         })()}
+
 
         {currentStep === 4 && (
           <Card className="border-none shadow-2xl rounded-[2rem] overflow-hidden bg-white">

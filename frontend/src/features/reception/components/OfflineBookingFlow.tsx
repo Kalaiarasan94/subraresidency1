@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent } from '../../../components/ui/card';
 import { Button } from '../../../components/ui/button';
 import { 
@@ -7,7 +7,7 @@ import {
   Printer, CheckCircle, ChevronRight,
   IndianRupee, Loader2
 } from 'lucide-react';
-import { checkAvailability, createBooking, BACKEND_URL } from '../../../lib/api';
+import { checkAvailability, createBooking, BACKEND_URL, fetchRoomCategories } from '../../../lib/api';
 
 export const OfflineBookingFlow = () => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -28,6 +28,30 @@ export const OfflineBookingFlow = () => {
   const [additionalNotes, setAdditionalNotes] = useState('');
   const [createdBookingId, setCreatedBookingId] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // External platform booking states
+  const [bookingSource, setBookingSource] = useState('Walk-in'); // 'Walk-in', 'Airbnb', 'Booking.com', 'Agoda', 'Other'
+  const [customSource, setCustomSource] = useState('');
+  const [extReference, setExtReference] = useState('');
+  const [otaAmountPaid, setOtaAmountPaid] = useState('');
+
+  // Category filter states
+  const [categories, setCategories] = useState<any[]>([]);
+  const [categoryFilter, setCategoryFilter] = useState('All Categories');
+
+  useEffect(() => {
+    const loadCategories = async () => {
+      try {
+        const data = await fetchRoomCategories();
+        if (data && Array.isArray(data)) {
+          setCategories(data);
+        }
+      } catch (err) {
+        console.error('Failed to load categories', err);
+      }
+    };
+    loadCategories();
+  }, []);
 
   const steps = [
     { label: 'Availability' },
@@ -101,16 +125,29 @@ export const OfflineBookingFlow = () => {
     setPaymentMethod('Cash Payment');
     setAdditionalNotes('');
     setCreatedBookingId('');
+    setBookingSource('Walk-in');
+    setCustomSource('');
+    setExtReference('');
+    setOtaAmountPaid('');
+    setCategoryFilter('All Categories');
     setCurrentStep(0);
   };
 
   const handleCreateOfflineBooking = async () => {
     setIsSubmitting(true);
-    const cleanedPaymentMethod = paymentMethod
-      .replace(" Payment", "")
-      .replace(" Terminal", "")
-      .replace(" / QR Scan", "")
-      .toLowerCase();
+    const isOTA = bookingSource !== 'Walk-in';
+    const finalSource = bookingSource === 'Other' ? (customSource || 'Other') : bookingSource;
+    
+    const cleanedPaymentMethod = isOTA 
+      ? finalSource.toLowerCase() 
+      : paymentMethod
+        .replace(" Payment", "")
+        .replace(" Terminal", "")
+        .replace(" / QR Scan", "")
+        .replace(" Settlement", "")
+        .toLowerCase();
+
+    const finalAmount = isOTA && otaAmountPaid ? parseFloat(otaAmountPaid) : totalPayable;
 
     const payload = {
       name: formData.name,
@@ -121,12 +158,13 @@ export const OfflineBookingFlow = () => {
       guests: String(formData.guests) + " Guests",
       category_id: selectedRoom.category_id,
       room_id: selectedRoom.id,
-      amount: totalPayable,
-      source: 'reception',
+      amount: finalAmount,
+      source: isOTA ? finalSource.toLowerCase() : 'reception',
+      booking_source: isOTA ? finalSource : 'Walk-in',
       status: 'confirmed',
       payment_status: 'success',
       payment_method: cleanedPaymentMethod,
-      notes: additionalNotes
+      notes: extReference ? `[Ref ID: ${extReference}] ${additionalNotes}` : additionalNotes
     };
 
     try {
@@ -157,6 +195,15 @@ export const OfflineBookingFlow = () => {
   const roomCost = basePricePerNight * nights;
   const tax = Number((roomCost * 0.18).toFixed(2));
   const totalPayable = roomCost + tax;
+
+  const todayStr = new Date().toLocaleDateString('en-CA');
+  const getMinCheckoutStr = () => {
+    if (!formData.checkin) return todayStr;
+    const d = new Date(formData.checkin);
+    d.setDate(d.getDate() + 1);
+    return d.toLocaleDateString('en-CA');
+  };
+  const minCheckoutStr = getMinCheckoutStr();
 
   return (
     <div className="max-w-6xl mx-auto py-4">
@@ -193,12 +240,13 @@ export const OfflineBookingFlow = () => {
                           </div>
                        </div>
 
-                       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                           <div className="space-y-2">
                              <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Check-in Date</label>
                              <input 
                                type="date" 
                                value={formData.checkin}
+                               min={todayStr}
                                onChange={e => setFormData(prev => ({ ...prev, checkin: e.target.value }))}
                                className="w-full bg-slate-50 border-2 border-slate-50 rounded-2xl p-4 text-xs font-bold text-slate-800 focus:border-emerald-500/50 outline-none transition-all" 
                              />
@@ -208,10 +256,24 @@ export const OfflineBookingFlow = () => {
                              <input 
                                type="date" 
                                value={formData.checkout}
+                               min={minCheckoutStr}
                                onChange={e => setFormData(prev => ({ ...prev, checkout: e.target.value }))}
                                className="w-full bg-slate-50 border-2 border-slate-50 rounded-2xl p-4 text-xs font-bold text-slate-800 focus:border-emerald-500/50 outline-none transition-all" 
                              />
                           </div>
+                          <div className="space-y-2">
+                              <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Room Category</label>
+                              <select
+                                value={categoryFilter}
+                                onChange={e => setCategoryFilter(e.target.value)}
+                                className="w-full bg-slate-50 border-2 border-slate-50 rounded-2xl p-4 text-xs font-bold text-slate-800 focus:border-emerald-500/50 outline-none transition-all cursor-pointer"
+                              >
+                                 <option value="All Categories">All Categories</option>
+                                 {categories.map((cat: any) => (
+                                   <option key={cat.id} value={cat.title}>{cat.title}</option>
+                                 ))}
+                              </select>
+                           </div>
                           <div className="flex items-end">
                              <Button 
                                onClick={loadAvailableRooms}
@@ -228,45 +290,50 @@ export const OfflineBookingFlow = () => {
                              <Loader2 className="animate-spin text-emerald-600" size={32} />
                              <span className="text-xs font-bold uppercase tracking-widest">Searching available rooms...</span>
                           </div>
-                       ) : availableRooms.length === 0 ? (
-                          formData.checkin && formData.checkout ? (
-                            <div className="text-center py-20 bg-slate-50 rounded-[2rem] border border-dashed border-slate-200">
-                               <p className="text-sm font-black text-slate-600 uppercase tracking-tight">No Rooms Available</p>
-                               <p className="text-[10px] text-slate-400 mt-2 font-bold">Try changing check-in or checkout dates.</p>
-                            </div>
-                          ) : (
-                            <div className="text-center py-20 bg-slate-50/50 rounded-[2rem] border border-dashed border-slate-200">
-                               <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Select dates above to view availability</p>
-                            </div>
-                          )
-                       ) : (
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
-                             {availableRooms.map((room) => {
-                               const isSel = selectedRoom?.id === room.id;
-                               return (
-                                 <button 
-                                   key={room.id}
-                                   onClick={() => setSelectedRoom(room)} 
-                                   className={`p-6 rounded-3xl border-2 transition-all text-left group ${
-                                      isSel 
-                                        ? 'border-emerald-600 bg-emerald-50/20 shadow-lg' 
-                                        : 'border-slate-50 bg-white hover:border-emerald-500/50 hover:shadow-xl'
-                                   }`}
-                                 >
-                                    <div className="flex justify-between items-start">
-                                       <p className={`text-2xl font-black ${isSel ? 'text-emerald-800' : 'text-slate-800'}`}>{room.room_number}</p>
-                                       <span className="text-[9px] font-black text-emerald-600 bg-emerald-50 px-2 py-1 rounded-lg uppercase tracking-tight">Available</span>
-                                    </div>
-                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-1">{room.category_name}</p>
-                                    <div className="mt-4 flex justify-between items-center">
-                                       <span className="text-xs font-black text-slate-800">₹ {Number(room.base_price).toLocaleString('en-IN')}</span>
-                                       {isSel && <CheckCircle size={16} className="text-emerald-600" />}
-                                    </div>
-                                 </button>
-                               );
-                             })}
-                          </div>
-                       )}
+                       ) : (() => {
+                           const filteredAvailableRooms = availableRooms.filter(room => {
+                             if (categoryFilter === 'All Categories') return true;
+                             return String(room.category_name || room.room_name || '').toLowerCase().trim() === categoryFilter.toLowerCase().trim();
+                           });
+
+                           if (filteredAvailableRooms.length === 0) {
+                             return (
+                               <div className="text-center py-20 bg-slate-50 rounded-[2rem] border border-dashed border-slate-200">
+                                  <p className="text-sm font-black text-slate-600 uppercase tracking-tight">No Rooms in category "{categoryFilter}"</p>
+                                  <p className="text-[10px] text-slate-400 mt-2 font-bold">Try selecting another category or check-in/out dates.</p>
+                               </div>
+                             );
+                           }
+
+                           return (
+                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
+                                {filteredAvailableRooms.map((room) => {
+                                  const isSel = selectedRoom?.id === room.id;
+                                  return (
+                                    <button 
+                                      key={room.id}
+                                      onClick={() => setSelectedRoom(room)} 
+                                      className={`p-6 rounded-3xl border-2 transition-all text-left group ${
+                                         isSel 
+                                           ? 'border-emerald-600 bg-emerald-50/20 shadow-lg' 
+                                           : 'border-slate-50 bg-white hover:border-emerald-500/50 hover:shadow-xl'
+                                      }`}
+                                    >
+                                       <div className="flex justify-between items-start">
+                                          <p className={`text-2xl font-black ${isSel ? 'text-emerald-800' : 'text-slate-800'}`}>{room.room_number}</p>
+                                          <span className="text-[9px] font-black text-emerald-600 bg-emerald-50 px-2 py-1 rounded-lg uppercase tracking-tight">Available</span>
+                                       </div>
+                                       <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-1">{room.category_label || room.category_name}</p>
+                                       <div className="mt-4 flex justify-between items-center">
+                                          <span className="text-xs font-black text-slate-800">₹ {Number(room.base_price).toLocaleString('en-IN')}</span>
+                                          {isSel && <CheckCircle size={16} className="text-emerald-600" />}
+                                       </div>
+                                    </button>
+                                  );
+                                })}
+                             </div>
+                           );
+                        })()}
                     </div>
                   )}
 
@@ -311,18 +378,80 @@ export const OfflineBookingFlow = () => {
                              />
                           </div>
                           <div className="space-y-2">
-                             <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest font-bold">Primary ID Type</label>
-                             <select 
-                               value={formData.idType}
-                               onChange={e => setFormData(prev => ({ ...prev, idType: e.target.value }))}
-                               className="w-full bg-slate-50 border-2 border-slate-50 rounded-2xl p-4 text-xs font-bold text-slate-800 focus:border-emerald-500/50 outline-none transition-all"
-                             >
-                                <option>Aadhar Card</option>
-                                <option>Passport</option>
-                                <option>Driving License</option>
-                                <option>Voter ID</option>
-                             </select>
-                          </div>
+                              <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest font-bold">Primary ID Type</label>
+                              <select 
+                                value={formData.idType}
+                                onChange={e => setFormData(prev => ({ ...prev, idType: e.target.value }))}
+                                className="w-full bg-slate-50 border-2 border-slate-50 rounded-2xl p-4 text-xs font-bold text-slate-800 focus:border-emerald-500/50 outline-none transition-all"
+                              >
+                                 <option>Aadhar Card</option>
+                                 <option>Passport</option>
+                                 <option>Driving License</option>
+                                 <option>Voter ID</option>
+                              </select>
+                           </div>
+
+                           <div className="space-y-2">
+                              <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest font-bold">Booking Source / Channel</label>
+                              <select 
+                                value={bookingSource}
+                                onChange={e => {
+                                  const val = e.target.value;
+                                  setBookingSource(val);
+                                  if (val !== 'Walk-in') {
+                                    setPaymentMethod('Platform Settlement');
+                                    setOtaAmountPaid(String(totalPayable));
+                                  } else {
+                                    setPaymentMethod('Cash Payment');
+                                    setOtaAmountPaid('');
+                                  }
+                                }}
+                                className="w-full bg-slate-50 border-2 border-slate-50 rounded-2xl p-4 text-xs font-bold text-slate-800 focus:border-emerald-500/50 outline-none transition-all"
+                              >
+                                 <option value="Walk-in">Walk-in (Direct)</option>
+                                 <option value="Airbnb">Airbnb</option>
+                                 <option value="Booking.com">Booking.com</option>
+                                 <option value="Agoda">Agoda</option>
+                                 <option value="Other">Other Platform</option>
+                              </select>
+                           </div>
+
+                           {bookingSource === 'Other' && (
+                             <div className="space-y-2">
+                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest font-bold">Specify Platform Name</label>
+                                <input 
+                                  value={customSource}
+                                  onChange={e => setCustomSource(e.target.value)}
+                                  className="w-full bg-slate-50 border-2 border-slate-50 rounded-2xl p-4 text-xs font-bold text-slate-800 focus:border-emerald-500/50 outline-none transition-all"
+                                  placeholder="e.g. Expedia, MakeMyTrip" 
+                                />
+                             </div>
+                           )}
+
+                           {bookingSource !== 'Walk-in' && (
+                             <>
+                               <div className="space-y-2">
+                                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest font-bold">Platform Booking Reference ID</label>
+                                  <input 
+                                    value={extReference}
+                                    onChange={e => setExtReference(e.target.value)}
+                                    className="w-full bg-slate-50 border-2 border-slate-50 rounded-2xl p-4 text-xs font-bold text-slate-800 focus:border-emerald-500/50 outline-none transition-all"
+                                    placeholder="e.g. HM32414A" 
+                                  />
+                               </div>
+                               <div className="space-y-2">
+                                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest font-bold">Amount Paid to Platform (₹)</label>
+                                  <input 
+                                    type="number"
+                                    value={otaAmountPaid}
+                                    onChange={e => setOtaAmountPaid(e.target.value)}
+                                    placeholder={String(totalPayable)}
+                                    className="w-full bg-slate-50 border-2 border-slate-50 rounded-2xl p-4 text-xs font-bold text-slate-800 focus:border-emerald-500/50 outline-none transition-all" 
+                                  />
+                               </div>
+                             </>
+                           )}
+
                           <div className="space-y-2">
                              <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Total Guests (Adults + Kids)</label>
                              <div className="flex items-center gap-4">
@@ -397,30 +526,37 @@ export const OfflineBookingFlow = () => {
                        </div>
                        <h2 className="text-3xl font-black text-slate-800 uppercase tracking-tighter">Settlement</h2>
                        <div className="max-w-sm mx-auto space-y-6">
-                          <div className="flex flex-col gap-2">
-                             <label className="text-[10px] font-black text-slate-400 uppercase text-left tracking-widest">Payment Method</label>
-                             <select 
-                               value={paymentMethod}
-                               onChange={e => setPaymentMethod(e.target.value)}
-                               className="w-full bg-slate-50 border-2 border-slate-50 rounded-2xl p-4 text-xs font-bold text-slate-800 outline-none"
-                             >
-                                <option>Cash Payment</option>
-                                <option>Card Terminal</option>
-                                <option>UPI / QR Scan</option>
-                             </select>
-                          </div>
-                          <div className="flex flex-col gap-2">
-                             <label className="text-[10px] font-black text-slate-400 uppercase text-left tracking-widest font-bold">Total Amount Received</label>
-                             <div className="relative">
-                                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">₹</span>
-                                <input 
-                                  readOnly
-                                  className="w-full bg-slate-50 border-2 border-slate-50 rounded-2xl p-4 pl-8 text-xs font-bold text-emerald-700 outline-none" 
-                                  value={totalPayable.toLocaleString('en-IN')} 
-                                />
-                             </div>
-                          </div>
-                       </div>
+                           <div className="flex flex-col gap-2">
+                              <label className="text-[10px] font-black text-slate-400 uppercase text-left tracking-widest">Payment Method</label>
+                              <select 
+                                value={paymentMethod}
+                                onChange={e => setPaymentMethod(e.target.value)}
+                                disabled={bookingSource !== 'Walk-in'}
+                                className="w-full bg-slate-50 border-2 border-slate-50 rounded-2xl p-4 text-xs font-bold text-slate-800 outline-none disabled:opacity-75 disabled:cursor-not-allowed"
+                              >
+                                 {bookingSource !== 'Walk-in' ? (
+                                   <option>Platform Settlement</option>
+                                 ) : (
+                                   <>
+                                     <option>Cash Payment</option>
+                                     <option>Card Terminal</option>
+                                     <option>UPI / QR Scan</option>
+                                   </>
+                                 )}
+                              </select>
+                           </div>
+                           <div className="flex flex-col gap-2">
+                              <label className="text-[10px] font-black text-slate-400 uppercase text-left tracking-widest font-bold">Total Amount Received</label>
+                              <div className="relative">
+                                 <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">₹</span>
+                                 <input 
+                                   readOnly
+                                   className="w-full bg-slate-50 border-2 border-slate-50 rounded-2xl p-4 pl-8 text-xs font-bold text-emerald-700 outline-none" 
+                                   value={(bookingSource !== 'Walk-in' && otaAmountPaid ? parseFloat(otaAmountPaid) : totalPayable).toLocaleString('en-IN')} 
+                                 />
+                              </div>
+                           </div>
+                        </div>
                     </div>
                   )}
 

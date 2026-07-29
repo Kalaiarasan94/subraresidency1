@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { 
   Hotel, Calendar, Settings, 
   LayoutDashboard, LogOut, Menu, X, CreditCard,
-  BarChart3, Layout, PieChart, Mail, Users
+  Layout, PieChart, Mail, Users
 } from 'lucide-react';
 import { CategoryManagement } from './components/CategoryManagement';
 import { BookingManagement } from './components/BookingManagement';
@@ -56,10 +56,32 @@ export const AdminPortal = () => {
     <div className="min-h-screen bg-slate-50/60 flex font-sans selection:bg-indigo-100 selection:text-indigo-900 admin-portal-theme">
       {/* Sidebar */}
       <aside className={`bg-[#0f172a] text-white transition-all duration-300 flex flex-col fixed h-full z-50 shadow-xl border-r border-slate-800/20 ${isSidebarOpen ? 'w-64' : 'w-20'}`}>
-        <div className="p-6 flex items-center gap-3 border-b border-slate-800/50">
-          <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-indigo-600 flex items-center justify-center text-white font-black text-xl rounded-xl shadow-lg shadow-indigo-500/20 border border-indigo-400/20">S</div>
-          {isSidebarOpen && <span className="font-extrabold text-sm tracking-[0.2em] text-slate-100 uppercase">SUBRA SYSTEM</span>}
-        </div>
+        {isSidebarOpen ? (
+          /* Expanded header: logo + name + collapse button */
+          <div className="px-5 py-4 flex items-center justify-between gap-3 border-b border-slate-800/50">
+            <div className="flex items-center gap-3 min-w-0">
+              <div className="w-9 h-9 shrink-0 bg-gradient-to-br from-indigo-500 to-indigo-600 flex items-center justify-center text-white font-black text-lg rounded-xl shadow-lg shadow-indigo-500/20 border border-indigo-400/20">S</div>
+              <span className="font-extrabold text-sm tracking-[0.2em] text-slate-100 uppercase truncate">SUBRA SYSTEM</span>
+            </div>
+            <button
+              onClick={() => setIsSidebarOpen(false)}
+              className="shrink-0 p-1.5 bg-slate-800/60 hover:bg-slate-700/60 rounded-lg text-slate-400 hover:text-slate-100 transition-all border border-slate-700/40"
+            >
+              <X size={14} />
+            </button>
+          </div>
+        ) : (
+          /* Collapsed header: single centered toggle button */
+          <div className="py-4 flex items-center justify-center border-b border-slate-800/50">
+            <button
+              onClick={() => setIsSidebarOpen(true)}
+              className="p-2 bg-slate-800/60 hover:bg-slate-700/60 rounded-lg text-slate-400 hover:text-slate-100 transition-all border border-slate-700/40"
+            >
+              <Menu size={16} />
+            </button>
+          </div>
+        )}
+
 
         <nav className="flex-grow p-4 space-y-6 overflow-y-auto custom-scrollbar">
           {/* Section: Intelligence */}
@@ -73,7 +95,6 @@ export const AdminPortal = () => {
             <div className="space-y-1">
               {[
                 { id: 'dashboard', icon: LayoutDashboard, label: 'Analytics Hub' },
-                { id: 'reports', icon: BarChart3, label: 'System Reports' },
               ].map((item: any) => (
                 <SidebarItem 
                    key={item.id} 
@@ -96,7 +117,6 @@ export const AdminPortal = () => {
             )}
             <div className="space-y-1">
               {[
-                { id: 'booking_mgmt', icon: Calendar, label: 'Booking Control' },
                 { id: 'rooms', icon: Hotel, label: 'Room Manager' },
                 { id: 'calendar', icon: Calendar, label: 'Live Inventory' },
                 { id: 'bookings', icon: CreditCard, label: 'Transactions' },
@@ -148,18 +168,10 @@ export const AdminPortal = () => {
       <main className={`flex-grow transition-all duration-300 ${isSidebarOpen ? 'ml-64' : 'ml-20'}`}>
         <header className="h-20 bg-white/70 backdrop-blur-md border-b border-slate-200/50 px-8 flex items-center justify-between sticky top-0 z-40">
           <div className="flex items-center gap-4">
-            <button 
-              onClick={() => setIsSidebarOpen(!isSidebarOpen)} 
-              className="p-2.5 bg-slate-100/60 hover:bg-slate-100 rounded-xl text-slate-500 hover:text-indigo-600 transition-all border border-slate-200/40"
-            >
-              {isSidebarOpen ? <X size={18} /> : <Menu size={18} />}
-            </button>
             <h2 className="text-xs font-black text-slate-800 uppercase tracking-[0.15em]">
                {activeTab === 'rooms' && showCreateRoom ? 'Configure Room' : 
                 activeTab === 'calendar' ? 'Inventory Calendar' : 
                 activeTab === 'dashboard' ? 'Business Intelligence' : 
-                activeTab === 'reports' ? 'Operational Reports' :
-                activeTab === 'booking_mgmt' ? 'Booking & Room Control' :
                 activeTab === 'bookings' ? 'Financial Hub' :
                 activeTab === 'website' ? 'Interface Management' :
                 activeTab === 'settings' ? 'System Configuration' : activeTab}
@@ -182,8 +194,6 @@ export const AdminPortal = () => {
         <div className="p-8 max-w-7xl mx-auto pb-20">
           {activeTab === 'dashboard' && <AdminDashboardView activeSubTab={dashboardView} onNavigate={setActiveTab} />}
           
-          {activeTab === 'reports' && <AdminDashboardView activeSubTab="finance" onNavigate={setActiveTab} />}
-          {activeTab === 'booking_mgmt' && <AdminDashboardView activeSubTab="rooms" onNavigate={setActiveTab} />}
           {activeTab === 'bookings' && <AdminDashboardView activeSubTab="finance" onNavigate={setActiveTab} />}
           {activeTab === 'website' && <AdminSettingsView />}
 

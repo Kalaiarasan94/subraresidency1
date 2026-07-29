@@ -34,8 +34,8 @@ try {
     $db->beginTransaction();
 
     // Fetch booking to make sure it exists
-    $stmt = $db->prepare("SELECT id FROM bookings WHERE booking_id = ? LIMIT 1");
-    $stmt->execute([$booking_id]);
+    $stmt = $db->prepare("SELECT id FROM bookings WHERE booking_id = ? OR id = ? LIMIT 1");
+    $stmt->execute([$booking_id, $booking_id]);
     $booking = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if (!$booking) {

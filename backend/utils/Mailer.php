@@ -159,14 +159,18 @@ class Mailer {
         try {
             $env = self::getEnvVars();
             $appUrl = rtrim(($env['APP_URL'] ?? 'http://localhost/subraresidency1'), '/');
-            $slipPng = BookingSlipGenerator::generate($bookingId, $toName, $checkIn, $checkOut, $amount, $roomName, 'Payment Successful', $appUrl);
-            if ($slipPng) {
-                $attachments[] = [
-                    'name' => "BookingSlip-{$bookingId}.png",
-                    'content' => base64_encode($slipPng)
-                ];
+            if (function_exists('imagecreatetruecolor')) {
+                $slipPng = BookingSlipGenerator::generate($bookingId, $toName, $checkIn, $checkOut, $amount, $roomName, 'Payment Successful', $appUrl);
+                if ($slipPng) {
+                    $attachments[] = [
+                        'name' => "BookingSlip-{$bookingId}.png",
+                        'content' => base64_encode($slipPng)
+                    ];
+                }
+            } else {
+                error_log("[Mailer] GD extension not loaded. Skipping PNG booking slip attachment.");
             }
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             error_log("[Mailer] Booking slip generation failed: " . $e->getMessage());
         }
 
@@ -278,6 +282,8 @@ class Mailer {
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 6); // 6 seconds connection timeout
+        curl_setopt($ch, CURLOPT_TIMEOUT, 12);        // 12 seconds execution timeout
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
             'api-key: ' . $apiKey,
             'Content-Type: application/json',

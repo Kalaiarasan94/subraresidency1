@@ -148,7 +148,7 @@ export const StayLogs = () => {
                     <Hotel size={13} className="text-slate-300" />
                     Room&nbsp;
                     <span className="font-black text-slate-800">
-                      {log.room_number ?? 'TBD'}
+                      {log.status === 'confirmed' ? 'Pending' : (log.room_number ?? 'TBD')}
                     </span>
                   </div>
 

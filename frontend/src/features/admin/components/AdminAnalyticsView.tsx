@@ -96,7 +96,7 @@ export const AdminAnalyticsView = () => {
                </div>
             </CardHeader>
             <CardContent className="h-80">
-               <ResponsiveContainer width="100%" height="100%">
+               <ResponsiveContainer width="100%" height="100%" minWidth={0}>
                   <AreaChart data={data.chart_data}>
                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
                      <XAxis dataKey="day" axisLine={false} tickLine={false} tick={{fontSize: 12}} />
@@ -113,7 +113,7 @@ export const AdminAnalyticsView = () => {
                <CardTitle className="text-sm font-black uppercase text-slate-800">Occupancy by Category</CardTitle>
             </CardHeader>
             <CardContent className="h-80">
-               <ResponsiveContainer width="100%" height="100%">
+               <ResponsiveContainer width="100%" height="100%" minWidth={0}>
                   <BarChart data={[
                     { name: 'Deluxe', value: 85 },
                     { name: 'Suite', value: 92 },
@@ -134,7 +134,7 @@ export const AdminAnalyticsView = () => {
          <Card className="border-none shadow-sm">
             <CardHeader><CardTitle className="text-sm font-black uppercase text-slate-800">Payment Channels</CardTitle></CardHeader>
             <CardContent className="h-64">
-               <ResponsiveContainer width="100%" height="100%">
+               <ResponsiveContainer width="100%" height="100%" minWidth={0}>
                   <PieChart>
                      <Pie data={[{n:'UPI', v:65}, {n:'Card', v:25}, {n:'Cash', v:10}]} dataKey="v" nameKey="n" innerRadius={60} outerRadius={80}>
                         {COLORS.map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}

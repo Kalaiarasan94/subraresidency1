@@ -27,6 +27,15 @@ export const RoomBookingFlow = ({ isOpen, onClose, room }: { isOpen: boolean, on
   const [activeImage, setActiveImage] = useState(0);
   const navigate = useNavigate();
 
+  const todayStr = new Date().toLocaleDateString('en-CA');
+  const getMinCheckoutStr = () => {
+    if (!bookingDetails.checkIn) return todayStr;
+    const d = new Date(bookingDetails.checkIn);
+    d.setDate(d.getDate() + 1);
+    return d.toLocaleDateString('en-CA');
+  };
+  const minCheckoutStr = getMinCheckoutStr();
+
   useEffect(() => {
     if (isOpen) {
       setStep('details');
@@ -273,6 +282,7 @@ export const RoomBookingFlow = ({ isOpen, onClose, room }: { isOpen: boolean, on
                     <input 
                       type="date" 
                       value={bookingDetails.checkIn}
+                      min={todayStr}
                       onChange={(e) => setBookingDetails({...bookingDetails, checkIn: e.target.value})}
                       className="w-full bg-brand-cream/30 border border-catalogue-gold/20 p-3 text-sm focus:outline-none focus:border-catalogue-gold" 
                     />
@@ -282,6 +292,7 @@ export const RoomBookingFlow = ({ isOpen, onClose, room }: { isOpen: boolean, on
                     <input 
                       type="date" 
                       value={bookingDetails.checkOut}
+                      min={minCheckoutStr}
                       onChange={(e) => setBookingDetails({...bookingDetails, checkOut: e.target.value})}
                       className="w-full bg-brand-cream/30 border border-catalogue-gold/20 p-3 text-sm focus:outline-none focus:border-catalogue-gold" 
                     />

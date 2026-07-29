@@ -36,6 +36,7 @@ export default {
         }
       },
       fontFamily: {
+        sans: ['Inter', 'sans-serif'],
         playfair: ['"Playfair Display"', 'serif'],
         cormorant: ['"Cormorant Garamond"', 'serif'],
         cinzel: ['Cinzel', 'serif'],

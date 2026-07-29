@@ -222,6 +222,9 @@ export const AboutPage = ({ onSelectTemple }: { onSelectTemple: (temple: any) =>
               <motion.div 
                 key={i} 
                 variants={fadeInUp} 
+                initial="initial"
+                animate="animate"
+                transition={{ duration: 0.6, delay: i * 0.08 }}
                 whileHover={{ y: -10, scale: 1.015 }} 
                 onClick={() => onSelectTemple(temple)}
                 className="animated-card bg-card-ivory p-8 border border-catalogue-gold/10 flex flex-col h-full ornate-shape ornate-border shadow-lg group cursor-pointer"

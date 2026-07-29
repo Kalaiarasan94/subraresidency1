@@ -7,7 +7,7 @@ import { Button } from '../../../components/ui/button';
 import { Card, CardContent } from '../../../components/ui/card';
 import { Badge } from '../../../components/ui/badge';
 import { useState, useEffect } from 'react';
-import { fetchRoomAvailability, API_BASE_URL } from '../../../lib/api';
+import { fetchRoomAvailability, fetchRoomCategories, checkAvailability, API_BASE_URL } from '../../../lib/api';
 
 interface Props {
   room: any;
@@ -46,6 +46,7 @@ export const RoomDetailPage: React.FC<Props> = ({ room, onBack, onBook, searchFi
   // seeded from searchFilters when available, otherwise today/tomorrow.
   const [localCheckIn, setLocalCheckIn] = useState(searchFilters?.checkIn || today);
   const [localCheckOut, setLocalCheckOut] = useState(searchFilters?.checkOut || tomorrow);
+  const [activeInput, setActiveInput] = useState<'checkIn' | 'checkOut'>('checkIn');
 
   const minCheckOut = (() => {
     const d = new Date(localCheckIn || today);
@@ -70,19 +71,19 @@ export const RoomDetailPage: React.FC<Props> = ({ room, onBack, onBook, searchFi
       return;
     }
 
-    // Simple range selector logic
-    if (localCheckIn && (!localCheckOut || dateStr > localCheckIn)) {
-      // If check-out is already set, or we click a date after check-in, set it as check-out.
-      // But if we clicked check-in again, or clicked to reset the check-in
-      if (dateStr === localCheckIn) {
-        return;
-      }
-      setLocalCheckOut(dateStr);
+    if (activeInput === 'checkIn') {
+      handleCheckInChange(dateStr);
+      setActiveInput('checkOut');
     } else {
-      setLocalCheckIn(dateStr);
-      const d = new Date(dateStr);
-      d.setDate(d.getDate() + 1);
-      setLocalCheckOut(toISODate(d));
+      // activeInput is 'checkOut'
+      if (dateStr > localCheckIn) {
+        setLocalCheckOut(dateStr);
+        setActiveInput('checkIn');
+      } else {
+        // If clicked date is before or equal to check-in, set it as check-in instead
+        handleCheckInChange(dateStr);
+        setActiveInput('checkOut');
+      }
     }
   };
 
@@ -107,13 +108,48 @@ export const RoomDetailPage: React.FC<Props> = ({ room, onBack, onBook, searchFi
   // Fetch sub-rooms for the category
   useEffect(() => {
     const fetchSubRooms = async () => {
-      if (!room || !room.id) return;
+      if (!room) return;
       setLoadingSubRooms(true);
       try {
-        const response = await fetch(`${API_BASE_URL}/rooms/subRooms?category_id=${room.id}`);
+        let categoryId = room.id;
+        
+        // If categoryId is not a number, fetch categories to match by title
+        if (isNaN(Number(categoryId))) {
+          const categories = await fetchRoomCategories();
+          if (Array.isArray(categories)) {
+            const matched = categories.find((c: any) => 
+              String(c.name || c.title || '').toLowerCase().trim().includes(String(room.title || room.name || '').toLowerCase().trim()) ||
+              String(room.title || room.name || '').toLowerCase().trim().includes(String(c.name || c.title || '').toLowerCase().trim())
+            );
+            if (matched) {
+              categoryId = matched.id;
+            }
+          }
+        }
+
+        if (!categoryId || isNaN(Number(categoryId))) {
+          setLoadingSubRooms(false);
+          return;
+        }
+
+        const response = await fetch(`${API_BASE_URL}/rooms/subRooms?category_id=${categoryId}`);
         const json = await response.json();
         if (json.status === 'success' && Array.isArray(json.rooms)) {
           setSubRooms(json.rooms);
+          
+          // Query checkAvailability for checkIn/checkOut to find an actually available room
+          const availJson = await checkAvailability(localCheckIn, localCheckOut);
+          if (availJson && availJson.status === 'success' && Array.isArray(availJson.rooms)) {
+            const availRoomIds = new Set(availJson.rooms.map((r: any) => Number(r.id)));
+            // Find the first subroom under this category that is actually available
+            const firstAvail = json.rooms.find((sub: any) => availRoomIds.has(Number(sub.id)));
+            if (firstAvail) {
+              setSelectedSubRoomId(firstAvail.id);
+              setLoadingSubRooms(false);
+              return;
+            }
+          }
+          
           if (json.rooms.length > 0) {
             setSelectedSubRoomId(json.rooms[0].id);
           }
@@ -125,7 +161,7 @@ export const RoomDetailPage: React.FC<Props> = ({ room, onBack, onBook, searchFi
       }
     };
     fetchSubRooms();
-  }, [room.id]);
+  }, [room, localCheckIn, localCheckOut]);
 
   useEffect(() => {
     const load = async () => {
@@ -386,7 +422,13 @@ export const RoomDetailPage: React.FC<Props> = ({ room, onBack, onBook, searchFi
                             value={localCheckIn}
                             min={today}
                             onChange={(e) => handleCheckInChange(e.target.value)}
-                            className="w-full bg-white border border-slate-200 rounded-lg py-2 pl-7 pr-1 text-[11px] font-bold text-slate-800 font-sans focus:outline-none focus:ring-2 focus:ring-catalogue-gold/30"
+                            onFocus={() => setActiveInput('checkIn')}
+                            onClick={() => setActiveInput('checkIn')}
+                            className={`w-full border rounded-lg py-2 pl-7 pr-1 text-[11px] font-bold text-slate-800 font-sans focus:outline-none transition-all duration-200 ${
+                              activeInput === 'checkIn'
+                                ? 'bg-catalogue-gold/5 border-catalogue-gold ring-2 ring-catalogue-gold/20'
+                                : 'bg-white border-slate-200 focus:ring-2 focus:ring-catalogue-gold/30'
+                            }`}
                           />
                         </div>
                       </div>
@@ -399,7 +441,13 @@ export const RoomDetailPage: React.FC<Props> = ({ room, onBack, onBook, searchFi
                             value={localCheckOut}
                             min={minCheckOut}
                             onChange={(e) => setLocalCheckOut(e.target.value)}
-                            className="w-full bg-white border border-slate-200 rounded-lg py-2 pl-7 pr-1 text-[11px] font-bold text-slate-800 font-sans focus:outline-none focus:ring-2 focus:ring-catalogue-gold/30"
+                            onFocus={() => setActiveInput('checkOut')}
+                            onClick={() => setActiveInput('checkOut')}
+                            className={`w-full border rounded-lg py-2 pl-7 pr-1 text-[11px] font-bold text-slate-800 font-sans focus:outline-none transition-all duration-200 ${
+                              activeInput === 'checkOut'
+                                ? 'bg-catalogue-gold/5 border-catalogue-gold ring-2 ring-catalogue-gold/20'
+                                : 'bg-white border-slate-200 focus:ring-2 focus:ring-catalogue-gold/30'
+                            }`}
                           />
                         </div>
                       </div>

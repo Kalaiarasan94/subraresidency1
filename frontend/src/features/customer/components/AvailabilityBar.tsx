@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Search, Calendar, Users, ChevronDown } from 'lucide-react';
 import { Button } from '../../../components/ui/button';
+import { API_BASE_URL } from '../../../lib/api';
+
 export const AvailabilityBar = ({ onSearch }: { onSearch?: (filters: any) => void }) => {
   const today = new Date().toISOString().split('T')[0];
   const [guests, setGuests] = useState('2 Guests');
@@ -9,6 +11,45 @@ export const AvailabilityBar = ({ onSearch }: { onSearch?: (filters: any) => voi
   // silently default to the same day as check-in.
   const [checkOut, setCheckOut] = useState('');
   const [error, setError] = useState('');
+  const [guestOptions, setGuestOptions] = useState<number[]>([1, 2, 3, 4]);
+
+  // Fetch room categories to derive dynamic min→max guest count
+  useEffect(() => {
+    const fetchGuestRange = async () => {
+      try {
+        const res = await fetch(`${API_BASE_URL}/rooms/categories`);
+        const data = await res.json();
+        if (Array.isArray(data) && data.length > 0) {
+          // adults field comes from adults_count, max_guests may also be present
+          const counts: number[] = data.flatMap((room: any) => {
+            const vals: number[] = [];
+            if (room.adults) vals.push(Number(room.adults));
+            if (room.max_guests) vals.push(Number(room.max_guests));
+            return vals;
+          }).filter(n => n > 0);
+
+          if (counts.length > 0) {
+            const minGuests = Math.min(...counts);
+            const maxGuests = Math.max(...counts);
+            // Build 1..max range starting from 1 (always allow at least 1 guest)
+            const range: number[] = [];
+            for (let i = Math.min(1, minGuests); i <= maxGuests; i++) {
+              range.push(i);
+            }
+            setGuestOptions(range);
+            // Default to minGuests if current default is out of range
+            if (minGuests > 1) {
+              setGuests(`${minGuests} Guests`);
+            }
+          }
+        }
+      } catch (e) {
+        // Silently fall back to static options if API fails
+        console.warn('Could not load guest range from API:', e);
+      }
+    };
+    fetchGuestRange();
+  }, []);
 
   const minCheckOut = (() => {
     const base = checkIn || today;
@@ -77,10 +118,11 @@ export const AvailabilityBar = ({ onSearch }: { onSearch?: (filters: any) => voi
             onChange={(e) => setGuests(e.target.value)}
             className="w-full bg-brand-cream/50 border border-catalogue-gold/10 p-3 pl-10 text-sm focus:outline-none focus:border-catalogue-gold appearance-none font-playfair"
           >
-            <option value="1 Guest">1 Guest</option>
-            <option value="2 Guests">2 Guests</option>
-            <option value="3 Guests">3 Guests</option>
-            <option value="4 Guests">4+ Guests</option>
+            {guestOptions.map(n => (
+              <option key={n} value={n === 1 ? '1 Guest' : `${n} Guests`}>
+                {n === 1 ? '1 Guest' : `${n} Guests`}
+              </option>
+            ))}
           </select>
           <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-catalogue-gold pointer-events-none" size={16} />
         </div>
@@ -99,6 +141,3 @@ export const AvailabilityBar = ({ onSearch }: { onSearch?: (filters: any) => voi
     </div>
   );
 };
-
-
-

@@ -8,7 +8,7 @@ import { fadeInUp } from './animations';
 import { ROOMS_DATA } from './data';
 import { OrnateDivider } from './OrnateDivider';
 import { SectionWrapper, DecorativeLayout } from './Layout';
-import { fetchRoomCategories } from '../../../lib/api';
+import { fetchRoomCategories, checkAvailability } from '../../../lib/api';
 
 export const RoomsPage = ({ 
   onBookRoom, 
@@ -22,6 +22,7 @@ export const RoomsPage = ({
   setSearchFilters?: (filters: any) => void;
 }) => {
   const [displayRooms, setDisplayRooms] = useState<any[]>(ROOMS_DATA);
+  const [guestOptions, setGuestOptions] = useState<number[]>([1, 2, 3, 4]);
 
   useEffect(() => {
     const loadRooms = async () => {
@@ -29,20 +30,36 @@ export const RoomsPage = ({
         const data = await fetchRoomCategories();
         const baseRooms = (data && Array.isArray(data) && data.length > 0) ? data : ROOMS_DATA;
 
+        const selectedGuestsCount = parseInt(searchFilters?.guests || '2') || 2;
+
         if (searchFilters?.checkIn && searchFilters?.checkOut) {
-          const apiBase = import.meta.env.VITE_API_BASE_URL || 'http://localhost/subraresidency1/backend/api/index.php';
-          const response = await fetch(`${apiBase}/rooms/checkAvailability?checkin=${searchFilters.checkIn}&checkout=${searchFilters.checkOut}`);
-          if (response.ok) {
-            const result = await response.json();
-            if (result && result.status === 'success' && Array.isArray(result.rooms)) {
-              const availableCategoryIds = new Set(result.rooms.map((r: any) => Number(r.category_id)));
-              const filtered = baseRooms.filter((room: any) => availableCategoryIds.has(Number(room.id)));
-              setDisplayRooms(filtered);
-              return;
-            }
+          const result = await checkAvailability(searchFilters.checkIn, searchFilters.checkOut);
+          if (result && result.status === 'success' && Array.isArray(result.rooms)) {
+            const availableCategoryIds = new Set(result.rooms.map((r: any) => Number(r.category_id)));
+            const filtered = baseRooms.filter((room: any) => {
+              // 1. Filter by guest count
+              const roomMaxGuests = Number(room.max_guests || room.adults || 2);
+              if (roomMaxGuests < selectedGuestsCount) return false;
+
+              // 2. Filter by date availability
+              const matchesId = availableCategoryIds.has(Number(room.id));
+              const roomTitle = String(room.title || room.name || '').toLowerCase().trim();
+              const matchesTitle = result.rooms.some((r: any) => {
+                const catLabel = String(r.category_label || r.category_name || '').toLowerCase().trim();
+                return roomTitle === catLabel;
+              });
+              return matchesId || matchesTitle;
+            });
+            setDisplayRooms(filtered);
+            return;
           }
         }
-        setDisplayRooms(baseRooms);
+        
+        const filtered = baseRooms.filter((room: any) => {
+          const roomMaxGuests = Number(room.max_guests || room.adults || 2);
+          return roomMaxGuests >= selectedGuestsCount;
+        });
+        setDisplayRooms(filtered);
       } catch (err) {
         console.error('Failed to load available rooms', err);
         setDisplayRooms(ROOMS_DATA);
@@ -51,7 +68,86 @@ export const RoomsPage = ({
     loadRooms();
   }, [searchFilters]);
 
-  // Helper to format price without double rupee
+  // Recompute guest options whenever rooms change
+  useEffect(() => {
+    if (displayRooms.length > 0) {
+      const counts: number[] = displayRooms.flatMap((room: any) => {
+        const vals: number[] = [];
+        if (room.adults) vals.push(Number(room.adults));
+        if (room.max_guests) vals.push(Number(room.max_guests));
+        return vals;
+      }).filter(n => n > 0);
+      if (counts.length > 0) {
+        const maxGuests = Math.max(...counts);
+        const range: number[] = [];
+        for (let i = 1; i <= maxGuests; i++) range.push(i);
+        setGuestOptions(range);
+      }
+    }
+  }, [displayRooms]);
+
+  const todayStr = new Date().toLocaleDateString('en-CA');
+  const effectiveFilters = searchFilters || {
+    checkIn: todayStr,
+    checkOut: (() => { const d = new Date(); d.setDate(d.getDate() + 1); return d.toLocaleDateString('en-CA'); })(),
+    guests: '2 Guests'
+  };
+
+  const formatGuests = (g: any) => {
+    if (!g) return '2 Guests';
+    const num = parseInt(g);
+    if (isNaN(num)) return String(g);
+    return num === 1 ? '1 Guest' : `${num} Guests`;
+  };
+
+  const [localCheckIn, setLocalCheckIn] = useState(effectiveFilters.checkIn);
+  const [localCheckOut, setLocalCheckOut] = useState(effectiveFilters.checkOut);
+  const [localGuests, setLocalGuests] = useState(formatGuests(effectiveFilters.guests));
+
+  useEffect(() => {
+    if (searchFilters) {
+      setLocalCheckIn(searchFilters.checkIn);
+      setLocalCheckOut(searchFilters.checkOut);
+      setLocalGuests(formatGuests(searchFilters.guests));
+    }
+  }, [searchFilters]);
+
+  const handleLocalCheckInChange = (val: string) => {
+    setLocalCheckIn(val);
+    const d = new Date(val);
+    d.setDate(d.getDate() + 1);
+    const minOut = d.toLocaleDateString('en-CA');
+    if (!localCheckOut || localCheckOut <= val) {
+      setLocalCheckOut(minOut);
+    }
+  };
+
+  const getLocalMinCheckoutStr = () => {
+    if (!localCheckIn) return todayStr;
+    const d = new Date(localCheckIn);
+    d.setDate(d.getDate() + 1);
+    return d.toLocaleDateString('en-CA');
+  };
+  const localMinCheckoutStr = getLocalMinCheckoutStr();
+
+  const handleConfirm = () => {
+    if (!localCheckIn || !localCheckOut) {
+      alert("Please select both check-in and check-out dates.");
+      return;
+    }
+    if (localCheckOut <= localCheckIn) {
+      alert("Check-out date must be after check-in date.");
+      return;
+    }
+    if (_setSearchFilters) {
+      _setSearchFilters({
+        checkIn: localCheckIn,
+        checkOut: localCheckOut,
+        guests: localGuests
+      });
+    }
+  };
+
   const formatPrice = (price: any) => {
     if (!price) return '₹3,500';
     const stringPrice = String(price);
@@ -69,26 +165,53 @@ export const RoomsPage = ({
           </div>
         </div>
 
-        {searchFilters && (
-          <div className="max-w-2xl mx-auto mb-16 p-5 bg-white/80 backdrop-blur-md rounded-2xl border border-catalogue-gold/30 flex items-center justify-between text-xs font-bold text-catalogue-green uppercase tracking-widest shadow-md ornate-border">
-            <div className="flex gap-8 items-center">
-              <div>
+        {effectiveFilters && (
+          <div className="max-w-2xl mx-auto mb-16 p-5 bg-white/90 backdrop-blur-md rounded-2xl border border-catalogue-gold/30 flex items-center justify-between text-xs font-bold text-catalogue-green uppercase tracking-widest shadow-md ornate-border">
+            <div className="flex gap-6 items-center flex-wrap">
+              <div className="space-y-1">
                 <span className="text-[10px] text-catalogue-gold block tracking-wider font-semibold">Check-In</span>
-                <span className="font-sans font-black">{searchFilters.checkIn}</span>
+                <input 
+                  type="date"
+                  value={localCheckIn}
+                  min={todayStr}
+                  onChange={(e) => handleLocalCheckInChange(e.target.value)}
+                  className="bg-transparent border-b border-catalogue-gold/30 font-sans font-black text-slate-800 outline-none w-[110px] focus:border-catalogue-gold pb-0.5 text-[11px] cursor-pointer"
+                />
               </div>
-              <div className="h-8 w-[1px] bg-catalogue-gold/25" />
-              <div>
+              <div className="h-8 w-[1px] bg-catalogue-gold/25 hidden md:block" />
+              <div className="space-y-1">
                 <span className="text-[10px] text-catalogue-gold block tracking-wider font-semibold">Check-Out</span>
-                <span className="font-sans font-black">{searchFilters.checkOut}</span>
+                <input 
+                  type="date"
+                  value={localCheckOut}
+                  min={localMinCheckoutStr}
+                  onChange={(e) => setLocalCheckOut(e.target.value)}
+                  className="bg-transparent border-b border-catalogue-gold/30 font-sans font-black text-slate-800 outline-none w-[110px] focus:border-catalogue-gold pb-0.5 text-[11px] cursor-pointer"
+                />
               </div>
-              <div className="h-8 w-[1px] bg-catalogue-gold/25" />
-              <div>
+              <div className="h-8 w-[1px] bg-catalogue-gold/25 hidden md:block" />
+              <div className="space-y-1">
                 <span className="text-[10px] text-catalogue-gold block tracking-wider font-semibold">Guests</span>
-                <span className="font-sans font-black">{searchFilters.guests}</span>
+                <select
+                  value={localGuests}
+                  onChange={(e) => setLocalGuests(e.target.value)}
+                  className="bg-transparent border-b border-catalogue-gold/30 font-sans font-black text-slate-800 outline-none focus:border-catalogue-gold pb-0.5 text-[11px] cursor-pointer pr-4"
+                >
+                  {guestOptions.map(n => (
+                    <option key={n} value={n === 1 ? '1 Guest' : `${n} Guests`}>
+                      {n === 1 ? '1 Guest' : `${n} Guests`}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
-            <div className="text-catalogue-gold font-bold text-[10px] tracking-widest">
-              Selected Dates
+            <div className="flex items-center gap-4">
+              <Button 
+                onClick={handleConfirm}
+                className="bg-catalogue-gold hover:bg-catalogue-green text-white text-[9px] font-black uppercase tracking-widest px-6 py-2 h-8 rounded-none transition-all shadow-sm active:scale-95"
+              >
+                Confirm
+              </Button>
             </div>
           </div>
         )}
@@ -117,7 +240,9 @@ export const RoomsPage = ({
                       <div className="absolute inset-0 bg-gradient-to-t from-catalogue-green/60 via-transparent to-transparent opacity-60" />
                       
                       <div className="absolute top-4 left-4 block">
-                         <Badge className="bg-white/95 backdrop-blur-md text-catalogue-green font-black uppercase tracking-widest text-[9px] px-3 py-1.5 border-none shadow-sm">Premium</Badge>
+                         <Badge className="bg-white/95 backdrop-blur-md text-catalogue-green font-black uppercase tracking-widest text-[9px] px-3 py-1.5 border-none shadow-sm">
+                           {room.category_tag || room.tag || 'Premium'}
+                         </Badge>
                       </div>
 
                       <div className="absolute bottom-4 left-6 right-6">

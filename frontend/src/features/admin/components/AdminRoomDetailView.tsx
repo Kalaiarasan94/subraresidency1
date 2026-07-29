@@ -6,7 +6,7 @@ import {
 } from 'lucide-react';
 import { Button } from '../../../components/ui/button';
 import { Card, CardContent } from '../../../components/ui/card';
-import { updateRoomDetails, uploadGalleryImage, deleteGalleryImage, BACKEND_URL, addSubRoom, updateSubRoom, deleteSubRoom, API_BASE_URL } from '../../../lib/api';
+import { updateRoomDetails, uploadGalleryImage, deleteGalleryImage, BACKEND_URL, addSubRoom, updateSubRoom, deleteSubRoom, API_BASE_URL, deleteRoomCategory } from '../../../lib/api';
 
 interface Props {
   room: any;
@@ -35,6 +35,8 @@ const ALL_AVAILABLE_AMENITIES = [
 
 export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onRefresh }) => {
   const [isSaving, setIsSaving] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const [formData, setFormData] = useState({
     id: room.id,
     room_name: room.title || room.room_name,
@@ -182,7 +184,8 @@ export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onRefresh }
       max_children: room.children || '',
       floor_number: room.floor || room.floor_number || '',
       bed_type: room.bed_type || '',
-      room_size: room.size || ''
+      room_size: room.size || '',
+      category_tag: room.category_tag || room.tag || 'Premium'
     });
   }, [room]);
 
@@ -289,6 +292,26 @@ export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onRefresh }
     }
   };
 
+  const handleDeleteCategory = async () => {
+    setIsDeleting(true);
+    try {
+      const res = await deleteRoomCategory(room.id);
+      if (res && res.status === 'success') {
+        alert("Room category deleted successfully!");
+        onRefresh();
+        onBack();
+      } else {
+        alert(res?.message || "Failed to delete room category.");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("An error occurred while deleting.");
+    } finally {
+      setIsDeleting(false);
+      setShowDeleteModal(false);
+    }
+  };
+
   return (
     <div className="bg-white min-h-screen rounded-3xl border border-slate-200 overflow-hidden shadow-sm font-sans relative">
       {/* Admin Action Bar */}
@@ -302,9 +325,18 @@ export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onRefresh }
         </button>
         
         <div className="flex gap-4">
+           <Button
+             onClick={() => setShowDeleteModal(true)}
+             disabled={isSaving || isDeleting}
+             className="bg-rose-600 hover:bg-rose-700 text-white px-8 py-2 rounded-lg font-bold text-xs uppercase tracking-widest shadow-lg flex items-center gap-2"
+           >
+             <Trash2 size={14} />
+             Delete Room
+           </Button>
+
            <Button 
              onClick={handleSave}
-             disabled={isSaving}
+             disabled={isSaving || isDeleting}
              className="bg-white text-emerald-900 hover:bg-emerald-50 px-8 py-2 rounded-lg font-bold text-xs uppercase tracking-widest shadow-lg flex items-center gap-2 min-w-[140px]"
            >
              {isSaving ? <Loader2 size={14} className="animate-spin" /> : <Save size={14} />}
@@ -541,9 +573,8 @@ export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onRefresh }
                     );
                   })}
                 </div>
-             </section>              <section className="pb-12 border-b border-slate-100">
-                <h3 className="text-sm font-bold text-[#4f46e5] uppercase tracking-widest mb-4">Internal Specs</h3>
-                <div className="grid grid-cols-2 md:grid-cols-5 gap-6 p-6 bg-slate-50 rounded-2xl border border-slate-100">
+             </section>                <h3 className="text-sm font-bold text-[#4f46e5] uppercase tracking-widest mb-4">Internal Specs & Badge</h3>
+                <div className="grid grid-cols-2 md:grid-cols-6 gap-6 p-6 bg-slate-50 rounded-2xl border border-slate-100">
                    <div className="text-center">
                       <p className="text-[10px] text-slate-400 font-bold uppercase mb-1">Max Adults</p>
                       <input 
@@ -591,8 +622,18 @@ export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onRefresh }
                         className="text-lg font-bold text-slate-800 bg-transparent text-center border-b border-transparent hover:border-slate-300 focus:outline-none focus:border-indigo-500 w-20"
                       />
                    </div>
-                 </div>
-              </section>
+                   <div className="text-center border-l border-slate-200 pl-4">
+                      <p className="text-[10px] text-slate-400 font-bold uppercase mb-1">Badge Tag</p>
+                      <input 
+                        name="category_tag"
+                        type="text"
+                        value={formData.category_tag || ''}
+                        onChange={handleChange}
+                        placeholder="Premium"
+                        className="text-sm font-bold text-slate-850 bg-transparent text-center border-b border-transparent hover:border-slate-300 focus:outline-none focus:border-indigo-500 w-full font-black uppercase tracking-wider"
+                      />
+                   </div>
+                </div>
 
              <section className="pb-12 border-b border-slate-100">
                 <h3 className="text-sm font-bold text-[#4f46e5] uppercase tracking-widest mb-4 flex items-center justify-between">
@@ -826,6 +867,35 @@ export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onRefresh }
           </div>
         </div>
       </div>
+
+      {/* Delete Confirmation Modal */}
+      {showDeleteModal && (
+        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl border border-slate-100 animate-in fade-in zoom-in-95 duration-200">
+            <h3 className="text-xl font-bold text-slate-950 mb-3 font-playfair uppercase tracking-tight">Delete Room Category</h3>
+            <p className="text-sm text-slate-500 mb-8 leading-relaxed font-semibold">
+              Are you sure you want to delete <span className="text-slate-900 font-bold">"{formData.room_name}"</span>? This action is permanent and will delete all associated physical rooms and bookings.
+            </p>
+            <div className="flex gap-4 justify-end">
+              <Button
+                onClick={() => setShowDeleteModal(false)}
+                disabled={isDeleting}
+                className="bg-slate-100 hover:bg-slate-200 text-slate-800 px-6 py-2 rounded-xl font-bold text-xs uppercase tracking-widest"
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={handleDeleteCategory}
+                disabled={isDeleting}
+                className="bg-rose-600 hover:bg-rose-700 text-white px-6 py-2 rounded-xl font-bold text-xs uppercase tracking-widest flex items-center gap-2"
+              >
+                {isDeleting ? <Loader2 size={12} className="animate-spin" /> : <Trash2 size={12} />}
+                Confirm Delete
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

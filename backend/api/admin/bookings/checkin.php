@@ -31,9 +31,9 @@ try {
     $bookingStmt = $db->prepare("
         SELECT id, check_in_date, check_out_date, total_amount, booking_id,
                guest_name, guest_email
-        FROM bookings WHERE booking_id = ?
+        FROM bookings WHERE booking_id = ? OR id = ?
     ");
-    $bookingStmt->execute([$bookingId]);
+    $bookingStmt->execute([$bookingId, $bookingId]);
     $booking = $bookingStmt->fetch(PDO::FETCH_ASSOC);
 
     if (!$booking) {

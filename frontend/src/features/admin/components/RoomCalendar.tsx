@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { Card } from '../../../components/ui/card';
 import { Button } from '../../../components/ui/button';
-import { 
-  ChevronLeft, ChevronRight, Clock, 
+import {
+  ChevronLeft, ChevronRight, Clock,
   Search, RefreshCw, Filter,
   CheckCircle, AlertCircle, Hammer,
   X, User
@@ -47,7 +47,7 @@ export const RoomCalendar = () => {
       // 2. Fetch Availability for the range
       const end = new Date(startDate);
       end.setDate(startDate.getDate() + 30);
-      
+
       const availData = await fetchRoomAvailability(
         0, // 0 handles all rooms
         startDate.toISOString().split('T')[0],
@@ -81,15 +81,36 @@ export const RoomCalendar = () => {
     return record ? record.status.toLowerCase() : 'available';
   };
 
+  const getCategoryStats = (categoryName: string, date: Date) => {
+    const dateStr = date.toISOString().split('T')[0];
+    
+    // Find all rooms in this category
+    const roomsInCategory = rooms.filter(r => r.category_name === categoryName);
+    const totalRooms = roomsInCategory.length;
+    
+    // Count how many are checked-in (occupied)
+    let occupied = 0;
+    roomsInCategory.forEach(r => {
+      const rec = availability.find(a => Number(a.room_id) === Number(r.id) && a.date === dateStr);
+      if (rec && rec.status.toLowerCase() === 'booked' && rec.booking_status === 'checked-in') {
+        occupied++;
+      }
+    });
+    
+    const left = totalRooms - occupied;
+    return { left, occupied };
+  };
+
   const handleCellClick = async (room: any, date: Date) => {
     const record = getAvailabilityRecord(room.id, date);
     const status = record ? record.status.toLowerCase() : 'available';
     const note = record ? record.note : '';
-    
+
     setSelectedCell({
       roomId: room.id,
       roomNumber: room.room_number || room.id,
       roomName: room.title || room.room_name,
+      categoryName: room.category_name || '',
       date,
       status,
       note
@@ -166,12 +187,12 @@ export const RoomCalendar = () => {
 
         <div className="flex items-center gap-3">
           <div className="flex bg-white/10 rounded-lg p-1 border border-white/10">
-            <Button variant="ghost" size="sm" onClick={() => shiftDate(-7)} className="text-white hover:bg-white/10 h-8 px-2"><ChevronLeft size={16}/></Button>
+            <Button variant="ghost" size="sm" onClick={() => shiftDate(-7)} className="text-white hover:bg-white/10 h-8 px-2"><ChevronLeft size={16} /></Button>
             <div className="px-4 flex items-center text-[10px] font-black uppercase tracking-widest border-x border-white/10">
-              {startDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} - 
+              {startDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} -
               {days[30].toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
             </div>
-            <Button variant="ghost" size="sm" onClick={() => shiftDate(7)} className="text-white hover:bg-white/10 h-8 px-2"><ChevronRight size={16}/></Button>
+            <Button variant="ghost" size="sm" onClick={() => shiftDate(7)} className="text-white hover:bg-white/10 h-8 px-2"><ChevronRight size={16} /></Button>
           </div>
           <Button onClick={loadData} variant="ghost" size="sm" className="text-white hover:bg-white/10 h-10 w-10 p-0 rounded-lg border border-white/10">
             <RefreshCw size={16} className={loading ? 'animate-spin' : ''} />
@@ -184,9 +205,9 @@ export const RoomCalendar = () => {
         <div className="flex items-center gap-4">
           <div className="relative group">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-indigo-600 transition-colors" size={14} />
-            <input 
-              type="text" 
-              placeholder="Filter rooms..." 
+            <input
+              type="text"
+              placeholder="Filter rooms..."
               value={searchTerm}
               onChange={e => setSearchTerm(e.target.value)}
               className="pl-10 pr-4 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 w-64 shadow-sm"
@@ -235,9 +256,8 @@ export const RoomCalendar = () => {
                   <th key={i} className={`p-3 border-b border-r border-slate-100 min-w-[60px] ${day.getDay() === 0 || day.getDay() === 6 ? 'bg-amber-50/30' : ''}`}>
                     <div className="flex flex-col items-center gap-1">
                       <span className="text-[8px] font-black uppercase text-slate-400">{day.toLocaleDateString('en-US', { weekday: 'short' })}</span>
-                      <span className={`text-xs font-black p-1 px-2 rounded-lg ${
-                        day.toDateString() === new Date().toDateString() ? 'bg-[#0b336b] text-white' : 'text-slate-800'
-                      }`}>
+                      <span className={`text-xs font-black p-1 px-2 rounded-lg ${day.toDateString() === new Date().toDateString() ? 'bg-[#0b336b] text-white' : 'text-slate-800'
+                        }`}>
                         {day.getDate()}
                       </span>
                     </div>
@@ -257,7 +277,7 @@ export const RoomCalendar = () => {
                 <tr key={room.id} className="group hover:bg-slate-50/30 transition-colors">
                   <td className="sticky left-0 z-20 bg-white group-hover:bg-slate-50 p-4 border-b border-r border-slate-100 shadow-[2px_0_5px_rgba(0,0,0,0.02)]">
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center text-[10px] font-black text-slate-600">
+                      <div className="px-2 min-w-[36px] h-8 rounded-lg bg-slate-100 flex items-center justify-center text-[10px] font-black text-slate-600 whitespace-nowrap">
                         {room.room_number || room.id}
                       </div>
                       <div className="flex flex-col">
@@ -267,19 +287,93 @@ export const RoomCalendar = () => {
                     </div>
                   </td>
                   {days.map((day, i) => {
-                    const status = getStatus(room.id, day);
+                    const record = getAvailabilityRecord(room.id, day);
+                    const status = record ? record.status.toLowerCase() : 'available';
+
+                    // Compute start and end for continuous booking capsule display
+                    const prevDay = new Date(day);
+                    prevDay.setDate(day.getDate() - 1);
+                    const nextDay = new Date(day);
+                    nextDay.setDate(day.getDate() + 1);
+
+                    const prevRecord = getAvailabilityRecord(room.id, prevDay);
+                    const nextRecord = getAvailabilityRecord(room.id, nextDay);
+
+                    const prevStatus = prevRecord ? prevRecord.status.toLowerCase() : 'available';
+                    const nextStatus = nextRecord ? nextRecord.status.toLowerCase() : 'available';
+
+                    const isStart = status !== 'available' && (prevStatus !== status || prevRecord?.note !== record?.note);
+                    const isEnd = status !== 'available' && (nextStatus !== status || nextRecord?.note !== record?.note);
+
+                    // CSS styling based on type and capsule position
+                    let cellStyle = 'w-full h-9 cursor-pointer transition-all flex items-center ';
+                    let label = '';
+                    const isConfirmed = record?.booking_status === 'confirmed';
+
+                    if (status === 'available') {
+                      cellStyle += 'rounded-lg mx-1 hover:bg-emerald-100 text-slate-350 hover:text-emerald-600 justify-center';
+                    } else if (status === 'booked') {
+                      if (isConfirmed) {
+                        cellStyle += 'bg-indigo-50/40 hover:bg-indigo-100/30 text-indigo-650 font-bold border-y border-dashed border-indigo-300 ';
+                      } else {
+                        cellStyle += 'bg-indigo-50 hover:bg-indigo-100/80 text-indigo-700 font-extrabold border-y border-indigo-200/60 ';
+                      }
+                      if (isStart && isEnd) {
+                        cellStyle += 'rounded-xl mx-1 border-x ';
+                      } else if (isStart) {
+                        cellStyle += 'rounded-l-xl ml-1 border-l ';
+                      } else if (isEnd) {
+                        cellStyle += 'rounded-r-xl mr-1 border-r ';
+                      } else {
+                        cellStyle += 'rounded-none ';
+                      }
+                      if (isStart) {
+                        if (isConfirmed) {
+                          const stats = getCategoryStats(room.category_name, day);
+                          label = `${stats.left} Left, ${stats.occupied} Booked`;
+                        } else {
+                          label = record?.note ? record.note.replace('booking:', '').replace('Room is set to Occupied', 'Booked').substring(0, 9) : 'Booked';
+                        }
+                      }
+                    } else {
+                      // Maintenance block
+                      cellStyle += 'bg-amber-50 hover:bg-amber-100/80 text-amber-700 font-extrabold border-y border-amber-200 ';
+                      if (isStart && isEnd) {
+                        cellStyle += 'rounded-xl mx-1 border-x ';
+                      } else if (isStart) {
+                        cellStyle += 'rounded-l-xl ml-1 border-l ';
+                      } else if (isEnd) {
+                        cellStyle += 'rounded-r-xl mr-1 border-r ';
+                      } else {
+                        cellStyle += 'rounded-none ';
+                      }
+                      if (isStart) {
+                        label = 'Maint';
+                      }
+                    }
+
                     return (
-                      <td key={i} className={`p-2 border-b border-r border-slate-100 min-w-[60px] relative`}>
-                        <div 
+                      <td key={i} className="py-2 px-0 border-b border-r border-slate-100 min-w-[60px] relative">
+                        <div
                           onClick={() => handleCellClick(room, day)}
-                          className={`w-full h-10 rounded-lg cursor-pointer transition-all flex items-center justify-center group/cell hover:scale-105 active:scale-95 ${
-                          status === 'available' ? 'bg-emerald-50 text-emerald-600 hover:bg-emerald-100' :
-                          status === 'booked' ? 'bg-rose-50 text-rose-600 hover:bg-rose-100' :
-                          'bg-amber-50 text-amber-600 hover:bg-amber-100'
-                        }`}>
-                           {status === 'available' && <CheckCircle size={14} className="opacity-0 group-hover/cell:opacity-100 transition-opacity" />}
-                           {status === 'booked' && <AlertCircle size={14} />}
-                           {status === 'maintenance' && <Hammer size={14} />}
+                          className={cellStyle}
+                        >
+                          {status === 'available' ? (
+                            <CheckCircle size={12} className="opacity-0 hover:opacity-100 transition-opacity" />
+                          ) : (
+                            <div className="flex items-center gap-1 pl-2 truncate w-full pointer-events-none select-none">
+                              {status === 'booked' ? (
+                                isStart && <AlertCircle size={10} className="shrink-0 text-indigo-500" />
+                              ) : (
+                                isStart && <Hammer size={10} className="shrink-0 text-amber-500" />
+                              )}
+                              {label && (
+                                <span className="text-[8px] font-black uppercase tracking-wider truncate">
+                                  {label}
+                                </span>
+                              )}
+                            </div>
+                          )}
                         </div>
                       </td>
                     );
@@ -314,7 +408,7 @@ export const RoomCalendar = () => {
                   Room {selectedCell.roomNumber} • {selectedCell.roomName}
                 </p>
               </div>
-              <button 
+              <button
                 onClick={() => setShowModal(null)}
                 className="text-slate-400 hover:text-slate-600 p-1.5 hover:bg-slate-100 rounded-lg transition-all"
               >
@@ -360,7 +454,7 @@ export const RoomCalendar = () => {
                           <span className="text-xs font-bold text-slate-800">{activeBookingDetails?.guest_name}</span>
                         </div>
                       </div>
-                      
+
                       <div className="grid grid-cols-2 gap-3 text-slate-700">
                         <div>
                           <span className="text-[8px] font-black text-slate-400 block uppercase tracking-wider">PHONE</span>
@@ -373,6 +467,19 @@ export const RoomCalendar = () => {
                       </div>
                     </div>
 
+                    {/* Room Type */}
+                    {selectedCell?.categoryName && (
+                      <div className="flex items-center gap-3 text-slate-700 border-b border-slate-50 pb-3">
+                        <div className="p-1.5 bg-indigo-50 rounded-lg">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-indigo-500"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                        </div>
+                        <div>
+                          <span className="text-[8px] font-black text-slate-400 block uppercase tracking-wider">ROOM TYPE</span>
+                          <span className="text-xs font-bold text-slate-800">{selectedCell.categoryName}</span>
+                        </div>
+                      </div>
+                    )}
+
                     {/* Financials & Status */}
                     <div className="grid grid-cols-2 gap-4 border-t border-slate-100 pt-4">
                       <div>
@@ -381,11 +488,10 @@ export const RoomCalendar = () => {
                       </div>
                       <div>
                         <span className="text-[8px] font-black text-slate-400 block uppercase tracking-wider">BILLING STATUS</span>
-                        <span className={`text-[9px] font-black px-2 py-0.5 rounded-full inline-block uppercase ${
-                          activeBookingDetails?.payment_status === 'success' 
-                            ? 'bg-emerald-50 text-emerald-700' 
+                        <span className={`text-[9px] font-black px-2 py-0.5 rounded-full inline-block uppercase ${activeBookingDetails?.payment_status === 'success'
+                            ? 'bg-emerald-50 text-emerald-700'
                             : 'bg-amber-100 text-amber-800'
-                        }`}>
+                          }`}>
                           {activeBookingDetails?.payment_status || 'Pending'}
                         </span>
                       </div>
@@ -463,7 +569,7 @@ export const RoomCalendar = () => {
 
             {/* Modal Footer */}
             <div className="p-4 bg-slate-50 border-t border-slate-100 flex justify-end">
-              <Button 
+              <Button
                 onClick={() => setShowModal(null)}
                 className="bg-[#0b336b] hover:bg-[#072145] text-[10px] uppercase font-black tracking-widest text-white px-5 py-2 rounded-lg shadow-md transition-all active:scale-95"
               >

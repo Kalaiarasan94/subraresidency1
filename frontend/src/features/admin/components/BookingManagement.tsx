@@ -40,7 +40,7 @@ export const BookingManagement = () => {
         setBookings(res.bookings.map((b: any) => ({ 
           id: b.booking_id, 
           guest: b.guest_name, 
-          room: b.rooms ? b.rooms.map((r: any) => r.room_number).join(', ') : '', 
+          room: b.status === 'confirmed' ? 'Pending' : (b.rooms ? b.rooms.map((r: any) => r.room_number).join(', ') : ''), 
           date: b.check_in_date + ' - ' + b.check_out_date, 
           amount: '₹' + (b.paid_amount || b.total_amount), 
           source: mapSource(b.booking_source || b.source || 'Online'), 
@@ -91,11 +91,12 @@ export const BookingManagement = () => {
           <p className="text-sm text-slate-500 font-medium">Manage reservations across all channels.</p>
         </div>
         <div className="flex gap-4">
-           <Button variant="outline" className="border-slate-200 text-slate-600 font-bold px-6 py-2.5 h-auto rounded-xl flex items-center gap-2">
-             <Download size={16} /> Export Logs
-           </Button>
-           <Button className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-8 py-2.5 h-auto rounded-xl flex items-center gap-2 shadow-sm">
-             <PlusSquare size={16} /> New Reservation
+           <Button 
+             variant="outline" 
+             onClick={() => window.open(`${BACKEND_URL}/admin_export_invoices.php`, '_blank')}
+             className="border-slate-200 text-slate-600 font-bold px-6 py-2.5 h-auto rounded-xl flex items-center gap-2"
+           >
+             <Download size={16} /> Export Invoices PDF
            </Button>
         </div>
       </div>
@@ -203,7 +204,8 @@ export const BookingManagement = () => {
                     <td className="px-8 py-5">
                        <span className={`text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-tighter ${
                          bk.status === 'Stay-in' ? 'bg-indigo-100 text-indigo-700' :
-                         bk.status === 'Confirmed' ? 'bg-blue-100 text-blue-700' : 'bg-slate-100 text-slate-500'
+                         bk.status === 'Confirmed' ? 'bg-blue-100 text-blue-700' :
+                         bk.status === 'Checked-out' ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-550'
                        }`}>
                          {bk.status}
                        </span>

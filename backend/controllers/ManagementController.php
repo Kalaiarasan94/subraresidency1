@@ -15,18 +15,27 @@ class ManagementController {
     }
 
     // GET /management/guests
-    // Returns one row per unique guest (grouped by email + phone)
+    // Returns one row per unique guest, grouped by email (primary) or phone (fallback)
+    // This ensures the same person booked under different name variants is counted correctly.
     public function getGuestDirectory() {
         try {
             $query = "SELECT
-                        guest_name   AS name,
-                        guest_email  AS email,
-                        guest_phone  AS phone,
-                        COUNT(*)             AS total_stays,
-                        MAX(check_in_date)   AS last_visit,
-                        SUM(total_amount)    AS total_spent
-                      FROM bookings
-                      GROUP BY guest_name, guest_email, guest_phone
+                        -- Most recent name used by this guest
+                        SUBSTRING_INDEX(GROUP_CONCAT(b.guest_name ORDER BY b.created_at DESC SEPARATOR '|||'), '|||', 1) AS name,
+                        -- Prefer email; fall back to phone as the grouping key
+                        COALESCE(NULLIF(TRIM(b.guest_email),''), b.guest_phone) AS email,
+                        -- Use the most recent phone on record for this identity
+                        SUBSTRING_INDEX(GROUP_CONCAT(b.guest_phone ORDER BY b.created_at DESC SEPARATOR '|||'), '|||', 1) AS phone,
+                        -- Count ALL bookings for this identity (email or phone)
+                        COUNT(DISTINCT b.id)  AS total_stays,
+                        MAX(b.check_in_date)  AS last_visit,
+                        SUM(b.total_amount)   AS total_spent,
+                        GROUP_CONCAT(DISTINCT r.room_number) AS room_numbers
+                      FROM bookings b
+                      LEFT JOIN booking_rooms br ON b.id = br.booking_id
+                      LEFT JOIN rooms_new r ON br.room_id = r.id
+                      WHERE b.status != 'pending'
+                      GROUP BY COALESCE(NULLIF(TRIM(b.guest_email),''), b.guest_phone)
                       ORDER BY last_visit DESC";
             $stmt = $this->db->prepare($query);
             $stmt->execute();
@@ -84,6 +93,7 @@ class ManagementController {
                       FROM bookings b
                       LEFT JOIN booking_rooms br ON b.id = br.booking_id
                       LEFT JOIN rooms_new r ON br.room_id = r.id
+                      WHERE b.status != 'pending'
                       ORDER BY b.created_at DESC
                       LIMIT 100";
             $stmt = $this->db->prepare($query);
@@ -252,6 +262,105 @@ class ManagementController {
             }
 
             echo json_encode(["status" => "success", "message" => "Payment & booking records updated/cancelled successfully", "email_status" => $emailSent ? 'sent' : 'failed']);
+        } catch (Exception $e) {
+            if ($this->db->inTransaction()) {
+                $this->db->rollBack();
+            }
+            http_response_code(500);
+            echo json_encode(["status" => "error", "message" => $e->getMessage()]);
+        }
+    }
+
+    // GET /management/guest-bookings
+    // Fetches all bookings for a guest identified by email OR phone (whichever is provided).
+    public function getGuestBookings() {
+        try {
+            $email = trim($_GET['email'] ?? '');
+            $phone = trim($_GET['phone'] ?? '');
+
+            if (empty($email) && empty($phone)) {
+                echo json_encode(["status" => "success", "data" => []]);
+                return;
+            }
+
+            // Match by email if provided; also match any booking with the same phone.
+            // This consolidates guests who booked under different names but same contact.
+            $conditions = [];
+            $params = [];
+
+            if (!empty($email)) {
+                $conditions[] = "TRIM(b.guest_email) = ?";
+                $params[] = $email;
+            }
+            if (!empty($phone)) {
+                $conditions[] = "TRIM(b.guest_phone) = ?";
+                $params[] = $phone;
+            }
+
+            $whereClause = implode(' OR ', $conditions);
+
+            $query = "SELECT b.id, b.booking_id, b.check_in_date, b.check_out_date, b.total_amount, b.status, b.payment_status,
+                             GROUP_CONCAT(r.room_number) as room_numbers
+                      FROM bookings b
+                      LEFT JOIN booking_rooms br ON b.id = br.booking_id
+                      LEFT JOIN rooms_new r ON br.room_id = r.id
+                      WHERE ($whereClause) AND b.status != 'cancelled'
+                      GROUP BY b.id
+                      ORDER BY b.check_in_date DESC";
+            $stmt = $this->db->prepare($query);
+            $stmt->execute($params);
+            $bookings = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            echo json_encode(["status" => "success", "data" => $bookings]);
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode(["status" => "error", "message" => $e->getMessage()]);
+        }
+    }
+
+    // POST /management/vacate
+    public function vacateBooking() {
+        try {
+            $data = json_decode(file_get_contents("php://input"));
+            $booking_id = $data->booking_id ?? null;
+            if (!$booking_id) {
+                http_response_code(400);
+                echo json_encode(["status" => "error", "message" => "booking_id required"]);
+                return;
+            }
+
+            $this->db->beginTransaction();
+
+            // 1. Get database primary key ID of booking
+            $stmt = $this->db->prepare("SELECT id FROM bookings WHERE id = ? OR booking_id = ?");
+            $stmt->execute([$booking_id, $booking_id]);
+            $booking = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if (!$booking) {
+                $this->db->rollBack();
+                http_response_code(404);
+                echo json_encode(["status" => "error", "message" => "Booking not found"]);
+                return;
+            }
+
+            $id = $booking['id'];
+
+            // 2. Update booking status
+            $stmt = $this->db->prepare("UPDATE bookings SET status = 'checked-out' WHERE id = ?");
+            $stmt->execute([$id]);
+
+            // 3. Mark rooms as Available
+            $stmt = $this->db->prepare("
+                UPDATE rooms_new 
+                SET status = 'Available' 
+                WHERE id IN (
+                    SELECT room_id FROM booking_rooms WHERE booking_id = ?
+                )
+            ");
+            $stmt->execute([$id]);
+
+            $this->db->commit();
+
+            echo json_encode(["status" => "success", "message" => "Booking marked as vacated successfully."]);
         } catch (Exception $e) {
             if ($this->db->inTransaction()) {
                 $this->db->rollBack();

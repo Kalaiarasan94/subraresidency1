@@ -1,6 +1,29 @@
 @import "tailwindcss";
 @config "../tailwind.config.js";
 
+/* Route all numbers, Rupee symbols, and dates rendered in Cormorant Garamond / Playfair Display to the geometric Outfit font */
+@font-face {
+  font-family: 'Cormorant Garamond';
+  src: local('Outfit'), local('Inter'), sans-serif;
+  unicode-range: U+0030-0039, U+20B9, U+002C, U+002E, U+002D, U+002F, U+003A;
+}
+
+@font-face {
+  font-family: 'Playfair Display';
+  src: local('Outfit'), local('Inter'), sans-serif;
+  unicode-range: U+0030-0039, U+20B9, U+002C, U+002E, U+002D, U+002F, U+003A;
+}
+
+/* Ensure inputs, selects, options, and generic sans/numeric classes use the professional Outfit font */
+input, 
+select, 
+option, 
+.font-sans, 
+.tabular-nums {
+  font-family: "Outfit", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  font-variant-numeric: tabular-nums !important;
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
@@ -283,19 +306,21 @@
   }
 }
 
-.admin-portal-theme h1,
-.admin-portal-theme h2,
-.admin-portal-theme h3,
-.admin-portal-theme h4,
-.admin-portal-theme h5,
-.admin-portal-theme h6,
-.reception-portal-theme h1,
-.reception-portal-theme h2,
-.reception-portal-theme h3,
-.reception-portal-theme h4,
-.reception-portal-theme h5,
-.reception-portal-theme h6 {
-  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif !important;
+.admin-portal-theme,
+.reception-portal-theme,
+.admin-portal-theme *,
+.reception-portal-theme * {
+  font-family: "Outfit", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+}
+
+/* Enable tabular numbers for tables, metrics, and calendar grids to ensure clean numeric alignments */
+.admin-portal-theme table,
+.reception-portal-theme table,
+.admin-portal-theme .tabular-nums,
+.reception-portal-theme .tabular-nums,
+.admin-portal-theme [class*="text-"],
+.reception-portal-theme [class*="text-"] {
+  font-variant-numeric: tabular-nums;
 }
 
 /* Disable ornate styles for admin and receptionist portals to keep them clean and professional */

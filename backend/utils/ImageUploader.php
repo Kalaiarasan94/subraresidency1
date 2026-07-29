@@ -2,9 +2,11 @@
 // backend/utils/ImageUploader.php
 // Saves an uploaded image file to disk as WebP, regardless of the source format.
 
-class ImageUploader {
+class ImageUploader
+{
 
-    public static function saveAsWebp($uploadedFile, $destDir, $prefix = 'img') {
+    public static function saveAsWebp($uploadedFile, $destDir, $prefix = 'img')
+    {
         if (!is_dir($destDir)) {
             mkdir($destDir, 0777, true);
         }

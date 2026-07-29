@@ -35,15 +35,15 @@ export const CustomerNavigation = ({ isMobileMenuOpen, onMobileMenuToggle, onMob
           <img src={logo} alt="Subra Residency" className="h-10 md:h-12 w-auto" />
           <div className="flex flex-col">
             <span className="font-playfair text-xl md:text-2xl font-black tracking-widest text-catalogue-green leading-none">SUBRA</span>
-            <span className="font-playfair text-[8px] md:text-[10px] font-bold tracking-[0.3em] text-catalogue-gold uppercase leading-none mt-1">Residency â€¢ Kumbakonam</span>
+            <span className="font-playfair text-[8px] md:text-[10px] font-bold tracking-[0.3em] text-catalogue-gold uppercase leading-none mt-1">Residency Kumbakonam</span>
           </div>
         </Link>
-        
+
         <div className="hidden md:flex items-center gap-10">
           {navigationLinks.map((link) => (
-            <Link 
+            <Link
               key={link.path}
-              to={link.path} 
+              to={link.path}
               className={cn(
                 "text-xs font-bold uppercase tracking-[0.2em] transition-all duration-300 relative py-1",
                 location.pathname === link.path ? "text-catalogue-gold" : "text-catalogue-green hover:text-catalogue-gold"
@@ -51,7 +51,7 @@ export const CustomerNavigation = ({ isMobileMenuOpen, onMobileMenuToggle, onMob
             >
               {link.label}
               {location.pathname === link.path && (
-                <motion.div 
+                <motion.div
                   layoutId="activeTab"
                   className="absolute -bottom-1 left-0 right-0 h-[2px] bg-catalogue-gold"
                   initial={{ width: 0 }}
@@ -61,7 +61,7 @@ export const CustomerNavigation = ({ isMobileMenuOpen, onMobileMenuToggle, onMob
             </Link>
           ))}
           <Link to="/rooms">
-            <Button 
+            <Button
               className="lux-button bg-catalogue-gold text-white hover:bg-catalogue-green transition-all font-bold uppercase tracking-widest text-[10px] px-8 py-6 rounded-none shadow-lg"
             >
               Book Now
@@ -69,7 +69,7 @@ export const CustomerNavigation = ({ isMobileMenuOpen, onMobileMenuToggle, onMob
           </Link>
         </div>
 
-        <button 
+        <button
           className="md:hidden text-catalogue-green"
           onClick={onMobileMenuToggle}
         >
@@ -87,9 +87,9 @@ export const CustomerNavigation = ({ isMobileMenuOpen, onMobileMenuToggle, onMob
           >
             <div className="flex flex-col p-6 space-y-4">
               {navigationLinks.map((link) => (
-                <Link 
+                <Link
                   key={link.path}
-                  to={link.path} 
+                  to={link.path}
                   onClick={onMobileMenuClose}
                   className={cn(
                     "text-sm font-bold uppercase tracking-widest py-2 border-b border-catalogue-gold/5",

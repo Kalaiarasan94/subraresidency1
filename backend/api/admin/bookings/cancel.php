@@ -26,8 +26,8 @@ try {
     $db->beginTransaction();
 
     // 1. Fetch booking to check if database record exists
-    $stmt = $db->prepare("SELECT id, booking_id, guest_name, guest_email, check_in_date, check_out_date, total_amount FROM bookings WHERE booking_id = ? LIMIT 1");
-    $stmt->execute([$booking_id]);
+    $stmt = $db->prepare("SELECT id, booking_id, guest_name, guest_email, check_in_date, check_out_date, total_amount FROM bookings WHERE booking_id = ? OR id = ? LIMIT 1");
+    $stmt->execute([$booking_id, $booking_id]);
     $booking = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if (!$booking) {

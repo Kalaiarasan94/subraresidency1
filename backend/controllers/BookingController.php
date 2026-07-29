@@ -33,9 +33,13 @@ class BookingController {
                 $date_str = date('Ymd');
                 $booking_id = "HBK" . $date_str . strtoupper(substr(uniqid(), -4));
 
-                // Map source to booking_source enum
-                $booking_source = 'Online';
-                if ($source === 'reception' || $source === 'walk-in' || $source === 'manual' || $source === 'other') $booking_source = 'Walk-in';
+                // Map source to booking_source enum or accept explicit parameter
+                $booking_source = $data->booking_source ?? 'Online';
+                if (!isset($data->booking_source)) {
+                    if ($source === 'reception' || $source === 'walk-in' || $source === 'manual' || $source === 'other') {
+                        $booking_source = 'Walk-in';
+                    }
+                }
 
                 // Insert into bookings
                 $query = "INSERT INTO bookings (booking_id, guest_name, guest_email, guest_phone, check_in_date, check_out_date, total_amount, status, payment_status, source, booking_source, special_requests) 
@@ -74,16 +78,22 @@ class BookingController {
                     error_log('Failed to insert booking_details: ' . $e->getMessage());
                 }
 
-                // Clean query to find the first room in rooms_new matching the category that is not already occupied/booked for these dates
                 $checkIn = $data->checkIn;
                 $checkOut = $data->checkOut;
                 $category_id = $data->category_id ?? null;
+
+                $today_str = date('Y-m-d');
+                $is_today_in_range = ($checkIn <= $today_str && $checkOut > $today_str);
+                $statusExclusions = "'Maintenance', 'Inactive'";
+                if ($is_today_in_range) {
+                    $statusExclusions .= ", 'Occupied'";
+                }
 
                 if (!$room_id) {
                     if ($category_id && $checkIn && $checkOut) {
                         $availStmt = $this->db->prepare("
                             SELECT r.id FROM rooms_new r
-                            WHERE r.category_id = ? AND r.status != 'Maintenance'
+                            WHERE r.category_id = ? AND r.status NOT IN ($statusExclusions)
                             AND r.id NOT IN (
                                 SELECT ra.room_id FROM room_availability ra 
                                 WHERE ra.status IN ('Booked', 'Maintenance')
@@ -92,9 +102,8 @@ class BookingController {
                             AND r.id NOT IN (
                                 SELECT br.room_id FROM booking_rooms br
                                 JOIN bookings b ON b.id = br.booking_id
-                                WHERE b.status = 'pending'
-                                  AND b.payment_status = 'pending'
-                                  AND b.created_at >= NOW() - INTERVAL 15 MINUTE
+                                WHERE (b.status IN ('confirmed', 'checked-in')
+                                   OR (b.status = 'pending' AND b.created_at >= NOW() - INTERVAL 15 MINUTE))
                                   AND b.check_in_date < ? 
                                   AND b.check_out_date > ?
                             )
@@ -111,7 +120,7 @@ class BookingController {
                         // Fallback to any available room in rooms_new for these dates
                         $availStmtFallback = $this->db->prepare("
                             SELECT r.id FROM rooms_new r
-                            WHERE r.status != 'Maintenance'
+                            WHERE r.status NOT IN ($statusExclusions)
                             AND r.id NOT IN (
                                 SELECT ra.room_id FROM room_availability ra 
                                 WHERE ra.status IN ('Booked', 'Maintenance')
@@ -120,9 +129,8 @@ class BookingController {
                             AND r.id NOT IN (
                                 SELECT br.room_id FROM booking_rooms br
                                 JOIN bookings b ON b.id = br.booking_id
-                                WHERE b.status = 'pending'
-                                  AND b.payment_status = 'pending'
-                                  AND b.created_at >= NOW() - INTERVAL 15 MINUTE
+                                WHERE (b.status IN ('confirmed', 'checked-in')
+                                   OR (b.status = 'pending' AND b.created_at >= NOW() - INTERVAL 15 MINUTE))
                                   AND b.check_in_date < ? 
                                   AND b.check_out_date > ?
                             )
@@ -164,32 +172,34 @@ class BookingController {
 
                 $this->db->commit();
 
-                // Send email confirmation non-blocking
-                try {
-                    $detailsQuery = $this->db->prepare("
-                        SELECT rc.name as room_category_name
-                        FROM booking_rooms br
-                        JOIN rooms_new r ON r.id = br.room_id
-                        JOIN room_categories rc ON rc.id = r.category_id
-                        WHERE br.booking_id = ?
-                        LIMIT 1
-                    ");
-                    $detailsQuery->execute([$db_booking_id]);
-                    $roomDetails = $detailsQuery->fetch(PDO::FETCH_ASSOC);
-                    $roomCategoryName = $roomDetails['room_category_name'] ?? 'Luxury Sanctuary';
+                // Send email confirmation non-blocking only if payment is successful
+                if ($payment_status === 'success') {
+                    try {
+                        $detailsQuery = $this->db->prepare("
+                            SELECT rc.name as room_category_name
+                            FROM booking_rooms br
+                            JOIN rooms_new r ON r.id = br.room_id
+                            JOIN room_categories rc ON rc.id = r.category_id
+                            WHERE br.booking_id = ?
+                            LIMIT 1
+                        ");
+                        $detailsQuery->execute([$db_booking_id]);
+                        $roomDetails = $detailsQuery->fetch(PDO::FETCH_ASSOC);
+                        $roomCategoryName = $roomDetails['room_category_name'] ?? 'Luxury Sanctuary';
 
-                    include_once __DIR__ . '/../utils/Mailer.php';
-                    Mailer::sendBookingConfirmation(
-                        $email,
-                        $data->name,
-                        $booking_id,
-                        $checkIn,
-                        $checkOut,
-                        $data->amount ?? 3500.00,
-                        $roomCategoryName
-                    );
-                } catch (Exception $mailEx) {
-                    error_log("[BookingController] Auto-mail failed: " . $mailEx->getMessage());
+                        include_once __DIR__ . '/../utils/Mailer.php';
+                        Mailer::sendBookingConfirmation(
+                            $email,
+                            $data->name,
+                            $booking_id,
+                            $checkIn,
+                            $checkOut,
+                            $data->amount ?? 3500.00,
+                            $roomCategoryName
+                        );
+                    } catch (Exception $mailEx) {
+                        error_log("[BookingController] Auto-mail failed: " . $mailEx->getMessage());
+                    }
                 }
 
                 http_response_code(201);

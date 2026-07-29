@@ -5,7 +5,7 @@ import {
   Settings, Shield, Layout, 
   FileText, PieChart as PieIcon,
   CheckCircle,
-  AlertCircle, History, LayoutDashboard, LogOut
+  AlertCircle, History, LayoutDashboard, LogOut, X
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '../../../components/ui/card';
 import { Button } from '../../../components/ui/button';
@@ -36,6 +36,37 @@ interface DashboardStats {
   chart_data: Array<{ day: string; bookings: number }>;
   revenue_overview: Array<{ name: string; value: number }>;
   booking_sources: Array<{ booking_source: string; count: number }>;
+  payment_methods: Array<{ method: string; amount: number; percentage: number }>;
+  today_bookings_list?: Array<{
+    booking_id: string;
+    guest_name: string;
+    check_in_date: string;
+    check_out_date: string;
+    total_amount: number;
+    status: string;
+  }>;
+  today_revenue_list?: Array<{
+    transaction_id: string;
+    amount: number;
+    payment_method: string;
+    payment_date: string;
+    booking_id: string;
+    guest_name: string;
+  }>;
+  available_rooms_list?: Array<{
+    room_number: string;
+    room_name: string;
+    category_name: string;
+    status: string;
+  }>;
+  occupied_rooms_list?: Array<{
+    room_number: string;
+    room_name: string;
+    category_name: string;
+    guest_name?: string;
+    check_in_date?: string;
+    check_out_date?: string;
+  }>;
   recent_bookings: Array<{
     booking_id: string;
     guest_name: string;
@@ -59,6 +90,10 @@ export const AdminDashboardView = ({
 }) => {
   const [data, setData] = useState<DashboardStats | null>(null);
   const [loading, setLoading] = useState(true);
+  const [showTodayBookingsModal, setShowTodayBookingsModal] = useState(false);
+  const [showTodayRevenueModal, setShowTodayRevenueModal] = useState(false);
+  const [showAvailableRoomsModal, setShowAvailableRoomsModal] = useState(false);
+  const [showOccupiedRoomsModal, setShowOccupiedRoomsModal] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -106,13 +141,13 @@ export const AdminDashboardView = ({
             {/* Stats Cards Row (2 rows of 4 cards on desktop, spacious) */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               <MiniStat icon={Calendar} label="Total Bookings" value={data.stats.total_bookings} color="bg-blue-50 text-blue-600" />
-              <MiniStat icon={Users} label="Today's Bookings" value={data.stats.today_bookings} color="bg-emerald-50 text-emerald-600" />
-              <MiniStat icon={TrendingUp} label="Today's Revenue" value={`₹${data.stats.today_revenue.toLocaleString()}`} color="bg-amber-50 text-amber-600" />
+              <MiniStat icon={Users} label="Today's Bookings" value={data.stats.today_bookings} color="bg-emerald-50 text-emerald-600" onClick={() => setShowTodayBookingsModal(true)} />
+              <MiniStat icon={TrendingUp} label="Today's Revenue" value={`₹${data.stats.today_revenue.toLocaleString()}`} color="bg-amber-50 text-amber-600" onClick={() => setShowTodayRevenueModal(true)} />
               <MiniStat icon={CreditCard} label="This Month Revenue" value={`₹${data.stats.monthly_revenue.toLocaleString()}`} color="bg-purple-50 text-purple-600" />
               
               <MiniStat icon={Hotel} label="Total Rooms" value={data.stats.total_rooms} color="bg-slate-50 text-slate-600" />
-              <MiniStat icon={CheckCircle} label="Available Rooms" value={data.stats.available_rooms} color="bg-teal-50 text-teal-600" />
-              <MiniStat icon={AlertCircle} label="Occupied Rooms" value={data.stats.occupied_rooms} color="bg-orange-50 text-orange-600" />
+              <MiniStat icon={CheckCircle} label="Available Rooms" value={data.stats.available_rooms} color="bg-teal-50 text-teal-600" onClick={() => setShowAvailableRoomsModal(true)} />
+              <MiniStat icon={AlertCircle} label="Occupied Rooms" value={data.stats.occupied_rooms} color="bg-orange-50 text-orange-600" onClick={() => setShowOccupiedRoomsModal(true)} />
               <MiniStat icon={XCircleIcon} label="Cancelled Bookings" value={data.stats.cancelled_bookings} color="bg-rose-50 text-rose-600" />
             </div>
 
@@ -125,7 +160,7 @@ export const AdminDashboardView = ({
                    <p className="text-[10px] text-slate-400 mt-0.5">Daily volume over the last 7 days</p>
                  </div>
                  <div className="h-[230px] w-full mt-2">
-                    <ResponsiveContainer width="100%" height="100%">
+                    <ResponsiveContainer width="100%" height="100%" minWidth={0}>
                       <AreaChart data={data.chart_data} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                         <defs>
                           <linearGradient id="colorBookings" x1="0" y1="0" x2="0" y2="1">
@@ -160,7 +195,7 @@ export const AdminDashboardView = ({
                    <p className="text-[10px] text-slate-400 mt-0.5">Estimated this month's revenue share</p>
                  </div>
                  <div className="h-[140px] flex items-center justify-center relative mt-2">
-                    <ResponsiveContainer width="100%" height="100%">
+                    <ResponsiveContainer width="100%" height="100%" minWidth={0}>
                       <PieChart>
                         <Pie data={data.revenue_overview} innerRadius={42} outerRadius={56} paddingAngle={4} dataKey="value">
                           {data.revenue_overview.map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
@@ -277,6 +312,187 @@ export const AdminDashboardView = ({
               </Card>
             </div>
           </div>
+
+          {/* Today's Bookings Modal */}
+          {showTodayBookingsModal && (
+            <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[999] flex items-center justify-center p-4 animate-in fade-in duration-300">
+              <div className="bg-white rounded-3xl shadow-2xl max-w-xl w-full overflow-hidden border border-slate-100 flex flex-col animate-in zoom-in-95 duration-200">
+                <div className="p-6 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+                  <div>
+                     <h3 className="text-xs font-black text-slate-800 uppercase tracking-widest">Today's Bookings</h3>
+                     <p className="text-[9px] text-slate-400 font-bold uppercase tracking-wider mt-1">Bookings created on current calendar date</p>
+                  </div>
+                  <button onClick={() => setShowTodayBookingsModal(false)} className="p-2.5 hover:bg-slate-100 rounded-xl text-slate-400 hover:text-slate-650 transition-colors">
+                    <X size={16} />
+                  </button>
+                </div>
+                
+                <div className="p-6 max-h-[400px] overflow-y-auto custom-scrollbar">
+                  <div className="space-y-3.5">
+                    {(data.today_bookings_list || []).map((bk: any, i: number) => (
+                      <div key={i} className="flex justify-between items-center p-4 bg-slate-50/80 border border-slate-100 rounded-2xl hover:border-indigo-200 transition-colors group">
+                        <div className="space-y-1">
+                          <div className="flex items-center gap-2">
+                            <span className="text-[10px] font-black text-indigo-600 tracking-wide">{bk.booking_id}</span>
+                            <span className={`text-[8px] font-black px-2 py-0.5 rounded-full border uppercase tracking-wider ${
+                              bk.status === 'checked-in' ? 'bg-emerald-50 border-emerald-150 text-emerald-800' :
+                              bk.status === 'confirmed' ? 'bg-indigo-50 border-indigo-200 text-indigo-800' : 'bg-slate-100 border-slate-200 text-slate-500'
+                            }`}>
+                              {bk.status}
+                            </span>
+                          </div>
+                          <p className="text-xs font-bold text-slate-800 uppercase">{bk.guest_name}</p>
+                          <p className="text-[9.5px] text-slate-400 font-medium">
+                            {bk.check_in_date} to {bk.check_out_date}
+                          </p>
+                        </div>
+                        <div className="text-right space-y-1">
+                          <span className="text-[8.5px] font-black text-slate-400 uppercase tracking-wider block">Total Amount</span>
+                          <span className="text-sm font-black text-slate-800 font-sans block">₹ {parseFloat(bk.total_amount).toLocaleString()}</span>
+                        </div>
+                      </div>
+                    ))}
+                    {(data.today_bookings_list || []).length === 0 && (
+                      <div className="py-12 text-center text-slate-400 text-[10.5px] font-black uppercase tracking-widest">No bookings registered today</div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Today's Revenue Modal */}
+          {showTodayRevenueModal && (
+            <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[999] flex items-center justify-center p-4 animate-in fade-in duration-300">
+              <div className="bg-white rounded-3xl shadow-2xl max-w-xl w-full overflow-hidden border border-slate-100 flex flex-col animate-in zoom-in-95 duration-200">
+                <div className="p-6 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+                  <div>
+                     <h3 className="text-xs font-black text-slate-800 uppercase tracking-widest">Today's Collections</h3>
+                     <p className="text-[9px] text-slate-400 font-bold uppercase tracking-wider mt-1">Successful transactions settled today</p>
+                  </div>
+                  <button onClick={() => setShowTodayRevenueModal(false)} className="p-2.5 hover:bg-slate-100 rounded-xl text-slate-400 hover:text-slate-650 transition-colors">
+                    <X size={16} />
+                  </button>
+                </div>
+                
+                <div className="p-6 max-h-[400px] overflow-y-auto custom-scrollbar">
+                  <div className="space-y-3.5">
+                    {(data.today_revenue_list || []).map((rev: any, i: number) => (
+                      <div key={i} className="flex justify-between items-center p-4 bg-slate-50/80 border border-slate-100 rounded-2xl hover:border-amber-200 transition-colors group">
+                        <div className="space-y-1">
+                          <div className="flex items-center gap-2">
+                            <span className="text-[10px] font-black text-amber-600 tracking-wide">TXN: {rev.transaction_id || 'N/A'}</span>
+                            <span className="text-[8px] font-black px-2 py-0.5 rounded-full border border-slate-200 bg-white uppercase text-slate-500 font-sans tracking-wide">
+                              {rev.payment_method || 'UPI'}
+                            </span>
+                          </div>
+                          <p className="text-xs font-bold text-slate-800 uppercase">{rev.guest_name}</p>
+                          <p className="text-[9.5px] text-slate-400 font-medium">
+                            Ref Booking: <span className="font-bold text-slate-600">{rev.booking_id}</span>
+                          </p>
+                        </div>
+                        <div className="text-right space-y-1">
+                          <span className="text-[8.5px] font-black text-slate-400 uppercase tracking-wider block">Paid Amount</span>
+                          <span className="text-sm font-black text-emerald-700 font-sans block">₹ {parseFloat(rev.amount).toLocaleString()}</span>
+                        </div>
+                      </div>
+                    ))}
+                    {(data.today_revenue_list || []).length === 0 && (
+                      <div className="py-12 text-center text-slate-400 text-[10.5px] font-black uppercase tracking-widest">No payments recorded today</div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Available Rooms Modal */}
+          {showAvailableRoomsModal && (
+            <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[999] flex items-center justify-center p-4 animate-in fade-in duration-300">
+              <div className="bg-white rounded-3xl shadow-2xl max-w-lg w-full overflow-hidden border border-slate-100 flex flex-col animate-in zoom-in-95 duration-200">
+                <div className="p-6 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+                  <div>
+                     <h3 className="text-xs font-black text-slate-800 uppercase tracking-widest">Available Rooms</h3>
+                     <p className="text-[9px] text-slate-400 font-bold uppercase tracking-wider mt-1">Live vacant inventory</p>
+                  </div>
+                  <button onClick={() => setShowAvailableRoomsModal(false)} className="p-2.5 hover:bg-slate-100 rounded-xl text-slate-400 hover:text-slate-650 transition-colors">
+                    <X size={16} />
+                  </button>
+                </div>
+                
+                <div className="p-6 max-h-[400px] overflow-y-auto custom-scrollbar">
+                  <div className="space-y-3.5">
+                    {(data.available_rooms_list || []).map((rm: any, i: number) => (
+                      <div key={i} className="flex justify-between items-center p-4 bg-emerald-50/20 border border-emerald-100/50 rounded-2xl">
+                        <div className="space-y-1">
+                          <p className="text-xs font-bold text-slate-800 uppercase">{rm.room_name || `Room ${rm.room_number}`}</p>
+                          <p className="text-[9.5px] text-slate-400 font-bold uppercase tracking-wider">{rm.category_name}</p>
+                        </div>
+                        <div className="text-right space-y-1">
+                          <span className="text-[8.5px] font-black text-slate-400 uppercase tracking-wider block font-sans">Room No</span>
+                          <span className="text-sm font-black text-emerald-800 block font-sans">{rm.room_number}</span>
+                        </div>
+                      </div>
+                    ))}
+                    {(data.available_rooms_list || []).length === 0 && (
+                      <div className="py-12 text-center text-slate-400 text-[10.5px] font-black uppercase tracking-widest">No available rooms remaining</div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Occupied Rooms Modal */}
+          {showOccupiedRoomsModal && (
+            <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[999] flex items-center justify-center p-4 animate-in fade-in duration-300">
+              <div className="bg-white rounded-3xl shadow-2xl max-w-lg w-full overflow-hidden border border-slate-100 flex flex-col animate-in zoom-in-95 duration-200">
+                <div className="p-6 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+                  <div>
+                     <h3 className="text-xs font-black text-slate-800 uppercase tracking-widest">Occupied Rooms</h3>
+                     <p className="text-[9px] text-slate-400 font-bold uppercase tracking-wider mt-1">Rooms currently allocated to guests</p>
+                  </div>
+                  <button onClick={() => setShowOccupiedRoomsModal(false)} className="p-2.5 hover:bg-slate-100 rounded-xl text-slate-400 hover:text-slate-650 transition-colors">
+                    <X size={16} />
+                  </button>
+                </div>
+                
+                <div className="p-6 max-h-[400px] overflow-y-auto custom-scrollbar">
+                  <div className="space-y-3.5">
+                    {(data.occupied_rooms_list || []).map((rm: any, i: number) => (
+                      <div key={i} className="flex justify-between items-start p-4 bg-rose-50/10 border border-rose-100/50 rounded-2xl gap-3">
+                        <div className="space-y-1 min-w-0">
+                          <p className="text-xs font-bold text-slate-800 uppercase">{rm.room_name || `Room ${rm.room_number}`}</p>
+                          <p className="text-[9px] text-slate-400 font-bold uppercase tracking-wider">{rm.category_name}</p>
+                          <p className="text-[10px] text-rose-800 font-bold uppercase mt-1">Guest: {rm.guest_name || 'Checked-in'}</p>
+                          {(rm.check_in_date || rm.check_out_date) && (
+                            <div className="flex items-center gap-1.5 mt-2">
+                              <span className="inline-flex items-center gap-1 bg-indigo-50 border border-indigo-100 text-indigo-700 text-[9px] font-black uppercase tracking-wide px-2 py-0.5 rounded-full">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+                                {rm.check_in_date}
+                              </span>
+                              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-slate-400 shrink-0"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                              <span className="inline-flex items-center gap-1 bg-amber-50 border border-amber-100 text-amber-700 text-[9px] font-black uppercase tracking-wide px-2 py-0.5 rounded-full">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+                                {rm.check_out_date}
+                              </span>
+                            </div>
+                          )}
+                        </div>
+                        <div className="text-right space-y-1 shrink-0">
+                          <span className="text-[8.5px] font-black text-slate-400 uppercase tracking-wider block font-sans">Room No</span>
+                          <span className="text-sm font-black text-rose-800 block font-sans">{rm.room_number}</span>
+                        </div>
+                      </div>
+                    ))}
+                    {(data.occupied_rooms_list || []).length === 0 && (
+                      <div className="py-12 text-center text-slate-400 text-[10.5px] font-black uppercase tracking-widest">No occupied rooms currently</div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       )}
 
@@ -454,14 +670,12 @@ export const AdminDashboardView = ({
                           <p className="text-lg font-black text-emerald-750 font-sans">₹ {(data.stats.total_revenue * 0.65).toLocaleString()}</p>
                         </div>
                         <div className="relative w-16 h-16">
-                           <ResponsiveContainer width={64} height={64}>
-                              <PieChart>
-                                <Pie data={[{v:65},{v:35}]} innerRadius={0} outerRadius={32} dataKey="v">
-                                  <Cell fill="#059669" />
-                                  <Cell fill="#cbd5e1" />
-                                </Pie>
-                              </PieChart>
-                           </ResponsiveContainer>
+                           <PieChart width={64} height={64}>
+                              <Pie data={[{v:65},{v:35}]} innerRadius={0} outerRadius={32} dataKey="v">
+                                <Cell fill="#059669" />
+                                <Cell fill="#cbd5e1" />
+                              </Pie>
+                            </PieChart>
                            <CreditCard size={12} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white" />
                         </div>
                       </div>
@@ -472,30 +686,86 @@ export const AdminDashboardView = ({
                       <p className="text-xs font-black text-indigo-655 mb-4 text-center tracking-wide uppercase">Payment Methods</p>
                       <div className="flex items-center gap-4">
                         <div className="w-24 h-24 relative">
-                          <ResponsiveContainer width="100%" height="100%">
-                            <PieChart>
-                              <Pie data={[{v:55},{v:25},{v:15},{v:5}]} innerRadius={30} outerRadius={45} dataKey="v" paddingAngle={2}>
-                                <Cell fill="#4f46e5" />
-                                <Cell fill="#8b5cf6" />
-                                <Cell fill="#06b6d4" />
-                                <Cell fill="#cbd5e1" />
+                          <PieChart width={96} height={96}>
+                              <Pie 
+                                data={data.payment_methods || []} 
+                                innerRadius={30} 
+                                outerRadius={45} 
+                                dataKey="amount" 
+                                nameKey="method" 
+                                paddingAngle={2}
+                              >
+                                {(data.payment_methods || []).map((_, i) => (
+                                  <Cell key={i} fill={COLORS[i % COLORS.length]} />
+                                ))}
                               </Pie>
-                              <Tooltip />
+                              <Tooltip formatter={(value: any) => [`₹${parseFloat(value).toLocaleString()}`, 'Amount']} />
                             </PieChart>
-                          </ResponsiveContainer>
                           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center">
                             <p className="text-[8px] font-bold text-slate-400 uppercase leading-none">Total</p>
-                            <p className="text-[10px] font-black text-slate-800 leading-tight">₹ {(data.stats.total_revenue / 100000).toFixed(2)}L</p>
+                            <p className="text-[10px] font-black text-slate-800 leading-tight">
+                              ₹ {((data.payment_methods || []).reduce((sum, item) => sum + item.amount, 0) / 100000).toFixed(2)}L
+                            </p>
                           </div>
                         </div>
-                        <div className="flex-grow space-y-1">
-                           <LegendItem color="bg-[#4f46e5]" label="UPI" percent="55%" />
-                           <LegendItem color="bg-[#8b5cf6]" label="Card" percent="25%" />
-                           <LegendItem color="bg-[#06b6d4]" label="Net Banking" percent="15%" />
-                           <LegendItem color="bg-[#cbd5e1]" label="Cash" percent="5%" />
+                        <div className="flex-grow space-y-1 max-h-[100px] overflow-y-auto pr-1 custom-scrollbar">
+                           {(data.payment_methods || []).map((item, i) => (
+                             <LegendItem 
+                               key={i}
+                               colorHex={COLORS[i % COLORS.length]}
+                               label={item.method} 
+                               percent={`${item.percentage}%`} 
+                             />
+                           ))}
                         </div>
                       </div>
                    </div>
+
+                    {/* Booking Channels Chart */}
+                    <div className="pt-4 border-t border-slate-100">
+                       <p className="text-xs font-black text-indigo-655 mb-4 text-center tracking-wide uppercase">Booking Channels</p>
+                       <div className="flex items-center gap-4">
+                         <div className="w-24 h-24 relative">
+                           <PieChart width={96} height={96}>
+                               <Pie 
+                                 data={data.booking_sources || []} 
+                                 innerRadius={30} 
+                                 outerRadius={45} 
+                                 dataKey="count" 
+                                 nameKey="booking_source" 
+                                 paddingAngle={2}
+                               >
+                                 {(data.booking_sources || []).map((_, i) => (
+                                   <Cell key={i} fill={COLORS[i % COLORS.length]} />
+                                 ))}
+                               </Pie>
+                               <Tooltip formatter={(value: any) => [`${value} bookings`, 'Volume']} />
+                             </PieChart>
+                           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center">
+                             <p className="text-[8px] font-bold text-slate-400 uppercase leading-none">Total</p>
+                             <p className="text-[10px] font-black text-slate-800 leading-tight">
+                               {(data.booking_sources || []).reduce((sum: number, b: any) => sum + (parseInt(b.count) || 0), 0)}
+                             </p>
+                           </div>
+                         </div>
+                         <div className="flex-grow space-y-1 max-h-[100px] overflow-y-auto pr-1 custom-scrollbar">
+                            {(() => {
+                              const totalCount = (data.booking_sources || []).reduce((sum: number, b: any) => sum + (parseInt(b.count) || 0), 0) || 1;
+                              return (data.booking_sources || []).map((b: any, i: number) => {
+                                const percent = Math.round((parseInt(b.count) || 0) / totalCount * 100);
+                                return (
+                                  <LegendItem 
+                                    key={i}
+                                    colorHex={COLORS[i % COLORS.length]}
+                                    label={b.booking_source || 'Unknown'} 
+                                    percent={`${percent}%`} 
+                                  />
+                                );
+                              });
+                            })()}
+                         </div>
+                       </div>
+                    </div>
                 </CardContent>
              </Card>
           </div>
@@ -587,17 +857,20 @@ const PaymentStat = ({ icon: Icon, label, value, color }: any) => (
   </div>
 );
 
-const LegendItem = ({ color, label, percent }: any) => (
+const LegendItem = ({ color, colorHex, label, percent }: any) => (
   <div className="flex items-center justify-between gap-3 group cursor-pointer hover:bg-slate-55 p-1 rounded transition-colors">
     <div className="flex items-center gap-2">
-      <div className={`w-2 h-2 rounded-full ${color}`}></div>
+      <div 
+        className={`w-2 h-2 rounded-full ${color || ''}`} 
+        style={colorHex ? { backgroundColor: colorHex } : {}}
+      />
       <span className="text-[10px] font-bold text-slate-655">{label}</span>
     </div>
     <span className="text-[10px] font-black text-slate-400">{percent}</span>
   </div>
 );
 
-const MiniStat = ({ icon: Icon, label, value, color }: any) => {
+const MiniStat = ({ icon: Icon, label, value, color, onClick }: any) => {
   const colorMap: any = {
     'bg-blue-50 text-blue-600': { border: 'border-blue-100/60', text: 'text-blue-600', bg: 'bg-blue-50/50' },
     'bg-emerald-50 text-emerald-600': { border: 'border-emerald-100/60', text: 'text-emerald-650', bg: 'bg-emerald-50/50' },
@@ -609,10 +882,13 @@ const MiniStat = ({ icon: Icon, label, value, color }: any) => {
     'bg-rose-50 text-rose-600': { border: 'border-rose-100/60', text: 'text-rose-655', bg: 'bg-rose-50/50' },
   };
   
-  const style = colorMap[color] || { border: 'border-slate-100', text: 'text-slate-655', bg: 'bg-slate-50' };
+  const style = colorMap[color] || { border: 'border-slate-100', text: 'text-slate-655', bg: 'bg-slate-55' };
 
   return (
-    <div className={`relative overflow-hidden bg-white p-5 rounded-2xl border ${style.border} flex flex-col justify-between shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group`}>
+    <div 
+      onClick={onClick}
+      className={`relative overflow-hidden bg-white p-5 rounded-2xl border ${style.border} flex flex-col justify-between shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group ${onClick ? 'cursor-pointer select-none active:scale-[0.99]' : ''}`}
+    >
       <div className={`absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r ${color.includes('blue') ? 'from-blue-500 to-indigo-500' : color.includes('emerald') ? 'from-emerald-500 to-teal-500' : color.includes('amber') ? 'from-amber-500 to-yellow-500' : color.includes('purple') ? 'from-purple-500 to-violet-500' : color.includes('teal') ? 'from-teal-500 to-emerald-500' : color.includes('orange') ? 'from-orange-500 to-amber-500' : color.includes('rose') ? 'from-rose-500 to-red-500' : 'from-slate-400 to-slate-500'}`} />
       <div className={`w-9 h-9 rounded-xl ${style.bg} ${style.text} flex items-center justify-center mb-3.5 group-hover:scale-110 transition-transform`}>
         <Icon size={16} />
