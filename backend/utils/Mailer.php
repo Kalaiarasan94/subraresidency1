@@ -2,7 +2,6 @@
 // backend/utils/Mailer.php
 
 include_once __DIR__ . '/BookingSlipGenerator.php';
-include_once __DIR__ . '/InvoicePdfGenerator.php';
 include_once __DIR__ . '/../config/db.php';
 include_once __DIR__ . '/../models/Settings.php';
 
@@ -116,6 +115,10 @@ class Mailer {
                     </tr>
                 </table>
 
+                <p style='font-size: 13px; color: #334155; margin: 0 0 20px; line-height: 1.6;'>
+                    Dear <strong>{$toName}</strong>, thank you for choosing Subra Residency! We're delighted to confirm your booking. Your booking slip and stay details are below — please keep this email for your records and present the QR code at check-in.
+                </p>
+
                 <table style='width: 100%; border-collapse: collapse;'>
                     <tr>
                         <!-- Left Column: Guest & Invoice Details -->
@@ -205,6 +208,7 @@ class Mailer {
                 </table>
 
                 <div class='footer'>
+                    <p style='margin: 0 0 5px; font-weight: 700; color: #0f3a20;'>Thank you for booking with Subra Residency — we look forward to hosting you!</p>
                     <p style='margin: 0 0 5px;'>Subra Residency • L.B.S Road • Kumbakonam • Tamil Nadu</p>
                     <p style='margin: 0; color: #94a3b8;'>Need help? Call {$sitePhone} or reply to this email.</p>
                 </div>
@@ -212,22 +216,7 @@ class Mailer {
         </body>
         </html>";
 
-        $attachments = [];
-
-        // 1. Generate & Attach PDF Invoice
-        try {
-            $pdfContent = InvoicePdfGenerator::generatePdf($bookingId, $toName, $toEmail, $checkIn, $checkOut, $amount, $roomName, 'Paid');
-            if ($pdfContent) {
-                $attachments[] = [
-                    'name' => "SubraResidency-Invoice-{$bookingId}.pdf",
-                    'content' => base64_encode($pdfContent)
-                ];
-            }
-        } catch (Throwable $e) {
-            error_log("[Mailer] PDF Invoice generation failed: " . $e->getMessage());
-        }
-
-        return self::sendViaBrevo($toEmail, $toName, "Your Subra Residency Tax Invoice & Confirmation - {$bookingId}", $htmlContent, $attachments);
+        return self::sendViaBrevo($toEmail, $toName, "Your Subra Residency Booking Confirmation - {$bookingId}", $htmlContent);
     }
 
     public static function sendBookingCancellation($toEmail, $toName, $bookingId, $checkIn, $checkOut, $amount, $roomName = 'Luxury Sanctuary') {
@@ -379,7 +368,7 @@ class Mailer {
             }
 
             if ($httpCode >= 200 && $httpCode < 300) {
-                $logMsg = "[" . date('Y-m-d H:i:s') . "] [Mailer SUCCESS] Email with PDF Invoice sent via Brevo REST API to $toEmail ($subject)\n";
+                $logMsg = "[" . date('Y-m-d H:i:s') . "] [Mailer SUCCESS] Email sent via Brevo REST API to $toEmail ($subject)\n";
                 file_put_contents(__DIR__ . '/../logs/payment.log', $logMsg, FILE_APPEND);
                 return true;
             } else {
@@ -393,7 +382,7 @@ class Mailer {
         foreach ($smtpPorts as $port) {
             $smtpSent = self::sendViaSmtp($toEmail, $toName, $subject, $htmlContent, $attachments, $port);
             if ($smtpSent) {
-                $logMsg = "[" . date('Y-m-d H:i:s') . "] [Mailer SUCCESS] Email with PDF Invoice sent via Brevo SMTP (Port $port) to $toEmail ($subject)\n";
+                $logMsg = "[" . date('Y-m-d H:i:s') . "] [Mailer SUCCESS] Email sent via Brevo SMTP (Port $port) to $toEmail ($subject)\n";
                 file_put_contents(__DIR__ . '/../logs/payment.log', $logMsg, FILE_APPEND);
                 return true;
             }
