@@ -4,7 +4,7 @@
 
 class BookingSlipGenerator {
 
-    public static function generate($bookingId, $guestName, $checkIn, $checkOut, $amount, $roomName, $paymentStatus = 'Payment Successful', $appUrl = 'http://localhost/subraresidency1') {
+    public static function generate($bookingId, $guestName, $checkIn, $checkOut, $amount, $roomName, $paymentStatus = 'Payment Successful', $appUrl = 'https://subraresidency.com') {
         $width = 900;
         $height = 640;
 

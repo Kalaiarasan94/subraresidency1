@@ -42,6 +42,29 @@ export const ReceptionPortal = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [notifications, setNotifications] = useState<any[]>([]);
   const [prefillBookingId, setPrefillBookingId] = useState<string | null>(null);
+  const [activeToast, setActiveToast] = useState<any>(null);
+  const [seenNotifIds, setSeenNotifIds] = useState<Set<number>>(new Set());
+
+  const playNotifChime = () => {
+    try {
+      const AudioCtx = window.AudioContext || (window as any).webkitAudioContext;
+      if (!AudioCtx) return;
+      const ctx = new AudioCtx();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(587.33, ctx.currentTime);
+      osc.frequency.setValueAtTime(880, ctx.currentTime + 0.12);
+      gain.gain.setValueAtTime(0.15, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.5);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.5);
+    } catch (e) {
+      // Audio playback restriction fallback
+    }
+  };
 
   // Persistence
   useEffect(() => {
@@ -85,8 +108,21 @@ export const ReceptionPortal = () => {
       try {
         const resp = await fetch(`${API_BASE_URL}/receptionist/notifications`);
         const data = await resp.json();
-        if (data.status === 'success') {
-          setNotifications(data.notifications);
+        if (data.status === 'success' && Array.isArray(data.notifications)) {
+          const notifs = data.notifications;
+          setNotifications(notifs);
+
+          const unreadQrs = notifs.filter((n: any) => !seenNotifIds.has(n.id) && n.type === 'QR_SCAN');
+          if (unreadQrs.length > 0) {
+            const newest = unreadQrs[0];
+            setSeenNotifIds((prev) => {
+              const next = new Set(prev);
+              notifs.forEach((n: any) => next.add(n.id));
+              return next;
+            });
+            playNotifChime();
+            setActiveToast(newest);
+          }
         }
       } catch (err) {
         console.error("Notif fetch error", err);
@@ -94,9 +130,9 @@ export const ReceptionPortal = () => {
     };
 
     fetchNotifs();
-    const interval = setInterval(fetchNotifs, 5000);
+    const interval = setInterval(fetchNotifs, 4000);
     return () => clearInterval(interval);
-  }, [user]);
+  }, [user, seenNotifIds]);
 
   const markRead = async () => {
      try {
@@ -251,6 +287,43 @@ export const ReceptionPortal = () => {
           {activeTab === 'history'         && <StayLogs />}
         </div>
       </main>
+
+      {/* Floating QR Scan Toast Alert */}
+      {activeToast && (
+        <div className="fixed bottom-6 right-6 z-[100] max-w-md w-full bg-[#051e13] border-2 border-emerald-500 rounded-3xl p-5 shadow-[0_10px_40px_rgba(0,0,0,0.5)] text-white animate-in slide-in-from-bottom-5 duration-300">
+          <div className="flex items-start justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 border border-emerald-500/30">
+                <Smartphone size={20} className="animate-pulse" />
+              </div>
+              <div>
+                <p className="text-[10px] font-black text-emerald-400 uppercase tracking-widest">⚡ Guest QR Scan Alert</p>
+                <p className="text-xs font-bold text-white mt-0.5">{activeToast.message}</p>
+              </div>
+            </div>
+            <button onClick={() => setActiveToast(null)} className="text-slate-400 hover:text-white p-1">
+              <X size={16} />
+            </button>
+          </div>
+          <div className="mt-4 flex gap-2">
+            <button
+              onClick={() => {
+                openNotification(activeToast);
+                setActiveToast(null);
+              }}
+              className="flex-1 bg-emerald-500 hover:bg-emerald-400 text-[#051e13] font-black text-xs uppercase tracking-wider py-2.5 rounded-xl shadow-lg transition-all"
+            >
+              Process Express Check-in
+            </button>
+            <button
+              onClick={() => setActiveToast(null)}
+              className="px-3 py-2.5 bg-white/10 hover:bg-white/20 text-slate-300 text-xs font-semibold rounded-xl"
+            >
+              Dismiss
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

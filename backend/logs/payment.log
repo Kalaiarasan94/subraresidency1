@@ -24609,3 +24609,811 @@ Stack trace:
 [2026-07-18 09:36:34] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
 [2026-07-18 09:36:34] INDEX.PHP REACHED
 [2026-07-18 09:36:34] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-03 09:48:01] INDEX.PHP REACHED
+[2026-08-03 09:48:01] INDEX.PHP REACHED
+[2026-08-03 09:48:01] REQUEST: POST /api/index.php/bookings/create (Path: /bookings/create)
+[2026-08-03 09:48:01] INDEX.PHP REACHED
+[2026-08-03 09:48:01] INDEX.PHP REACHED
+[2026-08-03 09:48:01] REQUEST: POST /api/index.php/payments/createOrder (Path: /payments/createOrder)
+[2026-08-03 09:48:01] CRITICAL: create_order.php reached!
+[2026-08-03 09:48:01] CRITICAL: Input: {"booking_id":"HBK20260803DAF0","amount":5850}
+[2026-08-03 09:48:01] DEBUG: Debug Mail Triggered for ID: HBK20260803DAF0
+[2026-08-03 09:48:01] DEBUG: Sending Mail to bhalaramsembu@gmail.com
+[2026-08-03 09:48:03][Mailer] Brevo API Error (HTTP 401): {"message":"Key not found","code":"unauthorized"}
+
+[2026-08-03 09:48:06] INDEX.PHP REACHED
+[2026-08-03 09:48:06] INDEX.PHP REACHED
+[2026-08-03 09:48:06] REQUEST: POST /api/index.php/bookings/create (Path: /bookings/create)
+[2026-08-03 09:48:07] INDEX.PHP REACHED
+[2026-08-03 09:48:07] INDEX.PHP REACHED
+[2026-08-03 09:48:07] REQUEST: POST /api/index.php/payments/createOrder (Path: /payments/createOrder)
+[2026-08-03 09:48:07] CRITICAL: create_order.php reached!
+[2026-08-03 09:48:07] CRITICAL: Input: {"booking_id":"HBK20260803155B","amount":5850}
+[2026-08-03 09:48:07] DEBUG: Debug Mail Triggered for ID: HBK20260803155B
+[2026-08-03 09:48:07] DEBUG: Sending Mail to bhalaramsembu@gmail.com
+[2026-08-03 09:48:08][Mailer] Brevo API Error (HTTP 401): {"message":"Key not found","code":"unauthorized"}
+
+[2026-08-03 09:48:16] INDEX.PHP REACHED
+[2026-08-03 09:48:16] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-08-03 09:48:16] INDEX.PHP REACHED
+[2026-08-03 09:48:16] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-08-03 09:48:19] INDEX.PHP REACHED
+[2026-08-03 09:48:19] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-03 09:48:19] INDEX.PHP REACHED
+[2026-08-03 09:48:19] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-03 09:48:36] INDEX.PHP REACHED
+[2026-08-03 09:48:36] INDEX.PHP REACHED
+[2026-08-03 09:48:36] REQUEST: POST /api/index.php/auth/receptionist/login (Path: /auth/receptionist/login)
+[2026-08-03 09:48:36] INDEX.PHP REACHED
+[2026-08-03 09:48:36] REQUEST: GET /api/index.php/dashboard/receptionist (Path: /dashboard/receptionist)
+[2026-08-03 09:48:36] INDEX.PHP REACHED
+[2026-08-03 09:48:36] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 09:48:36] INDEX.PHP REACHED
+[2026-08-03 09:48:36] REQUEST: GET /api/index.php/dashboard/receptionist (Path: /dashboard/receptionist)
+[2026-08-03 09:48:40] INDEX.PHP REACHED
+[2026-08-03 09:48:40] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 09:48:40] INDEX.PHP REACHED
+[2026-08-03 09:48:40] REQUEST: GET /api/index.php/management/guests (Path: /management/guests)
+[2026-08-03 09:48:40] INDEX.PHP REACHED
+[2026-08-03 09:48:40] REQUEST: GET /api/index.php/management/guests (Path: /management/guests)
+[2026-08-03 09:48:44] INDEX.PHP REACHED
+[2026-08-03 09:48:44] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 09:48:45] INDEX.PHP REACHED
+[2026-08-03 09:48:45] REQUEST: GET /api/index.php/rooms/list (Path: /rooms/list)
+[2026-08-03 09:48:45] INDEX.PHP REACHED
+[2026-08-03 09:48:45] REQUEST: GET /api/index.php/rooms/list (Path: /rooms/list)
+[2026-08-03 09:48:45] INDEX.PHP REACHED
+[2026-08-03 09:48:45] REQUEST: GET /api/index.php/rooms/availabilityList?start=2026-08-03&end=2026-09-02&_cb=1785743325038 (Path: /rooms/availabilityList)
+[2026-08-03 09:48:45] INDEX.PHP REACHED
+[2026-08-03 09:48:45] REQUEST: GET /api/index.php/rooms/availabilityList?start=2026-08-03&end=2026-09-02&_cb=1785743325039 (Path: /rooms/availabilityList)
+[2026-08-03 09:48:45] INDEX.PHP REACHED
+[2026-08-03 09:48:45] REQUEST: GET /api/index.php/admin/bookings/list?limit=100&offset=0 (Path: /admin/bookings/list)
+[2026-08-03 09:48:45] INDEX.PHP REACHED
+[2026-08-03 09:48:45] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-08-03 09:48:45] INDEX.PHP REACHED
+[2026-08-03 09:48:45] REQUEST: GET /api/index.php/admin/bookings/list?limit=100&offset=0 (Path: /admin/bookings/list)
+[2026-08-03 09:48:46] INDEX.PHP REACHED
+[2026-08-03 09:48:46] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-08-03 09:48:48] INDEX.PHP REACHED
+[2026-08-03 09:48:48] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 09:48:51] INDEX.PHP REACHED
+[2026-08-03 09:48:51] REQUEST: GET /api/index.php/admin/bookings/view?booking_id=HBK202607150CE3 (Path: /admin/bookings/view)
+[2026-08-03 09:48:52] INDEX.PHP REACHED
+[2026-08-03 09:48:52] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 09:48:56] INDEX.PHP REACHED
+[2026-08-03 09:48:56] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 09:49:00] INDEX.PHP REACHED
+[2026-08-03 09:49:00] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 09:49:04] INDEX.PHP REACHED
+[2026-08-03 09:49:04] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 09:49:08] INDEX.PHP REACHED
+[2026-08-03 09:49:08] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 09:49:12] INDEX.PHP REACHED
+[2026-08-03 09:49:12] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 09:49:16] INDEX.PHP REACHED
+[2026-08-03 09:49:16] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 09:49:20] INDEX.PHP REACHED
+[2026-08-03 09:49:20] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 09:49:24] INDEX.PHP REACHED
+[2026-08-03 09:49:24] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 09:49:28] INDEX.PHP REACHED
+[2026-08-03 09:49:28] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 09:49:32] INDEX.PHP REACHED
+[2026-08-03 09:49:32] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 09:49:36] INDEX.PHP REACHED
+[2026-08-03 09:49:36] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 09:49:40] INDEX.PHP REACHED
+[2026-08-03 09:49:40] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 09:49:45] INDEX.PHP REACHED
+[2026-08-03 09:49:45] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 09:50:45] INDEX.PHP REACHED
+[2026-08-03 09:50:45] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 09:51:45] INDEX.PHP REACHED
+[2026-08-03 09:51:45] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 09:52:45] INDEX.PHP REACHED
+[2026-08-03 09:52:45] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 09:53:45] INDEX.PHP REACHED
+[2026-08-03 09:53:45] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 09:54:45] INDEX.PHP REACHED
+[2026-08-03 09:54:45] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 09:55:33] INDEX.PHP REACHED
+[2026-08-03 09:55:33] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 09:55:36] INDEX.PHP REACHED
+[2026-08-03 09:55:36] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 09:55:40] INDEX.PHP REACHED
+[2026-08-03 09:55:40] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 09:55:44] INDEX.PHP REACHED
+[2026-08-03 09:55:44] INDEX.PHP REACHED
+[2026-08-03 09:55:44] REQUEST: POST /api/index.php/bookings/create (Path: /bookings/create)
+[2026-08-03 09:55:44] INDEX.PHP REACHED
+[2026-08-03 09:55:44] INDEX.PHP REACHED
+[2026-08-03 09:55:44] REQUEST: POST /api/index.php/payments/createOrder (Path: /payments/createOrder)
+[2026-08-03 09:55:44] CRITICAL: create_order.php reached!
+[2026-08-03 09:55:44] CRITICAL: Input: {"booking_id":"HBK20260803D58F","amount":5850}
+[2026-08-03 09:55:44] DEBUG: Debug Mail Triggered for ID: HBK20260803D58F
+[2026-08-03 09:55:44] DEBUG: Sending Mail to bhalaramsembu@gmail.com
+[2026-08-03 09:55:46][Mailer] Brevo API Error (HTTP 401): {"message":"Key not found","code":"unauthorized"}
+
+[2026-08-03 09:55:47] INDEX.PHP REACHED
+[2026-08-03 09:55:47] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 09:55:48] INDEX.PHP REACHED
+[2026-08-03 09:55:48] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 09:55:52] INDEX.PHP REACHED
+[2026-08-03 09:55:52] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 09:55:56] INDEX.PHP REACHED
+[2026-08-03 09:55:56] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 09:55:57] INDEX.PHP REACHED
+[2026-08-03 09:55:57] INDEX.PHP REACHED
+[2026-08-03 09:55:57] REQUEST: POST /api/index.php/bookings/create (Path: /bookings/create)
+[2026-08-03 09:55:57] INDEX.PHP REACHED
+[2026-08-03 09:55:57] INDEX.PHP REACHED
+[2026-08-03 09:55:57] REQUEST: POST /api/index.php/payments/createOrder (Path: /payments/createOrder)
+[2026-08-03 09:55:57] CRITICAL: create_order.php reached!
+[2026-08-03 09:55:57] CRITICAL: Input: {"booking_id":"HBK202608038884","amount":5850}
+[2026-08-03 09:55:57] DEBUG: Debug Mail Triggered for ID: HBK202608038884
+[2026-08-03 09:55:57] DEBUG: Sending Mail to bhalaramsembu@gmail.com
+[2026-08-03 09:56:01][Mailer] Brevo API Error (HTTP 401): {"message":"Key not found","code":"unauthorized"}
+
+[2026-08-03 09:56:01] INDEX.PHP REACHED
+[2026-08-03 09:56:01] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 09:56:04] INDEX.PHP REACHED
+[2026-08-03 09:56:04] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 09:56:08] INDEX.PHP REACHED
+[2026-08-03 09:56:08] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 09:56:12] INDEX.PHP REACHED
+[2026-08-03 09:56:12] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 09:56:16] INDEX.PHP REACHED
+[2026-08-03 09:56:16] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 09:56:20] INDEX.PHP REACHED
+[2026-08-03 09:56:20] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 09:56:24] INDEX.PHP REACHED
+[2026-08-03 09:56:24] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 09:56:28] INDEX.PHP REACHED
+[2026-08-03 09:56:28] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 09:56:32] INDEX.PHP REACHED
+[2026-08-03 09:56:32] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 09:56:36] INDEX.PHP REACHED
+[2026-08-03 09:56:36] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 09:56:45] INDEX.PHP REACHED
+[2026-08-03 09:56:45] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 09:57:45] INDEX.PHP REACHED
+[2026-08-03 09:57:45] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 09:58:45] INDEX.PHP REACHED
+[2026-08-03 09:58:45] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 09:59:45] INDEX.PHP REACHED
+[2026-08-03 09:59:45] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 10:00:45] INDEX.PHP REACHED
+[2026-08-03 10:00:45] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 10:01:45] INDEX.PHP REACHED
+[2026-08-03 10:01:45] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 10:02:45] INDEX.PHP REACHED
+[2026-08-03 10:02:45] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 10:03:45] INDEX.PHP REACHED
+[2026-08-03 10:03:45] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 10:04:45] INDEX.PHP REACHED
+[2026-08-03 10:04:45] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 10:05:45] INDEX.PHP REACHED
+[2026-08-03 10:05:45] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 10:06:45] INDEX.PHP REACHED
+[2026-08-03 10:06:45] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 08:07:36] Database Connection error: could not find driver
+[2026-08-03 10:07:45] INDEX.PHP REACHED
+[2026-08-03 10:07:45] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 08:08:27] Database Connection error: could not find driver
+[2026-08-03 08:08:27][Mailer] Brevo API status HTTP 500. Attempting native PHP mail fallback for af6402001@smtp-brevo.com...
+[2026-08-03 08:08:29][Mailer ERROR] Both Brevo and native PHP mail failed for af6402001@smtp-brevo.com
+[2026-08-03 10:08:45] INDEX.PHP REACHED
+[2026-08-03 10:08:45] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 08:09:37] Database Connection error: could not find driver
+[2026-08-03 08:09:37][Mailer] Brevo API status HTTP 500. Attempting native PHP mail fallback for af6402001@smtp-brevo.com...
+[2026-08-03 08:09:39][Mailer ERROR] Both Brevo and native PHP mail failed for af6402001@smtp-brevo.com
+[2026-08-03 10:09:45] INDEX.PHP REACHED
+[2026-08-03 10:09:45] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 10:10:45] INDEX.PHP REACHED
+[2026-08-03 10:10:45] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 10:10:58] INDEX.PHP REACHED
+[2026-08-03 10:10:58] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-08-03 10:10:58] INDEX.PHP REACHED
+[2026-08-03 10:10:58] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-08-03 10:10:58] INDEX.PHP REACHED
+[2026-08-03 10:10:58] REQUEST: GET /api/index.php/dashboard/receptionist (Path: /dashboard/receptionist)
+[2026-08-03 10:10:58] INDEX.PHP REACHED
+[2026-08-03 10:10:58] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 10:10:58] INDEX.PHP REACHED
+[2026-08-03 10:10:58] REQUEST: GET /api/index.php/dashboard/receptionist (Path: /dashboard/receptionist)
+[2026-08-03 10:10:58] INDEX.PHP REACHED
+[2026-08-03 10:10:58] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 10:51:33] INDEX.PHP REACHED
+[2026-08-03 10:51:33] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-08-03 10:51:35] INDEX.PHP REACHED
+[2026-08-03 10:51:35] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-08-03 10:51:35] INDEX.PHP REACHED
+[2026-08-03 10:51:35] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-08-03 08:52:30] Database Connection error: could not find driver
+[2026-08-03 08:52:30] [Mailer WARN] Brevo API returned HTTP 500: No response body
+[2026-08-03 08:52:30] [Mailer] Attempting native PHP mail fallback for af6402001@smtp-brevo.com...
+[2026-08-03 08:52:32] [Mailer ERROR] Both Brevo and native PHP mail failed for af6402001@smtp-brevo.com
+[2026-08-03 10:53:46] INDEX.PHP REACHED
+[2026-08-03 10:53:46] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-08-03 10:53:46] INDEX.PHP REACHED
+[2026-08-03 10:53:46] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-08-03 10:54:08] INDEX.PHP REACHED
+[2026-08-03 10:54:08] INDEX.PHP REACHED
+[2026-08-03 10:54:08] REQUEST: POST /api/index.php/bookings/create (Path: /bookings/create)
+[2026-08-03 10:54:08] INDEX.PHP REACHED
+[2026-08-03 10:54:08] INDEX.PHP REACHED
+[2026-08-03 10:54:08] REQUEST: POST /api/index.php/payments/createOrder (Path: /payments/createOrder)
+[2026-08-03 10:54:09] CRITICAL: create_order.php reached!
+[2026-08-03 10:54:09] CRITICAL: Input: {"booking_id":"HBK20260803A0AE","amount":5850}
+[2026-08-03 10:54:09] RAZORPAY RESPONSE (HTTP 401): {"error":{"code":"BAD_REQUEST_ERROR","description":"Authentication failed"}} | cURL Error: NONE
+[2026-08-03 10:54:26] INDEX.PHP REACHED
+[2026-08-03 10:54:26] INDEX.PHP REACHED
+[2026-08-03 10:54:26] REQUEST: POST /api/index.php/bookings/create (Path: /bookings/create)
+[2026-08-03 10:54:26] INDEX.PHP REACHED
+[2026-08-03 10:54:26] INDEX.PHP REACHED
+[2026-08-03 10:54:26] REQUEST: POST /api/index.php/payments/createOrder (Path: /payments/createOrder)
+[2026-08-03 10:54:26] CRITICAL: create_order.php reached!
+[2026-08-03 10:54:26] CRITICAL: Input: {"booking_id":"HBK2026080340CA","amount":5850}
+[2026-08-03 10:54:26] RAZORPAY RESPONSE (HTTP 401): {"error":{"code":"BAD_REQUEST_ERROR","description":"Authentication failed"}} | cURL Error: NONE
+[2026-08-03 08:54:31] Database Connection error: could not find driver
+[2026-08-03 08:54:31] [Mailer WARN] Brevo REST API returned HTTP 500: No response body. Trying Brevo SMTP...
+[2026-08-03 08:54:32] [Mailer] Attempting native PHP mail fallback for af6402001@smtp-brevo.com...
+[2026-08-03 08:54:34] [Mailer ERROR] All delivery methods (Brevo API, Brevo SMTP, PHP Mail) failed for af6402001@smtp-brevo.com
+[2026-08-03 11:04:46] INDEX.PHP REACHED
+[2026-08-03 11:04:46] INDEX.PHP REACHED
+[2026-08-03 11:04:46] REQUEST: POST /api/index.php/bookings/create (Path: /bookings/create)
+[2026-08-03 11:04:46] INDEX.PHP REACHED
+[2026-08-03 11:04:46] INDEX.PHP REACHED
+[2026-08-03 11:04:46] REQUEST: POST /api/index.php/payments/createOrder (Path: /payments/createOrder)
+[2026-08-03 11:04:46] CRITICAL: create_order.php reached!
+[2026-08-03 11:04:46] CRITICAL: Input: {"booking_id":"HBK20260803835D","amount":5850}
+[2026-08-03 11:04:46] RAZORPAY RESPONSE (HTTP 401): {"error":{"code":"BAD_REQUEST_ERROR","description":"Authentication failed"}} | cURL Error: NONE
+[2026-08-03 11:04:46] NOTICE: Using simulated payment order fallback due to Razorpay HTTP 401 auth response.
+[2026-08-03 11:04:46] INDEX.PHP REACHED
+[2026-08-03 11:04:46] INDEX.PHP REACHED
+[2026-08-03 11:04:46] REQUEST: POST /api/index.php/payments/verify (Path: /payments/verify)
+[2026-08-03 11:04:46] Verification request for booking: HBK20260803835D
+[2026-08-03 11:04:46] Booking HBK20260803835D successfully confirmed in database.
+[2026-08-03 11:04:48] [Mailer WARN] Brevo REST API returned HTTP 401: {"message":"Key not found","code":"unauthorized"}
+. Trying Brevo SMTP...
+[2026-08-03 11:04:49] [Mailer] Attempting native PHP mail fallback for bhalaramsembu@gmail.com...
+[2026-08-03 11:04:51] [Mailer ERROR] All delivery methods (Brevo API, Brevo SMTP, PHP Mail) failed for bhalaramsembu@gmail.com
+[2026-08-03 11:04:51] Email failed to send to bhalaramsembu@gmail.com
+[2026-08-03 11:04:51] INDEX.PHP REACHED
+[2026-08-03 11:04:51] REQUEST: GET /api/index.php/bookings/view?booking_id=HBK20260803835D (Path: /bookings/view)
+[2026-08-03 11:06:59] INDEX.PHP REACHED
+[2026-08-03 11:06:59] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-08-03 11:06:59] INDEX.PHP REACHED
+[2026-08-03 11:06:59] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-08-03 09:15:10] Database Connection error: could not find driver
+[2026-08-03 09:15:10] [Mailer WARN] Brevo REST API returned HTTP 500: No response body. Trying Brevo SMTP...
+[2026-08-03 09:15:11] [Mailer] Attempting native PHP mail fallback for af6402001@smtp-brevo.com...
+[2026-08-03 09:15:13] [Mailer ERROR] All delivery methods (Brevo API, Brevo SMTP, PHP Mail) failed for af6402001@smtp-brevo.com
+[2026-08-03 09:25:51] Database Connection error: could not find driver
+[2026-08-03 09:25:51] [Mailer WARN] Brevo REST API returned HTTP 500: No response body. Trying Brevo SMTP...
+[2026-08-03 09:25:51] [Mailer SMTP AUTH] 525 5.7.1 Unauthorized IP address
+[2026-08-03 09:25:51] [Mailer] Attempting native PHP mail fallback for af6402001@smtp-brevo.com...
+[2026-08-03 09:25:54] [Mailer ERROR] All delivery methods (Brevo API, Brevo SMTP, PHP Mail) failed for af6402001@smtp-brevo.com
+[2026-08-03 09:26:22] Database Connection error: could not find driver
+[2026-08-03 09:26:22] [Mailer WARN] Brevo REST API returned HTTP 500: No response body. Trying Brevo SMTP...
+[2026-08-03 09:26:23] [Mailer SMTP AUTH] 525 5.7.1 Unauthorized IP address
+[2026-08-03 09:26:23] [Mailer] Attempting native PHP mail fallback for af6402001@smtp-brevo.com...
+[2026-08-03 09:26:25] [Mailer ERROR] All delivery methods (Brevo API, Brevo SMTP, PHP Mail) failed for af6402001@smtp-brevo.com
+[2026-08-03 11:28:57] INDEX.PHP REACHED
+[2026-08-03 11:28:57] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-08-03 11:28:57] INDEX.PHP REACHED
+[2026-08-03 11:28:57] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-08-03 11:29:01] INDEX.PHP REACHED
+[2026-08-03 11:29:01] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-03 11:29:01] INDEX.PHP REACHED
+[2026-08-03 11:29:01] REQUEST: GET /api/index.php/settings (Path: /settings)
+[2026-08-03 11:29:01] INDEX.PHP REACHED
+[2026-08-03 11:29:01] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-03 11:29:01] INDEX.PHP REACHED
+[2026-08-03 11:29:01] REQUEST: GET /api/index.php/settings (Path: /settings)
+[2026-08-03 11:29:01] INDEX.PHP REACHED
+[2026-08-03 11:29:01] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-03 11:29:01] INDEX.PHP REACHED
+[2026-08-03 11:29:01] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-03 11:29:03] INDEX.PHP REACHED
+[2026-08-03 11:29:03] REQUEST: GET /api/index.php/rooms/subRooms?category_id=2 (Path: /rooms/subRooms)
+[2026-08-03 11:29:03] INDEX.PHP REACHED
+[2026-08-03 11:29:03] REQUEST: GET /api/index.php/rooms/availabilityList?room_id=2&start=2026-08-03&end=2026-08-16&_cb=1785749343630 (Path: /rooms/availabilityList)
+[2026-08-03 11:29:03] INDEX.PHP REACHED
+[2026-08-03 11:29:03] REQUEST: GET /api/index.php/rooms/availabilityList?room_id=2&start=2026-08-03&end=2026-08-16&_cb=1785749343633 (Path: /rooms/availabilityList)
+[2026-08-03 11:29:03] INDEX.PHP REACHED
+[2026-08-03 11:29:03] REQUEST: GET /api/index.php/rooms/subRooms?category_id=2 (Path: /rooms/subRooms)
+[2026-08-03 11:29:03] INDEX.PHP REACHED
+[2026-08-03 11:29:03] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-08-03&checkout=2026-08-04 (Path: /rooms/checkAvailability)
+[2026-08-03 11:29:03] INDEX.PHP REACHED
+[2026-08-03 11:29:03] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-08-03&checkout=2026-08-04 (Path: /rooms/checkAvailability)
+[2026-08-03 11:29:03] INDEX.PHP REACHED
+[2026-08-03 11:29:03] REQUEST: GET /api/index.php/rooms/availabilityList?room_id=9&start=2026-08-03&end=2026-08-16&_cb=1785749343812 (Path: /rooms/availabilityList)
+[2026-08-03 11:29:06] INDEX.PHP REACHED
+[2026-08-03 11:29:06] REQUEST: GET /api/index.php/rooms/availabilityList?room_id=9&start=2026-08-05&end=2026-08-18&_cb=1785749346281 (Path: /rooms/availabilityList)
+[2026-08-03 11:29:06] INDEX.PHP REACHED
+[2026-08-03 11:29:06] REQUEST: GET /api/index.php/rooms/subRooms?category_id=2 (Path: /rooms/subRooms)
+[2026-08-03 11:29:06] INDEX.PHP REACHED
+[2026-08-03 11:29:06] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-08-05&checkout=2026-08-06 (Path: /rooms/checkAvailability)
+[2026-08-03 11:29:08] INDEX.PHP REACHED
+[2026-08-03 11:29:08] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-03 11:29:08] INDEX.PHP REACHED
+[2026-08-03 11:29:08] REQUEST: GET /api/index.php/settings (Path: /settings)
+[2026-08-03 11:29:08] INDEX.PHP REACHED
+[2026-08-03 11:29:08] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-03 11:29:08] INDEX.PHP REACHED
+[2026-08-03 11:29:08] REQUEST: GET /api/index.php/settings (Path: /settings)
+[2026-08-03 11:29:08] INDEX.PHP REACHED
+[2026-08-03 11:29:08] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-03 11:29:08] INDEX.PHP REACHED
+[2026-08-03 11:29:08] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-03 11:29:33] INDEX.PHP REACHED
+[2026-08-03 11:29:33] INDEX.PHP REACHED
+[2026-08-03 11:29:33] REQUEST: POST /api/index.php/bookings/create (Path: /bookings/create)
+[2026-08-03 11:29:33] INDEX.PHP REACHED
+[2026-08-03 11:29:33] INDEX.PHP REACHED
+[2026-08-03 11:29:33] REQUEST: POST /api/index.php/payments/createOrder (Path: /payments/createOrder)
+[2026-08-03 11:29:33] CRITICAL: create_order.php reached!
+[2026-08-03 11:29:33] CRITICAL: Input: {"booking_id":"HBK2026080361E8","amount":3850}
+[2026-08-03 11:29:33] RAZORPAY RESPONSE (HTTP 401): {"error":{"description":"Authentication failed","code":"BAD_REQUEST_ERROR"}} | cURL Error: NONE
+[2026-08-03 11:29:33] NOTICE: Using simulated payment order fallback due to Razorpay HTTP 401 auth response.
+[2026-08-03 11:29:33] INDEX.PHP REACHED
+[2026-08-03 11:29:33] INDEX.PHP REACHED
+[2026-08-03 11:29:33] REQUEST: POST /api/index.php/payments/verify (Path: /payments/verify)
+[2026-08-03 11:29:33] Verification request for booking: HBK2026080361E8
+[2026-08-03 11:29:33] Booking HBK2026080361E8 successfully confirmed in database.
+[2026-08-03 11:29:35] [Mailer WARN] Brevo REST API returned HTTP 401: {"message":"Key not found","code":"unauthorized"}
+. Trying Brevo SMTP...
+[2026-08-03 11:29:36] [Mailer SMTP AUTH] 525 5.7.1 Unauthorized IP address
+[2026-08-03 11:29:36] [Mailer] Attempting native PHP mail fallback for bhalaramsembu@gmail.com...
+[2026-08-03 11:29:38] [Mailer ERROR] All delivery methods (Brevo API, Brevo SMTP, PHP Mail) failed for bhalaramsembu@gmail.com
+[2026-08-03 11:29:38] Email failed to send to bhalaramsembu@gmail.com
+[2026-08-03 11:29:38] INDEX.PHP REACHED
+[2026-08-03 11:29:38] REQUEST: GET /api/index.php/bookings/view?booking_id=HBK2026080361E8 (Path: /bookings/view)
+[2026-08-03 11:31:44] INDEX.PHP REACHED
+[2026-08-03 11:31:44] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-03 11:31:44] INDEX.PHP REACHED
+[2026-08-03 11:31:44] REQUEST: GET /api/index.php/settings (Path: /settings)
+[2026-08-03 11:31:44] INDEX.PHP REACHED
+[2026-08-03 11:31:44] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-03 11:31:44] INDEX.PHP REACHED
+[2026-08-03 11:31:44] REQUEST: GET /api/index.php/settings (Path: /settings)
+[2026-08-03 11:31:44] INDEX.PHP REACHED
+[2026-08-03 11:31:44] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-03 11:31:44] INDEX.PHP REACHED
+[2026-08-03 11:31:44] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-03 09:32:18] Database Connection error: could not find driver
+[2026-08-03 09:32:18] [Mailer WARN] Brevo REST API returned HTTP 500: No response body. Trying Brevo SMTP...
+[2026-08-03 09:32:19] [Mailer SMTP AUTH] 525 5.7.1 Unauthorized IP address
+[2026-08-03 09:32:19] [Mailer] Attempting native PHP mail fallback for subraresidencykum@gmail.com...
+[2026-08-03 09:32:21] [Mailer ERROR] All delivery methods (Brevo API, Brevo SMTP, PHP Mail) failed for subraresidencykum@gmail.com
+[2026-08-03 11:32:48] INDEX.PHP REACHED
+[2026-08-03 11:32:48] REQUEST: GET /api/index.php/rooms/subRooms?category_id=4 (Path: /rooms/subRooms)
+[2026-08-03 11:32:48] INDEX.PHP REACHED
+[2026-08-03 11:32:48] REQUEST: GET /api/index.php/rooms/availabilityList?room_id=4&start=2026-08-05&end=2026-08-18&_cb=1785749568917 (Path: /rooms/availabilityList)
+[2026-08-03 11:32:49] INDEX.PHP REACHED
+[2026-08-03 11:32:49] REQUEST: GET /api/index.php/rooms/availabilityList?room_id=4&start=2026-08-05&end=2026-08-18&_cb=1785749568918 (Path: /rooms/availabilityList)
+[2026-08-03 11:32:49] INDEX.PHP REACHED
+[2026-08-03 11:32:49] REQUEST: GET /api/index.php/rooms/subRooms?category_id=4 (Path: /rooms/subRooms)
+[2026-08-03 11:32:49] INDEX.PHP REACHED
+[2026-08-03 11:32:49] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-08-05&checkout=2026-08-06 (Path: /rooms/checkAvailability)
+[2026-08-03 11:32:49] INDEX.PHP REACHED
+[2026-08-03 11:32:49] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-08-05&checkout=2026-08-06 (Path: /rooms/checkAvailability)
+[2026-08-03 11:32:49] INDEX.PHP REACHED
+[2026-08-03 11:32:49] REQUEST: GET /api/index.php/rooms/availabilityList?room_id=3&start=2026-08-05&end=2026-08-18&_cb=1785749569192 (Path: /rooms/availabilityList)
+[2026-08-03 11:32:52] INDEX.PHP REACHED
+[2026-08-03 11:32:52] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-03 11:32:52] INDEX.PHP REACHED
+[2026-08-03 11:32:52] REQUEST: GET /api/index.php/settings (Path: /settings)
+[2026-08-03 11:32:52] INDEX.PHP REACHED
+[2026-08-03 11:32:52] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-03 11:32:52] INDEX.PHP REACHED
+[2026-08-03 11:32:52] REQUEST: GET /api/index.php/settings (Path: /settings)
+[2026-08-03 11:32:52] INDEX.PHP REACHED
+[2026-08-03 11:32:52] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-03 11:32:52] INDEX.PHP REACHED
+[2026-08-03 11:32:52] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-03 11:33:05] INDEX.PHP REACHED
+[2026-08-03 11:33:05] INDEX.PHP REACHED
+[2026-08-03 11:33:05] REQUEST: POST /api/index.php/bookings/create (Path: /bookings/create)
+[2026-08-03 11:33:05] INDEX.PHP REACHED
+[2026-08-03 11:33:05] INDEX.PHP REACHED
+[2026-08-03 11:33:05] REQUEST: POST /api/index.php/payments/createOrder (Path: /payments/createOrder)
+[2026-08-03 11:33:05] CRITICAL: create_order.php reached!
+[2026-08-03 11:33:05] CRITICAL: Input: {"booking_id":"HBK202608038748","amount":4050}
+[2026-08-03 11:33:05] RAZORPAY RESPONSE (HTTP 401): {"error":{"code":"BAD_REQUEST_ERROR","description":"Authentication failed"}} | cURL Error: NONE
+[2026-08-03 11:33:05] NOTICE: Using simulated payment order fallback due to Razorpay HTTP 401 auth response.
+[2026-08-03 11:33:05] INDEX.PHP REACHED
+[2026-08-03 11:33:05] INDEX.PHP REACHED
+[2026-08-03 11:33:05] REQUEST: POST /api/index.php/payments/verify (Path: /payments/verify)
+[2026-08-03 11:33:05] Verification request for booking: HBK202608038748
+[2026-08-03 11:33:05] Booking HBK202608038748 successfully confirmed in database.
+[2026-08-03 11:33:07] [Mailer WARN] Brevo REST API returned HTTP 401: {"message":"Key not found","code":"unauthorized"}
+. Trying Brevo SMTP...
+[2026-08-03 11:33:08] [Mailer SMTP AUTH] 525 5.7.1 Unauthorized IP address
+[2026-08-03 11:33:08] [Mailer] Attempting native PHP mail fallback for bhalaramsembu@gmail.com...
+[2026-08-03 11:33:10] [Mailer ERROR] All delivery methods (Brevo API, Brevo SMTP, PHP Mail) failed for bhalaramsembu@gmail.com
+[2026-08-03 11:33:10] Email failed to send to bhalaramsembu@gmail.com
+[2026-08-03 11:33:10] INDEX.PHP REACHED
+[2026-08-03 11:33:10] REQUEST: GET /api/index.php/bookings/view?booking_id=HBK202608038748 (Path: /bookings/view)
+[2026-08-03 09:39:50] Database Connection error: could not find driver
+[2026-08-03 09:39:50] [Mailer WARN] Brevo REST API returned HTTP 500: No response body. Trying Brevo SMTP...
+[2026-08-03 09:39:51] [Mailer SMTP AUTH] 525 5.7.1 Unauthorized IP address
+[2026-08-03 09:39:52] [Mailer SMTP AUTH] 525 5.7.1 Unauthorized IP address
+[2026-08-03 09:39:52] [Mailer] Attempting native PHP mail fallback for subraresidencykum@gmail.com...
+[2026-08-03 09:39:54] [Mailer ERROR] All delivery methods (Brevo API, Brevo SMTP, PHP Mail) failed for subraresidencykum@gmail.com
+[2026-08-03 11:54:54] INDEX.PHP REACHED
+[2026-08-03 11:54:54] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-03 11:54:54] INDEX.PHP REACHED
+[2026-08-03 11:54:54] REQUEST: GET /api/index.php/settings (Path: /settings)
+[2026-08-03 11:54:54] INDEX.PHP REACHED
+[2026-08-03 11:54:54] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-03 11:54:54] INDEX.PHP REACHED
+[2026-08-03 11:54:54] REQUEST: GET /api/index.php/settings (Path: /settings)
+[2026-08-03 11:54:54] INDEX.PHP REACHED
+[2026-08-03 11:54:54] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-03 11:54:54] INDEX.PHP REACHED
+[2026-08-03 11:54:54] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-03 11:55:21] INDEX.PHP REACHED
+[2026-08-03 11:55:21] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-03 11:55:21] INDEX.PHP REACHED
+[2026-08-03 11:55:21] REQUEST: GET /api/index.php/settings (Path: /settings)
+[2026-08-03 11:55:21] INDEX.PHP REACHED
+[2026-08-03 11:55:21] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-03 11:55:21] INDEX.PHP REACHED
+[2026-08-03 11:55:21] REQUEST: GET /api/index.php/settings (Path: /settings)
+[2026-08-03 11:55:21] INDEX.PHP REACHED
+[2026-08-03 11:55:21] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-03 11:55:21] INDEX.PHP REACHED
+[2026-08-03 11:55:21] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-03 11:55:33] INDEX.PHP REACHED
+[2026-08-03 11:55:33] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-08-03 11:55:33] INDEX.PHP REACHED
+[2026-08-03 11:55:33] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-08-04 05:28:32] Database Connection error: could not find driver
+[2026-08-04 05:28:32] [Mailer WARN] Brevo REST API returned HTTP 500: No response body. Trying Brevo SMTP...
+[2026-08-04 05:28:32] [Mailer SMTP AUTH] 525 5.7.1 Unauthorized IP address
+[2026-08-04 05:28:33] [Mailer SMTP AUTH] 525 5.7.1 Unauthorized IP address
+[2026-08-04 05:28:33] [Mailer] Attempting native PHP mail fallback for subraresidencykum@gmail.com...
+[2026-08-04 05:28:35] [Mailer ERROR] All delivery methods (Brevo API, Brevo SMTP, PHP Mail) failed for subraresidencykum@gmail.com
+[2026-08-04 05:33:56] Database Connection error: could not find driver
+[2026-08-04 05:33:56] [Mailer WARN] Brevo REST API returned HTTP 500: No response body. Trying Brevo SMTP...
+[2026-08-04 05:33:57] [Mailer SMTP AUTH] 235 2.0.0 Authentication succeeded
+[2026-08-04 05:33:57] [Mailer SMTP MAIL FROM] 250 2.0.0 Roger, accepting mail from <subraresidencykum@gmail.com>
+[2026-08-04 05:33:57] [Mailer SMTP RCPT TO] 250 2.0.0 I'll make sure <subraresidencykum@gmail.com> gets this
+[2026-08-04 05:33:58] [Mailer SUCCESS] Email with PDF Invoice sent via Brevo SMTP (Port 587) to subraresidencykum@gmail.com (Your Subra Residency Tax Invoice & Confirmation - HBKTEST12345)
+[2026-08-04 08:12:24] INDEX.PHP REACHED
+[2026-08-04 08:12:24] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 08:12:24] INDEX.PHP REACHED
+[2026-08-04 08:12:24] REQUEST: GET /api/index.php/settings (Path: /settings)
+[2026-08-04 08:12:24] INDEX.PHP REACHED
+[2026-08-04 08:12:24] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 08:12:24] INDEX.PHP REACHED
+[2026-08-04 08:12:24] REQUEST: GET /api/index.php/settings (Path: /settings)
+[2026-08-04 08:12:24] INDEX.PHP REACHED
+[2026-08-04 08:12:24] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 08:12:24] INDEX.PHP REACHED
+[2026-08-04 08:12:24] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 08:12:28] INDEX.PHP REACHED
+[2026-08-04 08:12:28] REQUEST: GET /api/index.php/rooms/availabilityList?room_id=2&start=2026-08-04&end=2026-08-17&_cb=1785823948001 (Path: /rooms/availabilityList)
+[2026-08-04 08:12:28] INDEX.PHP REACHED
+[2026-08-04 08:12:28] REQUEST: GET /api/index.php/rooms/subRooms?category_id=2 (Path: /rooms/subRooms)
+[2026-08-04 08:12:28] INDEX.PHP REACHED
+[2026-08-04 08:12:28] REQUEST: GET /api/index.php/rooms/availabilityList?room_id=2&start=2026-08-04&end=2026-08-17&_cb=1785823948003 (Path: /rooms/availabilityList)
+[2026-08-04 08:12:28] INDEX.PHP REACHED
+[2026-08-04 08:12:28] REQUEST: GET /api/index.php/rooms/subRooms?category_id=2 (Path: /rooms/subRooms)
+[2026-08-04 08:12:28] INDEX.PHP REACHED
+[2026-08-04 08:12:28] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-08-04&checkout=2026-08-05 (Path: /rooms/checkAvailability)
+[2026-08-04 08:12:28] INDEX.PHP REACHED
+[2026-08-04 08:12:28] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-08-04&checkout=2026-08-05 (Path: /rooms/checkAvailability)
+[2026-08-04 08:12:28] INDEX.PHP REACHED
+[2026-08-04 08:12:28] REQUEST: GET /api/index.php/rooms/availabilityList?room_id=9&start=2026-08-04&end=2026-08-17&_cb=1785823948128 (Path: /rooms/availabilityList)
+[2026-08-04 08:12:34] INDEX.PHP REACHED
+[2026-08-04 08:12:34] REQUEST: GET /api/index.php/rooms/availabilityList?room_id=9&start=2026-08-06&end=2026-08-19&_cb=1785823954522 (Path: /rooms/availabilityList)
+[2026-08-04 08:12:34] INDEX.PHP REACHED
+[2026-08-04 08:12:34] REQUEST: GET /api/index.php/rooms/subRooms?category_id=2 (Path: /rooms/subRooms)
+[2026-08-04 08:12:34] INDEX.PHP REACHED
+[2026-08-04 08:12:34] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-08-06&checkout=2026-08-07 (Path: /rooms/checkAvailability)
+[2026-08-04 08:12:35] INDEX.PHP REACHED
+[2026-08-04 08:12:35] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 08:12:35] INDEX.PHP REACHED
+[2026-08-04 08:12:35] REQUEST: GET /api/index.php/settings (Path: /settings)
+[2026-08-04 08:12:35] INDEX.PHP REACHED
+[2026-08-04 08:12:35] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 08:12:35] INDEX.PHP REACHED
+[2026-08-04 08:12:35] REQUEST: GET /api/index.php/settings (Path: /settings)
+[2026-08-04 08:12:35] INDEX.PHP REACHED
+[2026-08-04 08:12:35] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 08:12:35] INDEX.PHP REACHED
+[2026-08-04 08:12:35] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 08:12:52] INDEX.PHP REACHED
+[2026-08-04 08:12:52] INDEX.PHP REACHED
+[2026-08-04 08:12:52] REQUEST: POST /api/index.php/bookings/create (Path: /bookings/create)
+[2026-08-04 08:12:52] INDEX.PHP REACHED
+[2026-08-04 08:12:52] INDEX.PHP REACHED
+[2026-08-04 08:12:52] REQUEST: POST /api/index.php/payments/createOrder (Path: /payments/createOrder)
+[2026-08-04 08:12:52] CRITICAL: create_order.php reached!
+[2026-08-04 08:12:52] CRITICAL: Input: {"booking_id":"HBK20260804E7E9","amount":3850}
+[2026-08-04 08:12:52] RAZORPAY RESPONSE (HTTP 401): {"error":{"code":"BAD_REQUEST_ERROR","description":"Authentication failed"}} | cURL Error: NONE
+[2026-08-04 08:12:52] NOTICE: Using simulated payment order fallback due to Razorpay HTTP 401 auth response.
+[2026-08-04 08:12:52] INDEX.PHP REACHED
+[2026-08-04 08:12:52] INDEX.PHP REACHED
+[2026-08-04 08:12:52] REQUEST: POST /api/index.php/payments/verify (Path: /payments/verify)
+[2026-08-04 08:12:52] Verification request for booking: HBK20260804E7E9
+[2026-08-04 08:12:52] Booking HBK20260804E7E9 successfully confirmed in database.
+[2026-08-04 08:12:54] [Mailer WARN] Brevo REST API returned HTTP 401: {"message":"Key not found","code":"unauthorized"}
+. Trying Brevo SMTP...
+[2026-08-04 08:12:55] [Mailer SMTP AUTH] 235 2.0.0 Authentication succeeded
+[2026-08-04 08:12:55] [Mailer SMTP MAIL FROM] 250 2.0.0 Roger, accepting mail from <subraresidencykum@gmail.com>
+[2026-08-04 08:12:55] [Mailer SMTP RCPT TO] 250 2.0.0 I'll make sure <bhalaramsembu@gmail.com> gets this
+[2026-08-04 08:12:55] [Mailer SUCCESS] Email with PDF Invoice sent via Brevo SMTP (Port 587) to bhalaramsembu@gmail.com (Your Subra Residency Tax Invoice & Confirmation - HBK20260804E7E9)
+[2026-08-04 08:12:55] Email sent successfully to bhalaramsembu@gmail.com
+[2026-08-04 08:12:55] INDEX.PHP REACHED
+[2026-08-04 08:12:55] REQUEST: GET /api/index.php/bookings/view?booking_id=HBK20260804E7E9 (Path: /bookings/view)
+[2026-08-04 06:19:21] Database Connection error: could not find driver
+[2026-08-04 06:19:21] Database Connection error: could not find driver
+[2026-08-04 06:19:21] Database Connection error: could not find driver
+[2026-08-04 06:19:21] [Mailer WARN] Brevo REST API returned HTTP 500: No response body. Trying Brevo SMTP...
+[2026-08-04 06:19:22] [Mailer SMTP AUTH] 235 2.0.0 Authentication succeeded
+[2026-08-04 06:19:22] [Mailer SMTP MAIL FROM] 250 2.0.0 Roger, accepting mail from <subraresidencykum@gmail.com>
+[2026-08-04 06:19:22] [Mailer SMTP RCPT TO] 250 2.0.0 I'll make sure <subraresidencykum@gmail.com> gets this
+[2026-08-04 06:19:23] [Mailer SUCCESS] Email with PDF Invoice sent via Brevo SMTP (Port 587) to subraresidencykum@gmail.com (Your Subra Residency Tax Invoice & Confirmation - HBKTEST12345)
+[2026-08-04 06:19:47] Database Connection error: could not find driver
+[2026-08-04 06:19:47] Database Connection error: could not find driver
+[2026-08-04 06:19:47] Database Connection error: could not find driver
+[2026-08-04 06:19:47] [Mailer WARN] Brevo REST API returned HTTP 500: No response body. Trying Brevo SMTP...
+[2026-08-04 06:19:48] [Mailer SMTP AUTH] 235 2.0.0 Authentication succeeded
+[2026-08-04 06:19:48] [Mailer SMTP MAIL FROM] 250 2.0.0 Roger, accepting mail from <subraresidencykum@gmail.com>
+[2026-08-04 06:19:48] [Mailer SMTP RCPT TO] 250 2.0.0 I'll make sure <subraresidencykum@gmail.com> gets this
+[2026-08-04 06:19:48] [Mailer SUCCESS] Email with PDF Invoice sent via Brevo SMTP (Port 587) to subraresidencykum@gmail.com (Your Subra Residency Tax Invoice & Confirmation - HBKTEST12345)
+[2026-08-04 08:21:30] INDEX.PHP REACHED
+[2026-08-04 08:21:30] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 08:21:30] INDEX.PHP REACHED
+[2026-08-04 08:21:30] REQUEST: GET /api/index.php/settings (Path: /settings)
+[2026-08-04 08:21:30] INDEX.PHP REACHED
+[2026-08-04 08:21:30] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 08:21:30] INDEX.PHP REACHED
+[2026-08-04 08:21:30] REQUEST: GET /api/index.php/settings (Path: /settings)
+[2026-08-04 08:21:30] INDEX.PHP REACHED
+[2026-08-04 08:21:30] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 08:21:30] INDEX.PHP REACHED
+[2026-08-04 08:21:30] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 08:21:35] INDEX.PHP REACHED
+[2026-08-04 08:21:35] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 08:21:35] INDEX.PHP REACHED
+[2026-08-04 08:21:35] REQUEST: GET /api/index.php/settings (Path: /settings)
+[2026-08-04 08:21:35] INDEX.PHP REACHED
+[2026-08-04 08:21:35] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 08:21:35] INDEX.PHP REACHED
+[2026-08-04 08:21:35] REQUEST: GET /api/index.php/settings (Path: /settings)
+[2026-08-04 08:21:35] INDEX.PHP REACHED
+[2026-08-04 08:21:35] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 08:21:35] INDEX.PHP REACHED
+[2026-08-04 08:21:35] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 08:21:39] INDEX.PHP REACHED
+[2026-08-04 08:21:39] REQUEST: GET /api/index.php/rooms/availabilityList?room_id=2&start=2026-08-04&end=2026-08-17&_cb=1785824499341 (Path: /rooms/availabilityList)
+[2026-08-04 08:21:39] INDEX.PHP REACHED
+[2026-08-04 08:21:39] REQUEST: GET /api/index.php/rooms/availabilityList?room_id=2&start=2026-08-04&end=2026-08-17&_cb=1785824499343 (Path: /rooms/availabilityList)
+[2026-08-04 08:21:39] INDEX.PHP REACHED
+[2026-08-04 08:21:39] REQUEST: GET /api/index.php/rooms/subRooms?category_id=2 (Path: /rooms/subRooms)
+[2026-08-04 08:21:39] INDEX.PHP REACHED
+[2026-08-04 08:21:39] REQUEST: GET /api/index.php/rooms/subRooms?category_id=2 (Path: /rooms/subRooms)
+[2026-08-04 08:21:39] INDEX.PHP REACHED
+[2026-08-04 08:21:39] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-08-04&checkout=2026-08-05 (Path: /rooms/checkAvailability)
+[2026-08-04 08:21:39] INDEX.PHP REACHED
+[2026-08-04 08:21:39] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-08-04&checkout=2026-08-05 (Path: /rooms/checkAvailability)
+[2026-08-04 08:21:39] INDEX.PHP REACHED
+[2026-08-04 08:21:39] REQUEST: GET /api/index.php/rooms/availabilityList?room_id=9&start=2026-08-04&end=2026-08-17&_cb=1785824499573 (Path: /rooms/availabilityList)
+[2026-08-04 08:21:49] INDEX.PHP REACHED
+[2026-08-04 08:21:49] REQUEST: GET /api/index.php/rooms/availabilityList?room_id=9&start=2026-08-07&end=2026-08-20&_cb=1785824509739 (Path: /rooms/availabilityList)
+[2026-08-04 08:21:49] INDEX.PHP REACHED
+[2026-08-04 08:21:49] REQUEST: GET /api/index.php/rooms/subRooms?category_id=2 (Path: /rooms/subRooms)
+[2026-08-04 08:21:49] INDEX.PHP REACHED
+[2026-08-04 08:21:49] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-08-07&checkout=2026-08-08 (Path: /rooms/checkAvailability)
+[2026-08-04 08:21:51] INDEX.PHP REACHED
+[2026-08-04 08:21:51] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 08:21:51] INDEX.PHP REACHED
+[2026-08-04 08:21:51] REQUEST: GET /api/index.php/settings (Path: /settings)
+[2026-08-04 08:21:51] INDEX.PHP REACHED
+[2026-08-04 08:21:51] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 08:21:51] INDEX.PHP REACHED
+[2026-08-04 08:21:51] REQUEST: GET /api/index.php/settings (Path: /settings)
+[2026-08-04 08:21:51] INDEX.PHP REACHED
+[2026-08-04 08:21:51] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 08:21:51] INDEX.PHP REACHED
+[2026-08-04 08:21:51] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 08:22:22] INDEX.PHP REACHED
+[2026-08-04 08:22:22] INDEX.PHP REACHED
+[2026-08-04 08:22:22] REQUEST: POST /api/index.php/bookings/create (Path: /bookings/create)
+[2026-08-04 08:22:22] INDEX.PHP REACHED
+[2026-08-04 08:22:22] INDEX.PHP REACHED
+[2026-08-04 08:22:22] REQUEST: POST /api/index.php/payments/createOrder (Path: /payments/createOrder)
+[2026-08-04 08:22:22] CRITICAL: create_order.php reached!
+[2026-08-04 08:22:22] CRITICAL: Input: {"booking_id":"HBK20260804AA88","amount":3850}
+[2026-08-04 08:22:22] RAZORPAY RESPONSE (HTTP 401): {"error":{"description":"Authentication failed","code":"BAD_REQUEST_ERROR"}} | cURL Error: NONE
+[2026-08-04 08:22:22] NOTICE: Using simulated payment order fallback due to Razorpay HTTP 401 auth response.
+[2026-08-04 08:22:22] INDEX.PHP REACHED
+[2026-08-04 08:22:22] INDEX.PHP REACHED
+[2026-08-04 08:22:22] REQUEST: POST /api/index.php/payments/verify (Path: /payments/verify)
+[2026-08-04 08:22:22] Verification request for booking: HBK20260804AA88
+[2026-08-04 08:22:22] Booking HBK20260804AA88 successfully confirmed in database.
+[2026-08-04 08:22:24] [Mailer WARN] Brevo REST API returned HTTP 401: {"message":"Key not found","code":"unauthorized"}
+. Trying Brevo SMTP...
+[2026-08-04 08:22:25] [Mailer SMTP AUTH] 235 2.0.0 Authentication succeeded
+[2026-08-04 08:22:25] [Mailer SMTP MAIL FROM] 250 2.0.0 Roger, accepting mail from <subraresidencykum@gmail.com>
+[2026-08-04 08:22:25] [Mailer SMTP RCPT TO] 250 2.0.0 I'll make sure <bhalaramsembu@gmail.com> gets this
+[2026-08-04 08:22:25] [Mailer SUCCESS] Email with PDF Invoice sent via Brevo SMTP (Port 587) to bhalaramsembu@gmail.com (Your Subra Residency Tax Invoice & Confirmation - HBK20260804AA88)
+[2026-08-04 08:22:25] Email sent successfully to bhalaramsembu@gmail.com
+[2026-08-04 08:22:25] INDEX.PHP REACHED
+[2026-08-04 08:22:25] REQUEST: GET /api/index.php/bookings/view?booking_id=HBK20260804AA88 (Path: /bookings/view)
+[2026-08-04 06:33:14] Database Connection error: could not find driver
+[2026-08-04 06:36:09] Database Connection error: could not find driver
+[2026-08-04 06:37:04] Database Connection error: could not find driver
+[2026-08-04 06:37:04] Database Connection error: could not find driver
+[2026-08-04 06:37:04] Database Connection error: could not find driver
+[2026-08-04 06:37:04] [Mailer WARN] Brevo REST API returned HTTP 500: No response body. Trying Brevo SMTP...
+[2026-08-04 06:37:04] [Mailer SMTP AUTH] 235 2.0.0 Authentication succeeded
+[2026-08-04 06:37:04] [Mailer SMTP MAIL FROM] 250 2.0.0 Roger, accepting mail from <subraresidencykum@gmail.com>
+[2026-08-04 06:37:05] [Mailer SMTP RCPT TO] 250 2.0.0 I'll make sure <subraresidencykum@gmail.com> gets this
+[2026-08-04 06:37:05] [Mailer SUCCESS] Email with PDF Invoice sent via Brevo SMTP (Port 587) to subraresidencykum@gmail.com (Your Subra Residency Tax Invoice & Confirmation - HBKTEST12345)
+[2026-08-04 06:41:11] Database Connection error: could not find driver
+[2026-08-04 06:41:11] Database Connection error: could not find driver
+[2026-08-04 06:41:11] Database Connection error: could not find driver
+[2026-08-04 06:41:11] [Mailer WARN] Brevo REST API returned HTTP 500: No response body. Trying Brevo SMTP...
+[2026-08-04 06:41:12] [Mailer SMTP AUTH] 235 2.0.0 Authentication succeeded
+[2026-08-04 06:41:12] [Mailer SMTP MAIL FROM] 250 2.0.0 Roger, accepting mail from <subraresidencykum@gmail.com>
+[2026-08-04 06:41:12] [Mailer SMTP RCPT TO] 250 2.0.0 I'll make sure <bhalaramsembu@gmail.com> gets this
+[2026-08-04 06:41:12] [Mailer SUCCESS] Email with PDF Invoice sent via Brevo SMTP (Port 587) to bhalaramsembu@gmail.com (Your Subra Residency Tax Invoice & Confirmation - HBK20260804AA88)
+[2026-08-04 06:51:08] Database Connection error: could not find driver
+[2026-08-04 06:55:26] Database Connection error: could not find driver
+[2026-08-04 06:55:26] Database Connection error: could not find driver
+[2026-08-04 06:55:26] Database Connection error: could not find driver
+[2026-08-04 06:55:26] [Mailer WARN] Brevo REST API returned HTTP 500: No response body. Trying Brevo SMTP...
+[2026-08-04 06:55:27] [Mailer SMTP AUTH] 235 2.0.0 Authentication succeeded
+[2026-08-04 06:55:27] [Mailer SMTP MAIL FROM] 250 2.0.0 Roger, accepting mail from <subraresidencykum@gmail.com>
+[2026-08-04 06:55:27] [Mailer SMTP RCPT TO] 250 2.0.0 I'll make sure <bhalaramsembu@gmail.com> gets this
+[2026-08-04 06:55:27] [Mailer SUCCESS] Email with PDF Invoice sent via Brevo SMTP (Port 587) to bhalaramsembu@gmail.com (Your Subra Residency Tax Invoice & Confirmation - HBK20260804AA88)
+[2026-08-04 08:58:26] INDEX.PHP REACHED
+[2026-08-04 08:58:26] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 08:58:26] INDEX.PHP REACHED
+[2026-08-04 08:58:26] REQUEST: GET /api/index.php/settings (Path: /settings)
+[2026-08-04 08:58:26] INDEX.PHP REACHED
+[2026-08-04 08:58:26] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 08:58:26] INDEX.PHP REACHED
+[2026-08-04 08:58:26] REQUEST: GET /api/index.php/settings (Path: /settings)
+[2026-08-04 08:58:26] INDEX.PHP REACHED
+[2026-08-04 08:58:26] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 08:58:26] INDEX.PHP REACHED
+[2026-08-04 08:58:26] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 08:58:30] INDEX.PHP REACHED
+[2026-08-04 08:58:30] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 08:58:30] INDEX.PHP REACHED
+[2026-08-04 08:58:30] REQUEST: GET /api/index.php/settings (Path: /settings)
+[2026-08-04 08:58:30] INDEX.PHP REACHED
+[2026-08-04 08:58:30] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 08:58:30] INDEX.PHP REACHED
+[2026-08-04 08:58:30] REQUEST: GET /api/index.php/settings (Path: /settings)
+[2026-08-04 08:58:30] INDEX.PHP REACHED
+[2026-08-04 08:58:30] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 08:58:30] INDEX.PHP REACHED
+[2026-08-04 08:58:30] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 08:58:35] INDEX.PHP REACHED
+[2026-08-04 08:58:35] REQUEST: GET /api/index.php/rooms/availabilityList?room_id=2&start=2026-08-04&end=2026-08-17&_cb=1785826715496 (Path: /rooms/availabilityList)
+[2026-08-04 08:58:35] INDEX.PHP REACHED
+[2026-08-04 08:58:35] REQUEST: GET /api/index.php/rooms/subRooms?category_id=2 (Path: /rooms/subRooms)
+[2026-08-04 08:58:35] INDEX.PHP REACHED
+[2026-08-04 08:58:35] REQUEST: GET /api/index.php/rooms/availabilityList?room_id=2&start=2026-08-04&end=2026-08-17&_cb=1785826715498 (Path: /rooms/availabilityList)
+[2026-08-04 08:58:35] INDEX.PHP REACHED
+[2026-08-04 08:58:35] REQUEST: GET /api/index.php/rooms/subRooms?category_id=2 (Path: /rooms/subRooms)
+[2026-08-04 08:58:35] INDEX.PHP REACHED
+[2026-08-04 08:58:35] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-08-04&checkout=2026-08-05 (Path: /rooms/checkAvailability)
+[2026-08-04 08:58:35] INDEX.PHP REACHED
+[2026-08-04 08:58:35] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-08-04&checkout=2026-08-05 (Path: /rooms/checkAvailability)
+[2026-08-04 08:58:35] INDEX.PHP REACHED
+[2026-08-04 08:58:35] REQUEST: GET /api/index.php/rooms/availabilityList?room_id=9&start=2026-08-04&end=2026-08-17&_cb=1785826715694 (Path: /rooms/availabilityList)
+[2026-08-04 08:58:40] INDEX.PHP REACHED
+[2026-08-04 08:58:40] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 08:58:40] INDEX.PHP REACHED
+[2026-08-04 08:58:40] REQUEST: GET /api/index.php/settings (Path: /settings)
+[2026-08-04 08:58:40] INDEX.PHP REACHED
+[2026-08-04 08:58:40] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 08:58:40] INDEX.PHP REACHED
+[2026-08-04 08:58:40] REQUEST: GET /api/index.php/settings (Path: /settings)
+[2026-08-04 08:58:40] INDEX.PHP REACHED
+[2026-08-04 08:58:40] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 08:58:40] INDEX.PHP REACHED
+[2026-08-04 08:58:40] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 08:58:51] INDEX.PHP REACHED
+[2026-08-04 08:58:51] INDEX.PHP REACHED
+[2026-08-04 08:58:51] REQUEST: POST /api/index.php/bookings/create (Path: /bookings/create)
+[2026-08-04 08:58:51] INDEX.PHP REACHED
+[2026-08-04 08:58:51] INDEX.PHP REACHED
+[2026-08-04 08:58:51] REQUEST: POST /api/index.php/payments/createOrder (Path: /payments/createOrder)
+[2026-08-04 08:58:51] CRITICAL: create_order.php reached!
+[2026-08-04 08:58:51] CRITICAL: Input: {"booking_id":"HBK20260804269B","amount":3850}
+[2026-08-04 08:58:51] RAZORPAY RESPONSE (HTTP 401): {"error":{"code":"BAD_REQUEST_ERROR","description":"Authentication failed"}} | cURL Error: NONE
+[2026-08-04 08:58:51] NOTICE: Using simulated payment order fallback due to Razorpay HTTP 401 auth response.
+[2026-08-04 08:58:51] INDEX.PHP REACHED
+[2026-08-04 08:58:51] INDEX.PHP REACHED
+[2026-08-04 08:58:51] REQUEST: POST /api/index.php/payments/verify (Path: /payments/verify)
+[2026-08-04 08:58:51] Verification request for booking: HBK20260804269B
+[2026-08-04 08:58:51] Booking HBK20260804269B successfully confirmed in database.
+[2026-08-04 08:58:53] [Mailer WARN] Brevo REST API returned HTTP 401: {"message":"Key not found","code":"unauthorized"}
+. Trying Brevo SMTP...
+[2026-08-04 08:58:54] [Mailer SMTP AUTH] 235 2.0.0 Authentication succeeded
+[2026-08-04 08:58:54] [Mailer SMTP MAIL FROM] 250 2.0.0 Roger, accepting mail from <subraresidencykum@gmail.com>
+[2026-08-04 08:58:54] [Mailer SMTP RCPT TO] 250 2.0.0 I'll make sure <bhalaramsembu@gmail.com> gets this
+[2026-08-04 08:58:54] [Mailer SUCCESS] Email with PDF Invoice sent via Brevo SMTP (Port 587) to bhalaramsembu@gmail.com (Your Subra Residency Tax Invoice & Confirmation - HBK20260804269B)
+[2026-08-04 08:58:54] Email sent successfully to bhalaramsembu@gmail.com
+[2026-08-04 08:58:54] INDEX.PHP REACHED
+[2026-08-04 08:58:54] REQUEST: GET /api/index.php/bookings/view?booking_id=HBK20260804269B (Path: /bookings/view)
+[2026-08-04 07:02:08] Database Connection error: could not find driver
+[2026-08-04 07:02:08] Database Connection error: could not find driver
+[2026-08-04 07:02:08] Database Connection error: could not find driver
+[2026-08-04 07:02:08] [Mailer WARN] Brevo REST API returned HTTP 500: No response body. Trying Brevo SMTP...
+[2026-08-04 07:02:09] [Mailer SMTP AUTH] 235 2.0.0 Authentication succeeded
+[2026-08-04 07:02:09] [Mailer SMTP MAIL FROM] 250 2.0.0 Roger, accepting mail from <subraresidencykum@gmail.com>
+[2026-08-04 07:02:09] [Mailer SMTP RCPT TO] 250 2.0.0 I'll make sure <bhalaramsembu@gmail.com> gets this
+[2026-08-04 07:02:09] [Mailer SUCCESS] Email with PDF Invoice sent via Brevo SMTP (Port 587) to bhalaramsembu@gmail.com (Your Subra Residency Tax Invoice & Confirmation - HBK20260804AA88)
+[2026-08-04 09:04:16] INDEX.PHP REACHED
+[2026-08-04 09:04:16] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 09:04:16] INDEX.PHP REACHED
+[2026-08-04 09:04:16] REQUEST: GET /api/index.php/settings (Path: /settings)
+[2026-08-04 09:04:16] INDEX.PHP REACHED
+[2026-08-04 09:04:16] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 09:04:16] INDEX.PHP REACHED
+[2026-08-04 09:04:16] REQUEST: GET /api/index.php/settings (Path: /settings)
+[2026-08-04 09:04:16] INDEX.PHP REACHED
+[2026-08-04 09:04:16] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 09:04:16] INDEX.PHP REACHED
+[2026-08-04 09:04:16] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 09:04:19] INDEX.PHP REACHED
+[2026-08-04 09:04:19] REQUEST: GET /api/index.php/rooms/availabilityList?room_id=2&start=2026-08-04&end=2026-08-17&_cb=1785827059126 (Path: /rooms/availabilityList)
+[2026-08-04 09:04:19] INDEX.PHP REACHED
+[2026-08-04 09:04:19] REQUEST: GET /api/index.php/rooms/availabilityList?room_id=2&start=2026-08-04&end=2026-08-17&_cb=1785827059127 (Path: /rooms/availabilityList)
+[2026-08-04 09:04:19] INDEX.PHP REACHED
+[2026-08-04 09:04:19] REQUEST: GET /api/index.php/rooms/subRooms?category_id=2 (Path: /rooms/subRooms)
+[2026-08-04 09:04:19] INDEX.PHP REACHED
+[2026-08-04 09:04:19] REQUEST: GET /api/index.php/rooms/subRooms?category_id=2 (Path: /rooms/subRooms)
+[2026-08-04 09:04:19] INDEX.PHP REACHED
+[2026-08-04 09:04:19] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-08-04&checkout=2026-08-05 (Path: /rooms/checkAvailability)
+[2026-08-04 09:04:19] INDEX.PHP REACHED
+[2026-08-04 09:04:19] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-08-04&checkout=2026-08-05 (Path: /rooms/checkAvailability)
+[2026-08-04 09:04:19] INDEX.PHP REACHED
+[2026-08-04 09:04:19] REQUEST: GET /api/index.php/rooms/availabilityList?room_id=34&start=2026-08-04&end=2026-08-17&_cb=1785827059271 (Path: /rooms/availabilityList)
+[2026-08-04 09:04:24] INDEX.PHP REACHED
+[2026-08-04 09:04:24] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 09:04:24] INDEX.PHP REACHED
+[2026-08-04 09:04:24] REQUEST: GET /api/index.php/settings (Path: /settings)
+[2026-08-04 09:04:24] INDEX.PHP REACHED
+[2026-08-04 09:04:24] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 09:04:24] INDEX.PHP REACHED
+[2026-08-04 09:04:24] REQUEST: GET /api/index.php/settings (Path: /settings)
+[2026-08-04 09:04:24] INDEX.PHP REACHED
+[2026-08-04 09:04:24] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 09:04:24] INDEX.PHP REACHED
+[2026-08-04 09:04:24] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 09:04:33] INDEX.PHP REACHED
+[2026-08-04 09:04:33] INDEX.PHP REACHED
+[2026-08-04 09:04:33] REQUEST: POST /api/index.php/bookings/create (Path: /bookings/create)
+[2026-08-04 09:04:33] INDEX.PHP REACHED
+[2026-08-04 09:04:33] INDEX.PHP REACHED
+[2026-08-04 09:04:33] REQUEST: POST /api/index.php/payments/createOrder (Path: /payments/createOrder)
+[2026-08-04 09:04:33] CRITICAL: create_order.php reached!
+[2026-08-04 09:04:33] CRITICAL: Input: {"booking_id":"HBK20260804D61D","amount":3850}
+[2026-08-04 09:04:33] RAZORPAY RESPONSE (HTTP 401): {"error":{"description":"Authentication failed","code":"BAD_REQUEST_ERROR"}} | cURL Error: NONE
+[2026-08-04 09:04:33] NOTICE: Using simulated payment order fallback due to Razorpay HTTP 401 auth response.
+[2026-08-04 09:04:33] INDEX.PHP REACHED
+[2026-08-04 09:04:33] INDEX.PHP REACHED
+[2026-08-04 09:04:33] REQUEST: POST /api/index.php/payments/verify (Path: /payments/verify)
+[2026-08-04 09:04:33] Verification request for booking: HBK20260804D61D
+[2026-08-04 09:04:34] Booking HBK20260804D61D successfully confirmed in database.
+[2026-08-04 09:04:34] [Mailer WARN] Brevo REST API returned HTTP 401: {"message":"Key not found","code":"unauthorized"}
+. Trying Brevo SMTP...
+[2026-08-04 09:04:35] [Mailer SMTP AUTH] 235 2.0.0 Authentication succeeded
+[2026-08-04 09:04:35] [Mailer SMTP MAIL FROM] 250 2.0.0 Roger, accepting mail from <subraresidencykum@gmail.com>
+[2026-08-04 09:04:35] [Mailer SMTP RCPT TO] 250 2.0.0 I'll make sure <bhalaramsembu@gmail.com> gets this
+[2026-08-04 09:04:36] [Mailer SUCCESS] Email with PDF Invoice sent via Brevo SMTP (Port 587) to bhalaramsembu@gmail.com (Your Subra Residency Tax Invoice & Confirmation - HBK20260804D61D)
+[2026-08-04 09:04:36] Email sent successfully to bhalaramsembu@gmail.com
+[2026-08-04 09:04:36] INDEX.PHP REACHED
+[2026-08-04 09:04:36] REQUEST: GET /api/index.php/bookings/view?booking_id=HBK20260804D61D (Path: /bookings/view)

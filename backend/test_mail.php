@@ -7,7 +7,7 @@ include_once __DIR__ . '/utils/Mailer.php';
 
 echo "Sending test confirmation email via Brevo...\n";
 $res = Mailer::sendBookingConfirmation(
-    'af6402001@smtp-brevo.com',
+    'subraresidencykum@gmail.com',
     'Test Guest',
     'HBKTEST12345',
     '2026-07-08',

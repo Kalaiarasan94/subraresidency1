@@ -329,7 +329,7 @@ export const AdminDashboardView = ({
                 
                 <div className="p-6 max-h-[400px] overflow-y-auto custom-scrollbar">
                   <div className="space-y-3.5">
-                    {(data.today_bookings_list || []).map((bk: any, i: number) => (
+                    {(data.today_bookings_list || []).filter((bk: any) => String(bk.status).toLowerCase() !== 'pending').map((bk: any, i: number) => (
                       <div key={i} className="flex justify-between items-center p-4 bg-slate-50/80 border border-slate-100 rounded-2xl hover:border-indigo-200 transition-colors group">
                         <div className="space-y-1">
                           <div className="flex items-center gap-2">
@@ -352,8 +352,8 @@ export const AdminDashboardView = ({
                         </div>
                       </div>
                     ))}
-                    {(data.today_bookings_list || []).length === 0 && (
-                      <div className="py-12 text-center text-slate-400 text-[10.5px] font-black uppercase tracking-widest">No bookings registered today</div>
+                    {(data.today_bookings_list || []).filter((bk: any) => String(bk.status).toLowerCase() !== 'pending').length === 0 && (
+                      <div className="py-12 text-center text-slate-400 text-[10.5px] font-black uppercase tracking-widest">No confirmed bookings registered today</div>
                     )}
                   </div>
                 </div>

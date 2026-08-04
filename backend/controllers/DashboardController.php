@@ -60,7 +60,7 @@ class DashboardController
 
             // 1. STATS CARDS
             $total_bookings = $this->db->query("SELECT COUNT(*) FROM bookings")->fetchColumn();
-            $today_bookings = $this->db->query("SELECT COUNT(*) FROM bookings WHERE DATE(created_at) = '$today'")->fetchColumn();
+            $today_bookings = $this->db->query("SELECT COUNT(*) FROM bookings WHERE DATE(created_at) = '$today' AND LOWER(status) != 'pending'")->fetchColumn();
 
             $today_revenue = $this->db->query("SELECT SUM(amount) FROM payments WHERE DATE(payment_date) = '$today' AND status = 'success'")->fetchColumn() ?? 0;
             $monthly_revenue = $this->db->query("SELECT SUM(amount) FROM payments WHERE MONTH(payment_date) = '$thisMonth' AND YEAR(payment_date) = '$thisYear' AND status = 'success'")->fetchColumn() ?? 0;
@@ -153,11 +153,11 @@ class DashboardController
             $rooms_grid = $rooms_grid_stmt->fetchAll(PDO::FETCH_ASSOC);
 
             // 7. DETAIL LISTS FOR OVERVIEW MODALS
-            // Today's Bookings list
+            // Today's Bookings list (Exclude pending bookings)
             $today_bookings_stmt = $this->db->prepare("
                 SELECT b.booking_id, b.guest_name, b.check_in_date, b.check_out_date, b.total_amount, b.status
                 FROM bookings b
-                WHERE DATE(b.created_at) = ?
+                WHERE DATE(b.created_at) = ? AND LOWER(b.status) != 'pending'
                 ORDER BY b.created_at DESC
             ");
             $today_bookings_stmt->execute([$today]);

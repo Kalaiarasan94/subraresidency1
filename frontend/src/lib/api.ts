@@ -8,6 +8,31 @@ export const BACKEND_URL = API_BASE_URL.includes('/backend')
       ? API_BASE_URL.substring(0, API_BASE_URL.indexOf('/api/'))
       : API_BASE_URL.substring(0, API_BASE_URL.lastIndexOf('/')));
 
+export const getPublicAppUrl = (): string => {
+    if (import.meta.env.VITE_APP_URL) {
+        return (import.meta.env.VITE_APP_URL as string).replace(/\/+$/, '');
+    }
+    if (import.meta.env.VITE_CUSTOMER_DOMAIN && (import.meta.env.VITE_CUSTOMER_DOMAIN as string).trim() !== '') {
+        const domain = (import.meta.env.VITE_CUSTOMER_DOMAIN as string).trim();
+        if (!domain.includes('localhost') && !domain.includes('127.0.0.1')) {
+            return `https://${domain.replace(/^https?:\/\//, '')}`.replace(/\/+$/, '');
+        }
+    }
+    if (import.meta.env.VITE_API_BASE_URL && !import.meta.env.VITE_API_BASE_URL.includes('localhost') && !import.meta.env.VITE_API_BASE_URL.includes('127.0.0.1')) {
+        try {
+            const urlObj = new URL(import.meta.env.VITE_API_BASE_URL as string);
+            return urlObj.origin.replace(/\/+$/, '');
+        } catch (e) {}
+    }
+    if (typeof window !== 'undefined' && window.location.origin) {
+        const hostname = window.location.hostname;
+        if (hostname !== 'localhost' && hostname !== '127.0.0.1') {
+            return window.location.origin.replace(/\/+$/, '');
+        }
+    }
+    return 'https://subraresidency.com';
+};
+
 export const fetchRoomCategories = async () => {
     try {
         const response = await fetch(`${API_BASE_URL}/rooms/categories`);
@@ -73,12 +98,12 @@ export const fetchBookingById = async (bookingId: string) => {
     }
 };
 
-export const notifyQrScan = async (bookingId: string) => {
+export const notifyQrScan = async (bookingId: string, arrivalNote?: string) => {
     try {
         const resp = await fetch(`${API_BASE_URL}/bookings/qrScan`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ booking_id: bookingId })
+            body: JSON.stringify({ booking_id: bookingId, arrival_note: arrivalNote })
         });
         return await resp.json();
     } catch (e) {

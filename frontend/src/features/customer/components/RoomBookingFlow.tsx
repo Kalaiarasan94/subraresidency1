@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import QRCode from 'qrcode';
 import { Link } from 'react-router-dom';
 import { Search, MapPin, Calendar, Users, Star, ArrowRight, ShieldCheck, ChevronDown, X, CheckCircle2, CreditCard, QrCode, Info, ChevronRight, Phone, Clock, Droplets, Shirt, Footprints, Car } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -9,12 +10,13 @@ import { Badge } from '../../../components/ui/badge';
 import { fadeInUp, fadeInLeft, fadeInRight, staggerContainer, heroStagger, heroItem } from './animations';
 import { ROOMS_DATA, ATTRACTIONS_DATA, HIDDEN_TRAILS_DATA, RECOMMENDED_TRAILS_DATA, TEMPLE_DETAILS_DATA } from './data';
 import { logo, pillerImg, leafImg, templeBotImg, bgImg, locationMapImg, hotelBuildingImg, diningImg, hallImg, sarangapaniImg, mahamahamImg, airavatesvaraImg, uppiliappanImg, ramaswamyImg } from './assets';
-import { createBooking, createPaymentOrder, verifyPayment } from '../../../lib/api';
+import { createBooking, createPaymentOrder, verifyPayment, getPublicAppUrl } from '../../../lib/api';
 import { useNavigate } from 'react-router-dom';
 
 export const RoomBookingFlow = ({ isOpen, onClose, room }: { isOpen: boolean, onClose: () => void, room: any }) => {
   const [step, setStep] = useState<'details' | 'form' | 'payment' | 'confirm'>('details');
   const [realBookingId, setRealBookingId] = useState('');
+  const [qrDataUrl, setQrDataUrl] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [bookingDetails, setBookingDetails] = useState({ 
     name: '', 
@@ -41,8 +43,18 @@ export const RoomBookingFlow = ({ isOpen, onClose, room }: { isOpen: boolean, on
       setStep('details');
       setActiveImage(0);
       setRealBookingId('');
+      setQrDataUrl('');
     }
   }, [isOpen]);
+
+  useEffect(() => {
+    if (realBookingId) {
+      const publicBaseUrl = getPublicAppUrl();
+      QRCode.toDataURL(`${publicBaseUrl}/checkin-confirm/${realBookingId}`, { width: 300, margin: 2 })
+        .then((url) => setQrDataUrl(url))
+        .catch((err) => console.error('Error generating QR:', err));
+    }
+  }, [realBookingId]);
 
   if (!isOpen) return null;
 
@@ -405,12 +417,18 @@ export const RoomBookingFlow = ({ isOpen, onClose, room }: { isOpen: boolean, on
                   <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-catalogue-gold" />
                   <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-catalogue-gold" />
                   <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-catalogue-gold" />
-                  {/* Ideally render a QR code component for `realBookingId` */}
+                  {/* Dynamic QR code for mobile check-in */}
                   <div className="mx-auto mb-3">
-                    {/* placeholder box for QR image; generate server-side or use a client lib to render from booking id */}
-                    <div className="w-40 h-40 bg-slate-100 flex items-center justify-center">{realBookingId ? <span className="text-xs font-bold">QR</span> : null}</div>
+                    <div className="w-40 h-40 bg-slate-50 flex items-center justify-center rounded-lg overflow-hidden border border-slate-100 mx-auto">
+                      {qrDataUrl ? (
+                        <img src={qrDataUrl} alt={`QR Code for ${realBookingId}`} className="w-full h-full object-contain" />
+                      ) : (
+                        <QrCode size={48} className="text-catalogue-gold animate-pulse" />
+                      )}
+                    </div>
                   </div>
-                  <p className="mt-4 text-[10px] font-bold text-catalogue-gold uppercase tracking-[0.2em]">Booking ID: {realBookingId || '—'}</p>
+                  <p className="mt-2 text-[10px] font-bold text-catalogue-gold uppercase tracking-[0.2em]">Booking ID: {realBookingId || '—'}</p>
+                  <p className="mt-1 text-[9px] font-semibold text-slate-500 uppercase tracking-wider">Scan with mobile camera to start check-in</p>
                 </div>
 
                 <div className="bg-catalogue-green p-6 text-white text-xs space-y-3 text-left shadow-lg">

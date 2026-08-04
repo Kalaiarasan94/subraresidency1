@@ -6,7 +6,7 @@ import {
   CheckCircle2, Download, CreditCard, ArrowLeft, Calendar, 
   Users, Phone, Mail, MapPin, Globe, QrCode, Check, Loader2, Building
 } from 'lucide-react';
-import { fetchBookingById, createBooking, createPaymentOrder, verifyPayment } from '../../lib/api';
+import { fetchBookingById, createBooking, createPaymentOrder, verifyPayment, getPublicAppUrl } from '../../lib/api';
 import html2canvas from 'html2canvas';
 import QRCode from 'qrcode';
 
@@ -57,7 +57,8 @@ export default function BookingPage() {
   useEffect(() => {
     const id = bookingId || state?.bookingIdFromQuery;
     if (id) {
-      QRCode.toDataURL(`${window.location.origin}/checkin-confirm/${id}`, { width: 300, margin: 2 })
+      const publicBaseUrl = getPublicAppUrl();
+      QRCode.toDataURL(`${publicBaseUrl}/checkin-confirm/${id}`, { width: 300, margin: 2 })
         .then((url) => setQrDataUrl(url))
         .catch((err) => console.error('Error generating QR:', err));
     }
@@ -159,6 +160,36 @@ export default function BookingPage() {
 
       const order = orderResp.order;
       const keyId = orderResp.key_id;
+
+      // Handle simulated payment mode if Razorpay test keys are unauthenticated
+      if (orderResp.is_simulated) {
+        const verifyResp = await verifyPayment({
+          razorpay_payment_id: 'pay_sim_' + Math.random().toString(36).substring(2, 11).toUpperCase(),
+          razorpay_order_id: order.id,
+          razorpay_signature: 'simulated_signature',
+          booking_id: bid
+        });
+        setIsSubmitting(false);
+        if (verifyResp && verifyResp.status === 'success') {
+          setBookingId(bid);
+          setBookingFull({
+            booking_id: bid,
+            guest_name: bookingDetails.name,
+            guest_email: bookingDetails.email,
+            phone: bookingDetails.phone,
+            check_in_date: bookingDetails.checkIn,
+            check_out_date: bookingDetails.checkOut,
+            total_amount: totalAmount,
+            payment_status: 'success',
+            status: 'confirmed',
+            room_category: room.title || 'Reserved Room'
+          });
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+          alert(verifyResp?.message || 'Payment verification failed.');
+        }
+        return;
+      }
 
       // 3. Load Razorpay script dynamically
       const loadRzpScript = () => new Promise((resolve, reject) => {
