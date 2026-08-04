@@ -11,7 +11,7 @@ export const AvailabilityBar = ({ onSearch }: { onSearch?: (filters: any) => voi
   // silently default to the same day as check-in.
   const [checkOut, setCheckOut] = useState('');
   const [error, setError] = useState('');
-  const [guestOptions, setGuestOptions] = useState<number[]>([1, 2, 3, 4]);
+  const [guestOptions, setGuestOptions] = useState<number[]>([]);
 
   // Fetch room categories to derive dynamic min→max guest count
   useEffect(() => {
@@ -20,32 +20,19 @@ export const AvailabilityBar = ({ onSearch }: { onSearch?: (filters: any) => voi
         const res = await fetch(`${API_BASE_URL}/rooms/categories`);
         const data = await res.json();
         if (Array.isArray(data) && data.length > 0) {
-          // adults field comes from adults_count, max_guests may also be present
-          const counts: number[] = data.flatMap((room: any) => {
-            const vals: number[] = [];
-            if (room.adults) vals.push(Number(room.adults));
-            if (room.max_guests) vals.push(Number(room.max_guests));
-            return vals;
-          }).filter(n => n > 0);
-
-          if (counts.length > 0) {
-            const minGuests = Math.min(...counts);
-            const maxGuests = Math.max(...counts);
-            // Build 1..max range starting from 1 (always allow at least 1 guest)
-            const range: number[] = [];
-            for (let i = Math.min(1, minGuests); i <= maxGuests; i++) {
-              range.push(i);
-            }
-            setGuestOptions(range);
-            // Default to minGuests if current default is out of range
-            if (minGuests > 1) {
-              setGuests(`${minGuests} Guests`);
-            }
+          const capacities = data.map((room: any) => Number(room.max_guests || room.adults || 2));
+          const maxCapacity = Math.max(...capacities);
+          const range: number[] = [];
+          for (let i = 1; i <= maxCapacity; i++) {
+            range.push(i);
           }
+          setGuestOptions(range);
+        } else {
+          setGuestOptions([1, 2, 3]);
         }
       } catch (e) {
-        // Silently fall back to static options if API fails
         console.warn('Could not load guest range from API:', e);
+        setGuestOptions([1, 2, 3]);
       }
     };
     fetchGuestRange();

@@ -233,7 +233,7 @@ export const RoomBookingFlow = ({ isOpen, onClose, room }: { isOpen: boolean, on
                       </div>
                       <div>
                         <p className="text-[10px] uppercase font-bold text-catalogue-gold tracking-widest">Occupancy</p>
-                        <p className="text-sm font-bold">{room?.id === 'deluxe' ? '2 Adults' : room?.id === 'super-deluxe' ? '2-3 Adults' : '4-6 Adults'}</p>
+                        <p className="text-sm font-bold">{room?.max_guests ? `${room.max_guests} Guests` : room?.adults ? `${room.adults} Guests` : '2 Guests'}</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-4 text-catalogue-green group">
@@ -332,10 +332,11 @@ export const RoomBookingFlow = ({ isOpen, onClose, room }: { isOpen: boolean, on
                     onChange={(e) => setBookingDetails({...bookingDetails, guests: e.target.value})}
                     className="w-full bg-brand-cream/30 border border-catalogue-gold/20 p-4 font-playfair focus:outline-none focus:border-catalogue-gold"
                   >
-                    <option>1 Guest</option>
-                    <option>2 Guests</option>
-                    <option>3 Guests</option>
-                    <option>4+ Guests</option>
+                    {Array.from({ length: Number(room?.max_guests || room?.adults || 3) }, (_, i) => i + 1).map(n => (
+                      <option key={n} value={n === 1 ? '1 Guest' : `${n} Guests`}>
+                        {n === 1 ? '1 Guest' : `${n} Guests`}
+                      </option>
+                    ))}
                   </select>
                 </div>
                 <Button 

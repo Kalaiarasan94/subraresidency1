@@ -30,6 +30,15 @@ export const RoomsPage = ({
         const data = await fetchRoomCategories();
         const baseRooms = (data && Array.isArray(data) && data.length > 0) ? data : ROOMS_DATA;
 
+        // Dynamic guest options strictly matching highest max_guests given by admin across categories
+        const capacities = baseRooms.map((room: any) => Number(room.max_guests || room.adults || 2));
+        const maxCapacity = capacities.length > 0 ? Math.max(...capacities) : 2;
+        const range: number[] = [];
+        for (let i = 1; i <= maxCapacity; i++) {
+          range.push(i);
+        }
+        setGuestOptions(range);
+
         const selectedGuestsCount = parseInt(searchFilters?.guests || '2') || 2;
 
         if (searchFilters?.checkIn && searchFilters?.checkOut) {
@@ -67,24 +76,6 @@ export const RoomsPage = ({
     };
     loadRooms();
   }, [searchFilters]);
-
-  // Recompute guest options whenever rooms change
-  useEffect(() => {
-    if (displayRooms.length > 0) {
-      const counts: number[] = displayRooms.flatMap((room: any) => {
-        const vals: number[] = [];
-        if (room.adults) vals.push(Number(room.adults));
-        if (room.max_guests) vals.push(Number(room.max_guests));
-        return vals;
-      }).filter(n => n > 0);
-      if (counts.length > 0) {
-        const maxGuests = Math.max(...counts);
-        const range: number[] = [];
-        for (let i = 1; i <= maxGuests; i++) range.push(i);
-        setGuestOptions(range);
-      }
-    }
-  }, [displayRooms]);
 
   const todayStr = new Date().toLocaleDateString('en-CA');
   const effectiveFilters = searchFilters || {
@@ -265,7 +256,7 @@ export const RoomsPage = ({
                       <div className="grid grid-cols-3 gap-2 mb-4 py-4 border-y border-slate-50">
                         <div className="flex flex-col items-center gap-1">
                           <Users className="text-catalogue-gold" size={14} />
-                          <span className="text-[10px] font-bold text-slate-600 uppercase tracking-tighter tabular-nums font-sans">{room.adults || '2'} Guests</span>
+                          <span className="text-[10px] font-bold text-slate-600 uppercase tracking-tighter tabular-nums font-sans">{room.max_guests || room.adults || '2'} Guests</span>
                         </div>
                         <div className="flex flex-col items-center gap-1 border-x border-slate-50 px-1">
                           <BedDouble className="text-catalogue-gold" size={14} />

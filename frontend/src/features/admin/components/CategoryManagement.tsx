@@ -69,8 +69,8 @@ export const CategoryManagement: React.FC<Props> = ({ onAddRoom, onEditRoom }) =
               
               <div className="grid grid-cols-3 gap-2 border-y border-slate-50 py-3 mb-4">
                  <div className="text-center">
-                    <p className="text-[10px] text-slate-400 font-bold uppercase">Adults</p>
-                    <p className="text-sm font-bold text-slate-700">{cat.adults || cat.max_adults}</p>
+                    <p className="text-[10px] text-slate-400 font-bold uppercase">Capacity</p>
+                    <p className="text-sm font-bold text-slate-700">{cat.max_guests || cat.adults || cat.max_adults || 2} Guests</p>
                  </div>
                  <div className="text-center border-x border-slate-50">
                     <p className="text-[10px] text-slate-400 font-bold uppercase">Bed</p>
