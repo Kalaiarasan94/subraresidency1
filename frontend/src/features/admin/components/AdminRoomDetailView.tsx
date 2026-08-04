@@ -49,9 +49,11 @@ export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onRefresh }
       : '',
     max_adults: room.adults || '',
     max_children: room.children || '',
+    max_guests: room.max_guests || '',
     floor_number: room.floor || room.floor_number || '',
     bed_type: room.bed_type || '',
     room_size: room.size || '',
+    category_tag: room.category_tag || room.tag || 'Premium',
     maintenance_start: room.maintenance_start || '',
     maintenance_end: room.maintenance_end || ''
   });
@@ -182,6 +184,7 @@ export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onRefresh }
         : '',
       max_adults: room.adults || '',
       max_children: room.children || '',
+      max_guests: room.max_guests || '',
       floor_number: room.floor || room.floor_number || '',
       bed_type: room.bed_type || '',
       room_size: room.size || '',
@@ -573,9 +576,22 @@ export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onRefresh }
                     );
                   })}
                 </div>
-             </section>                <h3 className="text-sm font-bold text-[#4f46e5] uppercase tracking-widest mb-4">Internal Specs & Badge</h3>
-                <div className="grid grid-cols-2 md:grid-cols-6 gap-6 p-6 bg-slate-50 rounded-2xl border border-slate-100">
+             </section>
+              <section className="pb-12 border-b border-slate-100">
+                <h3 className="text-sm font-bold text-[#4f46e5] uppercase tracking-widest mb-4">Internal Specs & Badge</h3>
+                <div className="grid grid-cols-2 md:grid-cols-7 gap-4 p-6 bg-slate-50 rounded-2xl border border-slate-100">
                    <div className="text-center">
+                      <p className="text-[10px] text-slate-400 font-bold uppercase mb-1">Max Guests</p>
+                      <input 
+                        name="max_guests"
+                        type="number"
+                        value={formData.max_guests}
+                        onChange={handleChange}
+                        placeholder="5"
+                        className="text-lg font-bold text-slate-800 bg-transparent text-center border-b border-transparent hover:border-slate-300 focus:outline-none focus:border-indigo-500 w-14"
+                      />
+                   </div>
+                   <div className="text-center border-l border-slate-200 pl-3">
                       <p className="text-[10px] text-slate-400 font-bold uppercase mb-1">Max Adults</p>
                       <input 
                         name="max_adults"
@@ -634,8 +650,9 @@ export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onRefresh }
                       />
                    </div>
                 </div>
+              </section>
 
-             <section className="pb-12 border-b border-slate-100">
+              <section className="pb-12 border-b border-slate-100">
                 <h3 className="text-sm font-bold text-[#4f46e5] uppercase tracking-widest mb-4 flex items-center justify-between">
                   <span>Assigned Room Numbers</span>
                   <span className="text-[10px] text-slate-400 font-bold lowercase">({subRooms.length} rooms)</span>

@@ -24609,3 +24609,1153 @@ Stack trace:
 [2026-07-18 09:36:34] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
 [2026-07-18 09:36:34] INDEX.PHP REACHED
 [2026-07-18 09:36:34] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:32:59] INDEX.PHP REACHED
+[2026-07-30 11:32:59] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-30 11:32:59] INDEX.PHP REACHED
+[2026-07-30 11:32:59] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-30 11:32:59] INDEX.PHP REACHED
+[2026-07-30 11:32:59] REQUEST: GET /api/index.php/dashboard/receptionist (Path: /dashboard/receptionist)
+[2026-07-30 11:32:59] INDEX.PHP REACHED
+[2026-07-30 11:32:59] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:32:59] INDEX.PHP REACHED
+[2026-07-30 11:32:59] REQUEST: GET /api/index.php/dashboard/receptionist (Path: /dashboard/receptionist)
+[2026-07-30 11:32:59] INDEX.PHP REACHED
+[2026-07-30 11:32:59] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:33:00] INDEX.PHP REACHED
+[2026-07-30 11:33:00] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:33:00] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:33:00] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:33:00] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:33:00] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:33:00] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:33:00] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:33:00] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:33:00] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:33:00] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:33:00] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:33:00] INDEX.PHP REACHED
+[2026-07-30 11:33:00] REQUEST: GET /api/index.php/settings (Path: /settings)
+[2026-07-30 11:33:00] INDEX.PHP REACHED
+[2026-07-30 11:33:00] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:33:00] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:33:00] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:33:00] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:33:00] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:33:00] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:33:00] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:33:00] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:33:00] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:33:00] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:33:00] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:33:00] INDEX.PHP REACHED
+[2026-07-30 11:33:00] REQUEST: GET /api/index.php/settings (Path: /settings)
+[2026-07-30 11:33:00] INDEX.PHP REACHED
+[2026-07-30 11:33:00] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:33:00] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:33:00] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:33:00] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:33:00] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:33:00] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:33:00] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:33:00] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:33:00] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:33:00] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:33:00] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:33:00] INDEX.PHP REACHED
+[2026-07-30 11:33:00] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:33:00] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:33:00] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:33:00] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:33:00] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:33:00] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:33:00] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:33:00] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:33:00] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:33:00] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:33:00] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:33:05] INDEX.PHP REACHED
+[2026-07-30 11:33:05] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-30 11:33:05] INDEX.PHP REACHED
+[2026-07-30 11:33:05] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-30 11:33:05] INDEX.PHP REACHED
+[2026-07-30 11:33:05] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:33:08] INDEX.PHP REACHED
+[2026-07-30 11:33:08] REQUEST: GET /api/index.php/dashboard/receptionist (Path: /dashboard/receptionist)
+[2026-07-30 11:33:08] INDEX.PHP REACHED
+[2026-07-30 11:33:08] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:33:08] INDEX.PHP REACHED
+[2026-07-30 11:33:08] REQUEST: GET /api/index.php/dashboard/receptionist (Path: /dashboard/receptionist)
+[2026-07-30 11:33:08] INDEX.PHP REACHED
+[2026-07-30 11:33:08] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:33:13] INDEX.PHP REACHED
+[2026-07-30 11:33:13] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:33:17] INDEX.PHP REACHED
+[2026-07-30 11:33:17] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:33:17] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:33:17] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:33:17] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:33:17] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:33:17] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:33:17] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:33:17] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:33:17] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:33:17] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:33:17] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:33:17] INDEX.PHP REACHED
+[2026-07-30 11:33:17] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:33:17] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:33:17] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:33:17] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:33:17] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:33:17] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:33:17] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:33:17] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:33:17] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:33:17] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:33:17] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:33:17] INDEX.PHP REACHED
+[2026-07-30 11:33:17] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-30&checkout=2026-07-31 (Path: /rooms/checkAvailability)
+[2026-07-30 11:33:17] INDEX.PHP REACHED
+[2026-07-30 11:33:17] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-30&checkout=2026-07-31 (Path: /rooms/checkAvailability)
+[2026-07-30 11:33:18] INDEX.PHP REACHED
+[2026-07-30 11:33:18] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:33:20] INDEX.PHP REACHED
+[2026-07-30 11:33:20] REQUEST: GET /api/index.php/rooms/subRooms?category_id=2 (Path: /rooms/subRooms)
+[2026-07-30 11:33:20] INDEX.PHP REACHED
+[2026-07-30 11:33:20] REQUEST: GET /api/index.php/rooms/availabilityList?room_id=2&start=2026-07-30&end=2026-08-12&_cb=1785404000408 (Path: /rooms/availabilityList)
+[2026-07-30 11:33:20] INDEX.PHP REACHED
+[2026-07-30 11:33:20] REQUEST: GET /api/index.php/rooms/availabilityList?room_id=2&start=2026-07-30&end=2026-08-12&_cb=1785404000409 (Path: /rooms/availabilityList)
+[2026-07-30 11:33:20] INDEX.PHP REACHED
+[2026-07-30 11:33:20] REQUEST: GET /api/index.php/rooms/subRooms?category_id=2 (Path: /rooms/subRooms)
+[2026-07-30 11:33:20] INDEX.PHP REACHED
+[2026-07-30 11:33:20] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-30&checkout=2026-07-31 (Path: /rooms/checkAvailability)
+[2026-07-30 11:33:20] INDEX.PHP REACHED
+[2026-07-30 11:33:20] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-30&checkout=2026-07-31 (Path: /rooms/checkAvailability)
+[2026-07-30 11:33:20] INDEX.PHP REACHED
+[2026-07-30 11:33:20] REQUEST: GET /api/index.php/rooms/availabilityList?room_id=1&start=2026-07-30&end=2026-08-12&_cb=1785404000561 (Path: /rooms/availabilityList)
+[2026-07-30 11:33:23] INDEX.PHP REACHED
+[2026-07-30 11:33:23] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:33:27] INDEX.PHP REACHED
+[2026-07-30 11:33:27] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:33:27] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:33:27] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:33:27] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:33:27] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:33:27] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:33:27] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:33:27] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:33:27] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:33:27] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:33:27] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:33:27] INDEX.PHP REACHED
+[2026-07-30 11:33:27] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:33:27] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:33:27] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:33:27] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:33:27] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:33:27] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:33:27] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:33:27] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:33:27] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:33:27] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:33:27] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:33:28] INDEX.PHP REACHED
+[2026-07-30 11:33:28] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:33:30] INDEX.PHP REACHED
+[2026-07-30 11:33:30] REQUEST: GET /api/index.php/rooms/subRooms?category_id=3 (Path: /rooms/subRooms)
+[2026-07-30 11:33:30] INDEX.PHP REACHED
+[2026-07-30 11:33:30] REQUEST: GET /api/index.php/rooms/subRooms?category_id=3 (Path: /rooms/subRooms)
+[2026-07-30 11:33:33] INDEX.PHP REACHED
+[2026-07-30 11:33:33] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:33:38] INDEX.PHP REACHED
+[2026-07-30 11:33:38] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:33:43] INDEX.PHP REACHED
+[2026-07-30 11:33:43] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:33:48] INDEX.PHP REACHED
+[2026-07-30 11:33:48] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:33:53] INDEX.PHP REACHED
+[2026-07-30 11:33:53] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:33:58] INDEX.PHP REACHED
+[2026-07-30 11:33:58] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:34:03] INDEX.PHP REACHED
+[2026-07-30 11:34:03] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:34:08] INDEX.PHP REACHED
+[2026-07-30 11:34:08] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:34:13] INDEX.PHP REACHED
+[2026-07-30 11:34:13] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:34:18] INDEX.PHP REACHED
+[2026-07-30 11:34:18] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:34:23] INDEX.PHP REACHED
+[2026-07-30 11:34:23] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:34:28] INDEX.PHP REACHED
+[2026-07-30 11:34:28] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:34:33] INDEX.PHP REACHED
+[2026-07-30 11:34:33] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:34:38] INDEX.PHP REACHED
+[2026-07-30 11:34:38] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:34:53] INDEX.PHP REACHED
+[2026-07-30 11:34:53] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:34:53] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:34:53] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:34:53] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:34:53] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:34:53] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:34:53] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:34:53] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:34:53] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:34:53] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:34:53] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:34:53] INDEX.PHP REACHED
+[2026-07-30 11:34:53] REQUEST: GET /api/index.php/settings (Path: /settings)
+[2026-07-30 11:34:53] INDEX.PHP REACHED
+[2026-07-30 11:34:53] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:34:53] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:34:53] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:34:53] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:34:53] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:34:53] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:34:53] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:34:53] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:34:53] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:34:53] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:34:53] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:34:53] INDEX.PHP REACHED
+[2026-07-30 11:34:53] REQUEST: GET /api/index.php/settings (Path: /settings)
+[2026-07-30 11:34:53] INDEX.PHP REACHED
+[2026-07-30 11:34:53] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:34:53] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:34:53] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:34:53] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:34:53] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:34:53] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:34:53] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:34:53] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:34:53] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:34:53] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:34:53] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:34:53] INDEX.PHP REACHED
+[2026-07-30 11:34:53] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:34:53] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:34:53] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:34:53] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:34:53] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:34:53] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:34:53] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:34:53] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:34:53] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:34:53] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:34:53] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:34:54] INDEX.PHP REACHED
+[2026-07-30 11:34:54] REQUEST: GET /api/index.php/attractions/list (Path: /attractions/list)
+[2026-07-30 11:34:54] INDEX.PHP REACHED
+[2026-07-30 11:34:54] REQUEST: GET /api/index.php/settings (Path: /settings)
+[2026-07-30 11:34:54] INDEX.PHP REACHED
+[2026-07-30 11:34:54] REQUEST: GET /api/index.php/attractions/list (Path: /attractions/list)
+[2026-07-30 11:34:54] INDEX.PHP REACHED
+[2026-07-30 11:34:54] REQUEST: GET /api/index.php/settings (Path: /settings)
+[2026-07-30 11:35:06] INDEX.PHP REACHED
+[2026-07-30 11:35:06] REQUEST: GET /api/index.php/attractions/list (Path: /attractions/list)
+[2026-07-30 11:35:06] INDEX.PHP REACHED
+[2026-07-30 11:35:06] REQUEST: GET /api/index.php/settings (Path: /settings)
+[2026-07-30 11:35:06] INDEX.PHP REACHED
+[2026-07-30 11:35:06] REQUEST: GET /api/index.php/attractions/list (Path: /attractions/list)
+[2026-07-30 11:35:06] INDEX.PHP REACHED
+[2026-07-30 11:35:06] REQUEST: GET /api/index.php/settings (Path: /settings)
+[2026-07-30 11:35:12] INDEX.PHP REACHED
+[2026-07-30 11:35:12] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:35:13] INDEX.PHP REACHED
+[2026-07-30 11:35:13] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:35:18] INDEX.PHP REACHED
+[2026-07-30 11:35:18] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:35:23] INDEX.PHP REACHED
+[2026-07-30 11:35:23] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:35:28] INDEX.PHP REACHED
+[2026-07-30 11:35:28] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:35:33] INDEX.PHP REACHED
+[2026-07-30 11:35:33] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:35:35] INDEX.PHP REACHED
+[2026-07-30 11:35:35] REQUEST: GET /api/index.php/dashboard/receptionist (Path: /dashboard/receptionist)
+[2026-07-30 11:35:35] INDEX.PHP REACHED
+[2026-07-30 11:35:35] REQUEST: GET /api/index.php/dashboard/receptionist (Path: /dashboard/receptionist)
+[2026-07-30 11:35:38] INDEX.PHP REACHED
+[2026-07-30 11:35:38] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:35:40] INDEX.PHP REACHED
+[2026-07-30 11:35:40] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:35:40] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:40] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:40] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:40] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:40] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:40] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:40] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:40] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:40] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:40] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:40] INDEX.PHP REACHED
+[2026-07-30 11:35:40] REQUEST: GET /api/index.php/settings (Path: /settings)
+[2026-07-30 11:35:40] INDEX.PHP REACHED
+[2026-07-30 11:35:40] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:35:40] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:40] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:40] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:40] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:40] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:40] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:40] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:40] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:40] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:40] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:40] INDEX.PHP REACHED
+[2026-07-30 11:35:40] REQUEST: GET /api/index.php/settings (Path: /settings)
+[2026-07-30 11:35:40] INDEX.PHP REACHED
+[2026-07-30 11:35:40] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:35:40] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:40] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:40] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:40] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:40] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:40] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:40] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:40] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:40] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:40] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:40] INDEX.PHP REACHED
+[2026-07-30 11:35:40] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:35:40] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:40] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:40] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:40] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:40] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:40] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:40] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:40] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:40] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:40] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:41] INDEX.PHP REACHED
+[2026-07-30 11:35:41] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:35:41] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:41] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:41] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:41] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:41] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:41] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:41] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:41] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:41] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:41] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:41] INDEX.PHP REACHED
+[2026-07-30 11:35:41] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:35:41] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:41] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:41] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:41] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:41] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:41] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:41] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:41] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:41] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:41] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:41] INDEX.PHP REACHED
+[2026-07-30 11:35:41] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-30&checkout=2026-07-31 (Path: /rooms/checkAvailability)
+[2026-07-30 11:35:41] INDEX.PHP REACHED
+[2026-07-30 11:35:41] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-30&checkout=2026-07-31 (Path: /rooms/checkAvailability)
+[2026-07-30 11:35:43] INDEX.PHP REACHED
+[2026-07-30 11:35:43] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:35:48] INDEX.PHP REACHED
+[2026-07-30 11:35:48] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:35:49] INDEX.PHP REACHED
+[2026-07-30 11:35:49] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:35:49] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:49] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:49] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:49] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:49] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:49] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:49] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:49] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:49] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:49] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:49] INDEX.PHP REACHED
+[2026-07-30 11:35:49] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-30&checkout=2026-07-31 (Path: /rooms/checkAvailability)
+[2026-07-30 11:35:53] INDEX.PHP REACHED
+[2026-07-30 11:35:53] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:35:53] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:53] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:53] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:53] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:53] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:53] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:53] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:53] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:53] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:53] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:53] INDEX.PHP REACHED
+[2026-07-30 11:35:53] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-30&checkout=2026-07-31 (Path: /rooms/checkAvailability)
+[2026-07-30 11:35:53] INDEX.PHP REACHED
+[2026-07-30 11:35:53] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:35:54] INDEX.PHP REACHED
+[2026-07-30 11:35:54] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:35:54] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:54] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:54] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:54] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:54] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:54] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:54] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:54] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:54] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:54] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:54] INDEX.PHP REACHED
+[2026-07-30 11:35:54] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-30&checkout=2026-07-31 (Path: /rooms/checkAvailability)
+[2026-07-30 11:35:54] INDEX.PHP REACHED
+[2026-07-30 11:35:54] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:35:54] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:54] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:54] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:54] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:54] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:54] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:54] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:54] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:54] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:54] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:54] INDEX.PHP REACHED
+[2026-07-30 11:35:54] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-30&checkout=2026-07-31 (Path: /rooms/checkAvailability)
+[2026-07-30 11:35:54] INDEX.PHP REACHED
+[2026-07-30 11:35:54] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:35:54] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:54] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:54] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:54] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:54] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:54] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:54] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:54] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:54] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:54] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:54] INDEX.PHP REACHED
+[2026-07-30 11:35:54] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-30&checkout=2026-07-31 (Path: /rooms/checkAvailability)
+[2026-07-30 11:35:54] INDEX.PHP REACHED
+[2026-07-30 11:35:54] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:35:54] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:54] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:54] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:54] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:54] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:54] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:54] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:54] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:54] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:54] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:55] INDEX.PHP REACHED
+[2026-07-30 11:35:55] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-30&checkout=2026-07-31 (Path: /rooms/checkAvailability)
+[2026-07-30 11:35:57] INDEX.PHP REACHED
+[2026-07-30 11:35:57] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:35:57] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:57] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:57] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:57] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:57] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:57] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:57] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:57] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:57] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:35:57] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:35:57] INDEX.PHP REACHED
+[2026-07-30 11:35:57] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-30&checkout=2026-07-31 (Path: /rooms/checkAvailability)
+[2026-07-30 11:35:58] INDEX.PHP REACHED
+[2026-07-30 11:35:58] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:36:00] INDEX.PHP REACHED
+[2026-07-30 11:36:00] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:36:00] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:36:00] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:36:00] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:36:00] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:36:00] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:36:00] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:36:00] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:36:00] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:36:00] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:36:00] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:36:00] INDEX.PHP REACHED
+[2026-07-30 11:36:00] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-30&checkout=2026-07-31 (Path: /rooms/checkAvailability)
+[2026-07-30 11:36:03] INDEX.PHP REACHED
+[2026-07-30 11:36:03] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:36:03] INDEX.PHP REACHED
+[2026-07-30 11:36:03] REQUEST: GET /api/index.php/rooms/subRooms?category_id=4 (Path: /rooms/subRooms)
+[2026-07-30 11:36:03] INDEX.PHP REACHED
+[2026-07-30 11:36:03] REQUEST: GET /api/index.php/rooms/availabilityList?room_id=4&start=2026-07-30&end=2026-08-12&_cb=1785404163206 (Path: /rooms/availabilityList)
+[2026-07-30 11:36:03] INDEX.PHP REACHED
+[2026-07-30 11:36:03] REQUEST: GET /api/index.php/rooms/subRooms?category_id=4 (Path: /rooms/subRooms)
+[2026-07-30 11:36:03] INDEX.PHP REACHED
+[2026-07-30 11:36:03] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-30&checkout=2026-07-31 (Path: /rooms/checkAvailability)
+[2026-07-30 11:36:03] INDEX.PHP REACHED
+[2026-07-30 11:36:03] REQUEST: GET /api/index.php/rooms/availabilityList?room_id=4&start=2026-07-30&end=2026-08-12&_cb=1785404163206 (Path: /rooms/availabilityList)
+[2026-07-30 11:36:03] INDEX.PHP REACHED
+[2026-07-30 11:36:03] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-30&checkout=2026-07-31 (Path: /rooms/checkAvailability)
+[2026-07-30 11:36:03] INDEX.PHP REACHED
+[2026-07-30 11:36:03] REQUEST: GET /api/index.php/rooms/availabilityList?room_id=3&start=2026-07-30&end=2026-08-12&_cb=1785404163356 (Path: /rooms/availabilityList)
+[2026-07-30 11:36:05] INDEX.PHP REACHED
+[2026-07-30 11:36:05] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:36:05] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:36:05] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:36:05] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:36:05] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:36:05] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:36:05] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:36:05] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:36:05] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:36:05] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:36:05] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:36:05] INDEX.PHP REACHED
+[2026-07-30 11:36:05] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:36:05] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:36:05] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:36:05] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:36:05] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:36:05] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:36:05] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:36:05] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:36:05] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:36:05] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:36:05] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:36:05] INDEX.PHP REACHED
+[2026-07-30 11:36:05] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-30&checkout=2026-07-31 (Path: /rooms/checkAvailability)
+[2026-07-30 11:36:05] INDEX.PHP REACHED
+[2026-07-30 11:36:05] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-30&checkout=2026-07-31 (Path: /rooms/checkAvailability)
+[2026-07-30 11:36:08] INDEX.PHP REACHED
+[2026-07-30 11:36:08] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:36:13] INDEX.PHP REACHED
+[2026-07-30 11:36:13] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:36:18] INDEX.PHP REACHED
+[2026-07-30 11:36:18] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:36:23] INDEX.PHP REACHED
+[2026-07-30 11:36:23] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:36:28] INDEX.PHP REACHED
+[2026-07-30 11:36:28] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:36:33] INDEX.PHP REACHED
+[2026-07-30 11:36:33] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:36:39] INDEX.PHP REACHED
+[2026-07-30 11:36:39] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-30 11:36:39] INDEX.PHP REACHED
+[2026-07-30 11:36:39] REQUEST: GET /api/index.php/dashboard/admin (Path: /dashboard/admin)
+[2026-07-30 11:37:20] INDEX.PHP REACHED
+[2026-07-30 11:37:20] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:38:20] INDEX.PHP REACHED
+[2026-07-30 11:38:20] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:39:20] INDEX.PHP REACHED
+[2026-07-30 11:39:20] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:40:20] INDEX.PHP REACHED
+[2026-07-30 11:40:20] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:41:20] INDEX.PHP REACHED
+[2026-07-30 11:41:20] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:42:20] INDEX.PHP REACHED
+[2026-07-30 11:42:20] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:43:20] INDEX.PHP REACHED
+[2026-07-30 11:43:20] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:44:20] INDEX.PHP REACHED
+[2026-07-30 11:44:20] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:45:20] INDEX.PHP REACHED
+[2026-07-30 11:45:20] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:45:41] INDEX.PHP REACHED
+[2026-07-30 11:45:41] REQUEST: GET /api/index.php/rooms/subRooms?category_id=3 (Path: /rooms/subRooms)
+[2026-07-30 11:45:41] INDEX.PHP REACHED
+[2026-07-30 11:45:41] REQUEST: GET /api/index.php/rooms/subRooms?category_id=3 (Path: /rooms/subRooms)
+[2026-07-30 11:45:47] INDEX.PHP REACHED
+[2026-07-30 11:45:47] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:45:47] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:45:47] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:45:47] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:45:47] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:45:47] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:45:47] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:45:47] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:45:47] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:45:47] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:45:47] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:45:47] INDEX.PHP REACHED
+[2026-07-30 11:45:47] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:45:47] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:45:47] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:45:47] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:45:47] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:45:47] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:45:47] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:45:47] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:45:47] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:45:47] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:45:47] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:45:51] INDEX.PHP REACHED
+[2026-07-30 11:45:51] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:45:53] INDEX.PHP REACHED
+[2026-07-30 11:45:53] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:45:58] INDEX.PHP REACHED
+[2026-07-30 11:45:58] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:46:03] INDEX.PHP REACHED
+[2026-07-30 11:46:03] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:46:08] INDEX.PHP REACHED
+[2026-07-30 11:46:08] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:46:13] INDEX.PHP REACHED
+[2026-07-30 11:46:13] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:46:18] INDEX.PHP REACHED
+[2026-07-30 11:46:18] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:46:23] INDEX.PHP REACHED
+[2026-07-30 11:46:23] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:46:28] INDEX.PHP REACHED
+[2026-07-30 11:46:28] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:46:33] INDEX.PHP REACHED
+[2026-07-30 11:46:33] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:46:38] INDEX.PHP REACHED
+[2026-07-30 11:46:38] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:46:43] INDEX.PHP REACHED
+[2026-07-30 11:46:43] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:46:48] INDEX.PHP REACHED
+[2026-07-30 11:46:48] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:47:20] INDEX.PHP REACHED
+[2026-07-30 11:47:20] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:48:20] INDEX.PHP REACHED
+[2026-07-30 11:48:20] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:48:52] INDEX.PHP REACHED
+[2026-07-30 11:48:52] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:48:52] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:48:52] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:48:52] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:48:52] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:48:52] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:48:52] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:48:52] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:48:52] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:48:52] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:48:52] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:48:52] INDEX.PHP REACHED
+[2026-07-30 11:48:52] REQUEST: GET /api/index.php/settings (Path: /settings)
+[2026-07-30 11:48:52] INDEX.PHP REACHED
+[2026-07-30 11:48:52] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:48:52] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:48:52] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:48:52] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:48:52] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:48:52] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:48:52] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:48:52] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:48:52] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:48:52] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:48:52] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:48:52] INDEX.PHP REACHED
+[2026-07-30 11:48:52] REQUEST: GET /api/index.php/settings (Path: /settings)
+[2026-07-30 11:48:52] INDEX.PHP REACHED
+[2026-07-30 11:48:52] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:48:52] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:48:52] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:48:52] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:48:52] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:48:52] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:48:52] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:48:52] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:48:52] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:48:52] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:48:52] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:48:52] INDEX.PHP REACHED
+[2026-07-30 11:48:52] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:48:52] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:48:52] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:48:52] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:48:52] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:48:52] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:48:52] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:48:52] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:48:52] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:48:52] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:48:52] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:48:53] INDEX.PHP REACHED
+[2026-07-30 11:48:53] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:48:53] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:48:53] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:48:53] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:48:53] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:48:53] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:48:53] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:48:53] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:48:53] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:48:53] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:48:53] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:48:53] INDEX.PHP REACHED
+[2026-07-30 11:48:53] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:48:53] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:48:53] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:48:53] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:48:53] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:48:53] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:48:53] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:48:53] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:48:53] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:48:53] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:48:53] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:48:53] INDEX.PHP REACHED
+[2026-07-30 11:48:53] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-30&checkout=2026-07-31 (Path: /rooms/checkAvailability)
+[2026-07-30 11:48:53] INDEX.PHP REACHED
+[2026-07-30 11:48:53] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-30&checkout=2026-07-31 (Path: /rooms/checkAvailability)
+[2026-07-30 11:48:56] INDEX.PHP REACHED
+[2026-07-30 11:48:56] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:48:56] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:48:56] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:48:56] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:48:56] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:48:56] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:48:56] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:48:56] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:48:56] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:48:56] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:48:56] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:48:56] INDEX.PHP REACHED
+[2026-07-30 11:48:56] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-30&checkout=2026-07-31 (Path: /rooms/checkAvailability)
+[2026-07-30 11:48:58] INDEX.PHP REACHED
+[2026-07-30 11:48:58] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:48:58] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:48:58] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:48:58] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:48:58] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:48:58] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:48:58] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:48:58] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:48:58] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:48:58] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:48:58] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:48:58] INDEX.PHP REACHED
+[2026-07-30 11:48:58] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-30&checkout=2026-07-31 (Path: /rooms/checkAvailability)
+[2026-07-30 11:49:00] INDEX.PHP REACHED
+[2026-07-30 11:49:00] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:49:00] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:00] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:00] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:00] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:00] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:00] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:00] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:00] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:00] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:00] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:00] INDEX.PHP REACHED
+[2026-07-30 11:49:00] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:49:00] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:00] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:00] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:00] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:00] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:00] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:00] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:00] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:00] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:00] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:00] INDEX.PHP REACHED
+[2026-07-30 11:49:00] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-30&checkout=2026-07-31 (Path: /rooms/checkAvailability)
+[2026-07-30 11:49:00] INDEX.PHP REACHED
+[2026-07-30 11:49:00] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-30&checkout=2026-07-31 (Path: /rooms/checkAvailability)
+[2026-07-30 11:49:03] INDEX.PHP REACHED
+[2026-07-30 11:49:03] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:49:03] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:03] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:03] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:03] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:03] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:03] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:03] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:03] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:03] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:03] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:03] INDEX.PHP REACHED
+[2026-07-30 11:49:03] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-30&checkout=2026-07-31 (Path: /rooms/checkAvailability)
+[2026-07-30 11:49:06] INDEX.PHP REACHED
+[2026-07-30 11:49:06] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:49:06] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:06] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:06] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:06] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:06] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:06] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:06] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:06] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:06] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:06] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:06] INDEX.PHP REACHED
+[2026-07-30 11:49:06] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-30&checkout=2026-07-31 (Path: /rooms/checkAvailability)
+[2026-07-30 11:49:09] INDEX.PHP REACHED
+[2026-07-30 11:49:09] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:49:09] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:09] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:09] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:09] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:09] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:09] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:09] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:09] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:09] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:09] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:09] INDEX.PHP REACHED
+[2026-07-30 11:49:09] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-30&checkout=2026-07-31 (Path: /rooms/checkAvailability)
+[2026-07-30 11:49:16] INDEX.PHP REACHED
+[2026-07-30 11:49:16] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:49:16] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:16] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:16] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:16] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:16] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:16] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:16] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:16] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:16] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:16] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:16] INDEX.PHP REACHED
+[2026-07-30 11:49:16] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-30&checkout=2026-07-31 (Path: /rooms/checkAvailability)
+[2026-07-30 11:49:17] INDEX.PHP REACHED
+[2026-07-30 11:49:17] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:49:17] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:17] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:17] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:17] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:17] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:17] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:17] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:17] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:17] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:17] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:17] INDEX.PHP REACHED
+[2026-07-30 11:49:17] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-30&checkout=2026-07-31 (Path: /rooms/checkAvailability)
+[2026-07-30 11:49:20] INDEX.PHP REACHED
+[2026-07-30 11:49:20] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:49:20] INDEX.PHP REACHED
+[2026-07-30 11:49:20] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:49:20] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:20] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:20] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:20] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:20] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:20] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:20] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:20] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:20] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:20] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:20] INDEX.PHP REACHED
+[2026-07-30 11:49:20] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-30&checkout=2026-07-31 (Path: /rooms/checkAvailability)
+[2026-07-30 11:49:20] INDEX.PHP REACHED
+[2026-07-30 11:49:20] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:49:20] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:20] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:20] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:20] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:20] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:20] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:20] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:20] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:20] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:20] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:21] INDEX.PHP REACHED
+[2026-07-30 11:49:21] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-30&checkout=2026-07-31 (Path: /rooms/checkAvailability)
+[2026-07-30 11:49:21] INDEX.PHP REACHED
+[2026-07-30 11:49:21] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:49:21] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:21] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:21] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:21] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:21] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:21] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:21] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:21] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:21] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:21] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:21] INDEX.PHP REACHED
+[2026-07-30 11:49:21] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-30&checkout=2026-07-31 (Path: /rooms/checkAvailability)
+[2026-07-30 11:49:21] INDEX.PHP REACHED
+[2026-07-30 11:49:21] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:49:21] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:21] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:21] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:21] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:21] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:21] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:21] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:21] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:21] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:21] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:21] INDEX.PHP REACHED
+[2026-07-30 11:49:21] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-30&checkout=2026-07-31 (Path: /rooms/checkAvailability)
+[2026-07-30 11:49:22] INDEX.PHP REACHED
+[2026-07-30 11:49:22] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:49:22] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:22] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:22] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:22] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:22] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:22] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:22] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:22] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:22] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:22] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:22] INDEX.PHP REACHED
+[2026-07-30 11:49:22] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-30&checkout=2026-07-31 (Path: /rooms/checkAvailability)
+[2026-07-30 11:49:22] INDEX.PHP REACHED
+[2026-07-30 11:49:22] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:49:22] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:22] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:22] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:22] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:22] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:22] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:22] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:22] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:22] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:22] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:22] INDEX.PHP REACHED
+[2026-07-30 11:49:22] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-30&checkout=2026-07-31 (Path: /rooms/checkAvailability)
+[2026-07-30 11:49:23] INDEX.PHP REACHED
+[2026-07-30 11:49:23] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:49:23] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:23] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:23] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:23] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:23] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:23] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:23] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:23] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:23] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:23] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:23] INDEX.PHP REACHED
+[2026-07-30 11:49:23] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-30&checkout=2026-07-31 (Path: /rooms/checkAvailability)
+[2026-07-30 11:49:37] INDEX.PHP REACHED
+[2026-07-30 11:49:37] REQUEST: GET /api/index.php/rooms/subRooms?category_id=5 (Path: /rooms/subRooms)
+[2026-07-30 11:49:37] INDEX.PHP REACHED
+[2026-07-30 11:49:37] REQUEST: GET /api/index.php/rooms/subRooms?category_id=5 (Path: /rooms/subRooms)
+[2026-07-30 11:49:50] INDEX.PHP REACHED
+[2026-07-30 11:49:50] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:49:50] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:50] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:50] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:50] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:50] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:50] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:50] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:50] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:50] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:50] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:50] INDEX.PHP REACHED
+[2026-07-30 11:49:50] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-30&checkout=2026-07-31 (Path: /rooms/checkAvailability)
+[2026-07-30 11:49:51] INDEX.PHP REACHED
+[2026-07-30 11:49:51] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:49:51] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:51] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:51] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:51] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:51] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:51] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:51] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:51] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:51] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:51] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:51] INDEX.PHP REACHED
+[2026-07-30 11:49:51] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-30&checkout=2026-07-31 (Path: /rooms/checkAvailability)
+[2026-07-30 11:49:51] INDEX.PHP REACHED
+[2026-07-30 11:49:51] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:49:51] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:51] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:51] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:51] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:51] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:51] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:51] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:51] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:51] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:51] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:51] INDEX.PHP REACHED
+[2026-07-30 11:49:51] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-30&checkout=2026-07-31 (Path: /rooms/checkAvailability)
+[2026-07-30 11:49:51] INDEX.PHP REACHED
+[2026-07-30 11:49:51] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:49:51] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:51] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:51] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:51] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:51] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:51] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:51] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:51] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:51] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:51] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:51] INDEX.PHP REACHED
+[2026-07-30 11:49:51] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-30&checkout=2026-07-31 (Path: /rooms/checkAvailability)
+[2026-07-30 11:49:52] INDEX.PHP REACHED
+[2026-07-30 11:49:52] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:49:52] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:52] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:52] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:52] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:52] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:52] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:52] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:52] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:52] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:52] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:52] INDEX.PHP REACHED
+[2026-07-30 11:49:52] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-30&checkout=2026-07-31 (Path: /rooms/checkAvailability)
+[2026-07-30 11:49:52] INDEX.PHP REACHED
+[2026-07-30 11:49:52] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:49:52] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:52] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:52] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:52] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:52] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:52] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:52] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:52] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:52] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:52] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:52] INDEX.PHP REACHED
+[2026-07-30 11:49:52] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-30&checkout=2026-07-31 (Path: /rooms/checkAvailability)
+[2026-07-30 11:49:54] INDEX.PHP REACHED
+[2026-07-30 11:49:54] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:49:54] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:54] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:54] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:54] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:54] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:54] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:54] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:54] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:54] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:54] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:54] INDEX.PHP REACHED
+[2026-07-30 11:49:54] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:49:54] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:54] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:54] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:54] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:54] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:54] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:54] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:54] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:54] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:54] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:54] INDEX.PHP REACHED
+[2026-07-30 11:49:54] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-30&checkout=2026-07-31 (Path: /rooms/checkAvailability)
+[2026-07-30 11:49:54] INDEX.PHP REACHED
+[2026-07-30 11:49:54] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-30&checkout=2026-07-31 (Path: /rooms/checkAvailability)
+[2026-07-30 11:49:59] INDEX.PHP REACHED
+[2026-07-30 11:49:59] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:49:59] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:59] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:59] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:59] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:59] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:59] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:59] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:59] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:59] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:49:59] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:49:59] INDEX.PHP REACHED
+[2026-07-30 11:49:59] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-30&checkout=2026-07-31 (Path: /rooms/checkAvailability)
+[2026-07-30 11:50:00] INDEX.PHP REACHED
+[2026-07-30 11:50:00] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:50:00] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:50:00] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:50:00] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:50:00] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:50:00] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:50:00] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:50:00] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:50:00] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:50:00] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:50:00] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:50:00] INDEX.PHP REACHED
+[2026-07-30 11:50:00] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-30&checkout=2026-07-31 (Path: /rooms/checkAvailability)
+[2026-07-30 11:50:03] INDEX.PHP REACHED
+[2026-07-30 11:50:03] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:50:03] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:50:03] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:50:03] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:50:03] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:50:03] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:50:03] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:50:03] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:50:03] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:50:03] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:50:03] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:50:03] INDEX.PHP REACHED
+[2026-07-30 11:50:03] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-30&checkout=2026-07-31 (Path: /rooms/checkAvailability)
+[2026-07-30 11:50:20] INDEX.PHP REACHED
+[2026-07-30 11:50:20] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:51:20] INDEX.PHP REACHED
+[2026-07-30 11:51:20] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:52:20] INDEX.PHP REACHED
+[2026-07-30 11:52:20] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:53:13] INDEX.PHP REACHED
+[2026-07-30 11:53:13] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:53:13] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:53:13] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:53:13] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:53:13] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:53:13] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:53:13] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:53:13] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:53:13] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:53:13] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:53:13] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:53:13] INDEX.PHP REACHED
+[2026-07-30 11:53:13] REQUEST: GET /api/index.php/rooms/checkAvailability?checkin=2026-07-30&checkout=2026-07-31 (Path: /rooms/checkAvailability)
+[2026-07-30 11:53:20] INDEX.PHP REACHED
+[2026-07-30 11:53:20] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:54:20] INDEX.PHP REACHED
+[2026-07-30 11:54:20] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:55:20] INDEX.PHP REACHED
+[2026-07-30 11:55:20] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-07-30 11:56:01] INDEX.PHP REACHED
+[2026-07-30 11:56:01] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:56:01] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:56:01] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:56:01] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:56:01] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:56:01] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:56:01] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:56:01] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:56:01] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:56:01] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:56:01] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:56:01] INDEX.PHP REACHED
+[2026-07-30 11:56:01] REQUEST: GET /api/index.php/settings (Path: /settings)
+[2026-07-30 11:56:01] INDEX.PHP REACHED
+[2026-07-30 11:56:01] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:56:01] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:56:01] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:56:01] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:56:01] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:56:01] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:56:01] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:56:01] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:56:01] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:56:01] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:56:01] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:56:01] INDEX.PHP REACHED
+[2026-07-30 11:56:01] REQUEST: GET /api/index.php/settings (Path: /settings)
+[2026-07-30 11:56:01] INDEX.PHP REACHED
+[2026-07-30 11:56:01] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:56:01] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:56:01] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:56:01] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:56:01] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:56:01] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:56:01] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:56:01] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:56:01] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:56:01] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:56:01] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:56:01] INDEX.PHP REACHED
+[2026-07-30 11:56:01] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-07-30 11:56:01] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:56:01] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:56:01] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:56:01] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:56:01] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:56:01] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:56:01] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:56:01] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:56:01] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-07-30 11:56:01] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-07-30 11:56:20] INDEX.PHP REACHED
+[2026-07-30 11:56:20] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)

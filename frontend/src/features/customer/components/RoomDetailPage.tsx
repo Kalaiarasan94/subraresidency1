@@ -226,7 +226,7 @@ export const RoomDetailPage: React.FC<Props> = ({ room, onBack, onBook, searchFi
   const galleryImages = rawGallery.length > 0 ? rawGallery : [mainImage];
 
   // Specs
-  const adults = room.adults || room.max_adults || 2;
+  const maxGuests = room.max_guests || room.adults || room.max_adults || 2;
   const kids = room.children || room.max_children || 0;
   const bedType = room.bed_type || room.details?.bed || 'King Size Premium';
   const size = room.size || room.room_size || '450';
@@ -324,7 +324,7 @@ export const RoomDetailPage: React.FC<Props> = ({ room, onBack, onBook, searchFi
               <div className="space-y-2">
                 <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-catalogue-gold"><User size={20} /></div>
                 <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Capacity</p>
-                <p className="text-sm font-bold text-catalogue-green font-sans tabular-nums">{adults} Guests + {kids} Kids</p>
+                <p className="text-sm font-bold text-catalogue-green font-sans tabular-nums">{maxGuests} Guests + {kids} Kids</p>
               </div>
               <div className="space-y-2">
                 <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-catalogue-gold"><Bed size={20} /></div>
@@ -454,7 +454,7 @@ export const RoomDetailPage: React.FC<Props> = ({ room, onBack, onBook, searchFi
                     </div>
                      <div className="space-y-1">
                       <p className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">Guests</p>
-                      <p className="text-xs font-bold text-slate-800 font-sans tabular-nums">{adults} Guests + {kids} Kids</p>
+                      <p className="text-xs font-bold text-slate-800 font-sans tabular-nums">{maxGuests} Guests + {kids} Kids</p>
                     </div>
 
                     <div className="mt-4">
