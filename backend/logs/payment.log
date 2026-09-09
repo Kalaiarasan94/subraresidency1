@@ -25417,3 +25417,316 @@ Stack trace:
 [2026-08-04 09:04:36] Email sent successfully to bhalaramsembu@gmail.com
 [2026-08-04 09:04:36] INDEX.PHP REACHED
 [2026-08-04 09:04:36] REQUEST: GET /api/index.php/bookings/view?booking_id=HBK20260804D61D (Path: /bookings/view)
+[2026-08-04 09:38:14] Database Connection error: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it
+[2026-08-04 09:38:18] Database Connection error: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it
+[2026-08-04 09:38:19] [Mailer WARN] Brevo REST API returned HTTP 401: {"message":"Key not found","code":"unauthorized"}
+. Trying Brevo SMTP...
+[2026-08-04 09:38:20] [Mailer SMTP AUTH] 535 5.7.8 Authentication failed
+[2026-08-04 09:38:21] [Mailer SMTP AUTH] 535 5.7.8 Authentication failed
+[2026-08-04 09:38:21] [Mailer SMTP AUTH] 535 5.7.8 Authentication failed
+[2026-08-04 09:38:21] [Mailer] Attempting native PHP mail fallback for bhalaramsembu@gmail.com...
+[2026-08-04 09:38:24] [Mailer ERROR] All delivery methods (Brevo API, Brevo SMTP, PHP Mail) failed for bhalaramsembu@gmail.com
+[2026-08-04 09:39:19] Database Connection error: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it
+[2026-08-04 09:39:23] Database Connection error: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it
+[2026-08-04 09:39:24] [Mailer WARN] Brevo REST API returned HTTP 401: {"message":"Key not found","code":"unauthorized"}
+. Trying Brevo SMTP...
+[2026-08-04 09:39:24] [Mailer SMTP AUTH] 535 5.7.8 Authentication failed
+[2026-08-04 09:39:25] [Mailer SMTP AUTH] 535 5.7.8 Authentication failed
+[2026-08-04 09:39:26] [Mailer SMTP AUTH] 535 5.7.8 Authentication failed
+[2026-08-04 09:39:26] [Mailer] Attempting native PHP mail fallback for bhalaramsembu@gmail.com...
+[2026-08-04 09:39:28] [Mailer ERROR] All delivery methods (Brevo API, Brevo SMTP, PHP Mail) failed for bhalaramsembu@gmail.com
+[2026-08-04 09:41:48] INDEX.PHP REACHED
+[2026-08-04 09:41:48] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 09:41:52] Database Connection error: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it
+[2026-08-04 09:41:52] Fatal Error: Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php:41
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(60): RoomController->getCategories()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 41
+[2026-08-04 09:41:52] INDEX.PHP REACHED
+[2026-08-04 09:41:52] REQUEST: GET /api/index.php/settings (Path: /settings)
+[2026-08-04 09:41:56] Database Connection error: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it
+[2026-08-04 09:41:56] Fatal Error: Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\subraresidency1\backend\models\Settings.php:14
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\controllers\SettingsController.php(22): Settings->getAll()
+#1 C:\xampp\htdocs\subraresidency1\backend\api\index.php(194): SettingsController->getAllSettings()
+#2 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\models\Settings.php on line 14
+[2026-08-04 09:41:56] INDEX.PHP REACHED
+[2026-08-04 09:41:56] REQUEST: GET /api/index.php/rooms/availabilityList?room_id=super-deluxe&start=2026-08-04&end=2026-08-17&_cb=1785829311196 (Path: /rooms/availabilityList)
+[2026-08-04 09:42:00] Database Connection error: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it
+[2026-08-04 09:42:04] Database Connection error: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it
+[2026-08-04 09:42:04] Fatal Error: Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\subraresidency1\backend\api\admin\rooms\availability_list.php:39
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(90): include_once()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\api\admin\rooms\availability_list.php on line 39
+[2026-08-04 09:42:04] INDEX.PHP REACHED
+[2026-08-04 09:42:04] REQUEST: GET /api/index.php/rooms/availabilityList?room_id=super-deluxe&start=2026-08-04&end=2026-08-17&_cb=1785829311198 (Path: /rooms/availabilityList)
+[2026-08-04 09:42:08] Database Connection error: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it
+[2026-08-04 09:42:12] Database Connection error: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it
+[2026-08-04 09:42:12] Fatal Error: Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\subraresidency1\backend\api\admin\rooms\availability_list.php:39
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(90): include_once()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\api\admin\rooms\availability_list.php on line 39
+[2026-08-04 09:42:12] INDEX.PHP REACHED
+[2026-08-04 09:42:12] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 09:42:16] Database Connection error: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it
+[2026-08-04 09:42:16] Fatal Error: Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php:41
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(60): RoomController->getCategories()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 41
+[2026-08-04 09:42:16] INDEX.PHP REACHED
+[2026-08-04 09:42:16] REQUEST: GET /api/index.php/settings (Path: /settings)
+[2026-08-04 09:42:21] Database Connection error: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it
+[2026-08-04 09:42:21] Fatal Error: Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\subraresidency1\backend\models\Settings.php:14
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\controllers\SettingsController.php(22): Settings->getAll()
+#1 C:\xampp\htdocs\subraresidency1\backend\api\index.php(194): SettingsController->getAllSettings()
+#2 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\models\Settings.php on line 14
+[2026-08-04 09:42:21] INDEX.PHP REACHED
+[2026-08-04 09:42:21] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 09:42:25] Database Connection error: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it
+[2026-08-04 09:42:25] Fatal Error: Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php:41
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(60): RoomController->getCategories()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 41
+[2026-08-04 09:42:25] INDEX.PHP REACHED
+[2026-08-04 09:42:25] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 09:42:29] Database Connection error: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it
+[2026-08-04 09:42:29] Fatal Error: Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php:41
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(60): RoomController->getCategories()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 41
+[2026-08-04 09:42:29] INDEX.PHP REACHED
+[2026-08-04 09:42:29] INDEX.PHP REACHED
+[2026-08-04 09:42:29] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 09:42:33] Database Connection error: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it
+[2026-08-04 09:42:33] Fatal Error: Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php:41
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(60): RoomController->getCategories()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 41
+[2026-08-04 09:42:33] INDEX.PHP REACHED
+[2026-08-04 09:42:33] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 09:42:37] Database Connection error: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it
+[2026-08-04 09:42:37] Fatal Error: Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php:41
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(60): RoomController->getCategories()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 41
+[2026-08-04 09:42:37] INDEX.PHP REACHED
+[2026-08-04 09:42:37] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 09:42:41] Database Connection error: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it
+[2026-08-04 09:42:41] Fatal Error: Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php:41
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(60): RoomController->getCategories()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 41
+[2026-08-04 09:42:41] INDEX.PHP REACHED
+[2026-08-04 09:42:41] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 09:42:45] Database Connection error: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it
+[2026-08-04 09:42:45] Fatal Error: Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php:41
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(60): RoomController->getCategories()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 41
+[2026-08-04 09:42:45] INDEX.PHP REACHED
+[2026-08-04 09:42:45] REQUEST: GET /api/index.php/settings (Path: /settings)
+[2026-08-04 09:42:49] Database Connection error: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it
+[2026-08-04 09:42:49] Fatal Error: Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\subraresidency1\backend\models\Settings.php:14
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\controllers\SettingsController.php(22): Settings->getAll()
+#1 C:\xampp\htdocs\subraresidency1\backend\api\index.php(194): SettingsController->getAllSettings()
+#2 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\models\Settings.php on line 14
+[2026-08-04 09:42:49] INDEX.PHP REACHED
+[2026-08-04 09:42:49] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 09:42:53] Database Connection error: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it
+[2026-08-04 09:42:53] Fatal Error: Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php:41
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(60): RoomController->getCategories()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 41
+[2026-08-04 09:42:53] INDEX.PHP REACHED
+[2026-08-04 09:42:53] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 09:42:57] Database Connection error: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it
+[2026-08-04 09:42:57] Fatal Error: Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php:41
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(60): RoomController->getCategories()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 41
+[2026-08-04 09:42:57] INDEX.PHP REACHED
+[2026-08-04 09:42:57] REQUEST: GET /api/index.php/settings (Path: /settings)
+[2026-08-04 09:43:01] Database Connection error: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it
+[2026-08-04 09:43:01] Fatal Error: Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\subraresidency1\backend\models\Settings.php:14
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\controllers\SettingsController.php(22): Settings->getAll()
+#1 C:\xampp\htdocs\subraresidency1\backend\api\index.php(194): SettingsController->getAllSettings()
+#2 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\models\Settings.php on line 14
+[2026-08-04 09:43:01] INDEX.PHP REACHED
+[2026-08-04 09:43:01] REQUEST: POST /api/index.php/bookings/create (Path: /bookings/create)
+[2026-08-04 09:43:05] Database Connection error: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it
+[2026-08-04 09:43:05] Fatal Error: Uncaught Error: Call to a member function beginTransaction() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\BookingController.php:23
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(123): BookingController->create()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\BookingController.php on line 23
+[2026-08-04 09:44:11] INDEX.PHP REACHED
+[2026-08-04 09:44:11] INDEX.PHP REACHED
+[2026-08-04 09:44:11] REQUEST: POST /api/index.php/bookings/create (Path: /bookings/create)
+[2026-08-04 09:44:15] Database Connection error: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it
+[2026-08-04 09:44:15] Fatal Error: Uncaught Error: Call to a member function beginTransaction() on null in C:\xampp\htdocs\subraresidency1\backend\controllers\BookingController.php:23
+Stack trace:
+#0 C:\xampp\htdocs\subraresidency1\backend\api\index.php(123): BookingController->create()
+#1 {main}
+  thrown in C:\xampp\htdocs\subraresidency1\backend\controllers\BookingController.php on line 23
+[2026-08-04 09:45:14] [Mailer WARN] Brevo REST API returned HTTP 401: {"message":"Key not found","code":"unauthorized"}
+. Trying Brevo SMTP...
+[2026-08-04 09:45:15] [Mailer SMTP AUTH] 535 5.7.8 Authentication failed
+[2026-08-04 09:45:15] [Mailer SMTP AUTH] 535 5.7.8 Authentication failed
+[2026-08-04 09:45:16] [Mailer SMTP AUTH] 535 5.7.8 Authentication failed
+[2026-08-04 09:45:16] [Mailer] Attempting native PHP mail fallback for bhalaramsembu@gmail.com...
+[2026-08-04 09:45:18] [Mailer ERROR] All delivery methods (Brevo API, Brevo SMTP, PHP Mail) failed for bhalaramsembu@gmail.com
+[2026-08-04 09:46:25] INDEX.PHP REACHED
+[2026-08-04 09:46:25] INDEX.PHP REACHED
+[2026-08-04 09:46:25] REQUEST: POST /api/index.php/bookings/create (Path: /bookings/create)
+[2026-08-04 09:46:25] INDEX.PHP REACHED
+[2026-08-04 09:46:25] INDEX.PHP REACHED
+[2026-08-04 09:46:25] REQUEST: POST /api/index.php/payments/createOrder (Path: /payments/createOrder)
+[2026-08-04 09:46:25] CRITICAL: create_order.php reached!
+[2026-08-04 09:46:25] CRITICAL: Input: {"booking_id":"HBK20260804661F","amount":5850}
+[2026-08-04 09:46:25] RAZORPAY RESPONSE (HTTP 401): {"error":{"description":"Authentication failed","code":"BAD_REQUEST_ERROR"}} | cURL Error: NONE
+[2026-08-04 09:46:25] NOTICE: Using simulated payment order fallback due to Razorpay HTTP 401 auth response.
+[2026-08-04 09:46:25] INDEX.PHP REACHED
+[2026-08-04 09:46:25] INDEX.PHP REACHED
+[2026-08-04 09:46:25] REQUEST: POST /api/index.php/payments/verify (Path: /payments/verify)
+[2026-08-04 09:46:25] Verification request for booking: HBK20260804661F
+[2026-08-04 09:46:25] Booking HBK20260804661F successfully confirmed in database.
+[2026-08-04 09:46:26] [Mailer WARN] Brevo REST API returned HTTP 401: {"message":"Key not found","code":"unauthorized"}
+. Trying Brevo SMTP...
+[2026-08-04 09:46:27] [Mailer SMTP AUTH] 535 5.7.8 Authentication failed
+[2026-08-04 09:46:28] [Mailer SMTP AUTH] 535 5.7.8 Authentication failed
+[2026-08-04 09:46:30] [Mailer SMTP AUTH] 535 5.7.8 Authentication failed
+[2026-08-04 09:46:30] [Mailer] Attempting native PHP mail fallback for inworaaimstorm43@gmail.com...
+[2026-08-04 09:46:32] [Mailer ERROR] All delivery methods (Brevo API, Brevo SMTP, PHP Mail) failed for inworaaimstorm43@gmail.com
+[2026-08-04 09:46:32] Email failed to send to inworaaimstorm43@gmail.com
+[2026-08-04 09:46:32] INDEX.PHP REACHED
+[2026-08-04 09:46:32] REQUEST: GET /api/index.php/bookings/view?booking_id=HBK20260804661F (Path: /bookings/view)
+[2026-08-04 09:48:19] [Mailer WARN] Brevo REST API returned HTTP 401: {"message":"Key not found","code":"unauthorized"}
+. Trying Brevo SMTP...
+[2026-08-04 09:48:20] [Mailer SMTP AUTH] 535 5.7.8 Authentication failed
+[2026-08-04 09:48:21] [Mailer SMTP AUTH] 535 5.7.8 Authentication failed
+[2026-08-04 09:48:22] [Mailer SMTP AUTH] 535 5.7.8 Authentication failed
+[2026-08-04 09:48:22] [Mailer] Attempting native PHP mail fallback for bhalaramsembu@gmail.com...
+[2026-08-04 09:48:24] [Mailer ERROR] All delivery methods (Brevo API, Brevo SMTP, PHP Mail) failed for bhalaramsembu@gmail.com
+[2026-08-04 09:51:59] INDEX.PHP REACHED
+[2026-08-04 09:51:59] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 09:51:59] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-08-04 09:51:59] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-08-04 09:51:59] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-08-04 09:51:59] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-08-04 09:51:59] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-08-04 09:51:59] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-08-04 09:51:59] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-08-04 09:51:59] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-08-04 09:51:59] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-08-04 09:51:59] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-08-04 09:51:59] INDEX.PHP REACHED
+[2026-08-04 09:51:59] REQUEST: GET /api/index.php/settings (Path: /settings)
+[2026-08-04 09:51:59] INDEX.PHP REACHED
+[2026-08-04 09:51:59] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 09:51:59] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-08-04 09:51:59] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-08-04 09:51:59] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-08-04 09:51:59] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-08-04 09:51:59] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-08-04 09:51:59] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-08-04 09:51:59] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-08-04 09:51:59] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-08-04 09:51:59] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-08-04 09:51:59] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-08-04 09:51:59] INDEX.PHP REACHED
+[2026-08-04 09:51:59] REQUEST: GET /api/index.php/settings (Path: /settings)
+[2026-08-04 09:51:59] INDEX.PHP REACHED
+[2026-08-04 09:51:59] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 09:51:59] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-08-04 09:51:59] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-08-04 09:51:59] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-08-04 09:51:59] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-08-04 09:51:59] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-08-04 09:51:59] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-08-04 09:51:59] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-08-04 09:51:59] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-08-04 09:51:59] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-08-04 09:51:59] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-08-04 09:51:59] INDEX.PHP REACHED
+[2026-08-04 09:51:59] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 09:51:59] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-08-04 09:51:59] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-08-04 09:51:59] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-08-04 09:51:59] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-08-04 09:51:59] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-08-04 09:51:59] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-08-04 09:51:59] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-08-04 09:51:59] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-08-04 09:51:59] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-08-04 09:51:59] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-08-04 09:52:02] INDEX.PHP REACHED
+[2026-08-04 09:52:02] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 09:52:02] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-08-04 09:52:02] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-08-04 09:52:02] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-08-04 09:52:02] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-08-04 09:52:02] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-08-04 09:52:02] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-08-04 09:52:02] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-08-04 09:52:02] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-08-04 09:52:02] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-08-04 09:52:02] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-08-04 09:52:02] INDEX.PHP REACHED
+[2026-08-04 09:52:02] REQUEST: GET /api/index.php/settings (Path: /settings)
+[2026-08-04 09:52:02] INDEX.PHP REACHED
+[2026-08-04 09:52:02] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 09:52:02] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-08-04 09:52:02] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-08-04 09:52:02] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-08-04 09:52:02] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-08-04 09:52:02] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-08-04 09:52:02] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-08-04 09:52:02] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-08-04 09:52:02] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-08-04 09:52:03] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-08-04 09:52:03] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-08-04 09:52:03] INDEX.PHP REACHED
+[2026-08-04 09:52:03] REQUEST: GET /api/index.php/settings (Path: /settings)
+[2026-08-04 09:52:03] INDEX.PHP REACHED
+[2026-08-04 09:52:03] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 09:52:03] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-08-04 09:52:03] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-08-04 09:52:03] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-08-04 09:52:03] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-08-04 09:52:03] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-08-04 09:52:03] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-08-04 09:52:03] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-08-04 09:52:03] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-08-04 09:52:03] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-08-04 09:52:03] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-08-04 09:52:03] INDEX.PHP REACHED
+[2026-08-04 09:52:03] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-08-04 09:52:03] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-08-04 09:52:03] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-08-04 09:52:03] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-08-04 09:52:03] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-08-04 09:52:03] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-08-04 09:52:03] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-08-04 09:52:03] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-08-04 09:52:03] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-08-04 09:52:03] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
+[2026-08-04 09:52:03] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
