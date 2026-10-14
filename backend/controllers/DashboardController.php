@@ -3,6 +3,11 @@
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With, Cache-Control, cache-control, Pragma, Expires, *");
+header("Cache-Control: no-cache, no-store, must-revalidate");
+header("Pragma: no-cache");
+header("Expires: 0");
 
 include_once __DIR__ . '/../config/db.php';
 
@@ -407,4 +412,36 @@ class DashboardController
             echo json_encode(["status" => "error", "message" => $e->getMessage()]);
         }
     }
+
+    public function clearBookingData()
+    {
+        try {
+            $this->db->exec("SET FOREIGN_KEY_CHECKS = 0;");
+            $this->db->exec("DELETE FROM `booking_details`;");
+            $this->db->exec("ALTER TABLE `booking_details` AUTO_INCREMENT = 1;");
+            $this->db->exec("DELETE FROM `booking_rooms`;");
+            $this->db->exec("ALTER TABLE `booking_rooms` AUTO_INCREMENT = 1;");
+            $this->db->exec("DELETE FROM `payments`;");
+            $this->db->exec("ALTER TABLE `payments` AUTO_INCREMENT = 1;");
+            $this->db->exec("DELETE FROM `qr_codes`;");
+            $this->db->exec("ALTER TABLE `qr_codes` AUTO_INCREMENT = 1;");
+            $this->db->exec("DELETE FROM `receptionist_notifications`;");
+            $this->db->exec("ALTER TABLE `receptionist_notifications` AUTO_INCREMENT = 1;");
+            $this->db->exec("DELETE FROM `room_availability`;");
+            $this->db->exec("ALTER TABLE `room_availability` AUTO_INCREMENT = 1;");
+            $this->db->exec("DELETE FROM `bookings`;");
+            $this->db->exec("ALTER TABLE `bookings` AUTO_INCREMENT = 1;");
+            $this->db->exec("DELETE FROM `users`;");
+            $this->db->exec("ALTER TABLE `users` AUTO_INCREMENT = 1;");
+            $this->db->exec("UPDATE `rooms_new` SET `status` = 'Available' WHERE `status` = 'Occupied';");
+            $this->db->exec("UPDATE `rooms` SET `status` = 'available' WHERE `status` = 'occupied';");
+            $this->db->exec("SET FOREIGN_KEY_CHECKS = 1;");
+
+            echo json_encode(['status' => 'success', 'message' => 'All customer booking data cleared successfully.']);
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode(["status" => "error", "message" => $e->getMessage()]);
+        }
+    }
 }
+

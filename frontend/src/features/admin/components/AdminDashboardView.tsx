@@ -78,6 +78,7 @@ interface DashboardStats {
     id: number;
     number: string;
     status: string;
+    category?: string;
   }>;
 }
 
@@ -101,7 +102,10 @@ export const AdminDashboardView = ({
 
   const fetchData = async () => {
      try {
-       const resp = await fetch(`${API_BASE_URL}/dashboard/admin`);
+       const resp = await fetch(`${API_BASE_URL}/dashboard/admin?_t=${Date.now()}`, {
+         cache: 'no-store',
+         headers: { 'Cache-Control': 'no-cache, no-store, must-revalidate', 'Pragma': 'no-cache' }
+       });
        const json = await resp.json();
        if (json.status === 'success') {
          setData(json.data);
@@ -111,6 +115,26 @@ export const AdminDashboardView = ({
      } finally {
        setLoading(false);
      }
+  };
+
+  const handleClearData = async () => {
+    if (window.confirm("ARE YOU SURE?\nThis will permanently delete all customer bookings, guest history, payments, and financial transaction records from the live database.")) {
+      try {
+        setLoading(true);
+        const resp = await fetch(`${API_BASE_URL}/dashboard/clearData`);
+        const json = await resp.json();
+        if (json.status === 'success') {
+          alert("All customer booking and transaction data has been cleared!");
+          await fetchData();
+        } else {
+          alert("Error clearing data: " + (json.message || "Unknown error"));
+          setLoading(false);
+        }
+      } catch (e: any) {
+        alert("Failed to connect to clearData endpoint: " + e.message);
+        setLoading(false);
+      }
+    }
   };
 
   if (loading) return (
@@ -816,6 +840,13 @@ export const AdminDashboardView = ({
                icon={Shield}
                links={['Database Backup', 'System Logs', 'Activity Logs', 'Security Settings']}
                action="Manage Security"
+             />
+             <SettingsGroup 
+               title="Database Reset"
+               icon={X}
+               links={['Clear Bookings', 'Clear Payments', 'Clear Guest Directory', 'Reset Live Inventory']}
+               action="RESET ALL BOOKING DATA"
+               onActionClick={handleClearData}
              />
           </div>
         </div>
