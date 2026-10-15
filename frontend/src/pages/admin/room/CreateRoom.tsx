@@ -181,184 +181,384 @@ export const CreateRoom: React.FC<CreateRoomProps> = ({ initialData, onSuccess, 
   };
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden font-sans">
-      <div className="p-8 border-b border-slate-100 bg-slate-50/50 flex justify-between items-center">
-        <div>
-          <h1 className="text-2xl font-bold text-slate-900">{isEditMode ? 'Edit Configuration' : 'New Room Configuration'}</h1>
-          <p className="text-sm text-slate-500 font-medium">Step {currentStep} of {STEPS.length}: {STEPS[currentStep-1].title}</p>
-        </div>
-        <div className="flex gap-2">
-          {STEPS.map(s => (
-            <div key={s.id} className={`w-2 h-2 rounded-full ${currentStep === s.id ? 'bg-emerald-600 w-6' : currentStep > s.id ? 'bg-emerald-200' : 'bg-slate-200'} transition-all`} />
-          ))}
+    <div className="crm-card bg-white border border-gray-200 rounded-lg shadow-xs overflow-hidden font-sans">
+      {/* Card Header & Stepper */}
+      <div className="px-6 py-5 border-b border-gray-200 bg-white">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h1 className="text-lg font-semibold text-gray-900 tracking-tight">
+              {isEditMode ? 'Edit Room Configuration' : 'New Room Configuration'}
+            </h1>
+            <p className="text-xs text-gray-500 mt-0.5">
+              Step {currentStep} of {STEPS.length}: {STEPS[currentStep - 1].title}
+            </p>
+          </div>
+
+          {/* Stepper Navigation */}
+          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 max-w-full">
+            {STEPS.map((s) => {
+              const isActive = currentStep === s.id;
+              const isPast = currentStep > s.id;
+              const Icon = s.icon;
+              return (
+                <div
+                  key={s.id}
+                  onClick={() => {
+                    if (isPast) setCurrentStep(s.id);
+                  }}
+                  className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium transition-colors whitespace-nowrap ${
+                    isActive
+                      ? 'bg-emerald-50 text-emerald-700 border border-emerald-300'
+                      : isPast
+                      ? 'text-gray-700 hover:bg-gray-100 cursor-pointer'
+                      : 'text-gray-400'
+                  }`}
+                >
+                  <span className={`w-4 h-4 rounded-full flex items-center justify-center text-[10px] font-semibold ${
+                    isActive ? 'bg-emerald-600 text-white' : isPast ? 'bg-gray-200 text-gray-700' : 'bg-gray-100 text-gray-400'
+                  }`}>
+                    {s.id}
+                  </span>
+                  <span>{s.title}</span>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="p-10">
-        <div className="min-h-[400px]">
+      <form onSubmit={handleSubmit(onSubmit)} className="p-6 md:p-8">
+        <div className="min-h-[360px]">
+          {/* Step 1: Identity */}
           {currentStep === 1 && (
-            <div className="space-y-6 animate-in slide-in-from-right-4">
-              <div className="grid grid-cols-2 gap-8">
-                <div className="space-y-2">
-                  <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">Category Name</label>
-                  <input {...register('room_name', { required: true })} className="w-full border border-slate-200 p-4 rounded-xl outline-none focus:border-emerald-600 bg-slate-50" placeholder="e.g. Heritage Suite" />
+            <div className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div className="space-y-1.5">
+                  <label className="text-xs font-semibold text-gray-700">Category Name <span className="text-rose-500">*</span></label>
+                  <input 
+                    {...register('room_name', { required: true })} 
+                    className="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-xs text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 shadow-xs" 
+                    placeholder="e.g. Heritage Luxury Suite" 
+                  />
                 </div>
-                <div className="space-y-2">
-                  <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">Internal ID Code</label>
-                  <input {...register('room_code')} className="w-full border border-slate-200 p-4 rounded-xl outline-none bg-slate-50" placeholder="SR-101" />
+                <div className="space-y-1.5">
+                  <label className="text-xs font-semibold text-gray-700">Internal ID Code</label>
+                  <input 
+                    {...register('room_code')} 
+                    className="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-xs text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 shadow-xs" 
+                    placeholder="e.g. SR-101" 
+                  />
                 </div>
                 {!isEditMode && (
-                  <div className="space-y-2">
-                    <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">Number of Physical Rooms</label>
+                  <div className="space-y-1.5 md:col-span-2 max-w-sm">
+                    <label className="text-xs font-semibold text-gray-700">Number of Physical Rooms</label>
                     <input
                       type="number"
                       min={1}
                       max={50}
                       value={subRoomCount}
                       onChange={(e) => handleSubRoomCountChange(parseInt(e.target.value, 10))}
-                      className="w-full border border-slate-200 p-4 rounded-xl outline-none focus:border-emerald-600 bg-slate-50"
+                      className="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-xs text-gray-900 focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 shadow-xs"
                     />
-                    <p className="text-[10px] text-slate-400">How many actual physical rooms exist under this category (e.g. 5).</p>
+                    <p className="text-[11px] text-gray-400">Total physical room units under this category to initialize.</p>
                   </div>
                 )}
               </div>
 
               {!isEditMode && (
-                <div className="space-y-3 pt-2">
-                  <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">Room Numbers ({roomNumbers.length})</label>
-                  <div className="grid grid-cols-3 gap-4">
+                <div className="space-y-2 pt-2 border-t border-gray-100">
+                  <label className="text-xs font-semibold text-gray-700">
+                    Room Numbers ({roomNumbers.length} units)
+                  </label>
+                  <p className="text-[11px] text-gray-400">
+                    Assign a distinct room identifier (e.g. 101, 102, SD-01...) for each physical unit.
+                  </p>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 pt-1">
                     {roomNumbers.map((num, idx) => (
-                      <input
-                        key={idx}
-                        value={num}
-                        onChange={(e) => {
-                          const next = [...roomNumbers];
-                          next[idx] = e.target.value;
-                          setRoomNumbers(next);
-                        }}
-                        placeholder={`Room ${idx + 1} number`}
-                        className="w-full border border-slate-200 p-3 rounded-xl outline-none focus:border-emerald-600 bg-slate-50 text-sm"
-                      />
+                      <div key={idx} className="relative">
+                        <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[10px] font-semibold text-gray-400 pointer-events-none">
+                          #{idx + 1}
+                        </span>
+                        <input
+                          value={num}
+                          onChange={(e) => {
+                            const next = [...roomNumbers];
+                            next[idx] = e.target.value;
+                            setRoomNumbers(next);
+                          }}
+                          placeholder={`Unit ${idx + 1}`}
+                          className="w-full bg-white border border-gray-300 rounded-lg pl-7 pr-2.5 py-1.5 text-xs text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 shadow-xs"
+                        />
+                      </div>
                     ))}
                   </div>
-                  <p className="text-[10px] text-slate-400">Each entry becomes a bookable physical room (e.g. SD-01, SD-02...) under this category.</p>
                 </div>
               )}
             </div>
           )}
 
+          {/* Step 2: Rates */}
           {currentStep === 2 && (
-            <div className="space-y-6 animate-in slide-in-from-right-4">
-               <div className="grid grid-cols-2 gap-8">
-                <div className="space-y-2">
-                  <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">Base Rate (₹)</label>
-                  <input type="number" {...register('base_price', { required: true })} className="w-full border border-slate-200 p-4 rounded-xl outline-none focus:border-emerald-600 text-emerald-600 font-bold text-xl" />
+            <div className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div className="space-y-1.5">
+                  <label className="text-xs font-semibold text-gray-700">Base Price (24h) <span className="text-rose-500">*</span></label>
+                  <div className="relative">
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs">₹</span>
+                    <input 
+                      type="number" 
+                      {...register('base_price', { required: true })} 
+                      className="w-full bg-white border border-gray-300 rounded-lg pl-7 pr-3 py-2 text-xs font-semibold text-gray-900 focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 shadow-xs" 
+                      placeholder="3500"
+                    />
+                  </div>
+                  <p className="text-[11px] text-gray-400">Standard 24-hour night tariff.</p>
                 </div>
-                <div className="space-y-2">
-                  <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">Weekend Surcharge (₹)</label>
-                  <input type="number" {...register('weekend_price')} className="w-full border border-slate-200 p-4 rounded-xl outline-none" />
+
+                <div className="space-y-1.5">
+                  <label className="text-xs font-semibold text-gray-700">12-Hour Transit Rate</label>
+                  <div className="relative">
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs">₹</span>
+                    <input 
+                      type="number" 
+                      {...register('price_12_hours')} 
+                      className="w-full bg-white border border-gray-300 rounded-lg pl-7 pr-3 py-2 text-xs text-gray-900 focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 shadow-xs" 
+                      placeholder="2200"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-1.5">
+                  <label className="text-xs font-semibold text-gray-700">Weekend Surcharge</label>
+                  <div className="relative">
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs">₹</span>
+                    <input 
+                      type="number" 
+                      {...register('weekend_price')} 
+                      className="w-full bg-white border border-gray-300 rounded-lg pl-7 pr-3 py-2 text-xs text-gray-900 focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 shadow-xs" 
+                      placeholder="500"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-1.5">
+                  <label className="text-xs font-semibold text-gray-700">Festival / Peak Surcharge</label>
+                  <div className="relative">
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs">₹</span>
+                    <input 
+                      type="number" 
+                      {...register('festival_price')} 
+                      className="w-full bg-white border border-gray-300 rounded-lg pl-7 pr-3 py-2 text-xs text-gray-900 focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 shadow-xs" 
+                      placeholder="1000"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
           )}
 
+          {/* Step 3: Specs */}
           {currentStep === 3 && (
-            <div className="space-y-6 animate-in slide-in-from-right-4">
-              <div className="grid grid-cols-3 gap-6">
-                <div className="space-y-2">
-                  <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">Max Adults</label>
-                  <input type="number" {...register('max_adults')} className="w-full border border-slate-200 p-4 rounded-xl text-center font-bold" />
+            <div className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                <div className="space-y-1.5">
+                  <label className="text-xs font-semibold text-gray-700">Max Adults</label>
+                  <input 
+                    type="number" 
+                    {...register('max_adults')} 
+                    className="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-xs text-gray-900 focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 shadow-xs" 
+                    defaultValue={2}
+                  />
                 </div>
-                <div className="space-y-2">
-                  <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">Bed Type</label>
-                  <select {...register('bed_type')} className="w-full border border-slate-200 p-4 rounded-xl">
+                <div className="space-y-1.5">
+                  <label className="text-xs font-semibold text-gray-700">Max Children</label>
+                  <input 
+                    type="number" 
+                    {...register('max_children')} 
+                    className="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-xs text-gray-900 focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 shadow-xs" 
+                    defaultValue={1}
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <label className="text-xs font-semibold text-gray-700">Total Max Occupancy</label>
+                  <input 
+                    type="number" 
+                    {...register('max_guests')} 
+                    className="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-xs text-gray-900 focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 shadow-xs" 
+                    defaultValue={3}
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <label className="text-xs font-semibold text-gray-700">Bed Type</label>
+                  <select 
+                    {...register('bed_type')} 
+                    className="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-xs text-gray-900 focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 shadow-xs"
+                  >
                     <option value="King Size">King Size</option>
                     <option value="Queen Size">Queen Size</option>
+                    <option value="Twin Beds">Twin Beds</option>
                     <option value="Double Bed">Double Bed</option>
                   </select>
                 </div>
-                <div className="space-y-2">
-                  <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">Size (sqft)</label>
-                  <input {...register('room_size')} className="w-full border border-slate-200 p-4 rounded-xl" placeholder="450" />
+                <div className="space-y-1.5">
+                  <label className="text-xs font-semibold text-gray-700">Room Size (sqft)</label>
+                  <input 
+                    {...register('room_size')} 
+                    className="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-xs text-gray-900 focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 shadow-xs" 
+                    placeholder="350 sq.ft" 
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <label className="text-xs font-semibold text-gray-700">Floor Number</label>
+                  <input 
+                    type="number"
+                    {...register('floor_number')} 
+                    className="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-xs text-gray-900 focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 shadow-xs" 
+                    defaultValue={1}
+                  />
                 </div>
               </div>
             </div>
           )}
 
+          {/* Step 4: Features */}
           {currentStep === 4 && (
-            <div className="space-y-6 animate-in slide-in-from-right-4">
-               <div className="grid grid-cols-2 gap-x-12 gap-y-6 p-6 bg-slate-50 rounded-2xl border border-slate-100">
-                  {['WiFi', 'TV', 'Mini Fridge', 'AC', 'Balcony', 'Rain Shower', 'Room Service', 'Workspace'].map(item => (
-                    <label key={item} className="flex items-center gap-3 cursor-pointer">
-                      <input type="checkbox" value={item} {...register('amenities')} className="w-5 h-5 accent-emerald-600" />
-                      <span className="text-sm font-bold text-slate-700">{item}</span>
-                    </label>
-                  ))}
-               </div>
+            <div className="space-y-5">
+              <p className="text-xs text-gray-500">Select amenities included with this room category:</p>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+                {[
+                  'High-Speed WiFi', 'Smart TV', 'Mini Fridge', 'Air Conditioning', 
+                  'Balcony', 'Rain Shower', 'Room Service', 'Workspace',
+                  'Temple View', 'Tea/Coffee Maker', 'In-room Safe', 'Hot Water'
+                ].map(item => (
+                  <label 
+                    key={item} 
+                    className="flex items-center gap-2.5 p-3 bg-white border border-gray-200 rounded-lg cursor-pointer hover:border-gray-300 transition-colors shadow-xs"
+                  >
+                    <input 
+                      type="checkbox" 
+                      value={item} 
+                      {...register('amenities')} 
+                      className="w-4 h-4 text-emerald-600 rounded border-gray-300 focus:ring-emerald-500" 
+                    />
+                    <span className="text-xs font-medium text-gray-700 select-none">{item}</span>
+                  </label>
+                ))}
+              </div>
             </div>
           )}
 
+          {/* Step 5: Media */}
           {currentStep === 5 && (
-            <div className="space-y-8 animate-in slide-in-from-right-4">
-               <div className="space-y-4">
-                  <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">Main Card Image</label>
-                  {featuredPreview ? (
-                    <div className="relative w-72 aspect-video rounded-xl overflow-hidden shadow-md">
-                      <img src={featuredPreview} className="w-full h-full object-cover" />
-                      <button type="button" onClick={() => setFeaturedPreview(null)} className="absolute top-2 right-2 bg-white text-rose-600 rounded-full w-6 h-6 font-bold shadow-sm">✕</button>
-                    </div>
-                  ) : (
-                    <label className="w-72 aspect-video border-2 border-dashed border-slate-300 rounded-xl flex flex-col items-center justify-center cursor-pointer hover:bg-slate-50 transition-colors">
-                      <Images className="text-slate-300 mb-2" />
-                      <span className="text-[10px] font-bold text-slate-400">Click to upload</span>
-                      <input type="file" className="hidden" onChange={handleFeaturedChange} />
-                    </label>
-                  )}
-               </div>
+            <div className="space-y-5">
+              <div className="space-y-2">
+                <label className="text-xs font-semibold text-gray-700">Featured Display Image</label>
+                {featuredPreview ? (
+                  <div className="relative w-80 aspect-video rounded-lg overflow-hidden border border-gray-200 shadow-xs">
+                    <img src={featuredPreview} alt="Featured Preview" className="w-full h-full object-cover" />
+                    <button 
+                      type="button" 
+                      onClick={() => setFeaturedPreview(null)} 
+                      className="absolute top-2 right-2 bg-white/90 text-rose-600 hover:bg-white rounded-md p-1 font-bold text-xs shadow-xs"
+                    >
+                      ✕ Remove
+                    </button>
+                  </div>
+                ) : (
+                  <label className="w-80 aspect-video border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors">
+                    <Images className="text-gray-400 mb-2" size={28} />
+                    <span className="text-xs font-medium text-gray-600">Click to upload photo</span>
+                    <span className="text-[11px] text-gray-400 mt-0.5">PNG, JPG, or WEBP up to 5MB</span>
+                    <input type="file" className="hidden" accept="image/*" onChange={handleFeaturedChange} />
+                  </label>
+                )}
+              </div>
             </div>
           )}
 
+          {/* Step 6: Publish */}
           {currentStep === 6 && (
-            <div className="space-y-6 animate-in slide-in-from-right-4">
-                <div className="space-y-2">
-                  <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">Public Information (Full Description)</label>
-                  <textarea {...register('full_description')} className="w-full border border-slate-200 p-4 rounded-xl h-32 outline-none focus:border-emerald-600" />
+            <div className="space-y-5">
+              <div className="space-y-1.5">
+                <label className="text-xs font-semibold text-gray-700">Public Description</label>
+                <textarea 
+                  {...register('full_description')} 
+                  rows={4}
+                  className="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-xs text-gray-900 focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 shadow-xs" 
+                  placeholder="Describe room layout, ambiance, comfort, and view details..."
+                />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div className="space-y-1.5">
+                  <label className="text-xs font-semibold text-gray-700">House & Stay Rules</label>
+                  <textarea 
+                    {...register('house_rules')} 
+                    rows={3}
+                    className="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-xs text-gray-900 focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 shadow-xs" 
+                    placeholder="Check-in 12:00 PM, No smoking in rooms..."
+                  />
                 </div>
-                <div className="grid grid-cols-2 gap-8">
-                  <div className="space-y-2">
-                    <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">Guest Rules</label>
-                    <textarea {...register('house_rules')} className="w-full border border-slate-200 p-4 rounded-xl h-24" />
-                  </div>
-                  <div className="space-y-2 flex flex-col justify-center">
-                    <label className="flex items-center gap-3 p-4 bg-emerald-50 border border-emerald-100 rounded-xl cursor-pointer">
-                      <input type="checkbox" {...register('show_on_website')} className="w-6 h-6 accent-emerald-600" />
-                      <span className="font-bold text-emerald-900">Publish to Public Website</span>
-                    </label>
-                  </div>
+
+                <div className="flex flex-col justify-end">
+                  <label className="flex items-center gap-3 p-3.5 bg-gray-50 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-100/70 transition-colors">
+                    <input 
+                      type="checkbox" 
+                      {...register('show_on_website')} 
+                      className="w-4 h-4 text-emerald-600 rounded border-gray-300 focus:ring-emerald-500" 
+                    />
+                    <div>
+                      <span className="text-xs font-semibold text-gray-800 block">Publish to Public Website</span>
+                      <span className="text-[11px] text-gray-500">Allow customers to view and book this room on the website.</span>
+                    </div>
+                  </label>
                 </div>
+              </div>
             </div>
           )}
         </div>
 
-        <div className="mt-12 flex justify-between border-t border-slate-100 pt-8">
-          <Button type="button" variant="ghost" onClick={currentStep === 1 ? onCancel : prevStep} className="font-bold uppercase tracking-widest text-xs px-8 py-3 h-auto">
+        {/* Notices */}
+        {submitError && (
+          <div className="mt-4 p-3 bg-rose-50 border border-rose-200 text-rose-700 text-xs rounded-lg">
+            Error: {submitError}
+          </div>
+        )}
+        {successMessage && (
+          <div className="mt-4 p-3 bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs rounded-lg font-medium">
+            {successMessage}
+          </div>
+        )}
+
+        {/* Action Buttons */}
+        <div className="mt-8 flex items-center justify-between border-t border-gray-200 pt-5">
+          <button 
+            type="button" 
+            onClick={currentStep === 1 ? onCancel : prevStep} 
+            className="px-4 py-2 border border-gray-300 rounded-lg text-xs font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors shadow-xs"
+          >
             {currentStep === 1 ? 'Cancel' : 'Back'}
-          </Button>
+          </button>
 
           {currentStep < STEPS.length ? (
-            <Button type="button" onClick={nextStep} className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold uppercase tracking-widest text-xs px-12 py-5 h-auto rounded-xl">
+            <button 
+              type="button" 
+              onClick={nextStep} 
+              className="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-medium transition-colors shadow-xs"
+            >
               Next Step
-            </Button>
+            </button>
           ) : (
-            <Button type="submit" disabled={isSubmitting} className="bg-emerald-950 hover:bg-emerald-900 text-white font-bold uppercase tracking-widest text-xs px-16 py-5 h-auto rounded-xl shadow-lg">
+            <button 
+              type="submit" 
+              disabled={isSubmitting} 
+              className="px-6 py-2 bg-gray-900 hover:bg-black text-white rounded-lg text-xs font-medium transition-colors shadow-xs"
+            >
               {isSubmitting ? 'Saving...' : 'Deploy Configuration'}
-            </Button>
+            </button>
           )}
         </div>
       </form>
-
-      {submitError && <div className="absolute bottom-8 left-10 text-rose-500 font-bold text-sm bg-rose-50 px-4 py-2 rounded-lg border border-rose-100">Error: {submitError}</div>}
-      {successMessage && <div className="absolute bottom-8 left-10 text-emerald-600 font-bold text-sm bg-emerald-50 px-4 py-2 rounded-lg border border-emerald-100">{successMessage}</div>}
     </div>
   );
 };

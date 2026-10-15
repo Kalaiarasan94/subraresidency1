@@ -6,9 +6,9 @@ header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With, Cache-Control, cache-control, Pragma, Expires, *");
 
-include_once '../config/db.php';
-include_once '../models/Room.php';
-include_once '../utils/ImageUploader.php';
+include_once __DIR__ . '/../config/db.php';
+include_once __DIR__ . '/../models/Room.php';
+include_once __DIR__ . '/../utils/ImageUploader.php';
 
 class RoomController
 {
@@ -33,7 +33,24 @@ class RoomController
         if (strpos($host, 'localhost') !== false && strpos($script_uri, '/subraresidency1') !== false) {
             return 'http://' . $host . '/subraresidency1/backend';
         }
-        return $protocol . $host . $script_dir;
+        if ($script_dir === '.' || $script_dir === '/' || $script_dir === '\\') {
+            $script_dir = '';
+        }
+        return rtrim($protocol . $host . $script_dir, '/');
+    }
+
+    private function formatImageUrl($path, $baseUrl)
+    {
+        if (empty($path)) return '';
+        if (strpos($path, 'http://') === 0 || strpos($path, 'https://') === 0) {
+            return str_replace('/backend/backend/', '/backend/', $path);
+        }
+        $cleanPath = '/' . ltrim($path, '/');
+        $cleanBase = rtrim($baseUrl, '/');
+        if (str_ends_with($cleanBase, '/backend') && str_starts_with($cleanPath, '/backend/')) {
+            $cleanPath = substr($cleanPath, 8);
+        }
+        return $cleanBase . $cleanPath;
     }
 
     public function getCategories()
@@ -93,9 +110,10 @@ class RoomController
                 "full_description" => $row['full_description'],
                 "highlights" => $row['highlights'],
                 "house_rules" => $row['house_rules'],
-                "image" => $row['featured_image'] ? $baseUrl . $row['featured_image'] : '',
+                "image" => $this->formatImageUrl($row['featured_image'], $baseUrl),
                 "images" => array_map(function ($img) use ($baseUrl) {
-                    return $baseUrl . $img; }, $gallery),
+                    return $this->formatImageUrl($img, $baseUrl);
+                }, $gallery),
                 "balcony" => (bool) $row['balcony'],
                 "ac" => (bool) $row['air_conditioning'],
                 "smoking" => (bool) $row['smoking_allowed'],
@@ -503,9 +521,10 @@ class RoomController
                 "full_description" => $row['full_description'],
                 "highlights" => $row['highlights'],
                 "house_rules" => $row['house_rules'],
-                "image" => $row['featured_image'] ? $baseUrl . $row['featured_image'] : '',
+                "image" => $this->formatImageUrl($row['featured_image'], $baseUrl),
                 "images" => array_map(function ($img) use ($baseUrl) {
-                    return $baseUrl . $img; }, $gallery),
+                    return $this->formatImageUrl($img, $baseUrl);
+                }, $gallery),
                 "balcony" => (bool) $row['balcony'],
                 "ac" => (bool) $row['air_conditioning'],
                 "smoking_allowed" => (bool) $row['smoking_allowed'],

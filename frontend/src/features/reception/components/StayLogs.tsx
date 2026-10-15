@@ -45,42 +45,41 @@ export const StayLogs = () => {
   ];
 
   return (
-    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
-
+    <div className="space-y-6">
       {/* Header */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h2 className="text-2xl font-black text-slate-800 uppercase tracking-tighter">Stay Logs</h2>
-          <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">
-            Complete history of all guest stays
+          <h2 className="text-xl font-semibold text-gray-900 tracking-tight">Stay Logs</h2>
+          <p className="text-xs text-gray-500 mt-0.5">
+            Complete history of all guest stays and occupancy records
           </p>
         </div>
-        <div className="flex gap-4">
-          <div className="px-6 py-4 bg-white border border-slate-100 rounded-2xl text-center shadow-sm">
-            <p className="text-xl font-black text-emerald-700">{activeCount}</p>
-            <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Active</p>
+        <div className="flex items-center gap-3">
+          <div className="px-4 py-2 bg-white border border-gray-200 rounded-lg text-center shadow-xs">
+            <p className="text-lg font-semibold text-emerald-700 tabular-nums">{activeCount}</p>
+            <p className="text-[11px] font-medium text-gray-500">Active</p>
           </div>
-          <div className="px-6 py-4 bg-white border border-slate-100 rounded-2xl text-center shadow-sm">
-            <p className="text-xl font-black text-slate-700">{departedCount}</p>
-            <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Departed</p>
+          <div className="px-4 py-2 bg-white border border-gray-200 rounded-lg text-center shadow-xs">
+            <p className="text-lg font-semibold text-gray-900 tabular-nums">{departedCount}</p>
+            <p className="text-[11px] font-medium text-gray-500">Departed</p>
           </div>
-          <div className="px-6 py-4 bg-white border border-slate-100 rounded-2xl text-center shadow-sm">
-            <p className="text-xl font-black text-slate-700">{logs.length}</p>
-            <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Total</p>
+          <div className="px-4 py-2 bg-white border border-gray-200 rounded-lg text-center shadow-xs">
+            <p className="text-lg font-semibold text-gray-900 tabular-nums">{logs.length}</p>
+            <p className="text-[11px] font-medium text-gray-500">Total</p>
           </div>
         </div>
       </div>
 
       {/* Filter pills */}
-      <div className="flex flex-wrap gap-3">
+      <div className="flex flex-wrap gap-2">
         {filters.map(f => (
           <button
             key={f.key}
             onClick={() => setFilter(f.key)}
-            className={`px-5 py-2.5 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all ${
+            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
               filter === f.key
-                ? 'bg-[#061c12] text-white shadow-lg'
-                : 'bg-white border border-slate-100 text-slate-500 hover:border-emerald-300'
+                ? 'bg-emerald-50 text-emerald-700 border border-emerald-300 shadow-xs'
+                : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50'
             }`}
           >
             {f.label}
@@ -90,86 +89,88 @@ export const StayLogs = () => {
 
       {/* Skeleton */}
       {loading && (
-        <div className="space-y-4">
+        <div className="space-y-3">
           {Array(5).fill(0).map((_, i) => (
-            <div key={i} className="h-28 bg-slate-100 rounded-3xl animate-pulse" />
+            <div key={i} className="h-20 bg-white border border-gray-200 rounded-lg animate-pulse" />
           ))}
         </div>
       )}
 
       {/* Log rows */}
       {!loading && (
-        <div className="space-y-4">
+        <div className="space-y-2.5">
           {displayed.map((log, i) => {
-            const cfg = statusConfig[log.status] ?? { bg: 'bg-slate-100', text: 'text-slate-500', label: log.status };
+            const cfg = statusConfig[log.status] ?? { bg: 'bg-gray-100', text: 'text-gray-600', label: log.status };
             return (
-              <Card key={i} className="border-none shadow-lg rounded-[2rem] bg-white hover:shadow-xl transition-all">
-                <CardContent className="p-8 flex flex-wrap items-center justify-between gap-6">
-
-                  {/* Avatar + Name */}
-                  <div className="flex items-center gap-5 min-w-[180px]">
-                    <div className="w-14 h-14 bg-gradient-to-br from-emerald-500 to-emerald-700 rounded-2xl flex items-center justify-center text-white font-black text-lg uppercase shrink-0 shadow-md">
-                      {log.guest_name?.charAt(0) ?? '?'}
-                    </div>
-                    <div>
-                      <p className="font-black text-slate-800 uppercase tracking-tight leading-tight">
-                        {log.guest_name}
-                      </p>
-                      <button
-                        onClick={() => window.open(`${BACKEND_URL}/admin_view_booking.php?booking_id=${log.booking_id}`, '_blank')}
-                        className="text-[10px] font-black text-emerald-600 hover:text-emerald-800 hover:underline uppercase tracking-widest mt-1 text-left block"
-                      >
-                        {log.booking_id}
-                      </button>
-                    </div>
+              <div key={i} className="crm-card bg-white border border-gray-200 rounded-lg p-4 shadow-xs hover:border-gray-300 transition-colors flex flex-wrap items-center justify-between gap-4">
+                {/* Avatar + Name */}
+                <div className="flex items-center gap-3 min-w-[200px]">
+                  <div className="w-10 h-10 bg-gray-100 border border-gray-200 rounded-lg flex items-center justify-center text-gray-700 font-semibold text-sm shrink-0">
+                    {log.guest_name?.charAt(0) ?? '?'}
                   </div>
-
-                  {/* Phone */}
-                  <div className="flex items-center gap-2 text-xs font-bold text-slate-400">
-                    <Phone size={13} className="text-slate-300" />
-                    {log.guest_phone || '—'}
+                  <div>
+                    <p className="font-semibold text-sm text-gray-900 leading-tight">
+                      {log.guest_name}
+                    </p>
+                    <button
+                      onClick={() => window.open(`${BACKEND_URL}/admin_view_booking.php?booking_id=${log.booking_id}`, '_blank')}
+                      className="text-xs font-medium text-emerald-700 hover:text-emerald-900 hover:underline mt-0.5 text-left block"
+                    >
+                      {log.booking_id}
+                    </button>
                   </div>
+                </div>
 
-                  {/* Stay dates */}
-                  <div className="flex items-center gap-4 text-xs font-bold text-slate-400">
-                    <span className="flex items-center gap-2">
-                      <LogIn size={13} className="text-blue-400" />
-                      {log.check_in_date}
-                    </span>
-                    <span className="text-slate-200 font-black">→</span>
-                    <span className="flex items-center gap-2">
-                      <LogOut size={13} className="text-rose-400" />
-                      {log.check_out_date}
-                    </span>
-                  </div>
+                {/* Phone */}
+                <div className="flex items-center gap-1.5 text-xs text-gray-600">
+                  <Phone size={13} className="text-gray-400" />
+                  {log.guest_phone || '—'}
+                </div>
 
-                  {/* Room */}
-                  <div className="flex items-center gap-2 text-xs font-bold text-slate-500">
-                    <Hotel size={13} className="text-slate-300" />
-                    Room&nbsp;
-                    <span className="font-black text-slate-800">
-                      {log.status === 'confirmed' ? 'Pending' : (log.room_number ?? 'TBD')}
-                    </span>
-                  </div>
-
-                  {/* Amount */}
-                  <p className="font-black text-emerald-700 text-sm tabular-nums">
-                    ₹&nbsp;{parseFloat(log.total_amount).toLocaleString('en-IN')}
-                  </p>
-
-                  {/* Status */}
-                  <span className={`px-4 py-1.5 rounded-full text-[9px] font-black uppercase tracking-widest shrink-0 ${cfg.bg} ${cfg.text}`}>
-                    {cfg.label}
+                {/* Stay dates */}
+                <div className="flex items-center gap-2 text-xs text-gray-600 tabular-nums">
+                  <span className="flex items-center gap-1.5">
+                    <LogIn size={13} className="text-blue-500" />
+                    {log.check_in_date}
                   </span>
-                </CardContent>
-              </Card>
+                  <span className="text-gray-300">→</span>
+                  <span className="flex items-center gap-1.5">
+                    <LogOut size={13} className="text-rose-500" />
+                    {log.check_out_date}
+                  </span>
+                </div>
+
+                {/* Room */}
+                <div className="flex items-center gap-1.5 text-xs text-gray-700">
+                  <Hotel size={13} className="text-gray-400" />
+                  <span>Room:</span>
+                  <span className="font-semibold text-gray-900">
+                    {log.status === 'confirmed' ? 'Pending' : (log.room_number ?? 'TBD')}
+                  </span>
+                </div>
+
+                {/* Amount */}
+                <p className="font-semibold text-gray-900 text-sm tabular-nums">
+                  ₹ {parseFloat(log.total_amount).toLocaleString('en-IN')}
+                </p>
+
+                {/* Status */}
+                <span className={`px-2.5 py-1 rounded text-[11px] font-medium shrink-0 border ${
+                  log.status === 'checked-in' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' :
+                  log.status === 'confirmed' ? 'bg-blue-50 text-blue-700 border-blue-200' :
+                  log.status === 'cancelled' ? 'bg-rose-50 text-rose-700 border-rose-200' :
+                  'bg-gray-50 text-gray-600 border-gray-200'
+                }`}>
+                  {cfg.label}
+                </span>
+              </div>
             );
           })}
 
           {displayed.length === 0 && (
-            <div className="py-24 text-center space-y-4">
-              <Clock className="mx-auto text-slate-200" size={48} />
-              <p className="text-slate-400 font-black uppercase tracking-widest">
+            <div className="crm-card bg-white border border-gray-200 rounded-lg py-16 text-center space-y-3 shadow-xs">
+              <Clock className="mx-auto text-gray-300" size={36} />
+              <p className="text-gray-500 text-xs font-medium">
                 No matching stay records found
               </p>
             </div>

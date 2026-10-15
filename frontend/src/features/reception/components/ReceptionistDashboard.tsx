@@ -5,65 +5,47 @@ import {
   Users, LogIn, LogOut, 
   Hotel, Search, 
   Smartphone, PlusCircle, 
-  MessageSquare, X, Filter, ChevronDown
+  X, Filter, ChevronDown
 } from 'lucide-react';
 import { ResponsiveContainer, PieChart as RePie, Pie, Cell, Tooltip } from 'recharts';
 import { API_BASE_URL } from '../../../lib/api';
 
-const StatCard = ({ label, value, icon: Icon, color, trend, onClick }: any) => {
-  const colorMap: any = {
-    'bg-blue-500': { border: 'border-emerald-100', text: 'text-emerald-800', bg: 'bg-emerald-50/30', topBorder: 'bg-emerald-500' },
-    'bg-amber-500': { border: 'border-amber-100', text: 'text-amber-800', bg: 'bg-amber-50/30', topBorder: 'bg-amber-550' },
-    'bg-emerald-500': { border: 'border-teal-100', text: 'text-teal-800', bg: 'bg-teal-50/30', topBorder: 'bg-emerald-600' },
-    'bg-emerald-700': { border: 'border-emerald-200/50', text: 'text-emerald-900', bg: 'bg-emerald-50/50', topBorder: 'bg-emerald-800' },
-    'bg-rose-500': { border: 'border-rose-100', text: 'text-rose-800', bg: 'bg-rose-50/30', topBorder: 'bg-rose-500' },
-  };
-  const style = colorMap[color] || { border: 'border-slate-100', text: 'text-slate-655', bg: 'bg-slate-50', topBorder: 'bg-slate-400' };
-
+const StatCard = ({ label, value, icon: Icon, trend, onClick }: any) => {
   return (
-    <Card 
+    <div 
       onClick={onClick}
-      className={`relative overflow-hidden border ${style.border} ${style.bg} shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 group rounded-2xl ${onClick ? 'cursor-pointer' : ''}`}
+      className={`bg-white p-4.5 rounded-lg border border-gray-200 shadow-xs flex flex-col justify-between hover:border-gray-300 hover:shadow-sm transition-all ${onClick ? 'cursor-pointer select-none active:bg-gray-50' : ''}`}
     >
-      <div className={`absolute top-0 left-0 w-full h-[4px] ${style.topBorder}`} />
-      <CardContent className="p-6">
-        <div className="flex justify-between items-start mb-4">
-          <div className="p-2.5 rounded-xl bg-white shadow-sm text-emerald-800 transition-transform group-hover:scale-110">
-            <Icon size={18} />
-          </div>
-          {trend && (
-            <span className="text-[9px] font-black text-emerald-700 bg-white border border-emerald-150 px-2.5 py-0.5 rounded-full flex items-center gap-1 tracking-wider uppercase">
-              {trend}
-            </span>
-          )}
+      <div className="flex justify-between items-start mb-2">
+        <div className="w-9 h-9 rounded-md border border-gray-100 bg-gray-50 text-gray-600 flex items-center justify-center">
+          <Icon size={17} />
         </div>
-        <h3 className="text-[9px] font-black text-slate-455 uppercase tracking-widest leading-none mb-2">{label}</h3>
-        <p className="text-3xl font-extrabold text-slate-800 font-sans tabular-nums">{value}</p>
-      </CardContent>
-    </Card>
+        {trend && (
+          <span className="text-[10px] font-medium text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full">
+            {trend}
+          </span>
+        )}
+      </div>
+      <div>
+        <p className="text-xs font-medium text-gray-500 mb-1">{label}</p>
+        <p className="text-xl font-semibold text-gray-900 font-mono tabular-nums">{value}</p>
+      </div>
+    </div>
   );
 };
 
-const QuickAction = ({ icon: Icon, label, description, color, onClick }: any) => {
-  const colorMap: any = {
-    'bg-rose-500': { text: 'text-rose-700', bg: 'bg-rose-50/50', border: 'hover:border-rose-200 hover:bg-rose-50/10' },
-    'bg-blue-500': { text: 'text-teal-700', bg: 'bg-teal-50/50', border: 'hover:border-teal-200 hover:bg-teal-50/10' },
-    'bg-emerald-500': { text: 'text-emerald-700', bg: 'bg-emerald-50/50', border: 'hover:border-emerald-200 hover:bg-emerald-50/10' },
-    'bg-amber-500': { text: 'text-amber-700', bg: 'bg-amber-50/50', border: 'hover:border-amber-200 hover:bg-amber-50/10' },
-  };
-  const style = colorMap[color] || { text: 'text-slate-655', bg: 'bg-slate-50', border: 'hover:border-slate-200 hover:bg-slate-55/30' };
-
+const QuickAction = ({ icon: Icon, label, description, onClick }: any) => {
   return (
     <button 
       onClick={onClick}
-      className={`flex items-center gap-4 p-5 rounded-2xl bg-white border border-slate-150/60 shadow-sm ${style.border} hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 group w-full text-left`}
+      className="flex items-center gap-3.5 p-4 rounded-lg bg-white border border-gray-200 hover:border-gray-300 hover:bg-gray-50/70 transition-all w-full text-left shadow-xs cursor-pointer"
     >
-      <div className={`p-4 rounded-xl ${style.bg} ${style.text} group-hover:scale-110 transition-transform shadow-inner`}>
-        <Icon size={20} className="group-hover:rotate-6 transition-transform" />
+      <div className="w-9 h-9 rounded-md border border-gray-200 bg-gray-50 text-gray-700 flex items-center justify-center shrink-0">
+        <Icon size={17} />
       </div>
       <div>
-        <p className="text-xs font-black text-slate-800 uppercase tracking-wide">{label}</p>
-        <p className="text-[10px] text-slate-400 font-medium mt-1 leading-snug">{description}</p>
+        <p className="text-xs font-medium text-gray-900">{label}</p>
+        <p className="text-[11px] text-gray-400 mt-0.5">{description}</p>
       </div>
     </button>
   );
@@ -126,7 +108,7 @@ export const ReceptionistDashboard = ({ onNavigate }: { onNavigate?: (tab: strin
 
   if (loading) return (
     <div className="flex items-center justify-center min-h-[400px]">
-       <div className="w-10 h-10 border-4 border-emerald-600 border-t-transparent rounded-full animate-spin"></div>
+       <div className="w-8 h-8 border-2 border-emerald-600 border-t-transparent rounded-full animate-spin"></div>
     </div>
   );
 
@@ -139,14 +121,13 @@ export const ReceptionistDashboard = ({ onNavigate }: { onNavigate?: (tab: strin
   const availableRoomsList = data?.available_rooms_list || [];
   const occupiedRoomsList = data?.occupied_rooms_list || [];
 
-  // Overriding colors for premium hospitality palette
   const getHospitalityColor = (name: string) => {
     switch (name.toLowerCase()) {
-      case 'available': return '#10b981'; // Mint
-      case 'occupied': return '#064e3b'; // Deep Emerald
-      case 'cleaning': return '#f59e0b'; // Gold-cream details
-      case 'maintenance': return '#f43f5e'; // Rose
-      default: return '#64748b';
+      case 'available': return '#10b981';
+      case 'occupied': return '#2563eb';
+      case 'cleaning': return '#f59e0b';
+      case 'maintenance': return '#64748b';
+      default: return '#94a3b8';
     }
   };
 
@@ -156,56 +137,56 @@ export const ReceptionistDashboard = ({ onNavigate }: { onNavigate?: (tab: strin
   }));
 
   return (
-    <div className="space-y-8 animate-in fade-in duration-700">
+    <div className="space-y-6">
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
-        <StatCard label="Today's Arrivals" value={stats.arrivals} icon={LogIn} color="bg-blue-500" trend={stats.today_created_bookings > 0 ? `+${stats.today_created_bookings} New` : undefined} onClick={() => setShowArrivalsModal(true)} />
-        <StatCard label="Today's Departures" value={stats.departures} icon={LogOut} color="bg-amber-500" onClick={() => setShowDeparturesModal(true)} />
-        <StatCard label="Current Check-ins" value={stats.checked_in} icon={Users} color="bg-emerald-500" onClick={() => setShowCheckinsModal(true)} />
-        <StatCard label="Available Rooms" value={stats.available} icon={Hotel} color="bg-emerald-700" onClick={() => setShowAvailableRoomsModal(true)} />
-        <StatCard label="Occupied Rooms" value={stats.occupied} icon={Hotel} color="bg-rose-500" onClick={() => setShowOccupiedRoomsModal(true)} />
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+        <StatCard label="Today's Arrivals" value={stats.arrivals} icon={LogIn} trend={stats.today_created_bookings > 0 ? `+${stats.today_created_bookings} New` : undefined} onClick={() => setShowArrivalsModal(true)} />
+        <StatCard label="Today's Departures" value={stats.departures} icon={LogOut} onClick={() => setShowDeparturesModal(true)} />
+        <StatCard label="Current Check-ins" value={stats.checked_in} icon={Users} onClick={() => setShowCheckinsModal(true)} />
+        <StatCard label="Available Rooms" value={stats.available} icon={Hotel} onClick={() => setShowAvailableRoomsModal(true)} />
+        <StatCard label="Occupied Rooms" value={stats.occupied} icon={Hotel} onClick={() => setShowOccupiedRoomsModal(true)} />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Recent Bookings List */}
-        <Card className="lg:col-span-2 border border-slate-150/60 shadow-sm rounded-2xl overflow-hidden bg-white hover:shadow-md transition-all duration-300">
-          <div className="p-6 border-b border-slate-100/60 flex items-center justify-between bg-white">
+        <Card className="lg:col-span-2 border border-gray-200 shadow-xs rounded-lg bg-white">
+          <div className="p-4 border-b border-gray-100 flex items-center justify-between bg-white">
             <div>
-             <h3 className="text-xs font-black text-slate-800 uppercase tracking-widest">Recent Bookings (Online)</h3>
-             <p className="text-[10px] text-slate-400 font-medium mt-1">Status of pending check-ins</p>
+             <h3 className="text-sm font-medium text-gray-800">Recent online bookings</h3>
+             <p className="text-xs text-gray-400 mt-0.5">Status of upcoming &amp; pending check-ins</p>
            </div>
            <button 
              onClick={() => setShowAllBookings(true)}
-             className="flex items-center gap-2 bg-emerald-700 hover:bg-emerald-800 text-white text-[9px] font-black uppercase tracking-widest px-4 py-2 rounded-xl transition-all shadow-sm hover:shadow-md active:scale-95"
+             className="bg-white hover:bg-gray-50 border border-gray-300 text-gray-700 text-xs font-medium px-3 py-1.5 rounded-md shadow-xs transition-colors"
            >
-             View All
+             View all →
            </button>
           </div>
           <CardContent className="p-0">
             <div className="overflow-x-auto">
-              <table className="w-full text-left">
+              <table className="w-full text-left text-xs">
                 <thead>
-                  <tr className="bg-slate-50 text-[9px] font-black text-slate-455 uppercase tracking-widest border-b border-slate-150/60">
-                    <th className="px-6 py-4">Booking ID</th>
-                    <th className="px-6 py-4">Guest</th>
-                    <th className="px-6 py-4">Check-in</th>
-                    <th className="px-6 py-4">Room No.</th>
-                    <th className="px-6 py-4">Status</th>
+                  <tr className="bg-gray-50/80 text-[11px] font-semibold text-gray-500 border-b border-gray-200">
+                    <th className="px-4 py-2.5">Booking ID</th>
+                    <th className="px-4 py-2.5">Guest</th>
+                    <th className="px-4 py-2.5">Check-in</th>
+                    <th className="px-4 py-2.5">Room No.</th>
+                    <th className="px-4 py-2.5 text-right">Status</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-100/60">
+                <tbody className="divide-y divide-gray-100">
                   {recentBookings.map((bk: any, i: number) => (
-                    <tr key={i} className="hover:bg-slate-50/40 transition-colors group">
-                      <td className="px-6 py-4 text-[11px] font-bold text-emerald-800">{bk.booking_id}</td>
-                      <td className="px-6 py-4 text-xs font-bold text-slate-800 uppercase tracking-tight">{bk.guest_name}</td>
-                      <td className="px-6 py-4 text-xs font-medium text-slate-500 font-sans">{bk.check_in_date}</td>
-                      <td className="px-6 py-4 text-xs font-bold text-slate-700 font-sans">
+                    <tr key={i} className="hover:bg-gray-50 transition-colors">
+                      <td className="px-4 py-3 font-mono font-medium text-blue-600">{bk.booking_id}</td>
+                      <td className="px-4 py-3 font-medium text-gray-800">{bk.guest_name}</td>
+                      <td className="px-4 py-3 text-gray-500 font-mono text-[11px]">{bk.check_in_date}</td>
+                      <td className="px-4 py-3 font-mono text-gray-700">
                         {bk.status === 'confirmed' ? 'Pending' : (bk.room_id || 'N/A')}
                       </td>
-                      <td className="px-6 py-4">
-                        <span className={`text-[9px] font-black px-2.5 py-1 rounded-full border uppercase tracking-wider ${
-                          bk.status === 'checked-in' ? 'bg-emerald-50 border-emerald-150 text-emerald-800' :
-                          bk.status === 'confirmed' ? 'bg-amber-50 border-amber-200 text-amber-800' : 'bg-slate-100 border-slate-200 text-slate-500'
+                      <td className="px-4 py-3 text-right">
+                        <span className={`text-[10px] font-medium px-2 py-0.5 rounded border ${
+                          bk.status === 'checked-in' ? 'bg-[#ecfdf5] text-[#059669] border-[#a7f3d0]' :
+                          bk.status === 'confirmed' ? 'bg-blue-50 text-blue-700 border-blue-200' : 'bg-gray-100 border-gray-200 text-gray-700'
                         }`}>
                           {bk.status}
                         </span>
@@ -214,7 +195,7 @@ export const ReceptionistDashboard = ({ onNavigate }: { onNavigate?: (tab: strin
                   ))}
                   {recentBookings.length === 0 && (
                     <tr>
-                      <td colSpan={5} className="px-6 py-10 text-center text-slate-400 text-[10px] font-black uppercase tracking-widest">No recent online bookings found</td>
+                      <td colSpan={5} className="px-4 py-10 text-center text-gray-400 text-xs font-medium">No recent online bookings found</td>
                     </tr>
                   )}
                 </tbody>
@@ -224,22 +205,23 @@ export const ReceptionistDashboard = ({ onNavigate }: { onNavigate?: (tab: strin
         </Card>
 
         {/* Room Status Overview Pie Chart */}
-        <Card className="border border-slate-150/60 shadow-sm rounded-2xl bg-white flex flex-col hover:shadow-md transition-all duration-300">
-          <div className="p-6 border-b border-slate-100/60">
-            <h3 className="text-xs font-black text-slate-800 uppercase tracking-widest font-sans">Room Status Distribution</h3>
+        <Card className="border border-gray-200 shadow-xs rounded-lg bg-white flex flex-col">
+          <div className="p-4 border-b border-gray-100">
+            <h3 className="text-sm font-medium text-gray-800">Room status distribution</h3>
+            <p className="text-xs text-gray-400 mt-0.5">Live inventory allocation</p>
           </div>
-          <CardContent className="flex-grow flex flex-col p-6">
-            <div className="h-[240px] w-full relative">
+          <CardContent className="flex-grow flex flex-col p-4">
+            <div className="h-[210px] w-full relative min-w-0">
               {chartData.length > 0 ? (
-                <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+                <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={210}>
                   <RePie>
                     <Pie
                       data={chartData}
                       cx="50%"
                       cy="50%"
-                      innerRadius={60}
-                      outerRadius={75}
-                      paddingAngle={5}
+                      innerRadius={55}
+                      outerRadius={70}
+                      paddingAngle={3}
                       dataKey="value"
                     >
                       {chartData.map((entry: any, index: number) => (
@@ -248,33 +230,31 @@ export const ReceptionistDashboard = ({ onNavigate }: { onNavigate?: (tab: strin
                     </Pie>
                     <Tooltip 
                       contentStyle={{ 
-                        backgroundColor: '#051e13', 
-                        borderRadius: '12px', 
-                        border: 'none', 
-                        color: '#fff', 
-                        fontSize: '10px',
-                        fontWeight: 'bold',
-                        boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)'
+                        backgroundColor: '#ffffff', 
+                        borderRadius: '0.375rem', 
+                        border: '1px solid #e2e8f0', 
+                        color: '#1e293b', 
+                        fontSize: '12px'
                       }} 
                     />
                   </RePie>
                 </ResponsiveContainer>
               ) : (
-                <div className="h-full flex items-center justify-center text-slate-300 text-xs font-black uppercase tracking-widest">Loading chart…</div>
+                <div className="h-full flex items-center justify-center text-gray-400 text-xs">Loading chart…</div>
               )}
               <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                <span className="text-3xl font-extrabold text-slate-855 font-sans">{stats.total_rooms}</span>
-                <span className="text-[9px] font-black text-slate-455 uppercase tracking-widest mt-1">Total Rooms</span>
+                <span className="text-2xl font-semibold text-gray-900 font-mono">{stats.total_rooms}</span>
+                <span className="text-[10px] font-medium text-gray-400 uppercase mt-0.5">Total Rooms</span>
               </div>
             </div>
             
-            <div className="grid grid-cols-2 gap-4 mt-6 border-t border-slate-100/60 pt-4">
+            <div className="grid grid-cols-2 gap-3 mt-3 border-t border-gray-100 pt-3">
               {chartData.map((item: any, i: number) => (
-                <div key={i} className="flex items-center gap-3">
+                <div key={i} className="flex items-center gap-2">
                   <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: item.color }} />
                   <div className="flex flex-col">
-                     <span className="text-[9px] font-black text-slate-800 uppercase tracking-wide leading-none">{item.name}</span>
-                     <span className="text-[10px] font-bold text-slate-400 mt-1 font-sans">{item.value} Units</span>
+                     <span className="text-xs text-gray-700 font-medium">{item.name}</span>
+                     <span className="text-[10px] font-mono text-gray-400">{item.value} Units</span>
                   </div>
                 </div>
               ))}
@@ -283,53 +263,47 @@ export const ReceptionistDashboard = ({ onNavigate }: { onNavigate?: (tab: strin
         </Card>
       </div>
 
-      {/* Quick Actions & Features */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-         <QuickAction icon={Smartphone} label="Scan QR Check-in" description="Instantly verify guest arrivals" color="bg-rose-500" onClick={() => onNavigate?.('online_checkin')} />
-         <QuickAction icon={Search} label="Lookup Reservation" description="Search by ID or Mobile" color="bg-blue-500" onClick={() => onNavigate?.('online_checkin')} />
-         <QuickAction icon={PlusCircle} label="New Registration" description="Process walk-in guests" color="bg-emerald-500" onClick={() => onNavigate?.('offline_booking')} />
-         <QuickAction icon={Users} label="Guest Directory" description="Lookup guest files & stay logs" color="bg-amber-500" onClick={() => onNavigate?.('guests')} />
+      {/* Quick Actions */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+         <QuickAction icon={Smartphone} label="Scan QR Check-in" description="Verify guest arrivals via QR code" onClick={() => onNavigate?.('online_checkin')} />
+         <QuickAction icon={Search} label="Lookup Reservation" description="Search by ID or Mobile" onClick={() => onNavigate?.('online_checkin')} />
+         <QuickAction icon={PlusCircle} label="New Registration" description="Register walk-in guest folio" onClick={() => onNavigate?.('offline_booking')} />
+         <QuickAction icon={Users} label="Guest Directory" description="Access guest profiles &amp; stay logs" onClick={() => onNavigate?.('guests')} />
       </div>
 
       {/* Today's Departures Modal */}
       {showDeparturesModal && (
-        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[999] flex items-center justify-center p-4 animate-in fade-in duration-300">
-          <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden border border-slate-100 flex flex-col animate-in zoom-in-95 duration-200">
-            {/* Modal Header */}
-            <div className="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+        <div className="fixed inset-0 bg-black/60 z-[999] flex items-center justify-center p-4">
+          <div className="bg-white rounded-none border border-black shadow-2xl max-w-lg w-full overflow-hidden flex flex-col">
+            <div className="p-5 border-b border-neutral-200 flex items-center justify-between bg-neutral-50">
               <div>
-                <h3 className="text-xs font-black text-[#0b336b] uppercase tracking-widest">
-                  Today's Departures
-                </h3>
-                <p className="text-[9px] text-slate-400 font-black uppercase mt-1 tracking-tight">
-                  List of guests checking out today
-                </p>
+                <h3 className="text-xs font-bold text-black uppercase tracking-widest">Today's Departures</h3>
+                <p className="text-[9px] text-neutral-500 font-bold uppercase mt-0.5 tracking-wider">Scheduled check-outs for today</p>
               </div>
               <button 
                 onClick={() => setShowDeparturesModal(false)}
-                className="text-slate-400 hover:text-slate-600 p-1.5 hover:bg-slate-100 rounded-lg transition-all"
+                className="p-1.5 hover:bg-neutral-200 text-neutral-500 hover:text-black transition-colors rounded-none border border-neutral-300"
               >
                 <X size={16} />
               </button>
             </div>
 
-            {/* Modal Content */}
-            <div className="p-5 overflow-y-auto max-h-[60vh] space-y-4">
+            <div className="p-5 overflow-y-auto max-h-[60vh] space-y-2">
               {departuresList.length > 0 ? (
-                <div className="divide-y divide-slate-100 border border-slate-150 rounded-xl overflow-hidden bg-white">
+                <div className="divide-y divide-neutral-200 border border-neutral-200 bg-white">
                   {departuresList.map((dep: any, index: number) => (
-                    <div key={index} className="p-4 flex items-center justify-between hover:bg-slate-50/40 transition-colors">
+                    <div key={index} className="p-3.5 flex items-center justify-between hover:bg-neutral-50 transition-colors">
                       <div className="flex items-center gap-3">
-                        <div className="p-2 bg-amber-50 text-amber-700 rounded-xl">
-                          <LogOut size={16} />
+                        <div className="p-2 bg-neutral-100 text-black border border-neutral-200 rounded-none">
+                          <LogOut size={14} />
                         </div>
                         <div>
-                          <p className="text-xs font-black text-slate-800 uppercase tracking-wide">{dep.guest_name}</p>
-                          <p className="text-[9px] text-slate-400 font-bold uppercase mt-0.5 tracking-wider">Booking ID: {dep.booking_id}</p>
+                          <p className="text-xs font-bold text-black uppercase tracking-wide">{dep.guest_name}</p>
+                          <p className="text-[9px] text-neutral-500 font-mono uppercase mt-0.5">Booking ID: {dep.booking_id}</p>
                         </div>
                       </div>
                       <div className="text-right">
-                        <span className="text-[10px] font-black px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-700 uppercase tracking-widest font-sans">
+                        <span className="text-[10px] font-mono font-bold px-2 py-0.5 bg-neutral-100 border border-neutral-300 text-black uppercase">
                           Room {dep.room_number || 'N/A'}
                         </span>
                       </div>
@@ -337,17 +311,16 @@ export const ReceptionistDashboard = ({ onNavigate }: { onNavigate?: (tab: strin
                   ))}
                 </div>
               ) : (
-                <div className="py-12 text-center text-slate-400 text-xs font-bold uppercase tracking-widest italic">
+                <div className="py-10 text-center text-neutral-400 text-xs font-bold uppercase tracking-wider">
                   No departures scheduled for today.
                 </div>
               )}
             </div>
 
-            {/* Modal Footer */}
-            <div className="p-4 bg-slate-50 border-t border-slate-100 flex justify-end">
+            <div className="p-4 bg-neutral-50 border-t border-neutral-200 flex justify-end">
               <Button 
                 onClick={() => setShowDeparturesModal(false)}
-                className="bg-[#0b336b] hover:bg-[#072145] text-[10px] uppercase font-black tracking-widest text-white px-5 py-2 rounded-lg shadow-md transition-all"
+                className="bg-black hover:bg-neutral-800 text-[10px] uppercase font-bold tracking-wider text-white px-5 py-2 rounded-none transition-colors"
               >
                 Close
               </Button>
@@ -358,45 +331,39 @@ export const ReceptionistDashboard = ({ onNavigate }: { onNavigate?: (tab: strin
 
       {/* Today's Arrivals Modal */}
       {showArrivalsModal && (
-        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[999] flex items-center justify-center p-4 animate-in fade-in duration-300">
-          <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden border border-slate-100 flex flex-col animate-in zoom-in-95 duration-200">
-            {/* Modal Header */}
-            <div className="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+        <div className="fixed inset-0 bg-black/60 z-[999] flex items-center justify-center p-4">
+          <div className="bg-white rounded-none border border-black shadow-2xl max-w-lg w-full overflow-hidden flex flex-col">
+            <div className="p-5 border-b border-neutral-200 flex items-center justify-between bg-neutral-50">
               <div>
-                <h3 className="text-xs font-black text-emerald-800 uppercase tracking-widest">
-                  Today's Arrivals
-                </h3>
-                <p className="text-[9px] text-slate-400 font-black uppercase mt-1 tracking-tight">
-                  List of guests checking in today
-                </p>
+                <h3 className="text-xs font-bold text-black uppercase tracking-widest">Today's Arrivals</h3>
+                <p className="text-[9px] text-neutral-500 font-bold uppercase mt-0.5 tracking-wider">Scheduled check-ins for today</p>
               </div>
               <button 
                 onClick={() => setShowArrivalsModal(false)}
-                className="text-slate-400 hover:text-slate-600 p-1.5 hover:bg-slate-100 rounded-lg transition-all"
+                className="p-1.5 hover:bg-neutral-200 text-neutral-500 hover:text-black transition-colors rounded-none border border-neutral-300"
               >
                 <X size={16} />
               </button>
             </div>
 
-            {/* Modal Content */}
-            <div className="p-5 overflow-y-auto max-h-[60vh] space-y-4">
+            <div className="p-5 overflow-y-auto max-h-[60vh] space-y-2">
               {arrivalsList.length > 0 ? (
-                <div className="divide-y divide-slate-100 border border-slate-150 rounded-xl overflow-hidden bg-white">
+                <div className="divide-y divide-neutral-200 border border-neutral-200 bg-white">
                   {arrivalsList.map((arr: any, index: number) => (
-                    <div key={index} className="p-4 flex items-center justify-between hover:bg-slate-50/40 transition-colors">
+                    <div key={index} className="p-3.5 flex items-center justify-between hover:bg-neutral-50 transition-colors">
                       <div className="flex items-center gap-3">
-                        <div className="p-2 bg-blue-50 text-blue-700 rounded-xl">
-                          <LogIn size={16} />
+                        <div className="p-2 bg-neutral-100 text-black border border-neutral-200 rounded-none">
+                          <LogIn size={14} />
                         </div>
                         <div>
-                          <p className="text-xs font-black text-slate-800 uppercase tracking-wide">{arr.guest_name}</p>
-                          <p className="text-[9px] text-slate-400 font-bold uppercase mt-0.5 tracking-wider">
-                            Booking ID: {arr.booking_id}{arr.category_name ? ` · ${arr.category_name}` : ''}
+                          <p className="text-xs font-bold text-black uppercase tracking-wide">{arr.guest_name}</p>
+                          <p className="text-[9px] text-neutral-500 font-mono uppercase mt-0.5">
+                            ID: {arr.booking_id}{arr.category_name ? ` · ${arr.category_name}` : ''}
                           </p>
                         </div>
                       </div>
                       <div className="text-right">
-                        <span className="text-[10px] font-black px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-700 uppercase tracking-widest font-sans">
+                        <span className="text-[10px] font-mono font-bold px-2 py-0.5 bg-neutral-100 border border-neutral-300 text-black uppercase">
                           Room {arr.room_number || 'Pending'}
                         </span>
                       </div>
@@ -404,17 +371,16 @@ export const ReceptionistDashboard = ({ onNavigate }: { onNavigate?: (tab: strin
                   ))}
                 </div>
               ) : (
-                <div className="py-12 text-center text-slate-400 text-xs font-bold uppercase tracking-widest italic">
+                <div className="py-10 text-center text-neutral-400 text-xs font-bold uppercase tracking-wider">
                   No arrivals scheduled for today.
                 </div>
               )}
             </div>
 
-            {/* Modal Footer */}
-            <div className="p-4 bg-slate-50 border-t border-slate-100 flex justify-end">
+            <div className="p-4 bg-neutral-50 border-t border-neutral-200 flex justify-end">
               <Button 
                 onClick={() => setShowArrivalsModal(false)}
-                className="bg-emerald-800 hover:bg-emerald-900 text-[10px] uppercase font-black tracking-widest text-white px-5 py-2 rounded-lg shadow-md transition-all"
+                className="bg-black hover:bg-neutral-800 text-[10px] uppercase font-bold tracking-wider text-white px-5 py-2 rounded-none transition-colors"
               >
                 Close
               </Button>
@@ -425,48 +391,42 @@ export const ReceptionistDashboard = ({ onNavigate }: { onNavigate?: (tab: strin
 
       {/* Current Check-ins Modal */}
       {showCheckinsModal && (
-        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[999] flex items-center justify-center p-4 animate-in fade-in duration-300">
-          <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden border border-slate-100 flex flex-col animate-in zoom-in-95 duration-200">
-            {/* Modal Header */}
-            <div className="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+        <div className="fixed inset-0 bg-black/60 z-[999] flex items-center justify-center p-4">
+          <div className="bg-white rounded-none border border-black shadow-2xl max-w-lg w-full overflow-hidden flex flex-col">
+            <div className="p-5 border-b border-neutral-200 flex items-center justify-between bg-neutral-50">
               <div>
-                <h3 className="text-xs font-black text-teal-800 uppercase tracking-widest">
-                  Current Check-ins
-                </h3>
-                <p className="text-[9px] text-slate-400 font-black uppercase mt-1 tracking-tight">
-                  List of guests checked-in in-house
-                </p>
+                <h3 className="text-xs font-bold text-black uppercase tracking-widest">In-House Guests</h3>
+                <p className="text-[9px] text-neutral-500 font-bold uppercase mt-0.5 tracking-wider">Currently checked-in occupants</p>
               </div>
               <button 
                 onClick={() => setShowCheckinsModal(false)}
-                className="text-slate-400 hover:text-slate-600 p-1.5 hover:bg-slate-100 rounded-lg transition-all"
+                className="p-1.5 hover:bg-neutral-200 text-neutral-500 hover:text-black transition-colors rounded-none border border-neutral-300"
               >
                 <X size={16} />
               </button>
             </div>
 
-            {/* Modal Content */}
-            <div className="p-5 overflow-y-auto max-h-[60vh] space-y-4">
+            <div className="p-5 overflow-y-auto max-h-[60vh] space-y-2">
               {checkedInList.length > 0 ? (
-                <div className="divide-y divide-slate-100 border border-slate-150 rounded-xl overflow-hidden bg-white">
+                <div className="divide-y divide-neutral-200 border border-neutral-200 bg-white">
                   {checkedInList.map((ci: any, index: number) => (
-                    <div key={index} className="p-4 flex items-center justify-between hover:bg-slate-50/40 transition-colors">
+                    <div key={index} className="p-3.5 flex items-center justify-between hover:bg-neutral-50 transition-colors">
                       <div className="flex items-center gap-3">
-                        <div className="p-2 bg-emerald-50 text-emerald-700 rounded-xl">
-                          <Users size={16} />
+                        <div className="p-2 bg-neutral-100 text-black border border-neutral-200 rounded-none">
+                          <Users size={14} />
                         </div>
                         <div>
-                          <p className="text-xs font-black text-slate-800 uppercase tracking-wide">{ci.guest_name}</p>
-                          <p className="text-[9px] text-slate-400 font-bold uppercase mt-0.5 tracking-wider">
+                          <p className="text-xs font-bold text-black uppercase tracking-wide">{ci.guest_name}</p>
+                          <p className="text-[9px] text-neutral-500 font-mono uppercase mt-0.5">
                             Booking ID: {ci.booking_id}
                           </p>
-                          <p className="text-[8px] text-slate-400 font-bold mt-0.5">
-                            Stay: {ci.check_in_date} to {ci.check_out_date}
+                          <p className="text-[9px] text-neutral-500 font-mono mt-0.5">
+                            Stay: {ci.check_in_date} → {ci.check_out_date}
                           </p>
                         </div>
                       </div>
                       <div className="text-right">
-                        <span className="text-[10px] font-black px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-700 uppercase tracking-widest font-sans">
+                        <span className="text-[10px] font-mono font-bold px-2 py-0.5 bg-neutral-100 border border-neutral-300 text-black uppercase">
                           Room {ci.room_number || 'N/A'}
                         </span>
                       </div>
@@ -474,17 +434,16 @@ export const ReceptionistDashboard = ({ onNavigate }: { onNavigate?: (tab: strin
                   ))}
                 </div>
               ) : (
-                <div className="py-12 text-center text-slate-400 text-xs font-bold uppercase tracking-widest italic">
-                  No checked-in guests.
+                <div className="py-10 text-center text-neutral-400 text-xs font-bold uppercase tracking-wider">
+                  No checked-in guests currently.
                 </div>
               )}
             </div>
 
-            {/* Modal Footer */}
-            <div className="p-4 bg-slate-50 border-t border-slate-100 flex justify-end">
+            <div className="p-4 bg-neutral-50 border-t border-neutral-200 flex justify-end">
               <Button 
                 onClick={() => setShowCheckinsModal(false)}
-                className="bg-emerald-800 hover:bg-emerald-900 text-[10px] uppercase font-black tracking-widest text-white px-5 py-2 rounded-lg shadow-md transition-all"
+                className="bg-black hover:bg-neutral-800 text-[10px] uppercase font-bold tracking-wider text-white px-5 py-2 rounded-none transition-colors"
               >
                 Close
               </Button>
@@ -495,43 +454,37 @@ export const ReceptionistDashboard = ({ onNavigate }: { onNavigate?: (tab: strin
 
       {/* Available Rooms Modal */}
       {showAvailableRoomsModal && (
-        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[999] flex items-center justify-center p-4 animate-in fade-in duration-300">
-          <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden border border-slate-100 flex flex-col animate-in zoom-in-95 duration-200">
-            {/* Modal Header */}
-            <div className="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+        <div className="fixed inset-0 bg-black/60 z-[999] flex items-center justify-center p-4">
+          <div className="bg-white rounded-none border border-black shadow-2xl max-w-lg w-full overflow-hidden flex flex-col">
+            <div className="p-5 border-b border-neutral-200 flex items-center justify-between bg-neutral-50">
               <div>
-                <h3 className="text-xs font-black text-emerald-800 uppercase tracking-widest">
-                  Available Rooms
-                </h3>
-                <p className="text-[9px] text-slate-400 font-black uppercase mt-1 tracking-tight">
-                  List of rooms currently vacant
-                </p>
+                <h3 className="text-xs font-bold text-black uppercase tracking-widest">Available Rooms</h3>
+                <p className="text-[9px] text-neutral-500 font-bold uppercase mt-0.5 tracking-wider">Vacant inventory available for walk-ins</p>
               </div>
               <button 
                 onClick={() => setShowAvailableRoomsModal(false)}
-                className="text-slate-400 hover:text-slate-600 p-1.5 hover:bg-slate-100 rounded-lg transition-all"
+                className="p-1.5 hover:bg-neutral-200 text-neutral-500 hover:text-black transition-colors rounded-none border border-neutral-300"
               >
                 <X size={16} />
               </button>
             </div>
 
-            {/* Modal Content */}
-            <div className="p-5 overflow-y-auto max-h-[60vh] space-y-4">
+            <div className="p-5 overflow-y-auto max-h-[60vh] space-y-2">
               {availableRoomsList.length > 0 ? (
-                <div className="divide-y divide-slate-100 border border-slate-150 rounded-xl overflow-hidden bg-white">
+                <div className="divide-y divide-neutral-200 border border-neutral-200 bg-white">
                   {availableRoomsList.map((av: any, index: number) => (
-                    <div key={index} className="p-4 flex items-center justify-between hover:bg-slate-50/40 transition-colors">
+                    <div key={index} className="p-3.5 flex items-center justify-between hover:bg-neutral-50 transition-colors">
                       <div className="flex items-center gap-3">
-                        <div className="p-2 bg-emerald-50 text-emerald-700 rounded-xl">
-                          <Hotel size={16} />
+                        <div className="p-2 bg-neutral-100 text-black border border-neutral-200 rounded-none">
+                          <Hotel size={14} />
                         </div>
                         <div>
-                          <p className="text-xs font-black text-slate-800 uppercase tracking-wide">{av.room_name}</p>
-                          <p className="text-[9px] text-slate-400 font-bold uppercase mt-0.5 tracking-wider">{av.category_name}</p>
+                          <p className="text-xs font-bold text-black uppercase tracking-wide">{av.room_name}</p>
+                          <p className="text-[9px] text-neutral-500 font-bold uppercase mt-0.5 tracking-wider">{av.category_name}</p>
                         </div>
                       </div>
                       <div className="text-right">
-                        <span className="text-[10px] font-black px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-700 uppercase tracking-widest font-sans">
+                        <span className="text-[10px] font-mono font-bold px-2 py-0.5 bg-neutral-100 border border-neutral-300 text-black uppercase">
                           Room {av.room_number}
                         </span>
                       </div>
@@ -539,17 +492,16 @@ export const ReceptionistDashboard = ({ onNavigate }: { onNavigate?: (tab: strin
                   ))}
                 </div>
               ) : (
-                <div className="py-12 text-center text-slate-400 text-xs font-bold uppercase tracking-widest italic">
+                <div className="py-10 text-center text-neutral-400 text-xs font-bold uppercase tracking-wider">
                   No rooms are currently vacant.
                 </div>
               )}
             </div>
 
-            {/* Modal Footer */}
-            <div className="p-4 bg-slate-50 border-t border-slate-100 flex justify-end">
+            <div className="p-4 bg-neutral-50 border-t border-neutral-200 flex justify-end">
               <Button 
                 onClick={() => setShowAvailableRoomsModal(false)}
-                className="bg-emerald-800 hover:bg-emerald-900 text-[10px] uppercase font-black tracking-widest text-white px-5 py-2 rounded-lg shadow-md transition-all"
+                className="bg-black hover:bg-neutral-800 text-[10px] uppercase font-bold tracking-wider text-white px-5 py-2 rounded-none transition-colors"
               >
                 Close
               </Button>
@@ -560,45 +512,39 @@ export const ReceptionistDashboard = ({ onNavigate }: { onNavigate?: (tab: strin
 
       {/* Occupied Rooms Modal */}
       {showOccupiedRoomsModal && (
-        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[999] flex items-center justify-center p-4 animate-in fade-in duration-300">
-          <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden border border-slate-100 flex flex-col animate-in zoom-in-95 duration-200">
-            {/* Modal Header */}
-            <div className="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+        <div className="fixed inset-0 bg-black/60 z-[999] flex items-center justify-center p-4">
+          <div className="bg-white rounded-none border border-black shadow-2xl max-w-lg w-full overflow-hidden flex flex-col">
+            <div className="p-5 border-b border-neutral-200 flex items-center justify-between bg-neutral-50">
               <div>
-                <h3 className="text-xs font-black text-rose-800 uppercase tracking-widest">
-                  Occupied Rooms
-                </h3>
-                <p className="text-[9px] text-slate-400 font-black uppercase mt-1 tracking-tight">
-                  List of rooms currently occupied
-                </p>
+                <h3 className="text-xs font-bold text-black uppercase tracking-widest">Occupied Rooms</h3>
+                <p className="text-[9px] text-neutral-500 font-bold uppercase mt-0.5 tracking-wider">Rooms currently occupied by guests</p>
               </div>
               <button 
                 onClick={() => setShowOccupiedRoomsModal(false)}
-                className="text-slate-400 hover:text-slate-600 p-1.5 hover:bg-slate-100 rounded-lg transition-all"
+                className="p-1.5 hover:bg-neutral-200 text-neutral-500 hover:text-black transition-colors rounded-none border border-neutral-300"
               >
                 <X size={16} />
               </button>
             </div>
 
-            {/* Modal Content */}
-            <div className="p-5 overflow-y-auto max-h-[60vh] space-y-4">
+            <div className="p-5 overflow-y-auto max-h-[60vh] space-y-2">
               {occupiedRoomsList.length > 0 ? (
-                <div className="divide-y divide-slate-100 border border-slate-150 rounded-xl overflow-hidden bg-white">
+                <div className="divide-y divide-neutral-200 border border-neutral-200 bg-white">
                   {occupiedRoomsList.map((oc: any, index: number) => (
-                    <div key={index} className="p-4 flex items-center justify-between hover:bg-slate-50/40 transition-colors">
+                    <div key={index} className="p-3.5 flex items-center justify-between hover:bg-neutral-50 transition-colors">
                       <div className="flex items-center gap-3">
-                        <div className="p-2 bg-rose-50 text-rose-700 rounded-xl">
-                          <Hotel size={16} />
+                        <div className="p-2 bg-neutral-100 text-black border border-neutral-200 rounded-none">
+                          <Hotel size={14} />
                         </div>
                         <div>
-                          <p className="text-xs font-black text-slate-800 uppercase tracking-wide">{oc.room_name}</p>
-                          <p className="text-[9px] text-slate-400 font-bold uppercase mt-0.5 tracking-wider">
+                          <p className="text-xs font-bold text-black uppercase tracking-wide">{oc.room_name}</p>
+                          <p className="text-[9px] text-neutral-500 font-bold uppercase mt-0.5 tracking-wider">
                             {oc.category_name || 'Standard'} · Guest: {oc.guest_name || 'In-House Guest'}
                           </p>
                         </div>
                       </div>
                       <div className="text-right">
-                        <span className="text-[10px] font-black px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-700 uppercase tracking-widest font-sans">
+                        <span className="text-[10px] font-mono font-bold px-2 py-0.5 bg-neutral-100 border border-neutral-300 text-black uppercase">
                           Room {oc.room_number}
                         </span>
                       </div>
@@ -606,17 +552,16 @@ export const ReceptionistDashboard = ({ onNavigate }: { onNavigate?: (tab: strin
                   ))}
                 </div>
               ) : (
-                <div className="py-12 text-center text-slate-400 text-xs font-bold uppercase tracking-widest italic">
+                <div className="py-10 text-center text-neutral-400 text-xs font-bold uppercase tracking-wider">
                   No rooms are currently occupied.
                 </div>
               )}
             </div>
 
-            {/* Modal Footer */}
-            <div className="p-4 bg-slate-50 border-t border-slate-100 flex justify-end">
+            <div className="p-4 bg-neutral-50 border-t border-neutral-200 flex justify-end">
               <Button 
                 onClick={() => setShowOccupiedRoomsModal(false)}
-                className="bg-rose-800 hover:bg-rose-900 text-[10px] uppercase font-black tracking-widest text-white px-5 py-2 rounded-lg shadow-md transition-all"
+                className="bg-black hover:bg-neutral-800 text-[10px] uppercase font-bold tracking-wider text-white px-5 py-2 rounded-none transition-colors"
               >
                 Close
               </Button>
@@ -627,69 +572,69 @@ export const ReceptionistDashboard = ({ onNavigate }: { onNavigate?: (tab: strin
 
       {/* ====== VIEW ALL BOOKINGS MODAL ====== */}
       {showAllBookings && (
-        <div className="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-[1000] flex items-center justify-center p-4 animate-in fade-in duration-300">
-          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-5xl max-h-[90vh] flex flex-col overflow-hidden border border-slate-100 animate-in zoom-in-95 duration-200">
+        <div className="fixed inset-0 bg-black/60 z-[1000] flex items-center justify-center p-4">
+          <div className="bg-white rounded-none border border-black shadow-2xl w-full max-w-5xl max-h-[90vh] flex flex-col overflow-hidden">
             
             {/* Modal Header */}
-            <div className="p-6 border-b border-slate-100 bg-gradient-to-r from-emerald-900 to-emerald-800 flex items-center justify-between flex-shrink-0">
+            <div className="p-5 border-b border-neutral-200 bg-neutral-50 flex items-center justify-between flex-shrink-0">
               <div>
-                <h3 className="text-sm font-black text-white uppercase tracking-widest">All Bookings</h3>
-                <p className="text-[10px] text-emerald-300 font-medium mt-1">{allBookings.length} records found</p>
+                <h3 className="text-xs font-bold text-black uppercase tracking-widest">All Reservations</h3>
+                <p className="text-[10px] text-neutral-500 font-mono mt-0.5">{allBookings.length} records found</p>
               </div>
               <button 
                 onClick={() => setShowAllBookings(false)}
-                className="text-emerald-300 hover:text-white p-2 hover:bg-white/10 rounded-xl transition-all"
+                className="p-1.5 hover:bg-neutral-200 text-neutral-500 hover:text-black transition-colors rounded-none border border-neutral-300"
               >
-                <X size={18} />
+                <X size={16} />
               </button>
             </div>
 
             {/* Filters Bar */}
-            <div className="p-4 border-b border-slate-100 bg-slate-50/60 flex flex-wrap items-center gap-3 flex-shrink-0">
-              <div className="flex items-center gap-2 bg-white border border-slate-200 rounded-xl px-3 py-2 shadow-sm">
-                <Filter size={12} className="text-slate-400" />
-                <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Filter:</span>
+            <div className="p-4 border-b border-neutral-200 bg-white flex flex-wrap items-center gap-3 flex-shrink-0">
+              <div className="flex items-center gap-2 bg-neutral-100 border border-neutral-200 rounded-none px-3 py-1.5">
+                <Filter size={12} className="text-neutral-500" />
+                <span className="text-[9px] font-bold text-neutral-600 uppercase tracking-wider">Filter:</span>
               </div>
 
               {/* Date Filter */}
-              <div className="relative flex items-center bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden hover:border-emerald-400 transition-colors">
-                <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest pl-3 pr-1 whitespace-nowrap">Check-in Date</span>
+              <div className="relative flex items-center bg-white border border-neutral-300 rounded-none">
+                <span className="text-[8px] font-bold text-neutral-500 uppercase tracking-wider pl-3 pr-1 whitespace-nowrap">Check-in</span>
                 <input 
                   type="date"
                   value={filterDate}
                   onChange={e => setFilterDate(e.target.value)}
-                  className="text-xs font-bold text-slate-700 bg-transparent px-3 py-2 focus:outline-none min-w-[130px]"
+                  className="text-xs font-mono font-bold text-black bg-transparent px-2 py-1.5 focus:outline-none min-w-[130px]"
                 />
                 {filterDate && (
-                  <button onClick={() => setFilterDate('')} className="pr-2 text-slate-400 hover:text-rose-500">
+                  <button onClick={() => setFilterDate('')} className="pr-2 text-neutral-400 hover:text-black">
                     <X size={12} />
                   </button>
                 )}
               </div>
 
               {/* Room Filter */}
-              <div className="flex items-center bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden hover:border-emerald-400 transition-colors">
-                <Search size={12} className="ml-3 text-slate-400 shrink-0" />
+              <div className="flex items-center bg-white border border-neutral-300 rounded-none">
+                <Search size={12} className="ml-3 text-neutral-400 shrink-0" />
                 <input
                   type="text"
                   placeholder="Room name or number…"
                   value={filterRoom}
                   onChange={e => setFilterRoom(e.target.value)}
-                  className="text-xs font-bold text-slate-700 bg-transparent px-3 py-2 focus:outline-none w-44 placeholder:text-slate-300 placeholder:font-medium"
+                  className="text-xs font-bold text-black bg-transparent px-3 py-1.5 focus:outline-none w-44 placeholder:text-neutral-400"
                 />
                 {filterRoom && (
-                  <button onClick={() => setFilterRoom('')} className="pr-2 text-slate-400 hover:text-rose-500">
+                  <button onClick={() => setFilterRoom('')} className="pr-2 text-neutral-400 hover:text-black">
                     <X size={12} />
                   </button>
                 )}
               </div>
 
               {/* Status Filter */}
-              <div className="relative flex items-center bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden hover:border-emerald-400 transition-colors">
+              <div className="relative flex items-center bg-white border border-neutral-300 rounded-none">
                 <select
                   value={filterStatus}
                   onChange={e => setFilterStatus(e.target.value)}
-                  className="text-xs font-bold text-slate-700 bg-transparent pl-3 pr-8 py-2 focus:outline-none appearance-none min-w-[120px]"
+                  className="text-xs font-bold text-black bg-transparent pl-3 pr-8 py-1.5 focus:outline-none appearance-none min-w-[120px]"
                 >
                   <option value="">All Statuses</option>
                   <option value="confirmed">Confirmed</option>
@@ -698,13 +643,13 @@ export const ReceptionistDashboard = ({ onNavigate }: { onNavigate?: (tab: strin
                   <option value="pending">Pending</option>
                   <option value="cancelled">Cancelled</option>
                 </select>
-                <ChevronDown size={12} className="absolute right-2.5 text-slate-400 pointer-events-none" />
+                <ChevronDown size={12} className="absolute right-2.5 text-neutral-500 pointer-events-none" />
               </div>
 
               <button
                 onClick={fetchAllBookings}
                 disabled={allBookingsLoading}
-                className="bg-emerald-700 hover:bg-emerald-800 text-white text-[9px] font-black uppercase tracking-widest px-4 py-2 rounded-xl transition-all shadow-sm hover:shadow-md active:scale-95 disabled:opacity-60"
+                className="bg-black hover:bg-neutral-800 text-white text-[9px] font-bold uppercase tracking-wider px-4 py-2 rounded-none transition-colors disabled:opacity-50"
               >
                 {allBookingsLoading ? 'Searching…' : 'Search'}
               </button>
@@ -712,7 +657,7 @@ export const ReceptionistDashboard = ({ onNavigate }: { onNavigate?: (tab: strin
               {(filterDate || filterRoom || filterStatus) && (
                 <button
                   onClick={() => { setFilterDate(''); setFilterRoom(''); setFilterStatus(''); }}
-                  className="text-[9px] font-black text-rose-500 hover:text-rose-700 uppercase tracking-widest transition-colors"
+                  className="text-[9px] font-bold text-neutral-500 hover:text-black uppercase tracking-wider transition-colors"
                 >
                   Clear All
                 </button>
@@ -723,49 +668,49 @@ export const ReceptionistDashboard = ({ onNavigate }: { onNavigate?: (tab: strin
             <div className="flex-1 overflow-auto">
               {allBookingsLoading ? (
                 <div className="flex items-center justify-center py-20">
-                  <div className="w-8 h-8 border-4 border-emerald-600 border-t-transparent rounded-full animate-spin" />
+                  <div className="w-8 h-8 border-2 border-black border-t-transparent rounded-none animate-spin" />
                 </div>
               ) : (
-                <table className="w-full text-left min-w-[700px]">
-                  <thead className="sticky top-0 bg-slate-50 border-b border-slate-100">
-                    <tr className="text-[9px] font-black text-slate-400 uppercase tracking-widest">
-                      <th className="px-5 py-4">Booking ID</th>
-                      <th className="px-5 py-4">Guest</th>
-                      <th className="px-5 py-4">Check-in</th>
-                      <th className="px-5 py-4">Check-out</th>
-                      <th className="px-5 py-4">Room No.</th>
-                      <th className="px-5 py-4">Amount</th>
-                      <th className="px-5 py-4">Status</th>
+                <table className="w-full text-left text-xs min-w-[700px]">
+                  <thead className="sticky top-0 bg-neutral-100 border-b border-neutral-200">
+                    <tr className="text-[9px] font-bold text-neutral-600 uppercase tracking-wider">
+                      <th className="px-5 py-3">Booking ID</th>
+                      <th className="px-5 py-3">Guest</th>
+                      <th className="px-5 py-3">Check-in</th>
+                      <th className="px-5 py-3">Check-out</th>
+                      <th className="px-5 py-3">Room No.</th>
+                      <th className="px-5 py-3">Amount</th>
+                      <th className="px-5 py-3 text-right">Status</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-50">
+                  <tbody className="divide-y divide-neutral-100">
                     {allBookings.map((bk: any, i: number) => (
-                      <tr key={i} className="hover:bg-emerald-50/30 transition-colors group">
-                        <td className="px-5 py-3.5 text-[11px] font-bold text-emerald-800 font-mono">{bk.booking_id}</td>
-                        <td className="px-5 py-3.5">
-                          <p className="text-xs font-bold text-slate-800 uppercase tracking-tight">{bk.guest_name}</p>
-                          <p className="text-[9px] text-slate-400 font-medium mt-0.5">{bk.guest_phone || bk.guest_email || '—'}</p>
+                      <tr key={i} className="hover:bg-neutral-50 transition-colors">
+                        <td className="px-5 py-3 text-[11px] font-mono font-bold text-black">{bk.booking_id}</td>
+                        <td className="px-5 py-3">
+                          <p className="text-xs font-bold text-black uppercase">{bk.guest_name}</p>
+                          <p className="text-[9px] text-neutral-500 font-mono mt-0.5">{bk.guest_phone || bk.guest_email || '—'}</p>
                         </td>
-                        <td className="px-5 py-3.5 text-xs font-medium text-slate-500 font-sans">{bk.check_in_date}</td>
-                        <td className="px-5 py-3.5 text-xs font-medium text-slate-500 font-sans">{bk.check_out_date}</td>
-                        <td className="px-5 py-3.5 text-xs font-bold text-slate-700 font-sans">
+                        <td className="px-5 py-3 text-xs font-mono text-neutral-600">{bk.check_in_date}</td>
+                        <td className="px-5 py-3 text-xs font-mono text-neutral-600">{bk.check_out_date}</td>
+                        <td className="px-5 py-3 text-xs font-mono font-bold text-neutral-800">
                           {bk.status === 'confirmed' ? 'Pending' : (bk.rooms?.map((r: any) => r.room_number).join(', ') || bk.room_number || 'N/A')}
                         </td>
-                        <td className="px-5 py-3.5 text-xs font-bold text-slate-700">₹{Number(bk.total_amount || 0).toLocaleString('en-IN')}</td>
-                        <td className="px-5 py-3.5">
-                          <span className={`text-[9px] font-black px-2.5 py-1 rounded-full border uppercase tracking-wider ${
-                            bk.status === 'checked-in'  ? 'bg-emerald-50 border-emerald-200 text-emerald-800' :
-                            bk.status === 'confirmed'   ? 'bg-amber-50 border-amber-200 text-amber-800' :
-                            bk.status === 'checked-out' ? 'bg-slate-100 border-slate-200 text-slate-600' :
-                            bk.status === 'cancelled'   ? 'bg-rose-50 border-rose-200 text-rose-700' :
-                                                          'bg-slate-100 border-slate-200 text-slate-500'
+                        <td className="px-5 py-3 text-xs font-mono font-bold text-black">₹{Number(bk.total_amount || 0).toLocaleString('en-IN')}</td>
+                        <td className="px-5 py-3 text-right">
+                          <span className={`text-[8px] font-mono font-bold px-2 py-0.5 rounded-none border uppercase tracking-wider ${
+                            bk.status === 'checked-in'  ? 'bg-black text-white border-black' :
+                            bk.status === 'confirmed'   ? 'bg-neutral-800 text-white border-neutral-800' :
+                            bk.status === 'checked-out' ? 'bg-neutral-100 border-neutral-300 text-neutral-700' :
+                            bk.status === 'cancelled'   ? 'bg-neutral-100 border-neutral-200 text-neutral-400 line-through' :
+                                                          'bg-white border-neutral-300 text-neutral-600'
                           }`}>{bk.status}</span>
                         </td>
                       </tr>
                     ))}
                     {allBookings.length === 0 && (
                       <tr>
-                        <td colSpan={7} className="px-5 py-16 text-center text-slate-400 text-[10px] font-black uppercase tracking-widest">
+                        <td colSpan={7} className="px-5 py-16 text-center text-neutral-400 text-xs font-bold uppercase tracking-wider">
                           No bookings found matching the filters.
                         </td>
                       </tr>
@@ -776,11 +721,11 @@ export const ReceptionistDashboard = ({ onNavigate }: { onNavigate?: (tab: strin
             </div>
 
             {/* Footer */}
-            <div className="p-4 border-t border-slate-100 bg-slate-50/60 flex justify-between items-center flex-shrink-0">
-              <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">{allBookings.length} records shown</span>
+            <div className="p-4 border-t border-neutral-200 bg-neutral-50 flex justify-between items-center flex-shrink-0">
+              <span className="text-[9px] font-mono text-neutral-500 uppercase">{allBookings.length} records shown</span>
               <Button
                 onClick={() => setShowAllBookings(false)}
-                className="bg-emerald-800 hover:bg-emerald-900 text-[10px] uppercase font-black tracking-widest text-white px-5 py-2 rounded-lg shadow-md transition-all"
+                className="bg-black hover:bg-neutral-800 text-[10px] uppercase font-bold tracking-wider text-white px-5 py-2 rounded-none transition-colors"
               >
                 Close
               </Button>
@@ -791,3 +736,4 @@ export const ReceptionistDashboard = ({ onNavigate }: { onNavigate?: (tab: strin
     </div>
   );
 };
+

@@ -1,11 +1,15 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { Card, CardContent } from '../../../components/ui/card';
-import { CreditCard, Download, Filter, Check, Clock, Trash2, Search, X } from 'lucide-react';
+import { CreditCard, Download, Filter, Check, Clock, Trash2, Search, X, Printer, FileText } from 'lucide-react';
 import { API_BASE_URL, BACKEND_URL } from '../../../lib/api';
 
 const STATUS_OPTIONS = ['all', 'success', 'pending', 'failed'] as const;
 
-export const Settlements = () => {
+interface SettlementsProps {
+  onOpenReports?: () => void;
+}
+
+export const Settlements: React.FC<SettlementsProps> = ({ onOpenReports }) => {
   const [payments, setPayments] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -118,67 +122,67 @@ export const Settlements = () => {
     .reduce((sum, p) => sum + parseFloat(p.amount || 0), 0);
 
   return (
-    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+    <div className="space-y-6">
       {/* Header */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h2 className="text-2xl font-black text-slate-800 uppercase tracking-tighter">Financial Settlements</h2>
-          <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">Transaction Ledger & Revenue Flow</p>
+          <h2 className="text-xl font-semibold text-gray-900 tracking-tight">Financial Settlements</h2>
+          <p className="text-xs text-gray-500 mt-0.5">Transaction ledger and payment records</p>
         </div>
-        <div className="flex gap-3">
+        <div className="flex items-center gap-2">
           <div className="relative" ref={filterPanelRef}>
             <button
               onClick={() => setShowFilters(v => !v)}
-              className={`flex items-center gap-2 px-6 py-4 border rounded-2xl text-[10px] font-black uppercase transition-all shadow-sm ${
+              className={`flex items-center gap-1.5 px-3 py-1.5 border rounded-lg text-xs font-medium transition-colors shadow-xs ${
                 activeFilterCount > 0
-                  ? 'bg-emerald-700 border-emerald-700 text-white hover:bg-emerald-800'
-                  : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
+                  ? 'bg-emerald-50 border-emerald-300 text-emerald-700'
+                  : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50'
               }`}
             >
               <Filter size={14} /> Filter
               {activeFilterCount > 0 && (
-                <span className="ml-1 flex items-center justify-center w-4 h-4 rounded-full bg-white text-emerald-700 text-[9px]">{activeFilterCount}</span>
+                <span className="ml-1 flex items-center justify-center w-4 h-4 rounded-full bg-emerald-600 text-white text-[10px]">{activeFilterCount}</span>
               )}
             </button>
 
             {showFilters && (
-              <div className="absolute right-0 mt-2 w-80 bg-white rounded-2xl shadow-2xl border border-slate-100 p-6 z-20 space-y-5">
+              <div className="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-lg border border-gray-200 p-4 z-20 space-y-4">
                 <div className="flex items-center justify-between">
-                  <p className="text-[10px] font-black text-slate-700 uppercase tracking-widest">Filter Transactions</p>
+                  <p className="text-xs font-semibold text-gray-800">Filter Transactions</p>
                   {activeFilterCount > 0 && (
-                    <button onClick={clearFilters} className="text-[9px] font-bold text-rose-500 uppercase tracking-widest hover:text-rose-600">
+                    <button onClick={clearFilters} className="text-xs font-medium text-rose-600 hover:text-rose-700">
                       Clear all
                     </button>
                   )}
                 </div>
 
-                <div className="space-y-2">
-                  <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Search</label>
+                <div className="space-y-1.5">
+                  <label className="text-[11px] font-medium text-gray-500">Search</label>
                   <div className="relative">
-                    <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                    <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
                     <input
                       value={search}
                       onChange={e => setSearch(e.target.value)}
                       placeholder="Guest, booking ref, transaction ID"
-                      className="w-full pl-9 pr-8 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-200"
+                      className="w-full pl-8 pr-7 py-1.5 bg-white border border-gray-200 rounded-md text-xs text-gray-800 focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500"
                     />
                     {search && (
-                      <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
+                      <button onClick={() => setSearch('')} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
                         <X size={14} />
                       </button>
                     )}
                   </div>
                 </div>
 
-                <div className="space-y-2">
-                  <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Status</label>
-                  <div className="flex flex-wrap gap-2">
+                <div className="space-y-1.5">
+                  <label className="text-[11px] font-medium text-gray-500">Status</label>
+                  <div className="flex flex-wrap gap-1.5">
                     {STATUS_OPTIONS.map(s => (
                       <button
                         key={s}
                         onClick={() => setStatusFilter(s)}
-                        className={`px-3 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-wider transition-all ${
-                          statusFilter === s ? 'bg-emerald-700 text-white' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
+                        className={`px-2.5 py-1 rounded-md text-xs font-medium capitalize transition-colors ${
+                          statusFilter === s ? 'bg-emerald-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                         }`}
                       >
                         {s}
@@ -188,23 +192,23 @@ export const Settlements = () => {
                 </div>
 
                 {methods.length > 1 && (
-                  <div className="space-y-2">
-                    <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Method</label>
-                    <div className="flex flex-wrap gap-2">
+                  <div className="space-y-1.5">
+                    <label className="text-[11px] font-medium text-gray-500">Method</label>
+                    <div className="flex flex-wrap gap-1.5">
                       <button
                         onClick={() => setMethodFilter('all')}
-                        className={`px-3 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-wider transition-all ${
-                          methodFilter === 'all' ? 'bg-emerald-700 text-white' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
+                        className={`px-2.5 py-1 rounded-md text-xs font-medium capitalize transition-colors ${
+                          methodFilter === 'all' ? 'bg-emerald-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                         }`}
                       >
-                        all
+                        All
                       </button>
                       {methods.map(m => (
                         <button
                           key={m}
                           onClick={() => setMethodFilter(m)}
-                          className={`px-3 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-wider transition-all ${
-                            methodFilter === m ? 'bg-emerald-700 text-white' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
+                          className={`px-2.5 py-1 rounded-md text-xs font-medium capitalize transition-colors ${
+                            methodFilter === m ? 'bg-emerald-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                           }`}
                         >
                           {m}
@@ -214,165 +218,172 @@ export const Settlements = () => {
                   </div>
                 )}
 
-                <div className="space-y-2">
-                  <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Date Range</label>
+                <div className="space-y-1.5">
+                  <label className="text-[11px] font-medium text-gray-500">Date Range</label>
                   <div className="flex items-center gap-2">
                     <input
                       type="date"
                       value={dateFrom}
                       onChange={e => setDateFrom(e.target.value)}
-                      className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-[11px] font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-200"
+                      className="w-full px-2.5 py-1 bg-white border border-gray-200 rounded-md text-xs text-gray-700 focus:outline-none focus:ring-1 focus:ring-emerald-500"
                     />
-                    <span className="text-slate-300 text-xs">–</span>
+                    <span className="text-gray-400 text-xs">–</span>
                     <input
                       type="date"
                       value={dateTo}
                       onChange={e => setDateTo(e.target.value)}
-                      className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-[11px] font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-200"
+                      className="w-full px-2.5 py-1 bg-white border border-gray-200 rounded-md text-xs text-gray-700 focus:outline-none focus:ring-1 focus:ring-emerald-500"
                     />
                   </div>
                 </div>
               </div>
             )}
           </div>
-          <button className="flex items-center gap-2 px-6 py-4 bg-[#061c12] text-white rounded-2xl text-[10px] font-black uppercase tracking-widest shadow-xl hover:scale-105 active:scale-95 transition-all">
-            <Download size={14} /> Export
+          <button 
+            onClick={() => onOpenReports ? onOpenReports() : window.print()}
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-white hover:bg-gray-50 text-gray-800 border border-gray-300 rounded-lg text-xs font-semibold shadow-xs transition-colors cursor-pointer"
+            title="Download PDF or Print Official Report"
+          >
+            <Printer size={14} className="text-blue-600" />
+            <span>Official Report &amp; PDF</span>
           </button>
         </div>
       </div>
 
       {/* Summary row */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {[
           { label: 'Total Transactions', value: payments.length },
           { label: 'Successful', value: payments.filter(p => p.status === 'success').length },
           { label: 'Pending',    value: payments.filter(p => p.status === 'pending').length },
           { label: 'Revenue',    value: `₹ ${total.toLocaleString('en-IN')}` },
         ].map((s, i) => (
-          <div key={i} className="bg-white border border-slate-100 rounded-3xl p-6 shadow-sm">
-            <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest">{s.label}</p>
-            <p className="text-2xl font-black text-slate-800 mt-2">{s.value}</p>
+          <div key={i} className="crm-card bg-white border border-gray-200 rounded-lg p-4 shadow-xs">
+            <p className="text-[11px] font-medium text-gray-500 uppercase tracking-wider">{s.label}</p>
+            <p className="text-xl font-semibold text-gray-900 mt-1 tabular-nums">{s.value}</p>
           </div>
         ))}
       </div>
 
-      {/* Table */}
-      <Card className="border-none shadow-2xl rounded-[2.5rem] overflow-hidden bg-white">
+      {/* Table Box */}
+      <div className="crm-card bg-white border border-gray-200 rounded-lg shadow-xs overflow-hidden">
         {!loading && activeFilterCount > 0 && (
-          <div className="px-8 pt-6 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+          <div className="px-5 pt-3 pb-1 text-xs text-gray-500">
             Showing {filteredPayments.length} of {payments.length} transactions
           </div>
         )}
-        <CardContent className="p-0">
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
-              <thead>
-                <tr className="bg-slate-50 text-[10px] font-black text-slate-400 uppercase tracking-widest">
-                  <th className="px-6 py-6 border-b border-slate-100">Transaction ID</th>
-                  <th className="px-6 py-6 border-b border-slate-100">Guest</th>
-                  <th className="px-6 py-6 border-b border-slate-100">Booking Ref</th>
-                  <th className="px-6 py-6 border-b border-slate-100">Method</th>
-                  <th className="px-6 py-6 border-b border-slate-100">Date</th>
-                  <th className="px-6 py-6 border-b border-slate-100">Amount</th>
-                  <th className="px-6 py-6 border-b border-slate-100">Status</th>
-                  <th className="px-6 py-6 border-b border-slate-100 text-right">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-50">
-                {loading
-                  ? Array(5).fill(0).map((_, i) => (
-                      <tr key={i} className="animate-pulse">
-                        <td colSpan={8} className="px-6 py-6">
-                          <div className="h-4 bg-slate-100 rounded-lg w-full" />
-                        </td>
-                      </tr>
-                    ))
-                  : filteredPayments.map((pay, i) => (
-                      <tr key={i} className="hover:bg-emerald-50/30 transition-colors">
-                        <td className="px-6 py-6">
-                          <p className="text-[11px] font-black text-slate-700 flex items-center gap-2 whitespace-nowrap">
-                            <CreditCard size={13} className="text-emerald-500 shrink-0" />
-                            {pay.transaction_id || `TRX-${pay.id}`}
-                          </p>
-                        </td>
-                        <td className="px-6 py-6 text-xs font-black text-slate-800 uppercase whitespace-nowrap">
-                          {pay.guest_name || '—'}
-                        </td>
-                        <td className="px-6 py-6 text-xs font-bold text-slate-400 whitespace-nowrap">
-                          {pay.booking_ref ? (
-                            <button
-                              onClick={() => window.open(`${BACKEND_URL}/admin_view_booking.php?booking_id=${pay.booking_ref}`, '_blank')}
-                              className="text-emerald-700 hover:text-emerald-950 font-black hover:underline cursor-pointer tracking-wider transition-colors"
-                              title="Click to View Premium Invoice"
-                            >
-                              {pay.booking_ref}
-                            </button>
-                          ) : '—'}
-                        </td>
-                        <td className="px-6 py-6">
-                          <span className="px-3 py-1 bg-slate-100 rounded-lg text-[9px] font-black text-slate-500 uppercase tracking-widest whitespace-nowrap">
-                            {pay.payment_method || 'Online'}
-                          </span>
-                        </td>
-                        <td className="px-6 py-6 text-xs font-medium text-slate-400 whitespace-nowrap">
-                          {pay.payment_date ? new Date(pay.payment_date).toLocaleDateString('en-IN') : '—'}
-                        </td>
-                        <td className="px-6 py-6">
-                          <p className="text-sm font-black text-emerald-700 whitespace-nowrap">
-                            ₹ {parseFloat(pay.amount).toLocaleString('en-IN')}
-                          </p>
-                        </td>
-                        <td className="px-6 py-6">
-                          <span className={`px-4 py-1.5 rounded-full text-[9px] font-black uppercase tracking-tighter whitespace-nowrap ${
-                            pay.status === 'success'   ? 'bg-emerald-100 text-emerald-700' :
-                            pay.status === 'pending'   ? 'bg-amber-100   text-amber-700'   :
-                                                         'bg-rose-100    text-rose-700'
-                          }`}>
-                            {pay.status}
-                          </span>
-                        </td>
-                        <td className="px-6 py-6 text-right">
-                          <div className="flex items-center justify-end gap-1.5">
-                            <button
-                              onClick={() => handleUpdateStatus(pay.id, 'success')}
-                              disabled={pay.status === 'success'}
-                              title="Mark as paid"
-                              className="w-8 h-8 flex items-center justify-center bg-emerald-700 hover:bg-emerald-800 disabled:opacity-30 disabled:hover:bg-emerald-700 text-white rounded-lg transition-all"
-                            >
-                              <Check size={14} />
-                            </button>
-                            <button
-                              onClick={() => handleUpdateStatus(pay.id, 'pending')}
-                              disabled={pay.status === 'pending'}
-                              title="Mark as pending"
-                              className="w-8 h-8 flex items-center justify-center bg-amber-600 hover:bg-amber-700 disabled:opacity-30 disabled:hover:bg-amber-600 text-white rounded-lg transition-all"
-                            >
-                              <Clock size={14} />
-                            </button>
-                            <button
-                              onClick={() => handleDelete(pay.id)}
-                              title="Cancel & delete"
-                              className="w-8 h-8 flex items-center justify-center bg-rose-600 hover:bg-rose-700 text-white rounded-lg transition-all focus:ring-2 focus:ring-rose-200"
-                            >
-                              <Trash2 size={14} />
-                            </button>
+        <div className="overflow-x-auto">
+          <table className="w-full text-left border-collapse">
+            <thead>
+              <tr className="bg-gray-50/75 text-[11px] font-semibold text-gray-500 uppercase tracking-wider border-b border-gray-200">
+                <th className="px-4 py-3">Transaction ID</th>
+                <th className="px-4 py-3">Guest</th>
+                <th className="px-4 py-3">Booking Ref</th>
+                <th className="px-4 py-3">Method</th>
+                <th className="px-4 py-3">Date</th>
+                <th className="px-4 py-3">Amount</th>
+                <th className="px-4 py-3">Status</th>
+                <th className="px-4 py-3 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-100 text-xs">
+              {loading
+                ? Array(5).fill(0).map((_, i) => (
+                    <tr key={i} className="animate-pulse">
+                      <td colSpan={8} className="px-4 py-3">
+                        <div className="h-4 bg-gray-100 rounded-md w-full" />
+                      </td>
+                    </tr>
+                  ))
+                : filteredPayments.map((pay, i) => (
+                    <tr key={i} className="hover:bg-gray-50/60 transition-colors">
+                      <td className="px-4 py-3 font-medium text-gray-800">
+                        <span className="flex items-center gap-1.5">
+                          <CreditCard size={13} className="text-gray-400 shrink-0" />
+                          {pay.transaction_id || `TRX-${pay.id}`}
+                        </span>
+                      </td>
+                      <td className="px-4 py-3 font-medium text-gray-900">
+                        {pay.guest_name || '—'}
+                      </td>
+                      <td className="px-4 py-3 text-gray-600">
+                        {pay.booking_ref ? (
+                          <button
+                            onClick={() => window.open(`${BACKEND_URL}/admin_view_booking.php?booking_id=${pay.booking_ref}`, '_blank')}
+                            className="text-emerald-700 hover:text-emerald-900 font-medium hover:underline cursor-pointer"
+                            title="Click to View Invoice"
+                          >
+                            {pay.booking_ref}
+                          </button>
+                        ) : '—'}
+                      </td>
+                      <td className="px-4 py-3">
+                        <span className="px-2 py-0.5 bg-gray-100 rounded text-[11px] font-medium text-gray-600">
+                          {pay.payment_method || 'Online'}
+                        </span>
+                      </td>
+                      <td className="px-4 py-3 text-gray-500 tabular-nums">
+                        {pay.payment_date ? new Date(pay.payment_date).toLocaleDateString('en-IN') : '—'}
+                      </td>
+                      <td className="px-4 py-3 font-semibold text-gray-900 tabular-nums">
+                        <div>₹ {parseFloat(pay.amount).toLocaleString('en-IN')}</div>
+                        {(parseFloat(pay.platform_fee) > 0 || (pay.total_amount && parseFloat(pay.total_amount) > parseFloat(pay.amount))) && (
+                          <div className="text-[10px] text-gray-500 font-normal">
+                            Inv: ₹{parseFloat(pay.total_amount || pay.gross_amount).toLocaleString('en-IN')}
+                            {parseFloat(pay.platform_fee) > 0 && <span className="text-rose-600"> (Fee: -₹{parseFloat(pay.platform_fee).toLocaleString('en-IN')})</span>}
                           </div>
-                        </td>
-                      </tr>
-                    ))}
+                        )}
+                      </td>
+                      <td className="px-4 py-3">
+                        <span className={`inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium ${
+                          pay.status === 'success'   ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' :
+                          pay.status === 'pending'   ? 'bg-amber-50 text-amber-700 border border-amber-200' :
+                                                       'bg-rose-50 text-rose-700 border border-rose-200'
+                        }`}>
+                          {pay.status}
+                        </span>
+                      </td>
+                      <td className="px-4 py-3 text-right">
+                        <div className="flex items-center justify-end gap-1">
+                          <button
+                            onClick={() => handleUpdateStatus(pay.id, 'success')}
+                            disabled={pay.status === 'success'}
+                            title="Mark as paid"
+                            className="w-7 h-7 flex items-center justify-center bg-white border border-gray-200 hover:bg-emerald-50 hover:border-emerald-300 hover:text-emerald-700 disabled:opacity-30 text-gray-600 rounded-md transition-colors"
+                          >
+                            <Check size={13} />
+                          </button>
+                          <button
+                            onClick={() => handleUpdateStatus(pay.id, 'pending')}
+                            disabled={pay.status === 'pending'}
+                            title="Mark as pending"
+                            className="w-7 h-7 flex items-center justify-center bg-white border border-gray-200 hover:bg-amber-50 hover:border-amber-300 hover:text-amber-700 disabled:opacity-30 text-gray-600 rounded-md transition-colors"
+                          >
+                            <Clock size={13} />
+                          </button>
+                          <button
+                            onClick={() => handleDelete(pay.id)}
+                            title="Cancel & delete"
+                            className="w-7 h-7 flex items-center justify-center bg-white border border-gray-200 hover:bg-rose-50 hover:border-rose-300 hover:text-rose-700 text-gray-600 rounded-md transition-colors"
+                          >
+                            <Trash2 size={13} />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
 
-                {!loading && filteredPayments.length === 0 && (
-                  <tr>
-                    <td colSpan={8} className="px-8 py-24 text-center text-slate-400 font-black uppercase tracking-widest">
-                      {payments.length === 0 ? 'No payment records found' : 'No transactions match these filters'}
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
-        </CardContent>
-      </Card>
+              {!loading && filteredPayments.length === 0 && (
+                <tr>
+                  <td colSpan={8} className="px-4 py-12 text-center text-gray-400 font-medium">
+                    {payments.length === 0 ? 'No payment records found' : 'No transactions match these filters'}
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
 };

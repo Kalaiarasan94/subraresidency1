@@ -64,7 +64,8 @@ foreach ($databasesToTry as $config) {
             'receptionist_notifications',
             'room_availability',
             'bookings',
-            'users'
+            'users',
+            'expenses'
         ];
 
         foreach ($tables as $table) {

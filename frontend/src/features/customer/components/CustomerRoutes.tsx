@@ -33,6 +33,7 @@ export const CustomerRoutes = ({ onBookRoom, onSelectTemple, onRoomClick, search
         <Route path="/contact" element={<PageTransition><ThankYouPage /></PageTransition>} />
         <Route path="/bookings" element={<PageTransition><BookingPage /></PageTransition>} />
         <Route path="/checkin-confirm/:bookingId" element={<CheckinConfirmPage />} />
+        <Route path="/checkin/confirm/:bookingId" element={<CheckinConfirmPage />} />
       </Routes>
     </AnimatePresence>
   );

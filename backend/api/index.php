@@ -116,6 +116,10 @@ switch ($resource) {
             } elseif ($subAction === 'updateGuests') {
                 include_once __DIR__ . '/admin/bookings/update_guests.php';
             }
+        } elseif ($sub === 'notifications') {
+            include_once __DIR__ . '/receptionist/notifications.php';
+        } elseif ($sub === 'markRead') {
+            include_once __DIR__ . '/receptionist/mark_read.php';
         }
         break;
 
@@ -229,6 +233,28 @@ switch ($resource) {
             $controller->updateUser();
         } elseif ($action == 'delete') {
             $controller->deleteUser();
+        }
+        break;
+
+    case 'accounts':
+        include_once __DIR__ . '/../controllers/AccountsController.php';
+        $controller = new AccountsController();
+        if ($action == 'summary') {
+            $controller->getSummary();
+        }
+        break;
+
+    case 'expenses':
+        include_once __DIR__ . '/../controllers/AccountsController.php';
+        $controller = new AccountsController();
+        if ($action == 'list') {
+            $controller->getExpenses();
+        } elseif ($action == 'create') {
+            $controller->createExpense();
+        } elseif ($action == 'update') {
+            $controller->updateExpense();
+        } elseif ($action == 'delete') {
+            $controller->deleteExpense();
         }
         break;
 

@@ -1,626 +1,956 @@
 <?php
+// backend/admin_view_booking.php
 $env = @parse_ini_file(__DIR__ . '/.env');
 $appUrl = rtrim(($env['APP_URL'] ?? 'http://localhost/subraresidency1'), '/');
+
+// Base64 Logo for 100% reliable print & rendering
+$logoPath = __DIR__ . '/assets/logo.png';
+$logoBase64 = file_exists($logoPath) ? 'data:image/png;base64,' . base64_encode(file_get_contents($logoPath)) : '';
 ?>
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Subra Residency - Booking Invoice</title>
+  <title>Subra Residency - Official GST Tax Invoice</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --green: #0f3a20;
-      --gold: #cda052;
-      --text-dark: #1e293b;
-      --text-muted: #64748b;
-      --slate-400: #94a3b8;
+      --primary: #0a3622;
+      --primary-light: #135235;
+      --gold: #b38728;
+      --gold-dark: #8c6716;
+      --gold-light: #fbf5e8;
+      --gold-border: rgba(179, 135, 40, 0.35);
+      --dark: #0f172a;
+      --slate-600: #475569;
       --slate-500: #64748b;
-      --slate-700: #334155;
-      --slate-800: #1e293b;
-      --bg-slate: #f8fafc;
-      --border-light: #f1f5f9;
-      --border-gray: #e2e8f0;
-      --emerald-50: #ecfdf5;
-      --emerald-100: #d1fae5;
+      --slate-400: #94a3b8;
+      --slate-100: #f1f5f9;
+      --slate-50: #f8fafc;
+      --border: #e2e8f0;
       --emerald-600: #059669;
-      --emerald-700: #047857;
-      --emerald-800: #065f46;
-      --amber-50: #fffbeb;
-      --amber-100: #fef3c7;
-      --amber-600: #d97706;
-      --amber-700: #b45309;
+      --emerald-50: #ecfdf5;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: 'Outfit', sans-serif;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       background-color: #f1f5f9;
-      color: var(--text-dark);
-      padding: 40px 20px;
-      -webkit-print-color-adjust: exact;
-      print-color-adjust: exact;
+      color: var(--dark);
+      padding: 30px 16px;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+      line-height: 1.45;
     }
 
-    .container { max-width: 800px; margin: 0 auto; }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+    }
 
-    /* Actions Bar */
+    /* Top Control Bar */
     .actions-bar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: white;
-      padding: 16px 32px;
-      border-radius: 20px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      background: #ffffff;
+      padding: 14px 24px;
+      border-radius: 14px;
+      box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.08);
       margin-bottom: 24px;
+      border: 1px solid var(--border);
+    }
+
+    .actions-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .badge-portal {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      background: var(--gold-light);
+      color: var(--gold-dark);
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--gold-border);
     }
 
     .actions-title {
       font-size: 14px;
       font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      color: var(--text-muted);
+      color: var(--dark);
     }
 
-    .btn-print {
-      background: var(--green);
-      color: white;
-      border: none;
-      padding: 12px 28px;
+    .actions-btn-group {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn {
+      padding: 9px 20px;
       font-size: 12px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      border-radius: 12px;
+      font-weight: 700;
+      border-radius: 8px;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      transition: all 0.2s ease;
-      box-shadow: 0 4px 12px rgba(11, 58, 36, 0.2);
+      gap: 7px;
+      transition: all 0.2s;
+      text-decoration: none;
+      border: none;
+    }
+
+    .btn-print {
+      background: var(--primary);
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(10, 54, 34, 0.25);
     }
 
     .btn-print:hover {
-      background: #061c12;
+      background: var(--primary-light);
       transform: translateY(-1px);
-      box-shadow: 0 6px 16px rgba(11, 58, 36, 0.3);
     }
 
-    /* Invoice Page */
-    .page {
-      background: white;
-      border-radius: 28px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.08);
-      border: 8px double var(--gold);
-      padding: 48px;
+    .btn-outline {
+      background: #ffffff;
+      color: var(--slate-600);
+      border: 1px solid var(--border);
+    }
+
+    .btn-outline:hover {
+      background: var(--slate-50);
+      color: var(--dark);
+    }
+
+    /* Invoice Paper */
+    .invoice-card {
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 10px 35px -5px rgba(15, 23, 42, 0.08);
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      padding: 40px 44px;
       position: relative;
     }
 
-    .loading {
-      text-align: center;
-      padding: 40px;
-      font-size: 16px;
-      font-weight: 600;
-      color: var(--green);
+    /* Top Golden Accent Line */
+    .invoice-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(90deg, var(--primary) 0%, var(--gold) 50%, var(--primary) 100%);
+      border-top-left-radius: 16px;
+      border-top-right-radius: 16px;
     }
 
     /* Header */
-    .header {
+    .inv-header {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      gap: 24px;
-      padding-bottom: 28px;
-      border-bottom: 1px solid rgba(205, 160, 82, 0.2);
-      flex-wrap: wrap;
+      padding-bottom: 24px;
+      border-bottom: 2px solid var(--gold-light);
+      gap: 20px;
     }
 
-    .hotel-name {
-      font-family: 'Playfair Display', serif;
-      font-size: 26px;
-      font-weight: 900;
-      letter-spacing: 0.06em;
-      color: var(--green);
-    }
-
-    .hotel-tagline {
-      font-size: 10px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.25em;
-      color: var(--slate-400);
-      margin-top: 6px;
-    }
-
-    .hotel-address {
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--slate-500);
-      line-height: 1.6;
-      margin-top: 8px;
-    }
-
-    .header-right { text-align: right; }
-
-    .status-icon {
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      background: var(--emerald-50);
+    .inv-brand {
       display: flex;
       align-items: center;
-      justify-content: center;
-      margin-left: auto;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      gap: 18px;
     }
 
-    .status-icon.pending { background: var(--amber-50); }
-
-    .status-pill {
-      display: inline-block;
-      margin-top: 10px;
-      font-size: 10px;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      padding: 6px 16px;
-      border-radius: 999px;
-      background: var(--emerald-100);
-      color: var(--emerald-800);
+    .inv-logo {
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      padding: 4px;
+      background: #ffffff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
     }
 
-    .status-pill.pending { background: var(--amber-100); color: var(--amber-700); }
+    .inv-hotel-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      color: var(--primary);
+      line-height: 1.15;
+    }
 
-    .invoice-date {
+    .inv-legal-entity {
       font-size: 11px;
       font-weight: 700;
-      color: var(--slate-400);
-      margin-top: 8px;
-    }
-
-    /* Main layout */
-    .main-grid {
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-      gap: 40px;
-      margin-top: 32px;
-    }
-
-    .col-right {
-      border-left: 1px solid rgba(205, 160, 82, 0.2);
-      padding-left: 32px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 24px;
-    }
-
-    .label-gold {
-      font-size: 10px;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 0.25em;
-      color: var(--gold);
-      margin-bottom: 10px;
-    }
-
-    /* Invoice recipient */
-    .guest-name {
-      font-family: 'Playfair Display', serif;
-      font-size: 20px;
-      font-weight: 800;
-      color: var(--green);
-      margin-bottom: 10px;
-    }
-
-    .guest-meta {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 6px 16px;
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--slate-500);
-    }
-
-    .guest-meta div { display: flex; align-items: center; gap: 8px; }
-    .guest-meta svg { flex-shrink: 0; color: var(--slate-400); }
-
-    /* Booking meta card */
-    .meta-card {
-      background: rgba(248, 250, 252, 0.8);
-      border: 1px solid var(--border-light);
-      border-radius: 16px;
-      padding: 22px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 18px 24px;
-      margin: 28px 0;
-    }
-
-    .meta-card label {
-      display: block;
-      font-size: 9px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      color: var(--slate-400);
-      margin-bottom: 3px;
-    }
-
-    .meta-card span {
-      font-size: 13px;
-      font-weight: 800;
-      color: var(--green);
-    }
-
-    .meta-card span.plain { color: var(--slate-700); font-weight: 700; }
-
-    /* Table */
-    .bill-table { width: 100%; border-collapse: collapse; font-size: 12px; }
-
-    .bill-table th {
-      font-size: 10px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--slate-400);
-      padding-bottom: 10px;
-      border-bottom: 1px solid var(--border-gray);
-      text-align: left;
-    }
-
-    .bill-table th:nth-child(2) { text-align: center; }
-    .bill-table th:nth-child(3), .bill-table th:nth-child(4) { text-align: right; }
-
-    .bill-table td {
-      padding: 14px 0;
-      border-bottom: 1px solid var(--border-light);
-      font-weight: 600;
-      color: var(--slate-600, #475569);
-    }
-
-    .bill-table td:nth-child(2) { text-align: center; font-weight: 800; color: var(--slate-800); }
-    .bill-table td:nth-child(3), .bill-table td:nth-child(4) { text-align: right; font-weight: 800; color: var(--slate-800); }
-
-    .bill-table .desc-main { font-weight: 800; text-transform: uppercase; color: var(--slate-800); display: block; }
-    .bill-table .desc-sub { font-size: 10px; font-weight: 600; color: var(--slate-400); display: block; margin-top: 2px; }
-
-    .bill-table .total-label {
-      text-align: right;
-      font-weight: 800;
-      text-transform: uppercase;
-      font-size: 10px;
-      color: var(--slate-400);
-      border-bottom: none;
-    }
-
-    .bill-table .total-amount {
-      text-align: right;
-      font-weight: 900;
-      font-size: 16px;
-      color: var(--green);
-      border-bottom: none;
-    }
-
-    /* Reception QR */
-    .qr-wrap { text-align: center; }
-
-    .qr-box {
-      display: inline-block;
-      position: relative;
-      background: white;
-      border: 1px solid rgba(205, 160, 82, 0.2);
-      border-radius: 16px;
-      padding: 16px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-      margin-top: 6px;
-    }
-
-    .qr-box img { width: 150px; height: 150px; display: block; }
-
-    .qr-corner {
-      position: absolute;
-      width: 22px;
-      height: 22px;
-      border-color: var(--gold);
-    }
-    .qr-corner.tl { top: 4px; left: 4px; border-top: 2px solid; border-left: 2px solid; }
-    .qr-corner.tr { top: 4px; right: 4px; border-top: 2px solid; border-right: 2px solid; }
-    .qr-corner.bl { bottom: 4px; left: 4px; border-bottom: 2px solid; border-left: 2px solid; }
-    .qr-corner.br { bottom: 4px; right: 4px; border-bottom: 2px solid; border-right: 2px solid; }
-
-    .qr-caption {
-      font-size: 10px;
-      font-weight: 700;
+      color: var(--gold-dark);
+      margin-top: 3px;
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      color: var(--slate-500);
-      line-height: 1.6;
-      max-width: 190px;
-      margin: 14px auto 0;
     }
 
-    /* Paid stamp */
-    .stamp {
-      border: 2px dashed rgba(16, 185, 129, 0.3);
-      background: rgba(236, 253, 245, 0.5);
-      border-radius: 14px;
-      padding: 16px;
-      text-align: center;
-      transform: rotate(-3deg);
+    .inv-hotel-address {
+      font-size: 11px;
+      color: var(--slate-600);
+      margin-top: 5px;
+      line-height: 1.5;
+      max-width: 380px;
     }
 
-    .stamp.pending { border-color: rgba(217, 119, 6, 0.35); background: rgba(255, 251, 235, 0.6); }
-
-    .stamp-label {
-      font-size: 9px;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      color: var(--emerald-600);
-    }
-
-    .stamp.pending .stamp-label { color: var(--amber-600); }
-
-    .stamp-value {
-      font-family: 'Playfair Display', serif;
-      font-size: 18px;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--emerald-700);
-      display: flex;
+    .inv-gstin-tag {
+      display: inline-flex;
       align-items: center;
-      justify-content: center;
       gap: 6px;
+      background: var(--slate-50);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 3px 8px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--dark);
+      margin-top: 6px;
+    }
+
+    .inv-gstin-tag span {
+      color: var(--primary);
+      font-weight: 800;
+      letter-spacing: 0.05em;
+    }
+
+    .inv-header-meta {
+      text-align: right;
+    }
+
+    .inv-type-title {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: var(--primary);
+      text-transform: uppercase;
+    }
+
+    .inv-sub-type {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--slate-500);
+      text-transform: uppercase;
       margin-top: 2px;
     }
 
-    .stamp.pending .stamp-value { color: var(--amber-700); }
-
-    .stamp-txn {
-      font-size: 8px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--slate-400);
-      margin-top: 4px;
+    .inv-number-box {
+      margin-top: 10px;
+      background: var(--slate-50);
+      border: 1px solid var(--border);
+      padding: 8px 14px;
+      border-radius: 8px;
+      display: inline-block;
+      text-align: right;
     }
 
-    /* Footer */
-    .footer {
-      margin-top: 32px;
-      padding-top: 20px;
-      border-top: 1px solid var(--border-light);
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 8px;
+    .inv-num-label {
+      font-size: 9px;
+      font-weight: 700;
+      color: var(--slate-400);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .inv-num-value {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--dark);
+      font-family: monospace;
+    }
+
+    .inv-date-text {
+      font-size: 11px;
+      color: var(--slate-500);
+      margin-top: 4px;
+      font-weight: 600;
+    }
+
+    /* 2 Column Details Grid */
+    .inv-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      padding: 22px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .inv-grid-col {
+      background: var(--slate-50);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 20px;
+    }
+
+    .inv-grid-col-title {
       font-size: 10px;
       font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--slate-400);
+      letter-spacing: 0.12em;
+      color: var(--gold-dark);
+      margin-bottom: 10px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid rgba(179, 135, 40, 0.2);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
-    @media (max-width: 700px) {
-      .main-grid { grid-template-columns: 1fr; }
-      .col-right { border-left: none; padding-left: 0; border-top: 1px solid rgba(205, 160, 82, 0.2); padding-top: 24px; }
-      .guest-meta { grid-template-columns: 1fr; }
-      .meta-card { grid-template-columns: 1fr; }
-      .header { flex-direction: column; }
-      .header-right { text-align: left; }
-      .status-icon { margin-left: 0; }
+    .inv-guest-name {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 6px;
+    }
+
+    .inv-info-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      margin-bottom: 5px;
+      color: var(--slate-600);
+    }
+
+    .inv-info-row .label {
+      color: var(--slate-500);
+      font-weight: 600;
+    }
+
+    .inv-info-row .val {
+      font-weight: 700;
+      color: var(--dark);
+      text-align: right;
+    }
+
+    .channel-badge {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: #e0f2fe;
+      color: #0369a1;
+      display: inline-block;
+    }
+
+    /* Table */
+    .inv-table-wrap {
+      margin: 22px 0;
+    }
+
+    .inv-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+    }
+
+    .inv-table th {
+      background: var(--slate-100);
+      color: var(--slate-600);
+      font-weight: 800;
+      text-transform: uppercase;
+      font-size: 9.5px;
+      letter-spacing: 0.08em;
+      padding: 10px 12px;
+      text-align: left;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .inv-table th.tar, .inv-table td.tar {
+      text-align: right;
+    }
+
+    .inv-table th.tac, .inv-table td.tac {
+      text-align: center;
+    }
+
+    .inv-table td {
+      padding: 12px 12px;
+      border-bottom: 1px solid var(--border);
+      color: var(--dark);
+      font-weight: 600;
+      vertical-align: middle;
+    }
+
+    .inv-table td .item-title {
+      font-weight: 700;
+      color: var(--primary);
+      font-size: 12px;
+      display: block;
+    }
+
+    .inv-table td .item-sub {
+      font-size: 10px;
+      color: var(--slate-500);
+      margin-top: 2px;
+      display: block;
+    }
+
+    .sac-code {
+      font-family: monospace;
+      font-weight: 700;
+      color: var(--slate-600);
+      font-size: 10px;
+    }
+
+    /* Summary & Calculation Layout */
+    .inv-calc-section {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 24px;
+      padding-top: 12px;
+    }
+
+    .inv-words-box {
+      background: var(--slate-50);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+    }
+
+    .words-label {
+      font-size: 9.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--slate-400);
+      margin-bottom: 4px;
+    }
+
+    .words-text {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--primary);
+      font-style: italic;
+    }
+
+    .inv-stamp-wrap {
+      margin-top: 14px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .paid-stamp {
+      border: 2px dashed #059669;
+      background: var(--emerald-50);
+      color: #047857;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-weight: 900;
+      font-size: 13px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .paid-stamp.pending {
+      border-color: #d97706;
+      background: #fffbeb;
+      color: #b45309;
+    }
+
+    .inv-totals-box {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 18px;
+    }
+
+    .total-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 5px 0;
+      font-size: 11px;
+      color: var(--slate-600);
+    }
+
+    .total-row.tax-split {
+      font-size: 10.5px;
+      color: var(--slate-500);
+      padding-left: 10px;
+    }
+
+    .total-row.grand-total {
+      border-top: 2px solid var(--gold-light);
+      margin-top: 6px;
+      padding-top: 8px;
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .total-row.grand-total .val {
+      font-size: 18px;
+      font-family: monospace;
+      color: var(--primary);
+    }
+
+    /* Verification & Signatory Section */
+    .inv-bottom-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 28px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    .terms-box {
+      font-size: 9.5px;
+      color: var(--slate-500);
+      line-height: 1.5;
+    }
+
+    .terms-title {
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--dark);
+      margin-bottom: 4px;
+    }
+
+    .terms-box ol {
+      padding-left: 14px;
+    }
+
+    .terms-box li {
+      margin-bottom: 2px;
+    }
+
+    .signatory-box {
+      text-align: right;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: flex-end;
+    }
+
+    .signatory-company {
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--dark);
+    }
+
+    .signatory-space {
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      color: var(--gold-dark);
+      font-size: 15px;
+      opacity: 0.85;
+    }
+
+    .signatory-line {
+      width: 180px;
+      border-top: 1px solid var(--border);
+      padding-top: 4px;
+      font-size: 9.5px;
+      font-weight: 700;
+      color: var(--slate-500);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Footer Note */
+    .inv-footer {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 9.5px;
+      color: var(--slate-400);
+      font-weight: 600;
+      letter-spacing: 0.04em;
     }
 
     /* Print Styles */
     @media print {
-      body { background: white; padding: 0; }
-      .actions-bar { display: none; }
-      .page { box-shadow: none; }
+      body {
+        background: #ffffff !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+      .actions-bar {
+        display: none !important;
+      }
+      .container {
+        max-width: 100% !important;
+        width: 100% !important;
+      }
+      .invoice-card {
+        border: none !important;
+        box-shadow: none !important;
+        padding: 20px 24px !important;
+        border-radius: 0 !important;
+      }
+      .invoice-card::before {
+        display: none !important;
+      }
+      @page {
+        size: A4 portrait;
+        margin: 10mm;
+      }
     }
   </style>
 </head>
 <body>
 
 <div class="container">
-  <!-- Actions Bar -->
+  <!-- Top Bar -->
   <div class="actions-bar">
-    <div class="actions-title">Management Invoice Portal</div>
-    <button class="btn-print" onclick="window.print()">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"></path><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
-      Print Invoice
-    </button>
+    <div class="actions-left">
+      <span class="badge-portal">GST Certified</span>
+      <div class="actions-title">Official Tax Invoice &bull; Subra Residency</div>
+    </div>
+    <div class="actions-btn-group">
+      <button class="btn btn-outline" onclick="window.history.back()">
+        &larr; Back
+      </button>
+      <button class="btn btn-print" onclick="window.print()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"></path><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+        Print / Save PDF
+      </button>
+    </div>
   </div>
 
-  <!-- Printable Invoice Page -->
-  <div class="page" id="invoice-content">
-    <div class="loading">Fetching Reservation Invoice Folio...</div>
+  <!-- Invoice Sheet -->
+  <div class="invoice-card" id="invoice-sheet">
+    <div style="text-align: center; padding: 40px; color: var(--slate-500); font-weight: 600;">
+      Loading reservation details...
+    </div>
   </div>
 </div>
 
 <script>
   const APP_URL = <?php echo json_encode($appUrl); ?>;
+  const LOGO_DATA = <?php echo json_encode($logoBase64); ?>;
   const params = new URLSearchParams(location.search);
-  const id = params.get('booking_id');
-  const container = document.getElementById('invoice-content');
+  const bookingId = params.get('booking_id');
+  const sheet = document.getElementById('invoice-sheet');
 
-  const ICONS = {
-    mail: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z" opacity="0"></path><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-10 5L2 7"></path></svg>',
-    phone: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>',
-    globe: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M2 12h20"></path><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>',
-    pin: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>',
-    check: '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><path d="m22 4-10 10-3-3"></path></svg>',
-    checkSmall: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><path d="m22 4-10 10-3-3"></path></svg>',
-    clock: '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>'
-  };
+  function numberToWordsINR(amount) {
+    const num = Math.round(Number(amount));
+    if (isNaN(num) || num === 0) return 'Zero Rupees Only';
+    
+    const ones = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine',
+      'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
+    const tens = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+
+    function convertTwoDigits(n) {
+      if (n < 20) return ones[n];
+      const t = Math.floor(n / 10);
+      const o = n % 10;
+      return tens[t] + (o ? ' ' + ones[o] : '');
+    }
+
+    function convertThreeDigits(n) {
+      const h = Math.floor(n / 100);
+      const r = n % 100;
+      let res = '';
+      if (h) res += ones[h] + ' Hundred';
+      if (r) res += (res ? ' ' : '') + convertTwoDigits(r);
+      return res;
+    }
+
+    let n = num;
+    const crore = Math.floor(n / 10000000);
+    n %= 10000000;
+    const lakh = Math.floor(n / 100000);
+    n %= 100000;
+    const thousand = Math.floor(n / 1000);
+    n %= 1000;
+    const remainder = n;
+
+    let parts = [];
+    if (crore) parts.push(convertThreeDigits(crore) + ' Crore');
+    if (lakh) parts.push(convertThreeDigits(lakh) + ' Lakh');
+    if (thousand) parts.push(convertThreeDigits(thousand) + ' Thousand');
+    if (remainder) parts.push(convertThreeDigits(remainder));
+
+    return 'Indian Rupees ' + parts.join(' ') + ' Only';
+  }
 
   const esc = (v) => (v === null || v === undefined) ? '' : String(v).replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
-  if (!id) {
-    container.innerHTML = '<div class="loading" style="color: #ef4444;">Error: booking_id query parameter missing.</div>';
+  if (!bookingId) {
+    sheet.innerHTML = '<div style="color: #dc2626; text-align: center; padding: 40px; font-weight: 700;">Error: Booking ID parameter missing.</div>';
   } else {
-    fetch('api/index.php/admin/bookings/view?booking_id=' + encodeURIComponent(id))
-      .then(response => {
-        if (!response.ok) throw new Error('API server returned error code.');
-        return response.json();
-      })
+    fetch('api/index.php/admin/bookings/view?booking_id=' + encodeURIComponent(bookingId))
+      .then(res => res.json())
       .then(data => {
         if (data.status !== 'success' || !data.booking) {
-          container.innerHTML = '<div class="loading" style="color: #ef4444;">Booking reservation details not found.</div>';
+          sheet.innerHTML = '<div style="color: #dc2626; text-align: center; padding: 40px; font-weight: 700;">Booking record not found.</div>';
           return;
         }
 
         const b = data.booking;
-        const checkinDate = new Date(b.check_in_date);
-        const checkoutDate = new Date(b.check_out_date);
-        const diffTime = Math.abs(checkoutDate - checkinDate);
-        const nights = Math.max(1, Math.ceil(diffTime / (1000 * 60 * 60 * 24)));
-
         const total = parseFloat(b.total_amount || 0);
-        // Back-calculate Room Cost and GST to avoid tax float mismatch
-        const roomCost = Math.round((total / 1.18) * 100) / 100;
-        const tax = Math.round((total - roomCost) * 100) / 100;
-        const basePricePerNight = Math.round((roomCost / nights) * 100) / 100;
 
-        const inr = (v) => '₹' + Number(v || 0).toLocaleString('en-IN');
+        // Calculate nights
+        const cin = new Date(b.check_in_date);
+        const cout = new Date(b.check_out_date);
+        const diffDays = Math.max(1, Math.ceil(Math.abs(cout - cin) / (1000 * 60 * 60 * 24)));
 
-        const roomCategory = b.rooms && b.rooms.length > 0 ? b.rooms[0].room_name : 'Luxury Sanctuary';
-        const roomNumber = b.rooms && b.rooms.length > 0 ? b.rooms[0].room_number : null;
-        const sanctuaryLabel = roomCategory + (roomNumber ? ' (Room ' + roomNumber + ')' : '');
-        const isPaid = b.payment_status && b.payment_status.toLowerCase() === 'success';
+        // GST Breakdown (12% Standard Hotel Accommodation SAC 996311)
+        // 6% CGST + 6% SGST
+        const extraCharge = parseFloat(b.extra_guest_charge || 0);
+        const taxableTotal = Math.round((total / 1.12) * 100) / 100;
+        const totalGst = Math.round((total - taxableTotal) * 100) / 100;
+        const cgst = Math.round((totalGst / 2) * 100) / 100;
+        const sgst = Math.round((totalGst - cgst) * 100) / 100;
 
-        const invoiceDate = new Date(b.created_at || Date.now()).toISOString().split('T')[0];
-        const systemTimestamp = new Date(b.created_at || Date.now()).toLocaleString('en-IN');
+        const extraTaxable = extraCharge > 0 ? Math.round((extraCharge / 1.12) * 100) / 100 : 0;
+        const roomTaxable = Math.max(0, taxableTotal - extraTaxable);
+        const roomRatePerNight = Math.round((roomTaxable / diffDays) * 100) / 100;
 
-        const confirmUrl = APP_URL + '/checkin-confirm/' + encodeURIComponent(b.booking_id);
-        const qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=' + encodeURIComponent(confirmUrl);
+        const isPaid = (b.payment_status && b.payment_status.toLowerCase() === 'success');
+        const formattedDate = new Date(b.created_at || Date.now()).toLocaleDateString('en-IN', {
+          day: '2-digit', month: 'short', year: 'numeric'
+        });
 
-        container.innerHTML = `
-          <div class="header">
+        const roomName = (b.rooms && b.rooms[0] && b.rooms[0].room_name) || 'Executive Room';
+        const roomNumbers = (b.rooms && b.rooms.length > 0)
+          ? b.rooms.map(r => r.room_number).filter(Boolean).join(', ')
+          : 'Standard Assignment';
+
+        const sourceLabel = b.booking_source || 'Direct Online';
+        const inr = (v) => '₹' + Number(v || 0).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        const inrWhole = (v) => '₹' + Math.round(Number(v || 0)).toLocaleString('en-IN');
+
+        const logoHtml = LOGO_DATA 
+          ? `<img src="${LOGO_DATA}" alt="Subra Residency Logo" class="inv-logo" />`
+          : `<div class="inv-logo" style="display:flex;align-items:center;justify-content:center;background:#0a3622;color:#fff;font-weight:900;font-size:24px;">SR</div>`;
+
+        sheet.innerHTML = `
+          <!-- Header -->
+          <div class="inv-header">
+            <div class="inv-brand">
+              ${logoHtml}
+              <div>
+                <h1 class="inv-hotel-title">SUBRA RESIDENCY</h1>
+                <div class="inv-legal-entity">RAGUPATHI ANANDHALAKSHMI &bull; PROPRIETORSHIP</div>
+                <div class="inv-hotel-address">
+                  NO.45-1/1187B2, Lal Bahadur Sastry Road, Thanjavur, Tamil Nadu - 612001<br>
+                  Phone: +91 73958 09991 | 73958 09992 &bull; Email: subraresidency@gmail.com
+                </div>
+                <div class="inv-gstin-tag">
+                  GSTIN: <span>33AQQPA7394F2ZN</span> &bull; State: <span>Tamil Nadu (33)</span>
+                </div>
+              </div>
+            </div>
+            <div class="inv-header-meta">
+              <div class="inv-type-title">TAX INVOICE</div>
+              <div class="inv-sub-type">Original for Recipient</div>
+              <div class="inv-number-box">
+                <div class="inv-num-label">Invoice Reference</div>
+                <div class="inv-num-value">SR/2026/INV-${esc(b.id || b.booking_id)}</div>
+                <div class="inv-date-text">Date: ${esc(formattedDate)}</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2 Column Details Grid -->
+          <div class="inv-grid">
+            <!-- Left: Guest Details -->
+            <div class="inv-grid-col">
+              <div class="inv-grid-col-title">
+                <span>Billed To (Guest Details)</span>
+                <span style="color:var(--slate-400); font-size:9px;">Place of Supply: TN (33)</span>
+              </div>
+              <div class="inv-guest-name">${esc(b.guest_name || 'Walk-in Guest')}</div>
+              <div class="inv-info-row">
+                <span class="label">Mobile / Phone:</span>
+                <span class="val">${esc(b.guest_phone || '—')}</span>
+              </div>
+              <div class="inv-info-row">
+                <span class="label">Email Address:</span>
+                <span class="val">${esc(b.guest_email || '—')}</span>
+              </div>
+              <div class="inv-info-row">
+                <span class="label">Guest Address:</span>
+                <span class="val">${esc(b.address || 'Thanjavur, Tamil Nadu')}</span>
+              </div>
+              <div class="inv-info-row">
+                <span class="label">Country / State:</span>
+                <span class="val">${esc(b.country || 'India')} / Tamil Nadu</span>
+              </div>
+            </div>
+
+            <!-- Right: Stay Details -->
+            <div class="inv-grid-col">
+              <div class="inv-grid-col-title">
+                <span>Stay & Reservation Details</span>
+                <span class="channel-badge">${esc(sourceLabel)}</span>
+              </div>
+              <div class="inv-info-row">
+                <span class="label">Booking Ref ID:</span>
+                <span class="val" style="font-family:monospace; color:var(--primary); font-weight:800;">${esc(b.booking_id)}</span>
+              </div>
+              <div class="inv-info-row">
+                <span class="label">Room Category:</span>
+                <span class="val">${esc(roomName)}</span>
+              </div>
+              <div class="inv-info-row">
+                <span class="label">Assigned Room No:</span>
+                <span class="val" style="color:var(--primary); font-weight:800;">${esc(roomNumbers)}</span>
+              </div>
+              <div class="inv-info-row">
+                <span class="label">Check-In Arrival:</span>
+                <span class="val">${esc(b.check_in_date)} (12:00 PM)</span>
+              </div>
+              <div class="inv-info-row">
+                <span class="label">Check-Out Departure:</span>
+                <span class="val">${esc(b.check_out_date)} (11:00 AM)</span>
+              </div>
+              <div class="inv-info-row">
+                <span class="label">Stay Duration & Guests:</span>
+                <span class="val">${diffDays} Night(s) &bull; ${esc(b.guests || '1 Guest')}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Itemized Table -->
+          <div class="inv-table-wrap">
+            <table class="inv-table">
+              <thead>
+                <tr>
+                  <th style="width: 36px;" class="tac">#</th>
+                  <th>Service Description</th>
+                  <th class="tac">HSN / SAC</th>
+                  <th class="tac">Qty / Nights</th>
+                  <th class="tar">Rate per Night (₹)</th>
+                  <th class="tar">Taxable Value (₹)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="tac">1</td>
+                  <td>
+                    <span class="item-title">${esc(roomName)} Accommodations</span>
+                    <span class="item-sub">Room(s): ${esc(roomNumbers)} &bull; ${diffDays} Night(s) Stay</span>
+                  </td>
+                  <td class="tac"><span class="sac-code">996311</span></td>
+                  <td class="tac">${diffDays}</td>
+                  <td class="tar">${inr(roomRatePerNight)}</td>
+                  <td class="tar">${inr(roomTaxable)}</td>
+                </tr>
+                ${extraCharge > 0 ? `
+                <tr>
+                  <td class="tac">2</td>
+                  <td>
+                    <span class="item-title">Extra Guest / Additional Occupancy Charges</span>
+                    <span class="item-sub">Adults: ${b.extra_adults || 0}, Children: ${b.extra_children || 0}</span>
+                  </td>
+                  <td class="tac"><span class="sac-code">996311</span></td>
+                  <td class="tac">1</td>
+                  <td class="tar">${inr(extraTaxable)}</td>
+                  <td class="tar">${inr(extraTaxable)}</td>
+                </tr>
+                ` : ''}
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Calculation & Stamp -->
+          <div class="inv-calc-section">
             <div>
-              <div class="hotel-name">Subra Residency</div>
-              <div class="hotel-tagline">Stay Away From Home &bull; Kumbakonam</div>
-              <div class="hotel-address">
-                L.B.S Road, Near Railway Station, Kumbakonam, Tamil Nadu<br>
-                Ph: +91 73958 09991 | 73958 09992
+              <div class="inv-words-box">
+                <div class="words-label">Total Amount in Words</div>
+                <div class="words-text">${numberToWordsINR(total)}</div>
+              </div>
+
+              <div class="inv-stamp-wrap">
+                <div class="paid-stamp ${isPaid ? '' : 'pending'}">
+                  ${isPaid ? '&#10003; PAID & VERIFIED' : '&#9203; PAYMENT PENDING'}
+                </div>
+                ${b.transaction_id ? `
+                  <div style="font-size: 10px; color: var(--slate-500); font-family: monospace;">
+                    Txn Ref: <strong>${esc(b.transaction_id)}</strong>
+                  </div>
+                ` : ''}
               </div>
             </div>
-            <div class="header-right">
-              <div class="status-icon ${isPaid ? '' : 'pending'}" style="color: ${isPaid ? '#059669' : '#d97706'};">
-                ${isPaid ? ICONS.check : ICONS.clock}
+
+            <!-- Totals Box -->
+            <div class="inv-totals-box">
+              <div class="total-row">
+                <span>Total Taxable Amount:</span>
+                <span style="font-weight:700;">${inr(taxableTotal)}</span>
               </div>
-              <span class="status-pill ${isPaid ? '' : 'pending'}">${isPaid ? 'Booking Confirmed' : 'Payment Pending'}</span>
-              <div class="invoice-date">Invoice Date: ${esc(invoiceDate)}</div>
-            </div>
-          </div>
-
-          <div class="main-grid">
-            <div class="col-left">
-              <div class="label-gold">Invoice Recipient</div>
-              <div class="guest-name">${esc(b.guest_name || '—')}</div>
-              <div class="guest-meta">
-                <div>${ICONS.mail} ${esc(b.guest_email || '—')}</div>
-                <div>${ICONS.phone} ${esc(b.guest_phone || '—')}</div>
-                <div>${ICONS.globe} ${esc(b.country || '—')}</div>
-                <div>${ICONS.pin} ${esc(b.address || '—')}</div>
+              <div class="total-row tax-split">
+                <span>Central GST (CGST @ 6%):</span>
+                <span>${inr(cgst)}</span>
               </div>
-
-              <div class="meta-card">
-                <div>
-                  <label>Booking Identifier</label>
-                  <span>${esc(b.booking_id)}</span>
-                </div>
-                <div>
-                  <label>Assigned Sanctuary</label>
-                  <span>${esc(sanctuaryLabel)}</span>
-                </div>
-                <div>
-                  <label>Check-in Arrival</label>
-                  <span class="plain">${esc(b.check_in_date)}</span>
-                </div>
-                <div>
-                  <label>Check-out Departure</label>
-                  <span class="plain">${esc(b.check_out_date)}</span>
-                </div>
+              <div class="total-row tax-split">
+                <span>State GST (SGST @ 6%):</span>
+                <span>${inr(sgst)}</span>
               </div>
-
-              <div class="label-gold">Invoice Statement</div>
-              <table class="bill-table">
-                <thead>
-                  <tr>
-                    <th>Description</th>
-                    <th>Qty</th>
-                    <th>Price</th>
-                    <th>Amount</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>
-                      <span class="desc-main">${esc(roomCategory)}</span>
-                      <span class="desc-sub">Accomodation staying for ${nights} Night(s)</span>
-                    </td>
-                    <td>1</td>
-                    <td>${inr(basePricePerNight)}</td>
-                    <td>${inr(roomCost)}</td>
-                  </tr>
-                  <tr>
-                    <td><span class="desc-main" style="text-transform:none;">Goods &amp; Services Tax (GST)</span><span class="desc-sub">18% Standard Hospitality Levy</span></td>
-                    <td>1</td>
-                    <td>${inr(tax)}</td>
-                    <td>${inr(tax)}</td>
-                  </tr>
-                  <tr>
-                    <td colspan="2"></td>
-                    <td class="total-label">Grand Total</td>
-                    <td class="total-amount">${inr(total)}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <div class="col-right">
-              <div class="qr-wrap">
-                <div class="label-gold">Reception QR</div>
-                <div class="qr-box">
-                  <span class="qr-corner tl"></span>
-                  <span class="qr-corner tr"></span>
-                  <span class="qr-corner bl"></span>
-                  <span class="qr-corner br"></span>
-                  <img src="${qrUrl}" alt="Reception QR for ${esc(b.booking_id)}">
-                </div>
-                <p class="qr-caption">Please present this QR code at hotel front desk for an instant check-in.</p>
+              <div class="total-row" style="border-top:1px dashed var(--border); margin-top:4px; padding-top:4px;">
+                <span>Total Tax (GST 12%):</span>
+                <span style="font-weight:700; color:var(--primary);">${inr(totalGst)}</span>
               </div>
-
-              <div class="stamp ${isPaid ? '' : 'pending'}">
-                <div class="stamp-label">Secure Payment Status</div>
-                <div class="stamp-value">${isPaid ? ICONS.checkSmall : ''} ${isPaid ? 'Paid' : 'Pending'}</div>
-                ${b.transaction_id ? `<div class="stamp-txn">Txn ID: ${esc(b.transaction_id)}</div>` : ''}
+              <div class="total-row grand-total">
+                <span>Invoice Total:</span>
+                <span class="val">${inrWhole(total)}</span>
               </div>
             </div>
           </div>
 
-          <div class="footer">
-            <span>Authorized Subra Residency Digital Invoice</span>
-            <span>System Timestamp: ${esc(systemTimestamp)}</span>
+          <!-- Bottom: Terms & Signature -->
+          <div class="inv-bottom-section">
+            <div class="terms-box">
+              <div class="terms-title">Terms & Conditions &bull; GST Hospitality Compliance</div>
+              <ol>
+                <li>Goods & Services Tax (GST) applied under SAC Code 996311 as per Govt. of India regulations.</li>
+                <li>Check-out time is strictly 11:00 AM. Late check-out is subject to room availability and tariffs.</li>
+                <li>The registration certificate is prominently displayed at the principal place of business.</li>
+                <li>All disputes are subject to the exclusive jurisdiction of Thanjavur Courts.</li>
+              </ol>
+            </div>
+
+            <div class="signatory-box">
+              <div class="signatory-company">For SUBRA RESIDENCY</div>
+              <div class="signatory-space">Ragupathi Anandhalakshmi</div>
+              <div class="signatory-line">Authorized Signatory</div>
+            </div>
+          </div>
+
+          <!-- Footer -->
+          <div class="inv-footer">
+            This is a system generated GST Tax Invoice &bull; Subra Residency &bull; Lal Bahadur Sastry Road, Thanjavur
           </div>
         `;
+
         if (params.get('print') === '1') {
-          setTimeout(() => { window.print(); }, 500);
+          setTimeout(() => { window.print(); }, 400);
         }
       })
-      .catch(error => {
-        console.error(error);
-        container.innerHTML = '<div class="loading" style="color: #ef4444;">Error retrieving booking voucher. Please check database logs.</div>';
+      .catch(err => {
+        console.error(err);
+        sheet.innerHTML = '<div style="color: #dc2626; text-align: center; padding: 40px; font-weight: 700;">Error retrieving booking voucher.</div>';
       });
   }
 </script>
+
 </body>
 </html>

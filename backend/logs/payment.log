@@ -25730,3 +25730,2010 @@ Stack trace:
 [2026-08-04 09:52:03] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
 [2026-08-04 09:52:03] Error [2] Undefined array key "maintenance_start" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 104
 [2026-08-04 09:52:03] Error [2] Undefined array key "maintenance_end" in C:\xampp\htdocs\subraresidency1\backend\controllers\RoomController.php on line 105
+[2026-10-14 14:11:23] INDEX.PHP REACHED
+[2026-10-14 14:11:23] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-14 14:11:23] Database Connection error: SQLSTATE[HY000] [2002] No such file or directory
+[2026-10-14 14:11:23] Fatal Error: Uncaught Error: Call to a member function exec() on null in /Users/kirtheeshh/Desktop/PROJECTS/subraresidency1/backend/api/receptionist/notifications.php:19
+Stack trace:
+#0 /Users/kirtheeshh/Desktop/PROJECTS/subraresidency1/backend/api/index.php(159): include_once()
+#1 {main}
+  thrown in /Users/kirtheeshh/Desktop/PROJECTS/subraresidency1/backend/api/receptionist/notifications.php on line 19
+[2026-10-14 18:37:41] INDEX.PHP REACHED
+[2026-10-14 18:37:41] REQUEST: GET /api/index.php/accounts/summary (Path: /accounts/summary)
+[2026-10-14 18:37:46] INDEX.PHP REACHED
+[2026-10-14 18:37:46] REQUEST: GET /api/index.php/expenses/list (Path: /expenses/list)
+[2026-10-14 18:37:55] INDEX.PHP REACHED
+[2026-10-14 18:37:55] REQUEST: GET /api/index.php/admin/bookings/view?booking_id=HBK202610144E42 (Path: /admin/bookings/view)
+[2026-10-14 19:10:39] INDEX.PHP REACHED
+[2026-10-14 19:10:39] REQUEST: POST /api/index.php/auth/admin (Path: /auth/admin)
+[2026-10-14 19:10:46] INDEX.PHP REACHED
+[2026-10-14 19:10:46] REQUEST: POST /api/index.php/auth/receptionist (Path: /auth/receptionist)
+[2026-10-14 19:22:03] INDEX.PHP REACHED
+[2026-10-14 19:22:03] REQUEST: POST /api/index.php/bookings/qrScan (Path: /bookings/qrScan)
+[2026-10-15 04:49:51] INDEX.PHP REACHED
+[2026-10-15 04:49:51] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 04:50:40] INDEX.PHP REACHED
+[2026-10-15 04:50:40] REQUEST: GET /api/index.php/bookings/view?booking_id=HBK202610144E42 (Path: /bookings/view)
+[2026-10-15 07:44:06] INDEX.PHP REACHED
+[2026-10-15 07:44:06] REQUEST: POST /api/index.php/bookings/qrScan (Path: /bookings/qrScan)
+[2026-10-15 07:44:14] INDEX.PHP REACHED
+[2026-10-15 07:44:14] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:45:25] INDEX.PHP REACHED
+[2026-10-15 07:45:25] REQUEST: GET /api/index.php/bookings/view?booking_id=HBK202610144E42 (Path: /bookings/view)
+[2026-10-15 07:49:27] INDEX.PHP REACHED
+[2026-10-15 07:49:27] REQUEST: GET /api/index.php/accounts/summary (Path: /accounts/summary)
+[2026-10-15 07:49:40] INDEX.PHP REACHED
+[2026-10-15 07:49:40] REQUEST: GET /api/index.php/accounts/summary?start_date=2026-10-01&end_date=2026-10-31 (Path: /accounts/summary)
+[2026-10-15 07:50:06] INDEX.PHP REACHED
+[2026-10-15 07:50:06] REQUEST: GET /api/index.php/accounts/summary (Path: /accounts/summary)
+[2026-10-15 07:58:25] INDEX.PHP REACHED
+[2026-10-15 07:58:25] REQUEST: GET /api/index.php/management/settlements (Path: /management/settlements)
+[2026-10-15 07:58:25] INDEX.PHP REACHED
+[2026-10-15 07:58:25] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:58:25] INDEX.PHP REACHED
+[2026-10-15 07:58:25] REQUEST: GET /api/index.php/accounts/summary?start_date=2026-10-01&end_date=2026-10-31 (Path: /accounts/summary)
+[2026-10-15 07:58:25] INDEX.PHP REACHED
+[2026-10-15 07:58:25] REQUEST: GET /api/index.php/management/settlements (Path: /management/settlements)
+[2026-10-15 07:58:25] INDEX.PHP REACHED
+[2026-10-15 07:58:25] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:58:25] INDEX.PHP REACHED
+[2026-10-15 07:58:25] REQUEST: GET /api/index.php/accounts/summary?start_date=2026-10-01&end_date=2026-10-31 (Path: /accounts/summary)
+[2026-10-15 07:58:25] INDEX.PHP REACHED
+[2026-10-15 07:58:25] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:58:25] INDEX.PHP REACHED
+[2026-10-15 07:58:25] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:58:26] INDEX.PHP REACHED
+[2026-10-15 07:58:26] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:58:29] INDEX.PHP REACHED
+[2026-10-15 07:58:29] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:58:31] INDEX.PHP REACHED
+[2026-10-15 07:58:31] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:58:32] INDEX.PHP REACHED
+[2026-10-15 07:58:32] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:58:35] INDEX.PHP REACHED
+[2026-10-15 07:58:35] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:58:36] INDEX.PHP REACHED
+[2026-10-15 07:58:36] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:58:38] INDEX.PHP REACHED
+[2026-10-15 07:58:38] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:58:41] INDEX.PHP REACHED
+[2026-10-15 07:58:41] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:58:41] INDEX.PHP REACHED
+[2026-10-15 07:58:41] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:58:44] INDEX.PHP REACHED
+[2026-10-15 07:58:44] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:58:46] INDEX.PHP REACHED
+[2026-10-15 07:58:46] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:58:47] INDEX.PHP REACHED
+[2026-10-15 07:58:47] REQUEST: GET /api/index.php/management/settlements (Path: /management/settlements)
+[2026-10-15 07:58:47] INDEX.PHP REACHED
+[2026-10-15 07:58:47] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:58:47] INDEX.PHP REACHED
+[2026-10-15 07:58:47] REQUEST: GET /api/index.php/management/settlements (Path: /management/settlements)
+[2026-10-15 07:58:47] INDEX.PHP REACHED
+[2026-10-15 07:58:47] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:58:47] INDEX.PHP REACHED
+[2026-10-15 07:58:47] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:58:47] INDEX.PHP REACHED
+[2026-10-15 07:58:47] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:58:50] INDEX.PHP REACHED
+[2026-10-15 07:58:50] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:58:51] INDEX.PHP REACHED
+[2026-10-15 07:58:51] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:58:51] INDEX.PHP REACHED
+[2026-10-15 07:58:51] REQUEST: GET /api/index.php/accounts/summary?start_date=2026-10-01&end_date=2026-10-31 (Path: /accounts/summary)
+[2026-10-15 07:58:51] INDEX.PHP REACHED
+[2026-10-15 07:58:51] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:58:51] INDEX.PHP REACHED
+[2026-10-15 07:58:51] REQUEST: GET /api/index.php/accounts/summary?start_date=2026-10-01&end_date=2026-10-31 (Path: /accounts/summary)
+[2026-10-15 07:58:51] INDEX.PHP REACHED
+[2026-10-15 07:58:51] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:58:53] INDEX.PHP REACHED
+[2026-10-15 07:58:53] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:58:56] INDEX.PHP REACHED
+[2026-10-15 07:58:56] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:58:56] INDEX.PHP REACHED
+[2026-10-15 07:58:56] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:58:59] INDEX.PHP REACHED
+[2026-10-15 07:58:59] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:59:01] INDEX.PHP REACHED
+[2026-10-15 07:59:01] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:59:02] INDEX.PHP REACHED
+[2026-10-15 07:59:02] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:59:05] INDEX.PHP REACHED
+[2026-10-15 07:59:05] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:59:05] INDEX.PHP REACHED
+[2026-10-15 07:59:05] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:59:05] INDEX.PHP REACHED
+[2026-10-15 07:59:05] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:59:06] INDEX.PHP REACHED
+[2026-10-15 07:59:06] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:59:08] INDEX.PHP REACHED
+[2026-10-15 07:59:08] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:59:10] INDEX.PHP REACHED
+[2026-10-15 07:59:10] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:59:11] INDEX.PHP REACHED
+[2026-10-15 07:59:11] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:59:11] INDEX.PHP REACHED
+[2026-10-15 07:59:11] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:59:14] INDEX.PHP REACHED
+[2026-10-15 07:59:14] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:59:15] INDEX.PHP REACHED
+[2026-10-15 07:59:15] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:59:16] INDEX.PHP REACHED
+[2026-10-15 07:59:16] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:59:17] INDEX.PHP REACHED
+[2026-10-15 07:59:17] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:59:20] INDEX.PHP REACHED
+[2026-10-15 07:59:20] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:59:21] INDEX.PHP REACHED
+[2026-10-15 07:59:21] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:59:21] INDEX.PHP REACHED
+[2026-10-15 07:59:21] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:59:24] INDEX.PHP REACHED
+[2026-10-15 07:59:24] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:59:25] INDEX.PHP REACHED
+[2026-10-15 07:59:25] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:59:26] INDEX.PHP REACHED
+[2026-10-15 07:59:26] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:59:26] INDEX.PHP REACHED
+[2026-10-15 07:59:26] INDEX.PHP REACHED
+[2026-10-15 07:59:26] REQUEST: POST /api/index.php/auth/admin (Path: /auth/admin)
+[2026-10-15 07:59:27] INDEX.PHP REACHED
+[2026-10-15 07:59:27] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:59:27] INDEX.PHP REACHED
+[2026-10-15 07:59:27] REQUEST: GET /api/index.php/accounts/summary?start_date=2026-10-15&end_date=2026-10-15 (Path: /accounts/summary)
+[2026-10-15 07:59:30] INDEX.PHP REACHED
+[2026-10-15 07:59:30] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:59:30] INDEX.PHP REACHED
+[2026-10-15 07:59:30] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:59:31] INDEX.PHP REACHED
+[2026-10-15 07:59:31] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:59:33] INDEX.PHP REACHED
+[2026-10-15 07:59:33] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:59:35] INDEX.PHP REACHED
+[2026-10-15 07:59:35] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:59:36] INDEX.PHP REACHED
+[2026-10-15 07:59:36] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:59:36] INDEX.PHP REACHED
+[2026-10-15 07:59:36] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:59:38] INDEX.PHP REACHED
+[2026-10-15 07:59:38] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:59:40] INDEX.PHP REACHED
+[2026-10-15 07:59:40] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:59:41] INDEX.PHP REACHED
+[2026-10-15 07:59:41] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:59:41] INDEX.PHP REACHED
+[2026-10-15 07:59:41] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:59:44] INDEX.PHP REACHED
+[2026-10-15 07:59:44] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:59:45] INDEX.PHP REACHED
+[2026-10-15 07:59:45] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:59:46] INDEX.PHP REACHED
+[2026-10-15 07:59:46] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:59:46] INDEX.PHP REACHED
+[2026-10-15 07:59:46] INDEX.PHP REACHED
+[2026-10-15 07:59:46] REQUEST: POST /api/index.php/receptionist/markRead (Path: /receptionist/markRead)
+[2026-10-15 07:59:47] INDEX.PHP REACHED
+[2026-10-15 07:59:47] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:59:47] INDEX.PHP REACHED
+[2026-10-15 07:59:47] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:59:49] INDEX.PHP REACHED
+[2026-10-15 07:59:49] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:59:49] INDEX.PHP REACHED
+[2026-10-15 07:59:49] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:59:50] INDEX.PHP REACHED
+[2026-10-15 07:59:50] REQUEST: POST /api/index.php/receptionist/markRead (Path: /receptionist/markRead)
+[2026-10-15 07:59:50] INDEX.PHP REACHED
+[2026-10-15 07:59:50] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:59:50] INDEX.PHP REACHED
+[2026-10-15 07:59:50] REQUEST: GET /api/index.php/bookings/view?booking_id=HBK202610144E42 (Path: /bookings/view)
+[2026-10-15 07:59:50] INDEX.PHP REACHED
+[2026-10-15 07:59:50] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:59:50] INDEX.PHP REACHED
+[2026-10-15 07:59:50] REQUEST: GET /api/index.php/bookings/view?booking_id=HBK202610144E42 (Path: /bookings/view)
+[2026-10-15 07:59:51] INDEX.PHP REACHED
+[2026-10-15 07:59:51] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:59:53] INDEX.PHP REACHED
+[2026-10-15 07:59:53] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:59:53] INDEX.PHP REACHED
+[2026-10-15 07:59:53] INDEX.PHP REACHED
+[2026-10-15 07:59:53] REQUEST: POST /api/index.php/receptionist/markRead (Path: /receptionist/markRead)
+[2026-10-15 07:59:53] INDEX.PHP REACHED
+[2026-10-15 07:59:53] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:59:54] INDEX.PHP REACHED
+[2026-10-15 07:59:54] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:59:54] INDEX.PHP REACHED
+[2026-10-15 07:59:54] REQUEST: POST /api/index.php/receptionist/markRead (Path: /receptionist/markRead)
+[2026-10-15 07:59:54] INDEX.PHP REACHED
+[2026-10-15 07:59:54] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:59:56] INDEX.PHP REACHED
+[2026-10-15 07:59:56] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:59:56] INDEX.PHP REACHED
+[2026-10-15 07:59:56] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:59:59] INDEX.PHP REACHED
+[2026-10-15 07:59:59] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 07:59:59] INDEX.PHP REACHED
+[2026-10-15 07:59:59] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:00:00] INDEX.PHP REACHED
+[2026-10-15 08:00:00] REQUEST: GET /api/index.php/dashboard/receptionist (Path: /dashboard/receptionist)
+[2026-10-15 08:00:00] INDEX.PHP REACHED
+[2026-10-15 08:00:00] REQUEST: GET /api/index.php/dashboard/receptionist (Path: /dashboard/receptionist)
+[2026-10-15 08:00:01] INDEX.PHP REACHED
+[2026-10-15 08:00:01] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:00:02] INDEX.PHP REACHED
+[2026-10-15 08:00:02] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:00:03] INDEX.PHP REACHED
+[2026-10-15 08:00:03] INDEX.PHP REACHED
+[2026-10-15 08:00:03] REQUEST: POST /api/index.php/receptionist/markRead (Path: /receptionist/markRead)
+[2026-10-15 08:00:03] INDEX.PHP REACHED
+[2026-10-15 08:00:03] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:00:04] INDEX.PHP REACHED
+[2026-10-15 08:00:04] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:00:05] INDEX.PHP REACHED
+[2026-10-15 08:00:05] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:00:06] INDEX.PHP REACHED
+[2026-10-15 08:00:06] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:00:08] INDEX.PHP REACHED
+[2026-10-15 08:00:08] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:00:09] INDEX.PHP REACHED
+[2026-10-15 08:00:09] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:00:11] INDEX.PHP REACHED
+[2026-10-15 08:00:11] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:00:11] INDEX.PHP REACHED
+[2026-10-15 08:00:11] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:00:14] INDEX.PHP REACHED
+[2026-10-15 08:00:14] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:00:14] INDEX.PHP REACHED
+[2026-10-15 08:00:14] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:00:16] INDEX.PHP REACHED
+[2026-10-15 08:00:16] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:00:18] INDEX.PHP REACHED
+[2026-10-15 08:00:18] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:00:19] INDEX.PHP REACHED
+[2026-10-15 08:00:19] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:00:20] INDEX.PHP REACHED
+[2026-10-15 08:00:20] INDEX.PHP REACHED
+[2026-10-15 08:00:20] REQUEST: POST /api/index.php/auth/admin (Path: /auth/admin)
+[2026-10-15 08:00:21] INDEX.PHP REACHED
+[2026-10-15 08:00:21] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:00:21] INDEX.PHP REACHED
+[2026-10-15 08:00:21] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:00:24] INDEX.PHP REACHED
+[2026-10-15 08:00:24] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:00:24] INDEX.PHP REACHED
+[2026-10-15 08:00:24] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:00:26] INDEX.PHP REACHED
+[2026-10-15 08:00:26] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:00:27] INDEX.PHP REACHED
+[2026-10-15 08:00:27] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:00:29] INDEX.PHP REACHED
+[2026-10-15 08:00:29] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:00:30] INDEX.PHP REACHED
+[2026-10-15 08:00:30] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:00:31] INDEX.PHP REACHED
+[2026-10-15 08:00:31] REQUEST: GET /api/index.php/dashboard/receptionist (Path: /dashboard/receptionist)
+[2026-10-15 08:00:31] INDEX.PHP REACHED
+[2026-10-15 08:00:31] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:00:31] INDEX.PHP REACHED
+[2026-10-15 08:00:31] REQUEST: GET /api/index.php/dashboard/receptionist (Path: /dashboard/receptionist)
+[2026-10-15 08:00:31] INDEX.PHP REACHED
+[2026-10-15 08:00:31] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:00:31] INDEX.PHP REACHED
+[2026-10-15 08:00:31] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:00:31] INDEX.PHP REACHED
+[2026-10-15 08:00:31] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:00:31] INDEX.PHP REACHED
+[2026-10-15 08:00:31] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:00:33] INDEX.PHP REACHED
+[2026-10-15 08:00:33] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:00:34] INDEX.PHP REACHED
+[2026-10-15 08:00:34] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:00:36] INDEX.PHP REACHED
+[2026-10-15 08:00:36] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:00:36] INDEX.PHP REACHED
+[2026-10-15 08:00:36] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:00:37] INDEX.PHP REACHED
+[2026-10-15 08:00:37] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:00:39] INDEX.PHP REACHED
+[2026-10-15 08:00:39] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:00:40] INDEX.PHP REACHED
+[2026-10-15 08:00:40] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:00:41] INDEX.PHP REACHED
+[2026-10-15 08:00:41] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:00:43] INDEX.PHP REACHED
+[2026-10-15 08:00:43] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:00:44] INDEX.PHP REACHED
+[2026-10-15 08:00:44] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:00:44] INDEX.PHP REACHED
+[2026-10-15 08:00:44] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:00:44] INDEX.PHP REACHED
+[2026-10-15 08:00:44] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:00:47] INDEX.PHP REACHED
+[2026-10-15 08:00:47] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:00:48] INDEX.PHP REACHED
+[2026-10-15 08:00:48] REQUEST: GET /api/index.php/management/guests (Path: /management/guests)
+[2026-10-15 08:00:48] INDEX.PHP REACHED
+[2026-10-15 08:00:48] REQUEST: GET /api/index.php/management/guests (Path: /management/guests)
+[2026-10-15 08:00:49] INDEX.PHP REACHED
+[2026-10-15 08:00:49] REQUEST: GET /api/index.php/management/guest-bookings?email=ambi_sutha%40yahoo.com&phone=18476625560 (Path: /management/guest-bookings)
+[2026-10-15 08:00:49] INDEX.PHP REACHED
+[2026-10-15 08:00:49] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:00:50] INDEX.PHP REACHED
+[2026-10-15 08:00:50] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:00:51] INDEX.PHP REACHED
+[2026-10-15 08:00:51] REQUEST: GET /api/index.php/management/settlements (Path: /management/settlements)
+[2026-10-15 08:00:51] INDEX.PHP REACHED
+[2026-10-15 08:00:51] REQUEST: GET /api/index.php/management/settlements (Path: /management/settlements)
+[2026-10-15 08:00:53] INDEX.PHP REACHED
+[2026-10-15 08:00:53] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:00:53] INDEX.PHP REACHED
+[2026-10-15 08:00:53] REQUEST: GET /api/index.php/accounts/summary?start_date=2026-10-01&end_date=2026-10-31 (Path: /accounts/summary)
+[2026-10-15 08:00:53] INDEX.PHP REACHED
+[2026-10-15 08:00:53] REQUEST: GET /api/index.php/accounts/summary?start_date=2026-10-01&end_date=2026-10-31 (Path: /accounts/summary)
+[2026-10-15 08:00:54] INDEX.PHP REACHED
+[2026-10-15 08:00:54] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:00:56] INDEX.PHP REACHED
+[2026-10-15 08:00:56] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:00:59] INDEX.PHP REACHED
+[2026-10-15 08:00:59] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:00:59] INDEX.PHP REACHED
+[2026-10-15 08:00:59] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:01:02] INDEX.PHP REACHED
+[2026-10-15 08:01:02] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:01:04] INDEX.PHP REACHED
+[2026-10-15 08:01:04] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:01:06] INDEX.PHP REACHED
+[2026-10-15 08:01:06] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:01:09] INDEX.PHP REACHED
+[2026-10-15 08:01:09] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:01:09] INDEX.PHP REACHED
+[2026-10-15 08:01:09] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:01:12] INDEX.PHP REACHED
+[2026-10-15 08:01:12] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:01:14] INDEX.PHP REACHED
+[2026-10-15 08:01:14] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:01:15] INDEX.PHP REACHED
+[2026-10-15 08:01:15] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:01:18] INDEX.PHP REACHED
+[2026-10-15 08:01:18] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:01:19] INDEX.PHP REACHED
+[2026-10-15 08:01:19] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:01:21] INDEX.PHP REACHED
+[2026-10-15 08:01:21] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:01:24] INDEX.PHP REACHED
+[2026-10-15 08:01:24] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:01:24] INDEX.PHP REACHED
+[2026-10-15 08:01:24] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:01:27] INDEX.PHP REACHED
+[2026-10-15 08:01:27] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:01:27] INDEX.PHP REACHED
+[2026-10-15 08:01:27] INDEX.PHP REACHED
+[2026-10-15 08:01:27] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:01:27] INDEX.PHP REACHED
+[2026-10-15 08:01:27] REQUEST: POST /api/index.php/auth/admin (Path: /auth/admin)
+[2026-10-15 08:01:29] INDEX.PHP REACHED
+[2026-10-15 08:01:29] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:01:30] INDEX.PHP REACHED
+[2026-10-15 08:01:30] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:01:33] INDEX.PHP REACHED
+[2026-10-15 08:01:33] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:01:34] INDEX.PHP REACHED
+[2026-10-15 08:01:34] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:01:36] INDEX.PHP REACHED
+[2026-10-15 08:01:36] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:01:39] INDEX.PHP REACHED
+[2026-10-15 08:01:39] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:01:39] INDEX.PHP REACHED
+[2026-10-15 08:01:39] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:01:42] INDEX.PHP REACHED
+[2026-10-15 08:01:42] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:01:44] INDEX.PHP REACHED
+[2026-10-15 08:01:44] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:01:45] INDEX.PHP REACHED
+[2026-10-15 08:01:45] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:01:48] INDEX.PHP REACHED
+[2026-10-15 08:01:48] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:01:49] INDEX.PHP REACHED
+[2026-10-15 08:01:49] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:01:51] INDEX.PHP REACHED
+[2026-10-15 08:01:51] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:01:54] INDEX.PHP REACHED
+[2026-10-15 08:01:54] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:01:54] INDEX.PHP REACHED
+[2026-10-15 08:01:54] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:01:57] INDEX.PHP REACHED
+[2026-10-15 08:01:57] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:01:59] INDEX.PHP REACHED
+[2026-10-15 08:01:59] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:02:00] INDEX.PHP REACHED
+[2026-10-15 08:02:00] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:02:04] INDEX.PHP REACHED
+[2026-10-15 08:02:04] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:02:09] INDEX.PHP REACHED
+[2026-10-15 08:02:09] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:02:14] INDEX.PHP REACHED
+[2026-10-15 08:02:14] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:02:19] INDEX.PHP REACHED
+[2026-10-15 08:02:19] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:02:24] INDEX.PHP REACHED
+[2026-10-15 08:02:24] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:02:27] INDEX.PHP REACHED
+[2026-10-15 08:02:27] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:02:27] INDEX.PHP REACHED
+[2026-10-15 08:02:27] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:02:29] INDEX.PHP REACHED
+[2026-10-15 08:02:29] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:02:34] INDEX.PHP REACHED
+[2026-10-15 08:02:34] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:02:39] INDEX.PHP REACHED
+[2026-10-15 08:02:39] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:02:44] INDEX.PHP REACHED
+[2026-10-15 08:02:44] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:02:49] INDEX.PHP REACHED
+[2026-10-15 08:02:49] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:02:54] INDEX.PHP REACHED
+[2026-10-15 08:02:54] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:02:59] INDEX.PHP REACHED
+[2026-10-15 08:02:59] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:03:04] INDEX.PHP REACHED
+[2026-10-15 08:03:04] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:03:09] INDEX.PHP REACHED
+[2026-10-15 08:03:09] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:03:14] INDEX.PHP REACHED
+[2026-10-15 08:03:14] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:03:17] INDEX.PHP REACHED
+[2026-10-15 08:03:17] REQUEST: POST /api/index.php/auth/admin (Path: /auth/admin)
+[2026-10-15 08:03:19] INDEX.PHP REACHED
+[2026-10-15 08:03:19] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:03:23] INDEX.PHP REACHED
+[2026-10-15 08:03:23] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:03:23] INDEX.PHP REACHED
+[2026-10-15 08:03:23] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:03:24] INDEX.PHP REACHED
+[2026-10-15 08:03:24] REQUEST: GET /api/index.php/management/logs (Path: /management/logs)
+[2026-10-15 08:03:24] INDEX.PHP REACHED
+[2026-10-15 08:03:24] REQUEST: GET /api/index.php/management/logs (Path: /management/logs)
+[2026-10-15 08:03:24] INDEX.PHP REACHED
+[2026-10-15 08:03:24] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:03:25] INDEX.PHP REACHED
+[2026-10-15 08:03:25] REQUEST: GET /api/index.php/management/settlements (Path: /management/settlements)
+[2026-10-15 08:03:25] INDEX.PHP REACHED
+[2026-10-15 08:03:25] REQUEST: GET /api/index.php/management/settlements (Path: /management/settlements)
+[2026-10-15 08:03:26] INDEX.PHP REACHED
+[2026-10-15 08:03:26] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:03:27] INDEX.PHP REACHED
+[2026-10-15 08:03:27] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:03:29] INDEX.PHP REACHED
+[2026-10-15 08:03:29] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:03:29] INDEX.PHP REACHED
+[2026-10-15 08:03:29] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:03:32] INDEX.PHP REACHED
+[2026-10-15 08:03:32] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:03:33] INDEX.PHP REACHED
+[2026-10-15 08:03:33] INDEX.PHP REACHED
+[2026-10-15 08:03:33] REQUEST: POST /api/index.php/management/updatePaymentStatus (Path: /management/updatePaymentStatus)
+[2026-10-15 08:03:33] INDEX.PHP REACHED
+[2026-10-15 08:03:33] REQUEST: GET /api/index.php/management/settlements (Path: /management/settlements)
+[2026-10-15 08:03:34] INDEX.PHP REACHED
+[2026-10-15 08:03:34] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:03:35] INDEX.PHP REACHED
+[2026-10-15 08:03:35] REQUEST: POST /api/index.php/management/updatePaymentStatus (Path: /management/updatePaymentStatus)
+[2026-10-15 08:03:35] INDEX.PHP REACHED
+[2026-10-15 08:03:35] REQUEST: GET /api/index.php/management/settlements (Path: /management/settlements)
+[2026-10-15 08:03:35] INDEX.PHP REACHED
+[2026-10-15 08:03:35] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:03:38] INDEX.PHP REACHED
+[2026-10-15 08:03:38] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:03:39] INDEX.PHP REACHED
+[2026-10-15 08:03:39] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:03:41] INDEX.PHP REACHED
+[2026-10-15 08:03:41] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:03:44] INDEX.PHP REACHED
+[2026-10-15 08:03:44] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:03:44] INDEX.PHP REACHED
+[2026-10-15 08:03:44] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:03:47] INDEX.PHP REACHED
+[2026-10-15 08:03:47] REQUEST: POST /api/index.php/auth/reception (Path: /auth/reception)
+[2026-10-15 08:03:48] INDEX.PHP REACHED
+[2026-10-15 08:03:48] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:03:49] INDEX.PHP REACHED
+[2026-10-15 08:03:49] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:03:51] INDEX.PHP REACHED
+[2026-10-15 08:03:51] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:03:54] INDEX.PHP REACHED
+[2026-10-15 08:03:54] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:03:54] INDEX.PHP REACHED
+[2026-10-15 08:03:54] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:03:57] INDEX.PHP REACHED
+[2026-10-15 08:03:57] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:03:59] INDEX.PHP REACHED
+[2026-10-15 08:03:59] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:04:00] INDEX.PHP REACHED
+[2026-10-15 08:04:00] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:04:03] INDEX.PHP REACHED
+[2026-10-15 08:04:03] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:04:04] INDEX.PHP REACHED
+[2026-10-15 08:04:04] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:04:06] INDEX.PHP REACHED
+[2026-10-15 08:04:06] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:04:09] INDEX.PHP REACHED
+[2026-10-15 08:04:09] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:04:09] INDEX.PHP REACHED
+[2026-10-15 08:04:09] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:04:12] INDEX.PHP REACHED
+[2026-10-15 08:04:12] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:04:14] INDEX.PHP REACHED
+[2026-10-15 08:04:14] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:04:15] INDEX.PHP REACHED
+[2026-10-15 08:04:15] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:04:18] INDEX.PHP REACHED
+[2026-10-15 08:04:18] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:04:19] INDEX.PHP REACHED
+[2026-10-15 08:04:19] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:04:21] INDEX.PHP REACHED
+[2026-10-15 08:04:21] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:04:23] INDEX.PHP REACHED
+[2026-10-15 08:04:23] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:04:24] INDEX.PHP REACHED
+[2026-10-15 08:04:24] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:04:24] INDEX.PHP REACHED
+[2026-10-15 08:04:24] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:04:25] INDEX.PHP REACHED
+[2026-10-15 08:04:25] REQUEST: GET /api/index.php/accounts/summary? (Path: /accounts/summary)
+[2026-10-15 08:04:25] INDEX.PHP REACHED
+[2026-10-15 08:04:25] REQUEST: GET /api/index.php/expenses/list? (Path: /expenses/list)
+[2026-10-15 08:04:25] INDEX.PHP REACHED
+[2026-10-15 08:04:25] REQUEST: GET /api/index.php/accounts/summary?start_date=2026-09-30&end_date=2026-10-30 (Path: /accounts/summary)
+[2026-10-15 08:04:25] INDEX.PHP REACHED
+[2026-10-15 08:04:25] REQUEST: GET /api/index.php/expenses/list?start_date=2026-09-30&end_date=2026-10-30 (Path: /expenses/list)
+[2026-10-15 08:04:25] INDEX.PHP REACHED
+[2026-10-15 08:04:25] REQUEST: GET /api/index.php/accounts/summary? (Path: /accounts/summary)
+[2026-10-15 08:04:25] INDEX.PHP REACHED
+[2026-10-15 08:04:25] REQUEST: GET /api/index.php/expenses/list? (Path: /expenses/list)
+[2026-10-15 08:04:26] INDEX.PHP REACHED
+[2026-10-15 08:04:26] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:04:27] INDEX.PHP REACHED
+[2026-10-15 08:04:27] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:04:28] INDEX.PHP REACHED
+[2026-10-15 08:04:28] REQUEST: GET /api/index.php/admin/bookings/list?limit=100&offset=0 (Path: /admin/bookings/list)
+[2026-10-15 08:04:28] INDEX.PHP REACHED
+[2026-10-15 08:04:28] REQUEST: GET /api/index.php/admin/bookings/list?limit=100&offset=0 (Path: /admin/bookings/list)
+[2026-10-15 08:04:29] INDEX.PHP REACHED
+[2026-10-15 08:04:29] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:04:30] INDEX.PHP REACHED
+[2026-10-15 08:04:30] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:04:31] INDEX.PHP REACHED
+[2026-10-15 08:04:31] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:04:33] INDEX.PHP REACHED
+[2026-10-15 08:04:33] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:04:34] INDEX.PHP REACHED
+[2026-10-15 08:04:34] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:04:36] INDEX.PHP REACHED
+[2026-10-15 08:04:36] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:04:36] INDEX.PHP REACHED
+[2026-10-15 08:04:36] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:04:39] INDEX.PHP REACHED
+[2026-10-15 08:04:39] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:04:39] INDEX.PHP REACHED
+[2026-10-15 08:04:39] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:04:41] INDEX.PHP REACHED
+[2026-10-15 08:04:41] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:04:42] INDEX.PHP REACHED
+[2026-10-15 08:04:42] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:04:44] INDEX.PHP REACHED
+[2026-10-15 08:04:44] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:04:45] INDEX.PHP REACHED
+[2026-10-15 08:04:45] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:04:46] INDEX.PHP REACHED
+[2026-10-15 08:04:46] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:04:48] INDEX.PHP REACHED
+[2026-10-15 08:04:48] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:04:49] INDEX.PHP REACHED
+[2026-10-15 08:04:49] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:04:51] INDEX.PHP REACHED
+[2026-10-15 08:04:51] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:04:51] INDEX.PHP REACHED
+[2026-10-15 08:04:51] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:04:53] INDEX.PHP REACHED
+[2026-10-15 08:04:53] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:04:54] INDEX.PHP REACHED
+[2026-10-15 08:04:54] INDEX.PHP REACHED
+[2026-10-15 08:04:54] REQUEST: POST /api/index.php/receptionist/markRead (Path: /receptionist/markRead)
+[2026-10-15 08:04:54] INDEX.PHP REACHED
+[2026-10-15 08:04:54] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:04:54] INDEX.PHP REACHED
+[2026-10-15 08:04:54] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:04:56] INDEX.PHP REACHED
+[2026-10-15 08:04:56] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:04:56] INDEX.PHP REACHED
+[2026-10-15 08:04:56] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:04:59] INDEX.PHP REACHED
+[2026-10-15 08:04:59] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:04:59] INDEX.PHP REACHED
+[2026-10-15 08:04:59] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:05:01] INDEX.PHP REACHED
+[2026-10-15 08:05:01] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:05:02] INDEX.PHP REACHED
+[2026-10-15 08:05:02] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:05:04] INDEX.PHP REACHED
+[2026-10-15 08:05:04] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:05:06] INDEX.PHP REACHED
+[2026-10-15 08:05:06] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:05:06] INDEX.PHP REACHED
+[2026-10-15 08:05:06] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:05:09] INDEX.PHP REACHED
+[2026-10-15 08:05:09] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:05:09] INDEX.PHP REACHED
+[2026-10-15 08:05:09] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:05:11] INDEX.PHP REACHED
+[2026-10-15 08:05:11] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:05:12] INDEX.PHP REACHED
+[2026-10-15 08:05:12] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:05:14] INDEX.PHP REACHED
+[2026-10-15 08:05:14] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:05:15] INDEX.PHP REACHED
+[2026-10-15 08:05:15] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:05:16] INDEX.PHP REACHED
+[2026-10-15 08:05:16] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:05:18] INDEX.PHP REACHED
+[2026-10-15 08:05:18] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:05:19] INDEX.PHP REACHED
+[2026-10-15 08:05:19] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:05:21] INDEX.PHP REACHED
+[2026-10-15 08:05:21] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:05:21] INDEX.PHP REACHED
+[2026-10-15 08:05:21] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:05:24] INDEX.PHP REACHED
+[2026-10-15 08:05:24] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:05:24] INDEX.PHP REACHED
+[2026-10-15 08:05:24] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:05:26] INDEX.PHP REACHED
+[2026-10-15 08:05:26] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:05:27] INDEX.PHP REACHED
+[2026-10-15 08:05:27] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:05:29] INDEX.PHP REACHED
+[2026-10-15 08:05:29] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:05:30] INDEX.PHP REACHED
+[2026-10-15 08:05:30] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:05:30] INDEX.PHP REACHED
+[2026-10-15 08:05:30] REQUEST: GET /api/index.php/management/guests (Path: /management/guests)
+[2026-10-15 08:05:33] INDEX.PHP REACHED
+[2026-10-15 08:05:33] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:05:34] INDEX.PHP REACHED
+[2026-10-15 08:05:34] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:05:36] INDEX.PHP REACHED
+[2026-10-15 08:05:36] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:05:39] INDEX.PHP REACHED
+[2026-10-15 08:05:39] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:05:39] INDEX.PHP REACHED
+[2026-10-15 08:05:39] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:05:42] INDEX.PHP REACHED
+[2026-10-15 08:05:42] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:05:44] INDEX.PHP REACHED
+[2026-10-15 08:05:44] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:05:45] INDEX.PHP REACHED
+[2026-10-15 08:05:45] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:05:48] INDEX.PHP REACHED
+[2026-10-15 08:05:48] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:05:49] INDEX.PHP REACHED
+[2026-10-15 08:05:49] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:05:51] INDEX.PHP REACHED
+[2026-10-15 08:05:51] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:05:54] INDEX.PHP REACHED
+[2026-10-15 08:05:54] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:05:54] INDEX.PHP REACHED
+[2026-10-15 08:05:54] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:05:56] INDEX.PHP REACHED
+[2026-10-15 08:05:56] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:05:59] INDEX.PHP REACHED
+[2026-10-15 08:05:59] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:05:59] INDEX.PHP REACHED
+[2026-10-15 08:05:59] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:05:59] INDEX.PHP REACHED
+[2026-10-15 08:05:59] REQUEST: GET /api/index.php/management/guests (Path: /management/guests)
+[2026-10-15 08:05:59] INDEX.PHP REACHED
+[2026-10-15 08:05:59] REQUEST: GET /api/index.php/management/guests (Path: /management/guests)
+[2026-10-15 08:06:00] INDEX.PHP REACHED
+[2026-10-15 08:06:00] REQUEST: GET /api/index.php/management/settlements (Path: /management/settlements)
+[2026-10-15 08:06:00] INDEX.PHP REACHED
+[2026-10-15 08:06:00] REQUEST: GET /api/index.php/management/settlements (Path: /management/settlements)
+[2026-10-15 08:06:01] INDEX.PHP REACHED
+[2026-10-15 08:06:01] REQUEST: GET /api/index.php/management/logs (Path: /management/logs)
+[2026-10-15 08:06:01] INDEX.PHP REACHED
+[2026-10-15 08:06:01] REQUEST: GET /api/index.php/management/logs (Path: /management/logs)
+[2026-10-15 08:06:02] INDEX.PHP REACHED
+[2026-10-15 08:06:02] REQUEST: GET /api/index.php/accounts/summary?start_date=2026-10-01&end_date=2026-10-31 (Path: /accounts/summary)
+[2026-10-15 08:06:02] INDEX.PHP REACHED
+[2026-10-15 08:06:02] REQUEST: GET /api/index.php/accounts/summary?start_date=2026-10-01&end_date=2026-10-31 (Path: /accounts/summary)
+[2026-10-15 08:06:02] INDEX.PHP REACHED
+[2026-10-15 08:06:02] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:06:04] INDEX.PHP REACHED
+[2026-10-15 08:06:04] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:06:05] INDEX.PHP REACHED
+[2026-10-15 08:06:05] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:06:07] INDEX.PHP REACHED
+[2026-10-15 08:06:07] REQUEST: GET /api/index.php/management/logs (Path: /management/logs)
+[2026-10-15 08:06:07] INDEX.PHP REACHED
+[2026-10-15 08:06:07] REQUEST: GET /api/index.php/management/logs (Path: /management/logs)
+[2026-10-15 08:06:08] INDEX.PHP REACHED
+[2026-10-15 08:06:08] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:06:09] INDEX.PHP REACHED
+[2026-10-15 08:06:09] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:06:12] INDEX.PHP REACHED
+[2026-10-15 08:06:12] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:06:14] INDEX.PHP REACHED
+[2026-10-15 08:06:14] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:06:15] INDEX.PHP REACHED
+[2026-10-15 08:06:15] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:06:18] INDEX.PHP REACHED
+[2026-10-15 08:06:18] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:06:21] INDEX.PHP REACHED
+[2026-10-15 08:06:21] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:06:24] INDEX.PHP REACHED
+[2026-10-15 08:06:24] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:06:27] INDEX.PHP REACHED
+[2026-10-15 08:06:27] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:06:27] INDEX.PHP REACHED
+[2026-10-15 08:06:27] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:06:30] INDEX.PHP REACHED
+[2026-10-15 08:06:30] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:06:33] INDEX.PHP REACHED
+[2026-10-15 08:06:33] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:06:36] INDEX.PHP REACHED
+[2026-10-15 08:06:36] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:06:39] INDEX.PHP REACHED
+[2026-10-15 08:06:39] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:06:42] INDEX.PHP REACHED
+[2026-10-15 08:06:42] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:06:45] INDEX.PHP REACHED
+[2026-10-15 08:06:45] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:06:48] INDEX.PHP REACHED
+[2026-10-15 08:06:48] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:06:51] INDEX.PHP REACHED
+[2026-10-15 08:06:51] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:06:54] INDEX.PHP REACHED
+[2026-10-15 08:06:54] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:06:57] INDEX.PHP REACHED
+[2026-10-15 08:06:57] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:07:00] INDEX.PHP REACHED
+[2026-10-15 08:07:00] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:07:03] INDEX.PHP REACHED
+[2026-10-15 08:07:03] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:07:06] INDEX.PHP REACHED
+[2026-10-15 08:07:06] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:07:09] INDEX.PHP REACHED
+[2026-10-15 08:07:09] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:07:12] INDEX.PHP REACHED
+[2026-10-15 08:07:12] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:07:27] INDEX.PHP REACHED
+[2026-10-15 08:07:27] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:07:27] INDEX.PHP REACHED
+[2026-10-15 08:07:27] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:07:35] INDEX.PHP REACHED
+[2026-10-15 08:07:35] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:07:39] INDEX.PHP REACHED
+[2026-10-15 08:07:39] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:07:40] INDEX.PHP REACHED
+[2026-10-15 08:07:40] REQUEST: GET /api/index.php/management/guests?start_date=2026-10-01&end_date=2026-10-31 (Path: /management/guests)
+[2026-10-15 08:07:42] INDEX.PHP REACHED
+[2026-10-15 08:07:42] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:07:45] INDEX.PHP REACHED
+[2026-10-15 08:07:45] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:07:48] INDEX.PHP REACHED
+[2026-10-15 08:07:48] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:07:51] INDEX.PHP REACHED
+[2026-10-15 08:07:51] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:07:54] INDEX.PHP REACHED
+[2026-10-15 08:07:54] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:07:57] INDEX.PHP REACHED
+[2026-10-15 08:07:57] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:08:00] INDEX.PHP REACHED
+[2026-10-15 08:08:00] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:08:03] INDEX.PHP REACHED
+[2026-10-15 08:08:03] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:08:06] INDEX.PHP REACHED
+[2026-10-15 08:08:06] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:08:09] INDEX.PHP REACHED
+[2026-10-15 08:08:09] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:08:12] INDEX.PHP REACHED
+[2026-10-15 08:08:12] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:08:15] INDEX.PHP REACHED
+[2026-10-15 08:08:15] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:08:18] INDEX.PHP REACHED
+[2026-10-15 08:08:18] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:08:20] INDEX.PHP REACHED
+[2026-10-15 08:08:20] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:08:23] INDEX.PHP REACHED
+[2026-10-15 08:08:23] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:08:27] INDEX.PHP REACHED
+[2026-10-15 08:08:27] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:08:27] INDEX.PHP REACHED
+[2026-10-15 08:08:27] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:08:29] INDEX.PHP REACHED
+[2026-10-15 08:08:29] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:08:33] INDEX.PHP REACHED
+[2026-10-15 08:08:33] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:08:36] INDEX.PHP REACHED
+[2026-10-15 08:08:36] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:08:39] INDEX.PHP REACHED
+[2026-10-15 08:08:39] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:08:42] INDEX.PHP REACHED
+[2026-10-15 08:08:42] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:08:44] INDEX.PHP REACHED
+[2026-10-15 08:08:44] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:08:47] INDEX.PHP REACHED
+[2026-10-15 08:08:47] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:08:51] INDEX.PHP REACHED
+[2026-10-15 08:08:51] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:08:54] INDEX.PHP REACHED
+[2026-10-15 08:08:54] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:08:57] INDEX.PHP REACHED
+[2026-10-15 08:08:57] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:08:59] INDEX.PHP REACHED
+[2026-10-15 08:08:59] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:09:03] INDEX.PHP REACHED
+[2026-10-15 08:09:03] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:09:04] INDEX.PHP REACHED
+[2026-10-15 08:09:04] REQUEST: GET /api/index.php/management/logs (Path: /management/logs)
+[2026-10-15 08:09:04] INDEX.PHP REACHED
+[2026-10-15 08:09:04] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:09:04] INDEX.PHP REACHED
+[2026-10-15 08:09:04] REQUEST: GET /api/index.php/management/logs (Path: /management/logs)
+[2026-10-15 08:09:04] INDEX.PHP REACHED
+[2026-10-15 08:09:04] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:09:04] INDEX.PHP REACHED
+[2026-10-15 08:09:04] REQUEST: GET /api/index.php/admin/bookings/list?limit=100&offset=0 (Path: /admin/bookings/list)
+[2026-10-15 08:09:04] INDEX.PHP REACHED
+[2026-10-15 08:09:04] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:09:04] INDEX.PHP REACHED
+[2026-10-15 08:09:04] REQUEST: GET /api/index.php/admin/bookings/list?limit=100&offset=0 (Path: /admin/bookings/list)
+[2026-10-15 08:09:04] INDEX.PHP REACHED
+[2026-10-15 08:09:04] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:09:04] INDEX.PHP REACHED
+[2026-10-15 08:09:04] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:09:07] INDEX.PHP REACHED
+[2026-10-15 08:09:07] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:09:09] INDEX.PHP REACHED
+[2026-10-15 08:09:09] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:09:10] INDEX.PHP REACHED
+[2026-10-15 08:09:10] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:09:13] INDEX.PHP REACHED
+[2026-10-15 08:09:13] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:09:14] INDEX.PHP REACHED
+[2026-10-15 08:09:14] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:09:16] INDEX.PHP REACHED
+[2026-10-15 08:09:16] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:09:19] INDEX.PHP REACHED
+[2026-10-15 08:09:19] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:09:19] INDEX.PHP REACHED
+[2026-10-15 08:09:19] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:09:22] INDEX.PHP REACHED
+[2026-10-15 08:09:22] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:09:24] INDEX.PHP REACHED
+[2026-10-15 08:09:24] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:09:25] INDEX.PHP REACHED
+[2026-10-15 08:09:25] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:09:28] INDEX.PHP REACHED
+[2026-10-15 08:09:28] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:09:29] INDEX.PHP REACHED
+[2026-10-15 08:09:29] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:09:31] INDEX.PHP REACHED
+[2026-10-15 08:09:31] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:09:34] INDEX.PHP REACHED
+[2026-10-15 08:09:34] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:09:34] INDEX.PHP REACHED
+[2026-10-15 08:09:34] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:09:37] INDEX.PHP REACHED
+[2026-10-15 08:09:37] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:09:39] INDEX.PHP REACHED
+[2026-10-15 08:09:39] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:09:40] INDEX.PHP REACHED
+[2026-10-15 08:09:40] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:09:43] INDEX.PHP REACHED
+[2026-10-15 08:09:43] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:09:44] INDEX.PHP REACHED
+[2026-10-15 08:09:44] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:09:45] INDEX.PHP REACHED
+[2026-10-15 08:09:45] INDEX.PHP REACHED
+[2026-10-15 08:09:45] REQUEST: POST /api/index.php/receptionist/markRead (Path: /receptionist/markRead)
+[2026-10-15 08:09:45] INDEX.PHP REACHED
+[2026-10-15 08:09:45] REQUEST: GET /api/index.php/bookings/view?booking_id=HBK202610144E42 (Path: /bookings/view)
+[2026-10-15 08:09:45] INDEX.PHP REACHED
+[2026-10-15 08:09:45] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:09:45] INDEX.PHP REACHED
+[2026-10-15 08:09:45] REQUEST: GET /api/index.php/bookings/view?booking_id=HBK202610144E42 (Path: /bookings/view)
+[2026-10-15 08:09:46] INDEX.PHP REACHED
+[2026-10-15 08:09:46] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:09:47] INDEX.PHP REACHED
+[2026-10-15 08:09:47] REQUEST: POST /api/index.php/receptionist/markRead (Path: /receptionist/markRead)
+[2026-10-15 08:09:47] INDEX.PHP REACHED
+[2026-10-15 08:09:47] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:09:49] INDEX.PHP REACHED
+[2026-10-15 08:09:49] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:09:49] INDEX.PHP REACHED
+[2026-10-15 08:09:49] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:09:52] INDEX.PHP REACHED
+[2026-10-15 08:09:52] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:09:54] INDEX.PHP REACHED
+[2026-10-15 08:09:54] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:09:55] INDEX.PHP REACHED
+[2026-10-15 08:09:55] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:09:58] INDEX.PHP REACHED
+[2026-10-15 08:09:58] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:09:59] INDEX.PHP REACHED
+[2026-10-15 08:09:59] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:10:01] INDEX.PHP REACHED
+[2026-10-15 08:10:01] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:10:04] INDEX.PHP REACHED
+[2026-10-15 08:10:04] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:10:07] INDEX.PHP REACHED
+[2026-10-15 08:10:07] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:10:10] INDEX.PHP REACHED
+[2026-10-15 08:10:10] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:10:13] INDEX.PHP REACHED
+[2026-10-15 08:10:13] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:10:16] INDEX.PHP REACHED
+[2026-10-15 08:10:16] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:10:19] INDEX.PHP REACHED
+[2026-10-15 08:10:19] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:10:20] INDEX.PHP REACHED
+[2026-10-15 08:10:20] REQUEST: GET /api/index.php/dashboard/receptionist (Path: /dashboard/receptionist)
+[2026-10-15 08:10:20] INDEX.PHP REACHED
+[2026-10-15 08:10:20] REQUEST: GET /api/index.php/dashboard/receptionist (Path: /dashboard/receptionist)
+[2026-10-15 08:10:22] INDEX.PHP REACHED
+[2026-10-15 08:10:22] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:10:23] INDEX.PHP REACHED
+[2026-10-15 08:10:23] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-10-15 08:10:23] INDEX.PHP REACHED
+[2026-10-15 08:10:23] REQUEST: GET /api/index.php/rooms/categories (Path: /rooms/categories)
+[2026-10-15 08:10:24] INDEX.PHP REACHED
+[2026-10-15 08:10:24] REQUEST: GET /api/index.php/dashboard/receptionist (Path: /dashboard/receptionist)
+[2026-10-15 08:10:24] INDEX.PHP REACHED
+[2026-10-15 08:10:24] REQUEST: GET /api/index.php/dashboard/receptionist (Path: /dashboard/receptionist)
+[2026-10-15 08:10:25] INDEX.PHP REACHED
+[2026-10-15 08:10:25] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:10:27] INDEX.PHP REACHED
+[2026-10-15 08:10:27] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:10:28] INDEX.PHP REACHED
+[2026-10-15 08:10:28] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:10:31] INDEX.PHP REACHED
+[2026-10-15 08:10:31] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:10:34] INDEX.PHP REACHED
+[2026-10-15 08:10:34] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:10:37] INDEX.PHP REACHED
+[2026-10-15 08:10:37] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:10:40] INDEX.PHP REACHED
+[2026-10-15 08:10:40] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:10:43] INDEX.PHP REACHED
+[2026-10-15 08:10:43] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:10:46] INDEX.PHP REACHED
+[2026-10-15 08:10:46] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:10:49] INDEX.PHP REACHED
+[2026-10-15 08:10:49] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:10:52] INDEX.PHP REACHED
+[2026-10-15 08:10:52] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:10:55] INDEX.PHP REACHED
+[2026-10-15 08:10:55] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:10:58] INDEX.PHP REACHED
+[2026-10-15 08:10:58] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:11:01] INDEX.PHP REACHED
+[2026-10-15 08:11:01] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:11:04] INDEX.PHP REACHED
+[2026-10-15 08:11:04] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:11:07] INDEX.PHP REACHED
+[2026-10-15 08:11:07] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:11:10] INDEX.PHP REACHED
+[2026-10-15 08:11:10] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:11:13] INDEX.PHP REACHED
+[2026-10-15 08:11:13] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:11:16] INDEX.PHP REACHED
+[2026-10-15 08:11:16] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:11:19] INDEX.PHP REACHED
+[2026-10-15 08:11:19] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:11:22] INDEX.PHP REACHED
+[2026-10-15 08:11:22] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:11:25] INDEX.PHP REACHED
+[2026-10-15 08:11:25] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:11:27] INDEX.PHP REACHED
+[2026-10-15 08:11:27] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:11:28] INDEX.PHP REACHED
+[2026-10-15 08:11:28] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:11:31] INDEX.PHP REACHED
+[2026-10-15 08:11:31] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:11:34] INDEX.PHP REACHED
+[2026-10-15 08:11:34] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:11:37] INDEX.PHP REACHED
+[2026-10-15 08:11:37] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:11:40] INDEX.PHP REACHED
+[2026-10-15 08:11:40] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:11:43] INDEX.PHP REACHED
+[2026-10-15 08:11:43] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:11:46] INDEX.PHP REACHED
+[2026-10-15 08:11:46] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:11:49] INDEX.PHP REACHED
+[2026-10-15 08:11:49] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:11:52] INDEX.PHP REACHED
+[2026-10-15 08:11:52] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:11:55] INDEX.PHP REACHED
+[2026-10-15 08:11:55] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:11:58] INDEX.PHP REACHED
+[2026-10-15 08:11:58] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:12:01] INDEX.PHP REACHED
+[2026-10-15 08:12:01] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:12:04] INDEX.PHP REACHED
+[2026-10-15 08:12:04] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:12:07] INDEX.PHP REACHED
+[2026-10-15 08:12:07] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:12:10] INDEX.PHP REACHED
+[2026-10-15 08:12:10] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:12:27] INDEX.PHP REACHED
+[2026-10-15 08:12:27] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:12:27] INDEX.PHP REACHED
+[2026-10-15 08:12:27] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:12:28] INDEX.PHP REACHED
+[2026-10-15 08:12:28] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:12:31] INDEX.PHP REACHED
+[2026-10-15 08:12:31] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:12:34] INDEX.PHP REACHED
+[2026-10-15 08:12:34] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:12:37] INDEX.PHP REACHED
+[2026-10-15 08:12:37] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:12:40] INDEX.PHP REACHED
+[2026-10-15 08:12:40] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:12:42] INDEX.PHP REACHED
+[2026-10-15 08:12:42] REQUEST: GET /api/index.php/management/settlements (Path: /management/settlements)
+[2026-10-15 08:12:42] INDEX.PHP REACHED
+[2026-10-15 08:12:42] REQUEST: GET /api/index.php/management/settlements (Path: /management/settlements)
+[2026-10-15 08:12:43] INDEX.PHP REACHED
+[2026-10-15 08:12:43] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:12:43] INDEX.PHP REACHED
+[2026-10-15 08:12:43] REQUEST: GET /api/index.php/management/guests (Path: /management/guests)
+[2026-10-15 08:12:43] INDEX.PHP REACHED
+[2026-10-15 08:12:43] REQUEST: GET /api/index.php/management/guests (Path: /management/guests)
+[2026-10-15 08:12:46] INDEX.PHP REACHED
+[2026-10-15 08:12:46] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:12:49] INDEX.PHP REACHED
+[2026-10-15 08:12:49] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:12:52] INDEX.PHP REACHED
+[2026-10-15 08:12:52] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:12:55] INDEX.PHP REACHED
+[2026-10-15 08:12:55] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:12:58] INDEX.PHP REACHED
+[2026-10-15 08:12:58] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:13:01] INDEX.PHP REACHED
+[2026-10-15 08:13:01] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:13:04] INDEX.PHP REACHED
+[2026-10-15 08:13:04] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:13:07] INDEX.PHP REACHED
+[2026-10-15 08:13:07] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:13:10] INDEX.PHP REACHED
+[2026-10-15 08:13:10] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:13:13] INDEX.PHP REACHED
+[2026-10-15 08:13:13] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:13:14] INDEX.PHP REACHED
+[2026-10-15 08:13:14] REQUEST: GET /api/index.php/management/logs (Path: /management/logs)
+[2026-10-15 08:13:14] INDEX.PHP REACHED
+[2026-10-15 08:13:14] REQUEST: GET /api/index.php/management/logs (Path: /management/logs)
+[2026-10-15 08:13:15] INDEX.PHP REACHED
+[2026-10-15 08:13:15] REQUEST: GET /api/index.php/management/settlements (Path: /management/settlements)
+[2026-10-15 08:13:15] INDEX.PHP REACHED
+[2026-10-15 08:13:15] REQUEST: GET /api/index.php/management/settlements (Path: /management/settlements)
+[2026-10-15 08:13:16] INDEX.PHP REACHED
+[2026-10-15 08:13:16] REQUEST: GET /api/index.php/management/logs (Path: /management/logs)
+[2026-10-15 08:13:16] INDEX.PHP REACHED
+[2026-10-15 08:13:16] REQUEST: GET /api/index.php/management/logs (Path: /management/logs)
+[2026-10-15 08:13:16] INDEX.PHP REACHED
+[2026-10-15 08:13:16] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:13:17] INDEX.PHP REACHED
+[2026-10-15 08:13:17] REQUEST: GET /api/index.php/accounts/summary?start_date=2026-10-01&end_date=2026-10-31 (Path: /accounts/summary)
+[2026-10-15 08:13:17] INDEX.PHP REACHED
+[2026-10-15 08:13:17] REQUEST: GET /api/index.php/accounts/summary?start_date=2026-10-01&end_date=2026-10-31 (Path: /accounts/summary)
+[2026-10-15 08:13:18] INDEX.PHP REACHED
+[2026-10-15 08:13:18] REQUEST: GET /api/index.php/management/logs (Path: /management/logs)
+[2026-10-15 08:13:18] INDEX.PHP REACHED
+[2026-10-15 08:13:18] REQUEST: GET /api/index.php/management/logs (Path: /management/logs)
+[2026-10-15 08:13:18] INDEX.PHP REACHED
+[2026-10-15 08:13:18] REQUEST: GET /api/index.php/management/settlements (Path: /management/settlements)
+[2026-10-15 08:13:18] INDEX.PHP REACHED
+[2026-10-15 08:13:18] REQUEST: GET /api/index.php/management/settlements (Path: /management/settlements)
+[2026-10-15 08:13:19] INDEX.PHP REACHED
+[2026-10-15 08:13:19] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:13:22] INDEX.PHP REACHED
+[2026-10-15 08:13:22] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:13:25] INDEX.PHP REACHED
+[2026-10-15 08:13:25] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:13:27] INDEX.PHP REACHED
+[2026-10-15 08:13:27] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:13:28] INDEX.PHP REACHED
+[2026-10-15 08:13:28] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:13:31] INDEX.PHP REACHED
+[2026-10-15 08:13:31] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:13:34] INDEX.PHP REACHED
+[2026-10-15 08:13:34] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:13:37] INDEX.PHP REACHED
+[2026-10-15 08:13:37] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:13:40] INDEX.PHP REACHED
+[2026-10-15 08:13:40] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:13:43] INDEX.PHP REACHED
+[2026-10-15 08:13:43] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:13:46] INDEX.PHP REACHED
+[2026-10-15 08:13:46] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:13:49] INDEX.PHP REACHED
+[2026-10-15 08:13:49] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:13:52] INDEX.PHP REACHED
+[2026-10-15 08:13:52] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:13:55] INDEX.PHP REACHED
+[2026-10-15 08:13:55] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:13:58] INDEX.PHP REACHED
+[2026-10-15 08:13:58] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:14:01] INDEX.PHP REACHED
+[2026-10-15 08:14:01] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:14:04] INDEX.PHP REACHED
+[2026-10-15 08:14:04] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:14:07] INDEX.PHP REACHED
+[2026-10-15 08:14:07] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:14:10] INDEX.PHP REACHED
+[2026-10-15 08:14:10] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:14:13] INDEX.PHP REACHED
+[2026-10-15 08:14:13] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:14:16] INDEX.PHP REACHED
+[2026-10-15 08:14:16] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:14:19] INDEX.PHP REACHED
+[2026-10-15 08:14:19] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:14:22] INDEX.PHP REACHED
+[2026-10-15 08:14:22] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:14:25] INDEX.PHP REACHED
+[2026-10-15 08:14:25] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:14:27] INDEX.PHP REACHED
+[2026-10-15 08:14:27] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:14:28] INDEX.PHP REACHED
+[2026-10-15 08:14:28] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:14:31] INDEX.PHP REACHED
+[2026-10-15 08:14:31] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:14:34] INDEX.PHP REACHED
+[2026-10-15 08:14:34] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:14:37] INDEX.PHP REACHED
+[2026-10-15 08:14:37] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:14:40] INDEX.PHP REACHED
+[2026-10-15 08:14:40] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:14:43] INDEX.PHP REACHED
+[2026-10-15 08:14:43] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:14:46] INDEX.PHP REACHED
+[2026-10-15 08:14:46] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:14:49] INDEX.PHP REACHED
+[2026-10-15 08:14:49] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:14:52] INDEX.PHP REACHED
+[2026-10-15 08:14:52] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:14:55] INDEX.PHP REACHED
+[2026-10-15 08:14:55] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:14:58] INDEX.PHP REACHED
+[2026-10-15 08:14:58] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:15:01] INDEX.PHP REACHED
+[2026-10-15 08:15:01] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:15:04] INDEX.PHP REACHED
+[2026-10-15 08:15:04] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:15:07] INDEX.PHP REACHED
+[2026-10-15 08:15:07] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:15:10] INDEX.PHP REACHED
+[2026-10-15 08:15:10] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:15:13] INDEX.PHP REACHED
+[2026-10-15 08:15:13] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:15:16] INDEX.PHP REACHED
+[2026-10-15 08:15:16] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:15:19] INDEX.PHP REACHED
+[2026-10-15 08:15:19] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:15:22] INDEX.PHP REACHED
+[2026-10-15 08:15:22] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:15:25] INDEX.PHP REACHED
+[2026-10-15 08:15:25] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:15:27] INDEX.PHP REACHED
+[2026-10-15 08:15:27] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:15:28] INDEX.PHP REACHED
+[2026-10-15 08:15:28] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:15:31] INDEX.PHP REACHED
+[2026-10-15 08:15:31] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:15:34] INDEX.PHP REACHED
+[2026-10-15 08:15:34] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:15:37] INDEX.PHP REACHED
+[2026-10-15 08:15:37] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:15:40] INDEX.PHP REACHED
+[2026-10-15 08:15:40] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:15:43] INDEX.PHP REACHED
+[2026-10-15 08:15:43] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:15:46] INDEX.PHP REACHED
+[2026-10-15 08:15:46] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:15:49] INDEX.PHP REACHED
+[2026-10-15 08:15:49] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:16:27] INDEX.PHP REACHED
+[2026-10-15 08:16:27] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:16:27] INDEX.PHP REACHED
+[2026-10-15 08:16:27] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:17:27] INDEX.PHP REACHED
+[2026-10-15 08:17:27] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:17:27] INDEX.PHP REACHED
+[2026-10-15 08:17:27] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:18:10] INDEX.PHP REACHED
+[2026-10-15 08:18:10] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:18:13] INDEX.PHP REACHED
+[2026-10-15 08:18:13] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:18:13] INDEX.PHP REACHED
+[2026-10-15 08:18:13] REQUEST: GET /api/index.php/accounts/summary?start_date=2026-10-01&end_date=2026-10-31 (Path: /accounts/summary)
+[2026-10-15 08:18:13] INDEX.PHP REACHED
+[2026-10-15 08:18:13] REQUEST: GET /api/index.php/accounts/summary?start_date=2026-10-01&end_date=2026-10-31 (Path: /accounts/summary)
+[2026-10-15 08:18:16] INDEX.PHP REACHED
+[2026-10-15 08:18:16] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:18:19] INDEX.PHP REACHED
+[2026-10-15 08:18:19] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:18:22] INDEX.PHP REACHED
+[2026-10-15 08:18:22] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:18:25] INDEX.PHP REACHED
+[2026-10-15 08:18:25] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:18:27] INDEX.PHP REACHED
+[2026-10-15 08:18:27] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:18:28] INDEX.PHP REACHED
+[2026-10-15 08:18:28] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:18:31] INDEX.PHP REACHED
+[2026-10-15 08:18:31] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:18:34] INDEX.PHP REACHED
+[2026-10-15 08:18:34] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:18:37] INDEX.PHP REACHED
+[2026-10-15 08:18:37] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:18:40] INDEX.PHP REACHED
+[2026-10-15 08:18:40] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:18:43] INDEX.PHP REACHED
+[2026-10-15 08:18:43] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:18:46] INDEX.PHP REACHED
+[2026-10-15 08:18:46] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:18:49] INDEX.PHP REACHED
+[2026-10-15 08:18:49] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:18:52] INDEX.PHP REACHED
+[2026-10-15 08:18:52] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:18:55] INDEX.PHP REACHED
+[2026-10-15 08:18:55] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:18:58] INDEX.PHP REACHED
+[2026-10-15 08:18:58] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:19:01] INDEX.PHP REACHED
+[2026-10-15 08:19:01] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:19:04] INDEX.PHP REACHED
+[2026-10-15 08:19:04] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:19:07] INDEX.PHP REACHED
+[2026-10-15 08:19:07] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:19:10] INDEX.PHP REACHED
+[2026-10-15 08:19:10] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:19:13] INDEX.PHP REACHED
+[2026-10-15 08:19:13] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:19:16] INDEX.PHP REACHED
+[2026-10-15 08:19:16] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:19:19] INDEX.PHP REACHED
+[2026-10-15 08:19:19] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:19:22] INDEX.PHP REACHED
+[2026-10-15 08:19:22] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:19:25] INDEX.PHP REACHED
+[2026-10-15 08:19:25] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:19:27] INDEX.PHP REACHED
+[2026-10-15 08:19:27] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:19:28] INDEX.PHP REACHED
+[2026-10-15 08:19:28] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:19:31] INDEX.PHP REACHED
+[2026-10-15 08:19:31] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:19:34] INDEX.PHP REACHED
+[2026-10-15 08:19:34] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:19:37] INDEX.PHP REACHED
+[2026-10-15 08:19:37] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:19:40] INDEX.PHP REACHED
+[2026-10-15 08:19:40] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:19:43] INDEX.PHP REACHED
+[2026-10-15 08:19:43] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:19:46] INDEX.PHP REACHED
+[2026-10-15 08:19:46] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:19:49] INDEX.PHP REACHED
+[2026-10-15 08:19:49] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:19:52] INDEX.PHP REACHED
+[2026-10-15 08:19:52] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:19:55] INDEX.PHP REACHED
+[2026-10-15 08:19:55] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:19:58] INDEX.PHP REACHED
+[2026-10-15 08:19:58] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:20:01] INDEX.PHP REACHED
+[2026-10-15 08:20:01] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:20:28] INDEX.PHP REACHED
+[2026-10-15 08:20:29] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:20:29] INDEX.PHP REACHED
+[2026-10-15 08:20:29] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:20:29] INDEX.PHP REACHED
+[2026-10-15 08:20:29] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:20:31] INDEX.PHP REACHED
+[2026-10-15 08:20:31] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:20:34] INDEX.PHP REACHED
+[2026-10-15 08:20:34] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:20:37] INDEX.PHP REACHED
+[2026-10-15 08:20:37] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:20:40] INDEX.PHP REACHED
+[2026-10-15 08:20:40] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:20:43] INDEX.PHP REACHED
+[2026-10-15 08:20:43] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:20:46] INDEX.PHP REACHED
+[2026-10-15 08:20:46] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:20:49] INDEX.PHP REACHED
+[2026-10-15 08:20:49] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:20:52] INDEX.PHP REACHED
+[2026-10-15 08:20:52] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:20:55] INDEX.PHP REACHED
+[2026-10-15 08:20:55] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:20:58] INDEX.PHP REACHED
+[2026-10-15 08:20:58] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:21:01] INDEX.PHP REACHED
+[2026-10-15 08:21:01] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:21:04] INDEX.PHP REACHED
+[2026-10-15 08:21:04] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:21:07] INDEX.PHP REACHED
+[2026-10-15 08:21:07] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:21:10] INDEX.PHP REACHED
+[2026-10-15 08:21:10] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:21:13] INDEX.PHP REACHED
+[2026-10-15 08:21:13] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:21:16] INDEX.PHP REACHED
+[2026-10-15 08:21:16] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:21:19] INDEX.PHP REACHED
+[2026-10-15 08:21:19] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:21:22] INDEX.PHP REACHED
+[2026-10-15 08:21:22] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:21:25] INDEX.PHP REACHED
+[2026-10-15 08:21:25] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:21:27] INDEX.PHP REACHED
+[2026-10-15 08:21:27] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:21:28] INDEX.PHP REACHED
+[2026-10-15 08:21:28] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:21:52] INDEX.PHP REACHED
+[2026-10-15 08:21:52] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:21:55] INDEX.PHP REACHED
+[2026-10-15 08:21:55] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:21:58] INDEX.PHP REACHED
+[2026-10-15 08:21:58] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:22:01] INDEX.PHP REACHED
+[2026-10-15 08:22:01] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:22:04] INDEX.PHP REACHED
+[2026-10-15 08:22:04] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:22:07] INDEX.PHP REACHED
+[2026-10-15 08:22:07] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:22:10] INDEX.PHP REACHED
+[2026-10-15 08:22:10] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:22:13] INDEX.PHP REACHED
+[2026-10-15 08:22:13] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:22:16] INDEX.PHP REACHED
+[2026-10-15 08:22:16] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:22:19] INDEX.PHP REACHED
+[2026-10-15 08:22:19] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:22:22] INDEX.PHP REACHED
+[2026-10-15 08:22:22] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:22:25] INDEX.PHP REACHED
+[2026-10-15 08:22:25] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:22:27] INDEX.PHP REACHED
+[2026-10-15 08:22:27] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:22:28] INDEX.PHP REACHED
+[2026-10-15 08:22:28] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:22:31] INDEX.PHP REACHED
+[2026-10-15 08:22:31] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:22:34] INDEX.PHP REACHED
+[2026-10-15 08:22:34] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:22:37] INDEX.PHP REACHED
+[2026-10-15 08:22:37] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:22:40] INDEX.PHP REACHED
+[2026-10-15 08:22:40] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:22:43] INDEX.PHP REACHED
+[2026-10-15 08:22:43] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:22:46] INDEX.PHP REACHED
+[2026-10-15 08:22:46] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:22:49] INDEX.PHP REACHED
+[2026-10-15 08:22:49] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:22:52] INDEX.PHP REACHED
+[2026-10-15 08:22:52] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:23:14] INDEX.PHP REACHED
+[2026-10-15 08:23:14] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:23:16] INDEX.PHP REACHED
+[2026-10-15 08:23:16] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:23:19] INDEX.PHP REACHED
+[2026-10-15 08:23:19] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:23:22] INDEX.PHP REACHED
+[2026-10-15 08:23:22] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:23:25] INDEX.PHP REACHED
+[2026-10-15 08:23:25] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:23:26] INDEX.PHP REACHED
+[2026-10-15 08:23:26] REQUEST: GET /api/index.php/management/guests (Path: /management/guests)
+[2026-10-15 08:23:26] INDEX.PHP REACHED
+[2026-10-15 08:23:26] REQUEST: GET /api/index.php/management/guests (Path: /management/guests)
+[2026-10-15 08:23:27] INDEX.PHP REACHED
+[2026-10-15 08:23:27] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:23:28] INDEX.PHP REACHED
+[2026-10-15 08:23:28] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:23:45] INDEX.PHP REACHED
+[2026-10-15 08:23:45] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:23:46] INDEX.PHP REACHED
+[2026-10-15 08:23:46] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:23:49] INDEX.PHP REACHED
+[2026-10-15 08:23:49] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:23:52] INDEX.PHP REACHED
+[2026-10-15 08:23:52] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:23:55] INDEX.PHP REACHED
+[2026-10-15 08:23:55] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:23:58] INDEX.PHP REACHED
+[2026-10-15 08:23:58] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:24:01] INDEX.PHP REACHED
+[2026-10-15 08:24:01] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:24:04] INDEX.PHP REACHED
+[2026-10-15 08:24:04] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:24:07] INDEX.PHP REACHED
+[2026-10-15 08:24:07] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:24:10] INDEX.PHP REACHED
+[2026-10-15 08:24:10] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:24:13] INDEX.PHP REACHED
+[2026-10-15 08:24:13] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:24:16] INDEX.PHP REACHED
+[2026-10-15 08:24:16] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:24:19] INDEX.PHP REACHED
+[2026-10-15 08:24:19] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:24:22] INDEX.PHP REACHED
+[2026-10-15 08:24:22] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:24:25] INDEX.PHP REACHED
+[2026-10-15 08:24:25] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:24:27] INDEX.PHP REACHED
+[2026-10-15 08:24:27] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:24:28] INDEX.PHP REACHED
+[2026-10-15 08:24:28] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:24:31] INDEX.PHP REACHED
+[2026-10-15 08:24:31] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:24:34] INDEX.PHP REACHED
+[2026-10-15 08:24:34] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:24:37] INDEX.PHP REACHED
+[2026-10-15 08:24:37] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:24:40] INDEX.PHP REACHED
+[2026-10-15 08:24:40] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:24:43] INDEX.PHP REACHED
+[2026-10-15 08:24:43] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:24:46] INDEX.PHP REACHED
+[2026-10-15 08:24:46] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:24:49] INDEX.PHP REACHED
+[2026-10-15 08:24:49] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:24:52] INDEX.PHP REACHED
+[2026-10-15 08:24:52] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:24:55] INDEX.PHP REACHED
+[2026-10-15 08:24:55] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:24:58] INDEX.PHP REACHED
+[2026-10-15 08:24:58] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:25:01] INDEX.PHP REACHED
+[2026-10-15 08:25:01] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:25:04] INDEX.PHP REACHED
+[2026-10-15 08:25:04] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:25:07] INDEX.PHP REACHED
+[2026-10-15 08:25:07] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:25:10] INDEX.PHP REACHED
+[2026-10-15 08:25:10] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:25:13] INDEX.PHP REACHED
+[2026-10-15 08:25:13] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:25:16] INDEX.PHP REACHED
+[2026-10-15 08:25:16] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:25:19] INDEX.PHP REACHED
+[2026-10-15 08:25:19] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:25:22] INDEX.PHP REACHED
+[2026-10-15 08:25:22] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:25:25] INDEX.PHP REACHED
+[2026-10-15 08:25:25] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:25:27] INDEX.PHP REACHED
+[2026-10-15 08:25:27] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:25:28] INDEX.PHP REACHED
+[2026-10-15 08:25:28] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:25:31] INDEX.PHP REACHED
+[2026-10-15 08:25:31] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:25:34] INDEX.PHP REACHED
+[2026-10-15 08:25:34] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:25:37] INDEX.PHP REACHED
+[2026-10-15 08:25:37] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:25:40] INDEX.PHP REACHED
+[2026-10-15 08:25:40] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:25:43] INDEX.PHP REACHED
+[2026-10-15 08:25:43] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:25:46] INDEX.PHP REACHED
+[2026-10-15 08:25:46] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:25:49] INDEX.PHP REACHED
+[2026-10-15 08:25:49] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:25:52] INDEX.PHP REACHED
+[2026-10-15 08:25:52] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:25:55] INDEX.PHP REACHED
+[2026-10-15 08:25:55] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:25:58] INDEX.PHP REACHED
+[2026-10-15 08:25:58] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:26:01] INDEX.PHP REACHED
+[2026-10-15 08:26:01] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:26:04] INDEX.PHP REACHED
+[2026-10-15 08:26:04] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:26:07] INDEX.PHP REACHED
+[2026-10-15 08:26:07] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:26:10] INDEX.PHP REACHED
+[2026-10-15 08:26:10] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:26:13] INDEX.PHP REACHED
+[2026-10-15 08:26:13] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:26:16] INDEX.PHP REACHED
+[2026-10-15 08:26:16] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:26:19] INDEX.PHP REACHED
+[2026-10-15 08:26:19] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:26:22] INDEX.PHP REACHED
+[2026-10-15 08:26:22] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:26:25] INDEX.PHP REACHED
+[2026-10-15 08:26:25] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:26:27] INDEX.PHP REACHED
+[2026-10-15 08:26:27] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:26:28] INDEX.PHP REACHED
+[2026-10-15 08:26:28] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:26:31] INDEX.PHP REACHED
+[2026-10-15 08:26:31] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:26:34] INDEX.PHP REACHED
+[2026-10-15 08:26:34] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:26:37] INDEX.PHP REACHED
+[2026-10-15 08:26:37] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:26:40] INDEX.PHP REACHED
+[2026-10-15 08:26:40] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:26:43] INDEX.PHP REACHED
+[2026-10-15 08:26:43] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:26:46] INDEX.PHP REACHED
+[2026-10-15 08:26:46] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:26:49] INDEX.PHP REACHED
+[2026-10-15 08:26:49] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:26:52] INDEX.PHP REACHED
+[2026-10-15 08:26:52] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:26:55] INDEX.PHP REACHED
+[2026-10-15 08:26:55] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:26:58] INDEX.PHP REACHED
+[2026-10-15 08:26:58] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:27:01] INDEX.PHP REACHED
+[2026-10-15 08:27:01] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:27:04] INDEX.PHP REACHED
+[2026-10-15 08:27:04] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:27:07] INDEX.PHP REACHED
+[2026-10-15 08:27:07] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:27:10] INDEX.PHP REACHED
+[2026-10-15 08:27:10] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:27:13] INDEX.PHP REACHED
+[2026-10-15 08:27:13] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:27:16] INDEX.PHP REACHED
+[2026-10-15 08:27:16] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:27:19] INDEX.PHP REACHED
+[2026-10-15 08:27:19] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:27:22] INDEX.PHP REACHED
+[2026-10-15 08:27:22] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:27:25] INDEX.PHP REACHED
+[2026-10-15 08:27:25] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:27:27] INDEX.PHP REACHED
+[2026-10-15 08:27:27] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:27:28] INDEX.PHP REACHED
+[2026-10-15 08:27:28] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:27:30] INDEX.PHP REACHED
+[2026-10-15 08:27:30] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:27:31] INDEX.PHP REACHED
+[2026-10-15 08:27:31] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:27:34] INDEX.PHP REACHED
+[2026-10-15 08:27:34] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:27:37] INDEX.PHP REACHED
+[2026-10-15 08:27:37] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:27:40] INDEX.PHP REACHED
+[2026-10-15 08:27:40] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:27:43] INDEX.PHP REACHED
+[2026-10-15 08:27:43] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:27:46] INDEX.PHP REACHED
+[2026-10-15 08:27:46] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:28:15] INDEX.PHP REACHED
+[2026-10-15 08:28:15] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:28:16] INDEX.PHP REACHED
+[2026-10-15 08:28:16] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:28:18] INDEX.PHP REACHED
+[2026-10-15 08:28:18] REQUEST: GET /api/index.php/management/settlements (Path: /management/settlements)
+[2026-10-15 08:28:18] INDEX.PHP REACHED
+[2026-10-15 08:28:18] REQUEST: GET /api/index.php/management/settlements (Path: /management/settlements)
+[2026-10-15 08:28:19] INDEX.PHP REACHED
+[2026-10-15 08:28:19] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:28:22] INDEX.PHP REACHED
+[2026-10-15 08:28:22] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:28:22] INDEX.PHP REACHED
+[2026-10-15 08:28:22] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:28:24] INDEX.PHP REACHED
+[2026-10-15 08:28:24] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:28:25] INDEX.PHP REACHED
+[2026-10-15 08:28:25] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:28:26] INDEX.PHP REACHED
+[2026-10-15 08:28:26] REQUEST: GET /api/index.php/admin/bookings/view?booking_id=HBK202610144E42 (Path: /admin/bookings/view)
+[2026-10-15 08:28:28] INDEX.PHP REACHED
+[2026-10-15 08:28:28] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:28:29] INDEX.PHP REACHED
+[2026-10-15 08:28:29] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:28:31] INDEX.PHP REACHED
+[2026-10-15 08:28:31] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:28:34] INDEX.PHP REACHED
+[2026-10-15 08:28:34] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:28:34] INDEX.PHP REACHED
+[2026-10-15 08:28:34] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:28:37] INDEX.PHP REACHED
+[2026-10-15 08:28:37] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:28:39] INDEX.PHP REACHED
+[2026-10-15 08:28:39] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:28:40] INDEX.PHP REACHED
+[2026-10-15 08:28:40] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:28:43] INDEX.PHP REACHED
+[2026-10-15 08:28:43] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:28:44] INDEX.PHP REACHED
+[2026-10-15 08:28:44] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:28:46] INDEX.PHP REACHED
+[2026-10-15 08:28:46] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:28:49] INDEX.PHP REACHED
+[2026-10-15 08:28:49] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:28:49] INDEX.PHP REACHED
+[2026-10-15 08:28:49] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:28:52] INDEX.PHP REACHED
+[2026-10-15 08:28:52] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:28:54] INDEX.PHP REACHED
+[2026-10-15 08:28:54] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:28:55] INDEX.PHP REACHED
+[2026-10-15 08:28:55] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:28:58] INDEX.PHP REACHED
+[2026-10-15 08:28:58] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:28:59] INDEX.PHP REACHED
+[2026-10-15 08:28:59] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:29:01] INDEX.PHP REACHED
+[2026-10-15 08:29:01] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:29:04] INDEX.PHP REACHED
+[2026-10-15 08:29:04] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:29:04] INDEX.PHP REACHED
+[2026-10-15 08:29:04] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:29:07] INDEX.PHP REACHED
+[2026-10-15 08:29:07] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:29:09] INDEX.PHP REACHED
+[2026-10-15 08:29:09] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:29:10] INDEX.PHP REACHED
+[2026-10-15 08:29:10] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:29:13] INDEX.PHP REACHED
+[2026-10-15 08:29:13] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:29:14] INDEX.PHP REACHED
+[2026-10-15 08:29:14] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:29:16] INDEX.PHP REACHED
+[2026-10-15 08:29:16] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:29:19] INDEX.PHP REACHED
+[2026-10-15 08:29:19] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:29:19] INDEX.PHP REACHED
+[2026-10-15 08:29:19] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:29:24] INDEX.PHP REACHED
+[2026-10-15 08:29:24] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:29:27] INDEX.PHP REACHED
+[2026-10-15 08:29:27] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:29:29] INDEX.PHP REACHED
+[2026-10-15 08:29:29] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:29:34] INDEX.PHP REACHED
+[2026-10-15 08:29:34] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:29:39] INDEX.PHP REACHED
+[2026-10-15 08:29:39] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:29:44] INDEX.PHP REACHED
+[2026-10-15 08:29:44] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:29:49] INDEX.PHP REACHED
+[2026-10-15 08:29:49] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:29:54] INDEX.PHP REACHED
+[2026-10-15 08:29:54] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:29:59] INDEX.PHP REACHED
+[2026-10-15 08:29:59] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:30:04] INDEX.PHP REACHED
+[2026-10-15 08:30:04] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:30:09] INDEX.PHP REACHED
+[2026-10-15 08:30:09] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:30:14] INDEX.PHP REACHED
+[2026-10-15 08:30:14] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:30:19] INDEX.PHP REACHED
+[2026-10-15 08:30:19] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:30:24] INDEX.PHP REACHED
+[2026-10-15 08:30:24] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:30:27] INDEX.PHP REACHED
+[2026-10-15 08:30:27] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:30:29] INDEX.PHP REACHED
+[2026-10-15 08:30:29] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:30:34] INDEX.PHP REACHED
+[2026-10-15 08:30:34] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:30:39] INDEX.PHP REACHED
+[2026-10-15 08:30:39] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:30:44] INDEX.PHP REACHED
+[2026-10-15 08:30:44] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:30:49] INDEX.PHP REACHED
+[2026-10-15 08:30:49] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:30:54] INDEX.PHP REACHED
+[2026-10-15 08:30:54] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:30:59] INDEX.PHP REACHED
+[2026-10-15 08:30:59] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:31:04] INDEX.PHP REACHED
+[2026-10-15 08:31:04] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:31:09] INDEX.PHP REACHED
+[2026-10-15 08:31:09] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:31:14] INDEX.PHP REACHED
+[2026-10-15 08:31:14] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:31:19] INDEX.PHP REACHED
+[2026-10-15 08:31:19] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:31:24] INDEX.PHP REACHED
+[2026-10-15 08:31:24] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:31:27] INDEX.PHP REACHED
+[2026-10-15 08:31:27] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:31:29] INDEX.PHP REACHED
+[2026-10-15 08:31:29] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:31:34] INDEX.PHP REACHED
+[2026-10-15 08:31:34] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:31:39] INDEX.PHP REACHED
+[2026-10-15 08:31:39] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:31:44] INDEX.PHP REACHED
+[2026-10-15 08:31:44] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:31:49] INDEX.PHP REACHED
+[2026-10-15 08:31:49] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:31:54] INDEX.PHP REACHED
+[2026-10-15 08:31:54] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:31:59] INDEX.PHP REACHED
+[2026-10-15 08:31:59] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:32:04] INDEX.PHP REACHED
+[2026-10-15 08:32:04] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:32:09] INDEX.PHP REACHED
+[2026-10-15 08:32:09] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:32:14] INDEX.PHP REACHED
+[2026-10-15 08:32:14] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:32:19] INDEX.PHP REACHED
+[2026-10-15 08:32:19] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:32:24] INDEX.PHP REACHED
+[2026-10-15 08:32:24] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:32:27] INDEX.PHP REACHED
+[2026-10-15 08:32:27] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:32:29] INDEX.PHP REACHED
+[2026-10-15 08:32:29] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:32:34] INDEX.PHP REACHED
+[2026-10-15 08:32:34] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:32:39] INDEX.PHP REACHED
+[2026-10-15 08:32:39] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:32:44] INDEX.PHP REACHED
+[2026-10-15 08:32:44] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:32:49] INDEX.PHP REACHED
+[2026-10-15 08:32:49] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:32:54] INDEX.PHP REACHED
+[2026-10-15 08:32:54] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:32:59] INDEX.PHP REACHED
+[2026-10-15 08:32:59] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:33:04] INDEX.PHP REACHED
+[2026-10-15 08:33:04] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:33:09] INDEX.PHP REACHED
+[2026-10-15 08:33:09] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:33:14] INDEX.PHP REACHED
+[2026-10-15 08:33:14] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:33:19] INDEX.PHP REACHED
+[2026-10-15 08:33:19] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:33:24] INDEX.PHP REACHED
+[2026-10-15 08:33:24] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:33:27] INDEX.PHP REACHED
+[2026-10-15 08:33:27] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:33:29] INDEX.PHP REACHED
+[2026-10-15 08:33:29] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:33:34] INDEX.PHP REACHED
+[2026-10-15 08:33:34] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:33:39] INDEX.PHP REACHED
+[2026-10-15 08:33:39] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:33:44] INDEX.PHP REACHED
+[2026-10-15 08:33:44] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:33:49] INDEX.PHP REACHED
+[2026-10-15 08:33:49] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:33:54] INDEX.PHP REACHED
+[2026-10-15 08:33:54] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:33:59] INDEX.PHP REACHED
+[2026-10-15 08:33:59] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:34:04] INDEX.PHP REACHED
+[2026-10-15 08:34:04] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:34:09] INDEX.PHP REACHED
+[2026-10-15 08:34:09] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:34:14] INDEX.PHP REACHED
+[2026-10-15 08:34:14] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:34:19] INDEX.PHP REACHED
+[2026-10-15 08:34:19] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:34:24] INDEX.PHP REACHED
+[2026-10-15 08:34:24] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:34:27] INDEX.PHP REACHED
+[2026-10-15 08:34:27] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:34:29] INDEX.PHP REACHED
+[2026-10-15 08:34:29] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:34:34] INDEX.PHP REACHED
+[2026-10-15 08:34:34] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:34:39] INDEX.PHP REACHED
+[2026-10-15 08:34:39] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:34:44] INDEX.PHP REACHED
+[2026-10-15 08:34:44] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:34:49] INDEX.PHP REACHED
+[2026-10-15 08:34:49] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:34:54] INDEX.PHP REACHED
+[2026-10-15 08:34:54] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:34:59] INDEX.PHP REACHED
+[2026-10-15 08:34:59] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:35:04] INDEX.PHP REACHED
+[2026-10-15 08:35:04] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:35:09] INDEX.PHP REACHED
+[2026-10-15 08:35:09] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:35:14] INDEX.PHP REACHED
+[2026-10-15 08:35:14] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:35:19] INDEX.PHP REACHED
+[2026-10-15 08:35:19] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:35:24] INDEX.PHP REACHED
+[2026-10-15 08:35:24] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:35:27] INDEX.PHP REACHED
+[2026-10-15 08:35:27] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:35:29] INDEX.PHP REACHED
+[2026-10-15 08:35:29] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:35:34] INDEX.PHP REACHED
+[2026-10-15 08:35:34] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:35:39] INDEX.PHP REACHED
+[2026-10-15 08:35:39] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:35:44] INDEX.PHP REACHED
+[2026-10-15 08:35:44] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:35:49] INDEX.PHP REACHED
+[2026-10-15 08:35:49] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:35:54] INDEX.PHP REACHED
+[2026-10-15 08:35:54] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:35:59] INDEX.PHP REACHED
+[2026-10-15 08:35:59] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:36:04] INDEX.PHP REACHED
+[2026-10-15 08:36:04] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:36:09] INDEX.PHP REACHED
+[2026-10-15 08:36:09] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:36:14] INDEX.PHP REACHED
+[2026-10-15 08:36:14] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:36:19] INDEX.PHP REACHED
+[2026-10-15 08:36:19] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:36:24] INDEX.PHP REACHED
+[2026-10-15 08:36:24] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:36:27] INDEX.PHP REACHED
+[2026-10-15 08:36:27] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:36:29] INDEX.PHP REACHED
+[2026-10-15 08:36:29] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:36:34] INDEX.PHP REACHED
+[2026-10-15 08:36:34] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:36:39] INDEX.PHP REACHED
+[2026-10-15 08:36:39] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:36:44] INDEX.PHP REACHED
+[2026-10-15 08:36:44] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:36:49] INDEX.PHP REACHED
+[2026-10-15 08:36:49] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:36:54] INDEX.PHP REACHED
+[2026-10-15 08:36:54] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:36:59] INDEX.PHP REACHED
+[2026-10-15 08:36:59] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:37:04] INDEX.PHP REACHED
+[2026-10-15 08:37:04] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:37:09] INDEX.PHP REACHED
+[2026-10-15 08:37:09] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:37:14] INDEX.PHP REACHED
+[2026-10-15 08:37:14] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:37:19] INDEX.PHP REACHED
+[2026-10-15 08:37:19] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:37:24] INDEX.PHP REACHED
+[2026-10-15 08:37:24] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:37:27] INDEX.PHP REACHED
+[2026-10-15 08:37:27] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:37:29] INDEX.PHP REACHED
+[2026-10-15 08:37:29] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:37:34] INDEX.PHP REACHED
+[2026-10-15 08:37:34] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:37:39] INDEX.PHP REACHED
+[2026-10-15 08:37:39] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:37:44] INDEX.PHP REACHED
+[2026-10-15 08:37:44] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:37:49] INDEX.PHP REACHED
+[2026-10-15 08:37:49] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:37:54] INDEX.PHP REACHED
+[2026-10-15 08:37:54] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:37:59] INDEX.PHP REACHED
+[2026-10-15 08:37:59] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:38:04] INDEX.PHP REACHED
+[2026-10-15 08:38:04] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:38:09] INDEX.PHP REACHED
+[2026-10-15 08:38:09] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:38:14] INDEX.PHP REACHED
+[2026-10-15 08:38:14] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:38:19] INDEX.PHP REACHED
+[2026-10-15 08:38:19] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:38:24] INDEX.PHP REACHED
+[2026-10-15 08:38:24] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:38:27] INDEX.PHP REACHED
+[2026-10-15 08:38:27] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:38:29] INDEX.PHP REACHED
+[2026-10-15 08:38:29] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:38:34] INDEX.PHP REACHED
+[2026-10-15 08:38:34] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:38:39] INDEX.PHP REACHED
+[2026-10-15 08:38:39] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:38:44] INDEX.PHP REACHED
+[2026-10-15 08:38:44] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:38:49] INDEX.PHP REACHED
+[2026-10-15 08:38:49] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:38:54] INDEX.PHP REACHED
+[2026-10-15 08:38:54] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:38:59] INDEX.PHP REACHED
+[2026-10-15 08:38:59] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:39:04] INDEX.PHP REACHED
+[2026-10-15 08:39:04] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:39:09] INDEX.PHP REACHED
+[2026-10-15 08:39:09] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:39:14] INDEX.PHP REACHED
+[2026-10-15 08:39:14] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:39:19] INDEX.PHP REACHED
+[2026-10-15 08:39:19] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:39:24] INDEX.PHP REACHED
+[2026-10-15 08:39:24] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:39:27] INDEX.PHP REACHED
+[2026-10-15 08:39:27] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:39:29] INDEX.PHP REACHED
+[2026-10-15 08:39:29] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:39:34] INDEX.PHP REACHED
+[2026-10-15 08:39:34] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:39:39] INDEX.PHP REACHED
+[2026-10-15 08:39:39] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:39:44] INDEX.PHP REACHED
+[2026-10-15 08:39:44] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:39:49] INDEX.PHP REACHED
+[2026-10-15 08:39:49] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:39:54] INDEX.PHP REACHED
+[2026-10-15 08:39:54] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:39:59] INDEX.PHP REACHED
+[2026-10-15 08:39:59] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:40:04] INDEX.PHP REACHED
+[2026-10-15 08:40:04] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:40:09] INDEX.PHP REACHED
+[2026-10-15 08:40:09] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:40:14] INDEX.PHP REACHED
+[2026-10-15 08:40:14] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:40:19] INDEX.PHP REACHED
+[2026-10-15 08:40:19] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:40:24] INDEX.PHP REACHED
+[2026-10-15 08:40:24] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:40:27] INDEX.PHP REACHED
+[2026-10-15 08:40:27] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:40:29] INDEX.PHP REACHED
+[2026-10-15 08:40:29] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:40:34] INDEX.PHP REACHED
+[2026-10-15 08:40:34] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:40:39] INDEX.PHP REACHED
+[2026-10-15 08:40:39] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:40:44] INDEX.PHP REACHED
+[2026-10-15 08:40:44] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:40:49] INDEX.PHP REACHED
+[2026-10-15 08:40:49] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:40:54] INDEX.PHP REACHED
+[2026-10-15 08:40:54] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:40:59] INDEX.PHP REACHED
+[2026-10-15 08:40:59] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:41:04] INDEX.PHP REACHED
+[2026-10-15 08:41:04] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:41:09] INDEX.PHP REACHED
+[2026-10-15 08:41:09] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:41:14] INDEX.PHP REACHED
+[2026-10-15 08:41:14] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:41:19] INDEX.PHP REACHED
+[2026-10-15 08:41:19] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:41:24] INDEX.PHP REACHED
+[2026-10-15 08:41:24] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:41:27] INDEX.PHP REACHED
+[2026-10-15 08:41:27] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:41:29] INDEX.PHP REACHED
+[2026-10-15 08:41:29] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:41:34] INDEX.PHP REACHED
+[2026-10-15 08:41:34] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:41:39] INDEX.PHP REACHED
+[2026-10-15 08:41:39] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:41:44] INDEX.PHP REACHED
+[2026-10-15 08:41:44] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:41:49] INDEX.PHP REACHED
+[2026-10-15 08:41:49] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:41:54] INDEX.PHP REACHED
+[2026-10-15 08:41:54] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:41:59] INDEX.PHP REACHED
+[2026-10-15 08:41:59] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:42:04] INDEX.PHP REACHED
+[2026-10-15 08:42:04] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:42:09] INDEX.PHP REACHED
+[2026-10-15 08:42:09] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:42:14] INDEX.PHP REACHED
+[2026-10-15 08:42:14] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)
+[2026-10-15 08:42:19] INDEX.PHP REACHED
+[2026-10-15 08:42:19] REQUEST: GET /api/index.php/receptionist/notifications (Path: /receptionist/notifications)

@@ -42,9 +42,17 @@ class BookingController {
                     }
                 }
 
+                $total_amount = isset($data->total_amount) ? floatval($data->total_amount) : (isset($data->amount) ? floatval($data->amount) : 3500.00);
+                $actual_amount = isset($data->actual_amount) && floatval($data->actual_amount) > 0 ? floatval($data->actual_amount) : $total_amount;
+                $platform_fee = isset($data->platform_fee) ? floatval($data->platform_fee) : max(0.00, $total_amount - $actual_amount);
+
+                $extra_guest_charge = isset($data->extra_guest_charge) ? floatval($data->extra_guest_charge) : (isset($data->extra_charge) ? floatval($data->extra_charge) : 0.00);
+                $extra_adults = isset($data->extra_adults) ? intval($data->extra_adults) : 0;
+                $extra_children = isset($data->extra_children) ? intval($data->extra_children) : (isset($data->children) ? intval($data->children) : 0);
+
                 // Insert into bookings
-                $query = "INSERT INTO bookings (booking_id, guest_name, guest_email, guest_phone, check_in_date, check_out_date, total_amount, status, payment_status, source, booking_source, special_requests) 
-                          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                $query = "INSERT INTO bookings (booking_id, guest_name, guest_email, guest_phone, check_in_date, check_out_date, total_amount, actual_amount, platform_fee, status, payment_status, source, booking_source, special_requests) 
+                          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
                 $stmt = $this->db->prepare($query);
                 $stmt->execute([
                     $booking_id, 
@@ -53,7 +61,9 @@ class BookingController {
                     $data->phone ?? '', 
                     $data->checkIn, 
                     $data->checkOut, 
-                    $data->amount ?? 3500.00,
+                    $total_amount,
+                    $actual_amount,
+                    $platform_fee,
                     $status,
                     $payment_status,
                     $source,
@@ -64,7 +74,7 @@ class BookingController {
 
                 // Save booking details into booking_details table for easy retrieval
                 try {
-                    $bdStmt = $this->db->prepare("INSERT INTO booking_details (booking_id, guest_name, guest_email, guest_phone, guests, country, address, additional_notes) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+                    $bdStmt = $this->db->prepare("INSERT INTO booking_details (booking_id, guest_name, guest_email, guest_phone, guests, country, address, additional_notes, children, extra_guest_charge, extra_adults, extra_children) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
                     $bdStmt->execute([
                         $db_booking_id, 
                         $data->name, 
@@ -73,7 +83,11 @@ class BookingController {
                         $data->guests ?? '', 
                         $data->country ?? '', 
                         $data->address ?? '', 
-                        $data->notes ?? $data->specialRequests ?? ''
+                        $data->notes ?? $data->specialRequests ?? '',
+                        $extra_children,
+                        $extra_guest_charge,
+                        $extra_adults,
+                        $extra_children
                     ]);
                 } catch (Exception $e) {
                     error_log('Failed to insert booking_details: ' . $e->getMessage());
@@ -150,13 +164,13 @@ class BookingController {
                 }
 
                 $db_room_query = "INSERT INTO booking_rooms (booking_id, room_id, price_at_booking) VALUES (?, ?, ?)";
-                $this->db->prepare($db_room_query)->execute([$db_booking_id, $room_id, $data->amount ?? 3500.00]);
+                $this->db->prepare($db_room_query)->execute([$db_booking_id, $room_id, $total_amount]);
 
                 if ($payment_status === 'success') {
-                    // Record payment
-                    $payStmt = $this->db->prepare("INSERT INTO payments (booking_id, transaction_id, amount, payment_method, status) VALUES (?, ?, ?, ?, 'success')");
+                    // Record payment with actual_amount (without platform fee) for accounts & settlements
+                    $payStmt = $this->db->prepare("INSERT INTO payments (booking_id, transaction_id, amount, payment_method, status, platform_fee, gross_amount) VALUES (?, ?, ?, ?, 'success', ?, ?)");
                     $txnId = 'TXN_OFFLINE_' . strtoupper(substr(uniqid(), -8));
-                    $payStmt->execute([$db_booking_id, $txnId, $data->amount ?? 3500.00, $payment_method ?? 'cash']);
+                    $payStmt->execute([$db_booking_id, $txnId, $actual_amount, $payment_method ?? 'cash', $platform_fee, $total_amount]);
 
                     // Update room status
                     $this->db->prepare("UPDATE rooms_new SET status = 'Occupied' WHERE id = ?")->execute([$room_id]);

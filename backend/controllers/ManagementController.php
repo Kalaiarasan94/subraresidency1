@@ -24,6 +24,28 @@ class ManagementController {
     // This ensures the same person booked under different name variants is counted correctly.
     public function getGuestDirectory() {
         try {
+            $startDate = $_GET['start_date'] ?? null;
+            $endDate = $_GET['end_date'] ?? null;
+            $month = $_GET['month'] ?? null;
+            $year = $_GET['year'] ?? null;
+
+            $dateClause = "";
+            $params = [];
+
+            if (!empty($startDate) && !empty($endDate)) {
+                $dateClause = "AND (b.check_in_date BETWEEN ? AND ? OR DATE(b.created_at) BETWEEN ? AND ?)";
+                $params = [$startDate, $endDate, $startDate, $endDate];
+            } elseif (!empty($startDate)) {
+                $dateClause = "AND (b.check_in_date >= ? OR DATE(b.created_at) >= ?)";
+                $params = [$startDate, $startDate];
+            } elseif (!empty($endDate)) {
+                $dateClause = "AND (b.check_in_date <= ? OR DATE(b.created_at) <= ?)";
+                $params = [$endDate, $endDate];
+            } elseif (!empty($month) && !empty($year)) {
+                $dateClause = "AND (MONTH(b.check_in_date) = ? AND YEAR(b.check_in_date) = ?)";
+                $params = [$month, $year];
+            }
+
             $query = "SELECT
                         -- Most recent name used by this guest
                         SUBSTRING_INDEX(GROUP_CONCAT(b.guest_name ORDER BY b.created_at DESC SEPARATOR '|||'), '|||', 1) AS name,
@@ -31,19 +53,22 @@ class ManagementController {
                         COALESCE(NULLIF(TRIM(b.guest_email),''), b.guest_phone) AS email,
                         -- Use the most recent phone on record for this identity
                         SUBSTRING_INDEX(GROUP_CONCAT(b.guest_phone ORDER BY b.created_at DESC SEPARATOR '|||'), '|||', 1) AS phone,
+                        -- Most recent booking ref
+                        SUBSTRING_INDEX(GROUP_CONCAT(b.booking_id ORDER BY b.created_at DESC SEPARATOR '|||'), '|||', 1) AS last_booking_id,
                         -- Count ALL bookings for this identity (email or phone)
                         COUNT(DISTINCT b.id)  AS total_stays,
                         MAX(b.check_in_date)  AS last_visit,
+                        MAX(b.check_out_date) AS last_checkout,
                         SUM(b.total_amount)   AS total_spent,
                         GROUP_CONCAT(DISTINCT r.room_number) AS room_numbers
                       FROM bookings b
                       LEFT JOIN booking_rooms br ON b.id = br.booking_id
                       LEFT JOIN rooms_new r ON br.room_id = r.id
-                      WHERE b.status != 'pending'
+                      WHERE b.status != 'pending' $dateClause
                       GROUP BY COALESCE(NULLIF(TRIM(b.guest_email),''), b.guest_phone)
                       ORDER BY last_visit DESC";
             $stmt = $this->db->prepare($query);
-            $stmt->execute();
+            $stmt->execute($params);
             $guests = $stmt->fetchAll(PDO::FETCH_ASSOC);
             echo json_encode(["status" => "success", "data" => $guests]);
         } catch (Exception $e) {
@@ -65,8 +90,12 @@ class ManagementController {
                         p.payment_method,
                         p.status,
                         p.payment_date,
+                        p.platform_fee,
+                        p.gross_amount,
                         b.booking_id  AS booking_ref,
-                        b.guest_name
+                        b.guest_name,
+                        b.booking_source,
+                        b.total_amount
                       FROM payments p
                       LEFT JOIN bookings b ON b.id = p.booking_id
                       ORDER BY p.payment_date DESC";

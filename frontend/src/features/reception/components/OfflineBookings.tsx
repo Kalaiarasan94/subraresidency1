@@ -1,60 +1,71 @@
 import React from 'react';
 import { Card, CardContent } from '../../../components/ui/card';
-import { Button } from '../../../components/ui/button';
-import { Badge } from '../../../components/ui/badge';
-import { PlusCircle } from 'lucide-react';
+import { PlusCircle, Search } from 'lucide-react';
 
 export const OfflineBookings = () => {
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-gray-200">
         <div>
-          <h1 className="text-3xl font-playfair font-bold text-catalogue-green mb-1">Offline Bookings</h1>
-          <p className="text-slate-500">Walk-in registrations and manual entries.</p>
+          <h1 className="text-xl font-bold text-gray-900 tracking-tight">Walk-in Registrations</h1>
+          <p className="text-xs text-gray-500">Physical frontdesk reservations and manual guest folios</p>
         </div>
-        <Button className="bg-catalogue-gold text-white font-bold uppercase tracking-widest px-8 flex gap-2 items-center">
-          <PlusCircle size={18} />
-          <span>New Walk-in</span>
-        </Button>
+        <button 
+          onClick={() => window.location.href = '/reception'}
+          className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-xs rounded-lg shadow-xs transition-colors flex items-center gap-1.5"
+        >
+          <PlusCircle size={15} />
+          <span>New Walk-in Folio</span>
+        </button>
       </div>
 
-      <Card className="border-none shadow-sm">
-        <CardContent className="p-0">
-          <div className="overflow-x-auto">
-            <table className="w-full text-left">
-              <thead>
-                <tr className="bg-slate-50 text-[10px] uppercase font-bold text-slate-500 tracking-widest border-b border-slate-100">
-                  <th className="px-6 py-4">Guest</th>
-                  <th className="px-6 py-4">Room No</th>
-                  <th className="px-6 py-4">Stay duration</th>
-                  <th className="px-6 py-4">Amount</th>
-                  <th className="px-6 py-4">Status</th>
-                  <th className="px-6 py-4 text-right">Actions</th>
+      <div className="bg-white border border-gray-200 rounded-lg shadow-xs overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full text-left border-collapse">
+            <thead>
+              <tr className="bg-gray-50 text-[11px] font-semibold text-gray-500 uppercase tracking-wider border-b border-gray-200">
+                <th className="px-5 py-3">Guest</th>
+                <th className="px-5 py-3">Room No</th>
+                <th className="px-5 py-3">Stay Duration</th>
+                <th className="px-5 py-3">Amount</th>
+                <th className="px-5 py-3">Status</th>
+                <th className="px-5 py-3 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-100 text-xs">
+              {[1, 2, 3].map((_, i) => (
+                <tr key={i} className="hover:bg-gray-50/70 transition-colors">
+                  <td className="px-5 py-3">
+                    <p className="font-semibold text-gray-900">Walk-in Guest {i + 1}</p>
+                    <span className="inline-block mt-0.5 px-1.5 py-0.2 bg-gray-100 text-gray-600 text-[10px] font-medium rounded">
+                      Front Desk
+                    </span>
+                  </td>
+                  <td className="px-5 py-3 font-mono font-bold text-gray-900">
+                    30{i}
+                  </td>
+                  <td className="px-5 py-3 text-gray-600">
+                    1 Night
+                  </td>
+                  <td className="px-5 py-3 font-semibold text-gray-900">
+                    ₹2,500
+                  </td>
+                  <td className="px-5 py-3">
+                    <span className="inline-block px-2 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-semibold rounded-full">
+                      Checked-In
+                    </span>
+                  </td>
+                  <td className="px-5 py-3 text-right">
+                    <button className="px-3 py-1 border border-gray-300 hover:bg-gray-50 text-gray-700 font-medium text-xs rounded-md transition-colors">
+                      View Bill
+                    </button>
+                  </td>
                 </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-50">
-                {[1, 2, 3].map((_, i) => (
-                  <tr key={i} className="hover:bg-brand-cream/10 transition-colors">
-                    <td className="px-6 py-5">
-                      <p className="text-sm font-bold text-slate-800">Walk-in Guest {i + 1}</p>
-                      <Badge className="mt-1 bg-slate-100 text-slate-600 rounded-none text-[8px] uppercase font-bold">Manual Entry</Badge>
-                    </td>
-                    <td className="px-6 py-5 text-sm font-bold text-catalogue-green">30{i}</td>
-                    <td className="px-6 py-5 text-sm text-slate-600">1 Night</td>
-                    <td className="px-6 py-5 text-sm font-bold text-catalogue-green">₹2,500</td>
-                    <td className="px-6 py-5">
-                      <Badge className="bg-emerald-50 text-emerald-600 rounded-none px-3 font-bold text-[10px] uppercase tracking-wider">Checked-In</Badge>
-                    </td>
-                    <td className="px-6 py-5 text-right">
-                      <Button variant="outline" className="border-slate-200 text-slate-500 text-[10px] font-bold uppercase tracking-widest px-4">View Bill</Button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </CardContent>
-      </Card>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
 };

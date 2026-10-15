@@ -19,15 +19,23 @@ class Database {
 
     public function getConnection() {
         $this->conn = null;
-        try {
-            $this->conn = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name, $this->username, $this->password);
-            $this->conn->exec("set names utf8");
-            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch(PDOException $exception) {
-            $log_file = __DIR__ . '/../logs/payment.log';
-            if (!file_exists(dirname($log_file))) @mkdir(dirname($log_file), 0777, true);
-            @error_log("[" . date('Y-m-d H:i:s') . "] Database Connection error: " . $exception->getMessage() . "\n", 3, $log_file);
+        $hosts = [$this->host];
+        if ($this->host === 'localhost') {
+            $hosts[] = '127.0.0.1';
         }
+        foreach ($hosts as $h) {
+            try {
+                $this->conn = new PDO("mysql:host=" . $h . ";dbname=" . $this->db_name, $this->username, $this->password);
+                $this->conn->exec("set names utf8");
+                $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                return $this->conn;
+            } catch(PDOException $exception) {
+                $lastErr = $exception->getMessage();
+            }
+        }
+        $log_file = __DIR__ . '/../logs/payment.log';
+        if (!file_exists(dirname($log_file))) @mkdir(dirname($log_file), 0777, true);
+        @error_log("[" . date('Y-m-d H:i:s') . "] Database Connection error: " . ($lastErr ?? 'Unknown') . "\n", 3, $log_file);
         return $this->conn;
     }
 }

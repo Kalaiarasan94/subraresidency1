@@ -43,9 +43,12 @@ export const CustomerPortal = () => {
     window.scrollTo(0, 0);
   }, [location, detailedRoom]);
 
+  const isCheckinConfirm = location.pathname.startsWith('/checkin-confirm');
+  const hideHeaderFooter = detailedRoom || isCheckinConfirm;
+
   return (
     <div className="font-playfair selection:bg-catalogue-gold selection:text-white overflow-x-hidden min-h-screen flex flex-col">
-      {!detailedRoom && (
+      {!hideHeaderFooter && (
         <CustomerNavigation
           isMobileMenuOpen={isMobileMenuOpen}
           onMobileMenuToggle={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -53,7 +56,7 @@ export const CustomerPortal = () => {
         />
       )}
 
-      <main className={!detailedRoom ? "pt-20 flex-grow" : "flex-grow"}>
+      <main className={!hideHeaderFooter ? "pt-20 flex-grow" : "flex-grow"}>
         {detailedRoom ? (
           <RoomDetailPage 
             room={detailedRoom} 
@@ -72,11 +75,13 @@ export const CustomerPortal = () => {
         )}
       </main>
 
-      <RoomBookingFlow 
-        isOpen={isBookingOpen} 
-        onClose={() => setIsBookingOpen(false)} 
-        room={selectedRoom || detailedRoom || ROOMS_DATA[0]} 
-      />
+      {!isCheckinConfirm && (
+        <RoomBookingFlow 
+          isOpen={isBookingOpen} 
+          onClose={() => setIsBookingOpen(false)} 
+          room={selectedRoom || detailedRoom || ROOMS_DATA[0]} 
+        />
+      )}
 
       <AnimatePresence>
         {selectedTemple && (
@@ -84,7 +89,7 @@ export const CustomerPortal = () => {
         )}
       </AnimatePresence>
 
-      {!detailedRoom && <Footer />}
+      {!hideHeaderFooter && <Footer />}
     </div>
   );
 };

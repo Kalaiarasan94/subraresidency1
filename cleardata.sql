@@ -40,7 +40,11 @@ ALTER TABLE `bookings` AUTO_INCREMENT = 1;
 DELETE FROM `users`;
 ALTER TABLE `users` AUTO_INCREMENT = 1;
 
--- 9. Reset Occupied Rooms Back to Available in Live Inventory
+-- 9. Clear Operational Expenses & Audit Entries
+DELETE FROM `expenses`;
+ALTER TABLE `expenses` AUTO_INCREMENT = 1;
+
+-- 10. Reset Occupied Rooms Back to Available in Live Inventory
 UPDATE `rooms_new` SET `status` = 'Available' WHERE `status` = 'Occupied';
 UPDATE `rooms` SET `status` = 'available' WHERE `status` = 'occupied';
 

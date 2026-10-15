@@ -2,9 +2,10 @@
 // backend/utils/ImageUploader.php
 // Saves an uploaded image file to disk as WebP, regardless of the source format.
 
+include_once __DIR__ . '/UploadHelper.php';
+
 class ImageUploader
 {
-
     public static function saveAsWebp($uploadedFile, $destDir, $prefix = 'img')
     {
         if (!is_dir($destDir)) {
@@ -46,6 +47,13 @@ class ImageUploader
         $saved = imagewebp($image, $dest, 85);
         imagedestroy($image);
 
-        return $saved ? $filename : false;
+        if ($saved) {
+            // Determine subfolder (e.g. rooms, attractions, banners)
+            $subfolder = basename(rtrim($destDir, '/'));
+            UploadHelper::mirrorUpload($filename, $subfolder);
+            return $filename;
+        }
+
+        return false;
     }
 }

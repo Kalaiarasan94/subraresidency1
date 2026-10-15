@@ -140,71 +140,74 @@ export const AdminDashboardView = ({
   if (loading) return (
     <div className="flex items-center justify-center h-[60vh]">
       <div className="flex flex-col items-center gap-4">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-600"></div>
-        <p className="text-indigo-900 font-bold animate-pulse uppercase tracking-widest text-[10px]">Synchronizing System Data...</p>
+        <div className="animate-spin rounded-none h-10 w-10 border-2 border-black border-t-transparent"></div>
+        <p className="text-black font-bold uppercase tracking-widest text-[10px]">Synchronizing System Data...</p>
       </div>
     </div>
   );
 
   if (!data) return <div className="p-10 text-rose-600 font-bold">Error: Connection to Management API lost.</div>;
 
-  const COLORS = ['#4f46e5', '#8b5cf6', '#6366f1', '#06b6d4'];
+  const COLORS = ['#2563eb', '#10b981', '#f59e0b', '#8b5cf6'];
 
   return (
-    <div className="animate-in fade-in duration-700">
-      
+    <div>
       {/* VIEW CONDITIONAL RENDERING */}
       {activeSubTab === 'overview' && (
-        <div className="space-y-8 animate-in slide-in-from-bottom-4 duration-500">
+        <div className="space-y-6">
           <div className="space-y-6">
-            <h2 className="text-xs font-black text-slate-800 uppercase tracking-widest flex items-center gap-3">
-              <div className="w-8 h-[2px] bg-indigo-600"></div>
-              Dashboard Overview
-            </h2>
+            <div className="flex items-center justify-between pb-2 border-b border-gray-200">
+              <div>
+                <h2 className="text-xl font-medium text-gray-800 tracking-tight">
+                  System overview
+                </h2>
+                <p className="text-xs text-gray-500 mt-0.5">Real-time metrics and hotel operations</p>
+              </div>
+              <span className="text-xs font-mono px-2 py-0.5 bg-gray-100 border border-gray-200 rounded text-gray-600">Live Telemetry</span>
+            </div>
             
-            {/* Stats Cards Row (2 rows of 4 cards on desktop, spacious) */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              <MiniStat icon={Calendar} label="Total Bookings" value={data.stats.total_bookings} color="bg-blue-50 text-blue-600" />
-              <MiniStat icon={Users} label="Today's Bookings" value={data.stats.today_bookings} color="bg-emerald-50 text-emerald-600" onClick={() => setShowTodayBookingsModal(true)} />
-              <MiniStat icon={TrendingUp} label="Today's Revenue" value={`₹${data.stats.today_revenue.toLocaleString()}`} color="bg-amber-50 text-amber-600" onClick={() => setShowTodayRevenueModal(true)} />
-              <MiniStat icon={CreditCard} label="This Month Revenue" value={`₹${data.stats.monthly_revenue.toLocaleString()}`} color="bg-purple-50 text-purple-600" />
+            {/* Stats Cards Row */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <MiniStat icon={Calendar} label="Total Bookings" value={data.stats.total_bookings} />
+              <MiniStat icon={Users} label="Today's Bookings" value={data.stats.today_bookings} onClick={() => setShowTodayBookingsModal(true)} />
+              <MiniStat icon={TrendingUp} label="Today's Revenue" value={`₹${data.stats.today_revenue.toLocaleString('en-IN')}`} onClick={() => setShowTodayRevenueModal(true)} />
+              <MiniStat icon={CreditCard} label="This Month Revenue" value={`₹${data.stats.monthly_revenue.toLocaleString('en-IN')}`} />
               
-              <MiniStat icon={Hotel} label="Total Rooms" value={data.stats.total_rooms} color="bg-slate-50 text-slate-600" />
-              <MiniStat icon={CheckCircle} label="Available Rooms" value={data.stats.available_rooms} color="bg-teal-50 text-teal-600" onClick={() => setShowAvailableRoomsModal(true)} />
-              <MiniStat icon={AlertCircle} label="Occupied Rooms" value={data.stats.occupied_rooms} color="bg-orange-50 text-orange-600" onClick={() => setShowOccupiedRoomsModal(true)} />
-              <MiniStat icon={XCircleIcon} label="Cancelled Bookings" value={data.stats.cancelled_bookings} color="bg-rose-50 text-rose-600" />
+              <MiniStat icon={Hotel} label="Total Rooms" value={data.stats.total_rooms} />
+              <MiniStat icon={CheckCircle} label="Available Rooms" value={data.stats.available_rooms} onClick={() => setShowAvailableRoomsModal(true)} />
+              <MiniStat icon={AlertCircle} label="Occupied Rooms" value={data.stats.occupied_rooms} onClick={() => setShowOccupiedRoomsModal(true)} />
+              <MiniStat icon={XCircleIcon} label="Cancelled Bookings" value={data.stats.cancelled_bookings} />
             </div>
 
-            {/* First Row of Charts (Spacious & Detailed) */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* First Row of Charts */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               {/* Booking Trend Chart */}
-              <Card className="lg:col-span-2 border border-slate-100/80 shadow-sm rounded-3xl overflow-hidden bg-white hover:shadow-md transition-all duration-300 p-6 flex flex-col justify-between h-[340px]">
+              <Card className="lg:col-span-2 border border-gray-200 shadow-xs rounded-lg bg-white p-5 flex flex-col justify-between h-[340px]">
                  <div className="mb-2">
-                   <h3 className="text-xs font-black tracking-widest uppercase text-slate-400">Booking Trend</h3>
-                   <p className="text-[10px] text-slate-400 mt-0.5">Daily volume over the last 7 days</p>
+                   <h3 className="text-sm font-medium text-gray-800">Booking trend</h3>
+                   <p className="text-xs text-gray-400 mt-0.5">Daily volume over the last 7 days</p>
                  </div>
-                 <div className="h-[230px] w-full mt-2">
-                    <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+                 <div className="h-[230px] w-full mt-2 min-w-0">
+                    <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={230}>
                       <AreaChart data={data.chart_data} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                         <defs>
                           <linearGradient id="colorBookings" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stopColor="#4f46e5" stopOpacity={0.25}/>
-                            <stop offset="95%" stopColor="#4f46e5" stopOpacity={0.01}/>
+                            <stop offset="5%" stopColor="#2563eb" stopOpacity={0.12}/>
+                            <stop offset="95%" stopColor="#2563eb" stopOpacity={0.00}/>
                           </linearGradient>
                         </defs>
-                        <CartesianGrid strokeDasharray="3 3" stroke="#f8fafc" vertical={false} />
-                        <XAxis dataKey="day" stroke="#94a3b8" fontSize={9} tickLine={false} axisLine={false} dy={8} />
-                        <YAxis stroke="#94a3b8" fontSize={9} tickLine={false} axisLine={false} width={30} dx={-4} />
-                        <Area type="monotone" dataKey="bookings" stroke="#4f46e5" fill="url(#colorBookings)" strokeWidth={2.5} />
+                        <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
+                        <XAxis dataKey="day" stroke="#94a3b8" fontSize={11} tickLine={false} axisLine={{ stroke: '#e2e8f0' }} dy={8} />
+                        <YAxis stroke="#94a3b8" fontSize={11} tickLine={false} axisLine={false} width={30} dx={-4} />
+                        <Area type="monotone" dataKey="bookings" stroke="#2563eb" fill="url(#colorBookings)" strokeWidth={2} />
                         <Tooltip 
                           contentStyle={{ 
-                            backgroundColor: '#0f172a', 
-                            borderRadius: '12px', 
-                            border: 'none', 
-                            color: '#fff', 
-                            fontSize: '10px',
-                            fontWeight: 'bold',
-                            boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)'
+                            backgroundColor: '#ffffff', 
+                            borderRadius: '0.375rem', 
+                            border: '1px solid #e2e8f0', 
+                            color: '#1e293b', 
+                            fontSize: '12px',
+                            boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)'
                           }} 
                         />
                       </AreaChart>
@@ -213,45 +216,44 @@ export const AdminDashboardView = ({
               </Card>
 
               {/* Revenue Breakdown */}
-              <Card className="lg:col-span-1 border border-slate-100/80 shadow-sm rounded-3xl overflow-hidden bg-white hover:shadow-md transition-all duration-300 p-6 flex flex-col justify-between h-[340px]">
+              <Card className="lg:col-span-1 border border-gray-200 shadow-xs rounded-lg bg-white p-5 flex flex-col justify-between h-[340px]">
                  <div>
-                   <h3 className="text-xs font-black tracking-widest uppercase text-slate-400">Revenue Overview</h3>
-                   <p className="text-[10px] text-slate-400 mt-0.5">Estimated this month's revenue share</p>
+                   <h3 className="text-sm font-medium text-gray-800">Revenue breakdown</h3>
+                   <p className="text-xs text-gray-400 mt-0.5">Estimated this month's revenue share</p>
                  </div>
-                 <div className="h-[140px] flex items-center justify-center relative mt-2">
-                    <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+                 <div className="h-[140px] flex items-center justify-center relative mt-2 min-w-0">
+                    <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={140}>
                       <PieChart>
-                        <Pie data={data.revenue_overview} innerRadius={42} outerRadius={56} paddingAngle={4} dataKey="value">
+                        <Pie data={data.revenue_overview} innerRadius={42} outerRadius={56} paddingAngle={2} dataKey="value">
                           {data.revenue_overview.map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
                         </Pie>
                         <Tooltip 
                           formatter={(value: any) => [`₹${value.toLocaleString('en-IN')}`, 'Amount']}
                           contentStyle={{ 
-                            backgroundColor: '#0f172a', 
-                            borderRadius: '12px', 
-                            border: 'none', 
-                            color: '#fff', 
-                            fontSize: '10px',
-                            fontWeight: 'bold'
+                            backgroundColor: '#ffffff', 
+                            borderRadius: '0.375rem', 
+                            border: '1px solid #e2e8f0', 
+                            color: '#1e293b', 
+                            fontSize: '12px'
                           }} 
                         />
                       </PieChart>
                     </ResponsiveContainer>
                     <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                      <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Total</span>
-                      <span className="text-sm font-black text-slate-800">₹{data.stats.monthly_revenue.toLocaleString('en-IN')}</span>
+                      <span className="text-[10px] font-medium text-gray-400 uppercase">Total</span>
+                      <span className="text-sm font-semibold text-gray-900">₹{data.stats.monthly_revenue.toLocaleString('en-IN')}</span>
                     </div>
                  </div>
-                 <div className="space-y-2 mt-2 border-t border-slate-100 pt-4">
+                 <div className="space-y-2 mt-2 border-t border-gray-100 pt-3">
                    {(() => {
                      const totalRev = data.revenue_overview.reduce((sum, item) => sum + item.value, 0) || 1;
                      return data.revenue_overview.map((item, idx) => (
-                       <div key={idx} className="flex items-center justify-between text-[10px] font-bold text-slate-650">
+                       <div key={idx} className="flex items-center justify-between text-xs text-gray-600">
                          <div className="flex items-center gap-2">
                            <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: COLORS[idx % COLORS.length] }} />
                            <span>{item.name}</span>
                          </div>
-                         <span className="text-slate-850 font-extrabold">₹{item.value.toLocaleString('en-IN')} ({Math.round(item.value / totalRev * 100)}%)</span>
+                         <span className="font-mono text-gray-900">₹{item.value.toLocaleString('en-IN')} ({Math.round(item.value / totalRev * 100)}%)</span>
                        </div>
                      ));
                    })()}
@@ -259,40 +261,46 @@ export const AdminDashboardView = ({
               </Card>
             </div>
 
-            {/* Second Row of Operations & Grid (Spacious & Clean) */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Second Row of Operations & Grid */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               {/* Recent Bookings Table */}
-              <Card className="lg:col-span-2 border border-slate-100/80 shadow-sm rounded-3xl overflow-hidden bg-white hover:shadow-md transition-all duration-300 flex flex-col justify-between h-[380px]">
-                 <div className="p-6 pb-2 flex flex-row items-center justify-between border-b border-slate-50">
+              <Card className="lg:col-span-2 border border-gray-200 shadow-xs rounded-lg bg-white flex flex-col justify-between h-[380px]">
+                 <div className="p-4 flex flex-row items-center justify-between border-b border-gray-100">
                     <div>
-                      <h3 className="text-xs font-black tracking-widest uppercase text-slate-400">Recent Bookings</h3>
-                      <p className="text-[10px] text-slate-400 mt-0.5">Most recent reservation entries</p>
+                      <h3 className="text-sm font-medium text-gray-800">Recent bookings</h3>
+                      <p className="text-xs text-gray-400 mt-0.5">Most recent reservation entries</p>
                     </div>
-                    <Button variant="link" className="text-[9px] uppercase font-black tracking-widest text-indigo-600 hover:text-indigo-800 p-0 h-auto" onClick={() => onNavigate?.('bookings')}>View All</Button>
+                    <Button 
+                      variant="link" 
+                      className="text-xs font-medium text-blue-600 hover:text-blue-700 p-0 h-auto" 
+                      onClick={() => onNavigate?.('bookings')}
+                    >
+                      View all →
+                    </Button>
                  </div>
                  <div className="flex-grow overflow-y-auto">
-                    <table className="w-full text-[11px] text-left">
-                       <thead className="bg-slate-50/60 text-slate-455 uppercase font-black text-[9px] tracking-widest border-b border-slate-100">
+                    <table className="w-full text-xs text-left">
+                       <thead className="bg-gray-50/80 text-gray-500 uppercase font-medium text-[10px] tracking-wider border-b border-gray-200">
                           <tr>
-                            <th className="px-6 py-4">Booking ID</th>
-                            <th className="px-6 py-4">Guest</th>
-                            <th className="px-6 py-4">Check-in</th>
-                            <th className="text-right px-6 py-4">Status</th>
+                            <th className="px-4 py-2.5">Booking ID</th>
+                            <th className="px-4 py-2.5">Guest</th>
+                            <th className="px-4 py-2.5">Check-in</th>
+                            <th className="text-right px-4 py-2.5">Status</th>
                           </tr>
                        </thead>
-                       <tbody className="divide-y divide-slate-100/60">
+                       <tbody className="divide-y divide-gray-100">
                           {data.recent_bookings.map(b => (
-                            <tr key={b.booking_id} className="hover:bg-slate-50/40 transition-colors">
-                              <td className="px-6 py-4 font-extrabold text-slate-800">{b.booking_id}</td>
-                              <td className="px-6 py-4 text-slate-655 font-bold uppercase tracking-tight">{b.guest_name}</td>
-                              <td className="px-6 py-4 text-slate-400 font-bold font-sans">{b.check_in_date}</td>
-                              <td className="px-6 py-4 text-right">
-                                 <span className={`px-3 py-1 rounded-full text-[8px] font-black border uppercase tracking-wider ${
-                                   b.status === 'confirmed' ? 'bg-indigo-50 border-indigo-150 text-indigo-700' :
-                                   b.status === 'checked-in' ? 'bg-emerald-50 border-emerald-150 text-emerald-700' :
-                                   b.status === 'checked-out' ? 'bg-slate-50 border-slate-200 text-slate-600' :
-                                   b.status === 'pending' ? 'bg-amber-50 border-amber-200 text-amber-700' :
-                                   'bg-rose-50 border-rose-150 text-rose-700'
+                            <tr key={b.booking_id} className="hover:bg-gray-50 transition-colors">
+                              <td className="px-4 py-3 font-mono font-medium text-blue-600">{b.booking_id}</td>
+                              <td className="px-4 py-3 text-gray-800 font-medium">{b.guest_name}</td>
+                              <td className="px-4 py-3 text-gray-500 font-mono text-[11px]">{b.check_in_date}</td>
+                              <td className="px-4 py-3 text-right">
+                                 <span className={`px-2 py-0.5 rounded text-[10px] font-medium border ${
+                                   b.status === 'confirmed' ? 'bg-blue-50 text-blue-700 border-blue-200' :
+                                   b.status === 'checked-in' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' :
+                                   b.status === 'checked-out' ? 'bg-gray-100 text-gray-700 border-gray-200' :
+                                   b.status === 'pending' ? 'bg-amber-50 text-amber-700 border-amber-200' :
+                                   'bg-gray-100 text-gray-400 border-gray-200 line-through'
                                  }`}>
                                    {b.status}
                                  </span>
@@ -305,33 +313,33 @@ export const AdminDashboardView = ({
               </Card>
 
               {/* Live Room Grid */}
-              <Card className="lg:col-span-1 border border-slate-100/80 shadow-sm rounded-3xl overflow-hidden bg-white hover:shadow-md transition-all duration-300 p-6 flex flex-col justify-between h-[380px]">
+              <Card className="lg:col-span-1 border border-gray-200 shadow-xs rounded-lg bg-white p-5 flex flex-col justify-between h-[380px]">
                  <div className="mb-2">
-                   <h3 className="text-xs font-black tracking-widest uppercase text-slate-400">Live Occupancy Grid</h3>
-                   <p className="text-[10px] text-slate-400 mt-0.5">Real-time status of all hotel rooms</p>
+                   <h3 className="text-sm font-medium text-gray-800">Live room grid</h3>
+                   <p className="text-xs text-gray-400 mt-0.5">Real-time status of all hotel rooms</p>
                  </div>
-                 <div className="flex-grow overflow-y-auto mt-4 pr-1 custom-scrollbar">
+                 <div className="flex-grow overflow-y-auto mt-2 pr-1">
                     <div className="grid grid-cols-4 sm:grid-cols-5 gap-2">
                       {data.rooms_grid.map((room, idx) => (
                         <div 
                           key={idx}
                           title={`${room.number} - ${room.category || 'Standard'} (${room.status})`}
-                          className={`flex flex-col items-center justify-center p-2 rounded-xl border text-center transition-all ${
-                            room.status === 'Available' ? 'bg-emerald-50/40 border-emerald-100 text-emerald-800' :
-                            room.status === 'Occupied' ? 'bg-rose-50/40 border-rose-100 text-rose-800' :
-                            'bg-amber-50/40 border-amber-150 text-amber-800'
+                          className={`flex flex-col items-center justify-center p-2 rounded-md border text-center transition-colors ${
+                            room.status === 'Available' ? 'bg-white border-gray-200 text-gray-800 hover:border-gray-400' :
+                            room.status === 'Occupied' ? 'bg-emerald-50 border-emerald-300 text-emerald-800' :
+                            'bg-amber-50 border-amber-200 text-amber-800'
                           }`}
                         >
-                          <span className="text-[10.5px] font-extrabold">{room.number}</span>
-                          <span className="text-[7px] font-black uppercase tracking-wider mt-0.5 opacity-80">{room.status}</span>
+                          <span className="text-xs font-semibold font-mono">{room.number}</span>
+                          <span className="text-[9px] font-medium tracking-tight mt-0.5 opacity-80">{room.status}</span>
                         </div>
                       ))}
                     </div>
                  </div>
-                 <div className="flex justify-between items-center text-[8px] font-black uppercase tracking-wider text-slate-400 mt-4 border-t border-slate-100 pt-4">
-                   <div className="flex items-center gap-1.5"><div className="w-2 h-2 rounded-full bg-emerald-500"></div> Available</div>
-                   <div className="flex items-center gap-1.5"><div className="w-2 h-2 rounded-full bg-rose-500"></div> Occupied</div>
-                   <div className="flex items-center gap-1.5"><div className="w-2 h-2 rounded-full bg-amber-500"></div> Maint/Clean</div>
+                 <div className="flex justify-between items-center text-[10px] font-medium text-gray-500 mt-4 border-t border-gray-100 pt-3">
+                   <div className="flex items-center gap-1.5"><div className="w-2.5 h-2.5 rounded bg-white border border-gray-300"></div> Available</div>
+                   <div className="flex items-center gap-1.5"><div className="w-2.5 h-2.5 rounded bg-emerald-50 border border-emerald-300"></div> Occupied</div>
+                   <div className="flex items-center gap-1.5"><div className="w-2.5 h-2.5 rounded bg-amber-50 border border-amber-200"></div> Maint</div>
                  </div>
               </Card>
             </div>
@@ -339,45 +347,45 @@ export const AdminDashboardView = ({
 
           {/* Today's Bookings Modal */}
           {showTodayBookingsModal && (
-            <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[999] flex items-center justify-center p-4 animate-in fade-in duration-300">
-              <div className="bg-white rounded-3xl shadow-2xl max-w-xl w-full overflow-hidden border border-slate-100 flex flex-col animate-in zoom-in-95 duration-200">
-                <div className="p-6 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+            <div className="fixed inset-0 bg-black/60 z-[999] flex items-center justify-center p-4">
+              <div className="bg-white rounded-none border border-black shadow-2xl max-w-xl w-full overflow-hidden flex flex-col">
+                <div className="p-5 border-b border-neutral-200 flex items-center justify-between bg-neutral-50">
                   <div>
-                     <h3 className="text-xs font-black text-slate-800 uppercase tracking-widest">Today's Bookings</h3>
-                     <p className="text-[9px] text-slate-400 font-bold uppercase tracking-wider mt-1">Bookings created on current calendar date</p>
+                     <h3 className="text-xs font-bold text-black uppercase tracking-widest">Today's Bookings</h3>
+                     <p className="text-[9px] text-neutral-500 font-bold uppercase tracking-wider mt-0.5">Reservations registered on current date</p>
                   </div>
-                  <button onClick={() => setShowTodayBookingsModal(false)} className="p-2.5 hover:bg-slate-100 rounded-xl text-slate-400 hover:text-slate-650 transition-colors">
+                  <button onClick={() => setShowTodayBookingsModal(false)} className="p-1.5 hover:bg-neutral-200 text-neutral-500 hover:text-black transition-colors rounded-none border border-neutral-300">
                     <X size={16} />
                   </button>
                 </div>
                 
-                <div className="p-6 max-h-[400px] overflow-y-auto custom-scrollbar">
-                  <div className="space-y-3.5">
+                <div className="p-5 max-h-[400px] overflow-y-auto">
+                  <div className="space-y-2">
                     {(data.today_bookings_list || []).filter((bk: any) => String(bk.status).toLowerCase() !== 'pending').map((bk: any, i: number) => (
-                      <div key={i} className="flex justify-between items-center p-4 bg-slate-50/80 border border-slate-100 rounded-2xl hover:border-indigo-200 transition-colors group">
-                        <div className="space-y-1">
+                      <div key={i} className="flex justify-between items-center p-3.5 bg-neutral-50 border border-neutral-200 rounded-none hover:border-black transition-colors">
+                        <div className="space-y-0.5">
                           <div className="flex items-center gap-2">
-                            <span className="text-[10px] font-black text-indigo-600 tracking-wide">{bk.booking_id}</span>
-                            <span className={`text-[8px] font-black px-2 py-0.5 rounded-full border uppercase tracking-wider ${
-                              bk.status === 'checked-in' ? 'bg-emerald-50 border-emerald-150 text-emerald-800' :
-                              bk.status === 'confirmed' ? 'bg-indigo-50 border-indigo-200 text-indigo-800' : 'bg-slate-100 border-slate-200 text-slate-500'
+                            <span className="text-[10px] font-bold font-mono text-black">{bk.booking_id}</span>
+                            <span className={`text-[8px] font-mono font-bold px-1.5 py-0.5 border rounded-none uppercase ${
+                              bk.status === 'checked-in' ? 'bg-black text-white border-black' :
+                              bk.status === 'confirmed' ? 'bg-neutral-800 text-white border-neutral-800' : 'bg-neutral-100 border-neutral-300 text-neutral-700'
                             }`}>
                               {bk.status}
                             </span>
                           </div>
-                          <p className="text-xs font-bold text-slate-800 uppercase">{bk.guest_name}</p>
-                          <p className="text-[9.5px] text-slate-400 font-medium">
+                          <p className="text-xs font-bold text-black uppercase">{bk.guest_name}</p>
+                          <p className="text-[10px] text-neutral-500 font-mono">
                             {bk.check_in_date} to {bk.check_out_date}
                           </p>
                         </div>
-                        <div className="text-right space-y-1">
-                          <span className="text-[8.5px] font-black text-slate-400 uppercase tracking-wider block">Total Amount</span>
-                          <span className="text-sm font-black text-slate-800 font-sans block">₹ {parseFloat(bk.total_amount).toLocaleString()}</span>
+                        <div className="text-right">
+                          <span className="text-[9px] font-bold text-neutral-400 uppercase tracking-wider block">Total</span>
+                          <span className="text-sm font-black text-black font-mono block">₹{parseFloat(bk.total_amount).toLocaleString('en-IN')}</span>
                         </div>
                       </div>
                     ))}
                     {(data.today_bookings_list || []).filter((bk: any) => String(bk.status).toLowerCase() !== 'pending').length === 0 && (
-                      <div className="py-12 text-center text-slate-400 text-[10.5px] font-black uppercase tracking-widest">No confirmed bookings registered today</div>
+                      <div className="py-10 text-center text-neutral-400 text-xs uppercase tracking-wider font-bold">No confirmed bookings registered today</div>
                     )}
                   </div>
                 </div>
@@ -387,42 +395,42 @@ export const AdminDashboardView = ({
 
           {/* Today's Revenue Modal */}
           {showTodayRevenueModal && (
-            <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[999] flex items-center justify-center p-4 animate-in fade-in duration-300">
-              <div className="bg-white rounded-3xl shadow-2xl max-w-xl w-full overflow-hidden border border-slate-100 flex flex-col animate-in zoom-in-95 duration-200">
-                <div className="p-6 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+            <div className="fixed inset-0 bg-black/60 z-[999] flex items-center justify-center p-4">
+              <div className="bg-white rounded-none border border-black shadow-2xl max-w-xl w-full overflow-hidden flex flex-col">
+                <div className="p-5 border-b border-neutral-200 flex items-center justify-between bg-neutral-50">
                   <div>
-                     <h3 className="text-xs font-black text-slate-800 uppercase tracking-widest">Today's Collections</h3>
-                     <p className="text-[9px] text-slate-400 font-bold uppercase tracking-wider mt-1">Successful transactions settled today</p>
+                     <h3 className="text-xs font-bold text-black uppercase tracking-widest">Today's Collections</h3>
+                     <p className="text-[9px] text-neutral-500 font-bold uppercase tracking-wider mt-0.5">Transactions settled today</p>
                   </div>
-                  <button onClick={() => setShowTodayRevenueModal(false)} className="p-2.5 hover:bg-slate-100 rounded-xl text-slate-400 hover:text-slate-650 transition-colors">
+                  <button onClick={() => setShowTodayRevenueModal(false)} className="p-1.5 hover:bg-neutral-200 text-neutral-500 hover:text-black transition-colors rounded-none border border-neutral-300">
                     <X size={16} />
                   </button>
                 </div>
                 
-                <div className="p-6 max-h-[400px] overflow-y-auto custom-scrollbar">
-                  <div className="space-y-3.5">
+                <div className="p-5 max-h-[400px] overflow-y-auto">
+                  <div className="space-y-2">
                     {(data.today_revenue_list || []).map((rev: any, i: number) => (
-                      <div key={i} className="flex justify-between items-center p-4 bg-slate-50/80 border border-slate-100 rounded-2xl hover:border-amber-200 transition-colors group">
-                        <div className="space-y-1">
+                      <div key={i} className="flex justify-between items-center p-3.5 bg-neutral-50 border border-neutral-200 rounded-none hover:border-black transition-colors">
+                        <div className="space-y-0.5">
                           <div className="flex items-center gap-2">
-                            <span className="text-[10px] font-black text-amber-600 tracking-wide">TXN: {rev.transaction_id || 'N/A'}</span>
-                            <span className="text-[8px] font-black px-2 py-0.5 rounded-full border border-slate-200 bg-white uppercase text-slate-500 font-sans tracking-wide">
+                            <span className="text-[10px] font-mono font-bold text-black">TXN: {rev.transaction_id || 'N/A'}</span>
+                            <span className="text-[8px] font-mono font-bold px-1.5 py-0.5 border border-neutral-300 bg-white uppercase text-neutral-700">
                               {rev.payment_method || 'UPI'}
                             </span>
                           </div>
-                          <p className="text-xs font-bold text-slate-800 uppercase">{rev.guest_name}</p>
-                          <p className="text-[9.5px] text-slate-400 font-medium">
-                            Ref Booking: <span className="font-bold text-slate-600">{rev.booking_id}</span>
+                          <p className="text-xs font-bold text-black uppercase">{rev.guest_name}</p>
+                          <p className="text-[10px] text-neutral-500 font-mono">
+                            Ref: {rev.booking_id}
                           </p>
                         </div>
-                        <div className="text-right space-y-1">
-                          <span className="text-[8.5px] font-black text-slate-400 uppercase tracking-wider block">Paid Amount</span>
-                          <span className="text-sm font-black text-emerald-700 font-sans block">₹ {parseFloat(rev.amount).toLocaleString()}</span>
+                        <div className="text-right">
+                          <span className="text-[9px] font-bold text-neutral-400 uppercase tracking-wider block">Paid</span>
+                          <span className="text-sm font-black text-black font-mono block">₹{parseFloat(rev.amount).toLocaleString('en-IN')}</span>
                         </div>
                       </div>
                     ))}
                     {(data.today_revenue_list || []).length === 0 && (
-                      <div className="py-12 text-center text-slate-400 text-[10.5px] font-black uppercase tracking-widest">No payments recorded today</div>
+                      <div className="py-10 text-center text-neutral-400 text-xs uppercase tracking-wider font-bold">No payments recorded today</div>
                     )}
                   </div>
                 </div>
@@ -432,34 +440,34 @@ export const AdminDashboardView = ({
 
           {/* Available Rooms Modal */}
           {showAvailableRoomsModal && (
-            <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[999] flex items-center justify-center p-4 animate-in fade-in duration-300">
-              <div className="bg-white rounded-3xl shadow-2xl max-w-lg w-full overflow-hidden border border-slate-100 flex flex-col animate-in zoom-in-95 duration-200">
-                <div className="p-6 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+            <div className="fixed inset-0 bg-black/60 z-[999] flex items-center justify-center p-4">
+              <div className="bg-white rounded-none border border-black shadow-2xl max-w-lg w-full overflow-hidden flex flex-col">
+                <div className="p-5 border-b border-neutral-200 flex items-center justify-between bg-neutral-50">
                   <div>
-                     <h3 className="text-xs font-black text-slate-800 uppercase tracking-widest">Available Rooms</h3>
-                     <p className="text-[9px] text-slate-400 font-bold uppercase tracking-wider mt-1">Live vacant inventory</p>
+                     <h3 className="text-xs font-bold text-black uppercase tracking-widest">Available Rooms</h3>
+                     <p className="text-[9px] text-neutral-500 font-bold uppercase tracking-wider mt-0.5">Current vacant inventory</p>
                   </div>
-                  <button onClick={() => setShowAvailableRoomsModal(false)} className="p-2.5 hover:bg-slate-100 rounded-xl text-slate-400 hover:text-slate-650 transition-colors">
+                  <button onClick={() => setShowAvailableRoomsModal(false)} className="p-1.5 hover:bg-neutral-200 text-neutral-500 hover:text-black transition-colors rounded-none border border-neutral-300">
                     <X size={16} />
                   </button>
                 </div>
                 
-                <div className="p-6 max-h-[400px] overflow-y-auto custom-scrollbar">
-                  <div className="space-y-3.5">
+                <div className="p-5 max-h-[400px] overflow-y-auto">
+                  <div className="space-y-2">
                     {(data.available_rooms_list || []).map((rm: any, i: number) => (
-                      <div key={i} className="flex justify-between items-center p-4 bg-emerald-50/20 border border-emerald-100/50 rounded-2xl">
-                        <div className="space-y-1">
-                          <p className="text-xs font-bold text-slate-800 uppercase">{rm.room_name || `Room ${rm.room_number}`}</p>
-                          <p className="text-[9.5px] text-slate-400 font-bold uppercase tracking-wider">{rm.category_name}</p>
+                      <div key={i} className="flex justify-between items-center p-3.5 bg-neutral-50 border border-neutral-200 rounded-none hover:border-black transition-colors">
+                        <div className="space-y-0.5">
+                          <p className="text-xs font-bold text-black uppercase">{rm.room_name || `Room ${rm.room_number}`}</p>
+                          <p className="text-[9px] text-neutral-500 font-bold uppercase tracking-wider">{rm.category_name}</p>
                         </div>
-                        <div className="text-right space-y-1">
-                          <span className="text-[8.5px] font-black text-slate-400 uppercase tracking-wider block font-sans">Room No</span>
-                          <span className="text-sm font-black text-emerald-800 block font-sans">{rm.room_number}</span>
+                        <div className="text-right">
+                          <span className="text-[9px] font-bold text-neutral-400 uppercase tracking-wider block">Room No</span>
+                          <span className="text-sm font-black text-black font-mono block">{rm.room_number}</span>
                         </div>
                       </div>
                     ))}
                     {(data.available_rooms_list || []).length === 0 && (
-                      <div className="py-12 text-center text-slate-400 text-[10.5px] font-black uppercase tracking-widest">No available rooms remaining</div>
+                      <div className="py-10 text-center text-neutral-400 text-xs uppercase tracking-wider font-bold">No available rooms remaining</div>
                     )}
                   </div>
                 </div>
@@ -469,48 +477,42 @@ export const AdminDashboardView = ({
 
           {/* Occupied Rooms Modal */}
           {showOccupiedRoomsModal && (
-            <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[999] flex items-center justify-center p-4 animate-in fade-in duration-300">
-              <div className="bg-white rounded-3xl shadow-2xl max-w-lg w-full overflow-hidden border border-slate-100 flex flex-col animate-in zoom-in-95 duration-200">
-                <div className="p-6 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+            <div className="fixed inset-0 bg-black/60 z-[999] flex items-center justify-center p-4">
+              <div className="bg-white rounded-none border border-black shadow-2xl max-w-lg w-full overflow-hidden flex flex-col">
+                <div className="p-5 border-b border-neutral-200 flex items-center justify-between bg-neutral-50">
                   <div>
-                     <h3 className="text-xs font-black text-slate-800 uppercase tracking-widest">Occupied Rooms</h3>
-                     <p className="text-[9px] text-slate-400 font-bold uppercase tracking-wider mt-1">Rooms currently allocated to guests</p>
+                     <h3 className="text-xs font-bold text-black uppercase tracking-widest">Occupied Rooms</h3>
+                     <p className="text-[9px] text-neutral-500 font-bold uppercase tracking-wider mt-0.5">Rooms currently allocated to guests</p>
                   </div>
-                  <button onClick={() => setShowOccupiedRoomsModal(false)} className="p-2.5 hover:bg-slate-100 rounded-xl text-slate-400 hover:text-slate-650 transition-colors">
+                  <button onClick={() => setShowOccupiedRoomsModal(false)} className="p-1.5 hover:bg-neutral-200 text-neutral-500 hover:text-black transition-colors rounded-none border border-neutral-300">
                     <X size={16} />
                   </button>
                 </div>
                 
-                <div className="p-6 max-h-[400px] overflow-y-auto custom-scrollbar">
-                  <div className="space-y-3.5">
+                <div className="p-5 max-h-[400px] overflow-y-auto">
+                  <div className="space-y-2">
                     {(data.occupied_rooms_list || []).map((rm: any, i: number) => (
-                      <div key={i} className="flex justify-between items-start p-4 bg-rose-50/10 border border-rose-100/50 rounded-2xl gap-3">
-                        <div className="space-y-1 min-w-0">
-                          <p className="text-xs font-bold text-slate-800 uppercase">{rm.room_name || `Room ${rm.room_number}`}</p>
-                          <p className="text-[9px] text-slate-400 font-bold uppercase tracking-wider">{rm.category_name}</p>
-                          <p className="text-[10px] text-rose-800 font-bold uppercase mt-1">Guest: {rm.guest_name || 'Checked-in'}</p>
+                      <div key={i} className="flex justify-between items-start p-3.5 bg-neutral-50 border border-neutral-200 rounded-none hover:border-black transition-colors gap-3">
+                        <div className="space-y-0.5 min-w-0">
+                          <p className="text-xs font-bold text-black uppercase">{rm.room_name || `Room ${rm.room_number}`}</p>
+                          <p className="text-[9px] text-neutral-500 font-bold uppercase tracking-wider">{rm.category_name}</p>
+                          <p className="text-[10px] text-black font-bold uppercase mt-1">Guest: {rm.guest_name || 'Checked-in'}</p>
                           {(rm.check_in_date || rm.check_out_date) && (
-                            <div className="flex items-center gap-1.5 mt-2">
-                              <span className="inline-flex items-center gap-1 bg-indigo-50 border border-indigo-100 text-indigo-700 text-[9px] font-black uppercase tracking-wide px-2 py-0.5 rounded-full">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
-                                {rm.check_in_date}
-                              </span>
-                              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-slate-400 shrink-0"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                              <span className="inline-flex items-center gap-1 bg-amber-50 border border-amber-100 text-amber-700 text-[9px] font-black uppercase tracking-wide px-2 py-0.5 rounded-full">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
-                                {rm.check_out_date}
-                              </span>
+                            <div className="flex items-center gap-1.5 mt-1.5 font-mono text-[9px] text-neutral-600">
+                              <span>{rm.check_in_date}</span>
+                              <span>→</span>
+                              <span>{rm.check_out_date}</span>
                             </div>
                           )}
                         </div>
-                        <div className="text-right space-y-1 shrink-0">
-                          <span className="text-[8.5px] font-black text-slate-400 uppercase tracking-wider block font-sans">Room No</span>
-                          <span className="text-sm font-black text-rose-800 block font-sans">{rm.room_number}</span>
+                        <div className="text-right shrink-0">
+                          <span className="text-[9px] font-bold text-neutral-400 uppercase tracking-wider block">Room No</span>
+                          <span className="text-sm font-black text-black font-mono block">{rm.room_number}</span>
                         </div>
                       </div>
                     ))}
                     {(data.occupied_rooms_list || []).length === 0 && (
-                      <div className="py-12 text-center text-slate-400 text-[10.5px] font-black uppercase tracking-widest">No occupied rooms currently</div>
+                      <div className="py-10 text-center text-neutral-400 text-xs uppercase tracking-wider font-bold">No occupied rooms currently</div>
                     )}
                   </div>
                 </div>
@@ -521,9 +523,9 @@ export const AdminDashboardView = ({
       )}
 
       {activeSubTab === 'rooms' && (
-        <div className="space-y-6 animate-in slide-in-from-bottom-4 duration-500">
-          <div className="bg-gradient-to-r from-slate-900 to-indigo-950 text-white p-5 rounded-2xl mb-8 flex items-center justify-between shadow-md shadow-indigo-950/15">
-            <h2 className="text-xs font-black uppercase tracking-[0.2em] flex items-center gap-2 px-2">
+        <div className="space-y-6">
+          <div className="p-4 border-b border-neutral-200 flex items-center justify-between bg-white">
+            <h2 className="text-xs font-bold uppercase tracking-[0.2em] text-black">
               Booking &amp; Room Management
             </h2>
           </div>
@@ -537,23 +539,23 @@ export const AdminDashboardView = ({
                  { label: `Confirmed (${data.stats.confirmed_bookings})`, icon: CheckCircle },
                  { label: `Checked-in (${data.stats.checked_in_bookings})`, icon: LayoutDashboard },
                  { label: `Checked-out (${data.stats.checked_out_bookings})`, icon: LogOut },
-                 { label: `Cancelled (${data.stats.cancelled_bookings})`, icon: AlertCircle, color: 'text-rose-500' },
-                 { label: `Pending (${data.stats.pending_bookings})`, icon: History, color: 'text-amber-500' },
+                 { label: `Cancelled (${data.stats.cancelled_bookings})`, icon: AlertCircle },
+                 { label: `Pending (${data.stats.pending_bookings})`, icon: History },
                ]}
                footer="VIEW ALL"
                onFooterClick={() => onNavigate?.('bookings')}
              />
 
              {/* Room Availability Form - Interactive */}
-             <Card className="border border-slate-100 shadow-sm flex flex-col h-full bg-white group hover:shadow-md transition-all rounded-2xl">
-                <CardHeader className="pb-4 flex flex-row items-center justify-between">
-                  <CardTitle className="text-xs font-black uppercase text-indigo-600 tracking-wider">Room Search</CardTitle>
-                  <Calendar size={14} className="text-indigo-500" />
+             <Card className="border border-neutral-200 shadow-none flex flex-col h-full bg-white rounded-none">
+                <CardHeader className="pb-4 flex flex-row items-center justify-between border-b border-neutral-100">
+                  <CardTitle className="text-xs font-bold uppercase text-black tracking-wider">Room Search</CardTitle>
+                  <Calendar size={14} className="text-black" />
                 </CardHeader>
-                <CardContent className="space-y-4 flex-grow px-6">
+                <CardContent className="space-y-4 flex-grow p-5">
                    <div className="space-y-1.5">
-                      <label className="text-[9px] font-black uppercase text-slate-400 tracking-wider">Accommodation Type</label>
-                      <select className="w-full bg-slate-50 border border-slate-100 rounded-xl p-3 text-xs font-bold text-slate-700 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all outline-none appearance-none">
+                      <label className="text-[9px] font-bold uppercase text-neutral-500 tracking-wider">Accommodation Type</label>
+                      <select className="w-full bg-neutral-50 border border-neutral-300 rounded-none p-2.5 text-xs font-bold text-black focus:border-black outline-none">
                          <option>Standard Deluxe</option>
                          <option>Heritage Suite</option>
                          <option>Royal Temple View</option>
@@ -562,35 +564,35 @@ export const AdminDashboardView = ({
                    </div>
                    <div className="grid grid-cols-1 gap-4">
                       <div className="space-y-1.5">
-                        <label className="text-[9px] font-black uppercase text-slate-400 tracking-wider">Arrival Date</label>
-                        <div className="relative group/input">
-                          <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within/input:text-indigo-500 transition-colors">
+                        <label className="text-[9px] font-bold uppercase text-neutral-500 tracking-wider">Arrival Date</label>
+                        <div className="relative">
+                          <div className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400">
                             <Calendar size={14} />
                           </div>
                           <input 
                             type="date" 
                             defaultValue={new Date().toISOString().split('T')[0]} 
-                            className="w-full bg-white border border-slate-200 rounded-xl py-3 pl-10 pr-4 text-xs font-bold text-slate-700 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all" 
+                            className="w-full bg-white border border-neutral-300 rounded-none py-2 pl-9 pr-3 text-xs font-mono font-bold text-black focus:border-black outline-none" 
                           />
                         </div>
                       </div>
                       <div className="space-y-1.5">
-                        <label className="text-[9px] font-black uppercase text-slate-400 tracking-wider">Departure Date</label>
-                        <div className="relative group/input">
-                          <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within/input:text-indigo-500 transition-colors">
+                        <label className="text-[9px] font-bold uppercase text-neutral-500 tracking-wider">Departure Date</label>
+                        <div className="relative">
+                          <div className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400">
                             <Calendar size={14} />
                           </div>
                           <input 
                             type="date" 
                             defaultValue={new Date(Date.now() + 86400000).toISOString().split('T')[0]} 
-                            className="w-full bg-white border border-slate-200 rounded-xl py-3 pl-10 pr-4 text-xs font-bold text-slate-700 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all" 
+                            className="w-full bg-white border border-neutral-300 rounded-none py-2 pl-9 pr-3 text-xs font-mono font-bold text-black focus:border-black outline-none" 
                           />
                         </div>
                       </div>
                    </div>
                 </CardContent>
                 <div className="p-4 pt-0">
-                  <Button onClick={() => onNavigate?.('calendar')} className="w-full bg-indigo-600 hover:bg-indigo-700 text-white text-[10px] font-black uppercase h-11 rounded-xl shadow-lg shadow-indigo-500/10 active:scale-95 transition-all">
+                  <Button onClick={() => onNavigate?.('calendar')} className="w-full bg-black hover:bg-neutral-800 text-white text-[10px] font-bold uppercase tracking-wider h-10 rounded-none transition-colors">
                     Search Availability
                   </Button>
                 </div>
@@ -615,109 +617,108 @@ export const AdminDashboardView = ({
       )}
 
       {activeSubTab === 'finance' && (
-        <div className="space-y-6 animate-in slide-in-from-bottom-4 duration-500">
-          <div className="bg-gradient-to-r from-slate-900 to-indigo-950 text-white p-5 rounded-2xl mb-8 flex items-center justify-between shadow-md shadow-indigo-950/15">
-            <h2 className="text-xs font-black uppercase tracking-[0.2em] px-2">
-              Payments, Accounts & Transactions
+        <div className="space-y-6">
+          <div className="p-4 border-b border-neutral-200 flex items-center justify-between bg-white">
+            <h2 className="text-xs font-bold uppercase tracking-[0.2em] text-black">
+              Payments, Accounts &amp; Transactions
             </h2>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
              {/* Payment Overview */}
-             <Card className="lg:col-span-3 border border-slate-100 shadow-sm flex flex-col rounded-2xl bg-white">
-                <CardHeader className="pb-4"><CardTitle className="text-xs font-black uppercase text-indigo-600 tracking-wider">Payment Overview</CardTitle></CardHeader>
-                <CardContent className="space-y-6 flex-grow">
-                   <PaymentStat icon={Calendar} label="Today's Collections" value={`₹ ${data.stats.today_revenue.toLocaleString()}`} color="text-indigo-600" />
-                   <PaymentStat icon={Calendar} label="This Month Collections" value={`₹ ${data.stats.monthly_revenue.toLocaleString()}`} color="text-violet-600" />
-                   <PaymentStat icon={Calendar} label="Total Collections (All Time)" value={`₹ ${data.stats.total_revenue.toLocaleString()}`} color="text-emerald-700" />
+             <Card className="lg:col-span-3 border border-neutral-200 shadow-none flex flex-col rounded-none bg-white">
+                <CardHeader className="pb-4 border-b border-neutral-100"><CardTitle className="text-xs font-bold uppercase text-black tracking-wider">Payment Overview</CardTitle></CardHeader>
+                <CardContent className="space-y-4 flex-grow p-4">
+                   <PaymentStat icon={Calendar} label="Today's Collections" value={`₹ ${data.stats.today_revenue.toLocaleString()}`} />
+                   <PaymentStat icon={Calendar} label="This Month Collections" value={`₹ ${data.stats.monthly_revenue.toLocaleString()}`} />
+                   <PaymentStat icon={Calendar} label="Total Collections (All Time)" value={`₹ ${data.stats.total_revenue.toLocaleString()}`} />
                 </CardContent>
              </Card>
 
              {/* Recent Transactions */}
-             <Card className="lg:col-span-6 border border-slate-100 shadow-sm overflow-hidden flex flex-col rounded-2xl bg-white">
-                <CardHeader className="pb-4"><CardTitle className="text-xs font-black uppercase text-indigo-600 tracking-wider">Recent Transactions</CardTitle></CardHeader>
+             <Card className="lg:col-span-6 border border-neutral-200 shadow-none overflow-hidden flex flex-col rounded-none bg-white">
+                <CardHeader className="pb-3 border-b border-neutral-100"><CardTitle className="text-xs font-bold uppercase text-black tracking-wider">Recent Transactions</CardTitle></CardHeader>
                 <CardContent className="p-0 flex-grow">
                    <div className="overflow-x-auto">
                       <table className="w-full text-[11px] text-left">
-                        <thead className="bg-slate-50 text-slate-455 uppercase font-black text-[9px] tracking-wider border-b border-slate-100">
+                        <thead className="bg-neutral-50 text-neutral-500 uppercase font-bold text-[9px] tracking-wider border-b border-neutral-200">
                            <tr>
-                             <th className="px-5 py-3">Transaction ID</th>
-                             <th className="px-5 py-3">Booking ID</th>
-                             <th className="px-5 py-3">Guest Name</th>
-                             <th className="text-right px-5 py-3">Amount</th>
-                             <th className="text-center px-5 py-3">Method</th>
-                             <th className="text-center px-5 py-3">Date</th>
-                             <th className="text-right px-5 py-3">Status</th>
+                             <th className="px-4 py-3">Transaction ID</th>
+                             <th className="px-4 py-3">Booking ID</th>
+                             <th className="px-4 py-3">Guest Name</th>
+                             <th className="text-right px-4 py-3">Amount</th>
+                             <th className="text-center px-4 py-3">Method</th>
+                             <th className="text-center px-4 py-3">Date</th>
+                             <th className="text-right px-4 py-3">Status</th>
                            </tr>
                         </thead>
-                        <tbody className="divide-y divide-slate-100/60">
+                        <tbody className="divide-y divide-neutral-100">
                            {data.recent_bookings.map((t: any, i: number) => (
-                             <tr key={i} className="hover:bg-slate-50/40 transition-colors">
-                               <td className="px-5 py-3.5 text-slate-400 font-medium font-sans">TXN{t.booking_id}</td>
-                               <td className="px-5 py-3.5 font-extrabold text-slate-650">{t.booking_id}</td>
-                               <td className="px-5 py-3.5 font-bold text-slate-900">{t.guest_name}</td>
-                               <td className="px-5 py-3.5 text-right font-extrabold text-indigo-950">₹ {parseFloat(t.total_amount).toLocaleString()}</td>
-                               <td className="px-5 py-3.5 text-center"><span className="text-[9px] uppercase font-black text-slate-505">{t.method || 'UPI'}</span></td>
-                               <td className="px-5 py-3.5 text-center text-slate-500 whitespace-nowrap font-sans">{new Date(t.check_in_date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}</td>
-                               <td className="px-5 py-3.5 text-right">
-                                 <span className="px-3 py-1 bg-emerald-50 border border-emerald-150 text-emerald-700 rounded-full text-[8px] font-black uppercase tracking-wider">{t.status}</span>
-                               </td>
+                             <tr key={i} className="hover:bg-neutral-50 transition-colors">
+                               <td className="px-4 py-3 text-neutral-400 font-mono text-[10px]">TXN{t.booking_id}</td>
+                               <td className="px-4 py-3 font-mono font-bold text-black">{t.booking_id}</td>
+                               <td className="px-4 py-3 font-bold text-black uppercase">{t.guest_name}</td>
+                               <td className="px-4 py-3 text-right font-mono font-bold text-black">₹{parseFloat(t.total_amount).toLocaleString()}</td>
+                               <td className="px-4 py-3 text-center"><span className="text-[9px] uppercase font-mono font-bold text-neutral-600">{t.method || 'UPI'}</span></td>
+                               <td className="px-4 py-3 text-center text-neutral-500 font-mono text-[10px] whitespace-nowrap">{new Date(t.check_in_date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}</td>
+                               <td className="px-4 py-3 text-right">
+                                 <span className="px-2 py-0.5 border border-neutral-300 bg-neutral-100 text-neutral-800 rounded-none text-[8px] font-mono font-bold uppercase tracking-wider">{t.status}</span>
+                                </td>
                              </tr>
                            ))}
                         </tbody>
                       </table>
                    </div>
                 </CardContent>
-                <div className="p-4 flex justify-center">
-                  <Button onClick={() => onNavigate?.('bookings')} className="bg-indigo-600 hover:bg-indigo-700 text-white text-[10px] font-black uppercase h-10 px-10 rounded-xl shadow-lg shadow-indigo-500/10 active:scale-95 transition-all">VIEW ALL TRANSACTIONS</Button>
+                <div className="p-4 border-t border-neutral-200 flex justify-center">
+                  <Button onClick={() => onNavigate?.('bookings')} className="bg-black hover:bg-neutral-800 text-white text-[9px] font-bold uppercase tracking-wider h-9 px-8 rounded-none transition-colors">VIEW ALL TRANSACTIONS</Button>
                 </div>
              </Card>
 
              {/* Accounts Summary */}
-             <Card className="lg:col-span-3 border border-slate-100 shadow-sm flex flex-col rounded-2xl bg-white">
-                <CardHeader className="pb-4 flex flex-row items-center justify-between">
-                  <CardTitle className="text-xs font-black uppercase text-indigo-600 tracking-wider">Accounts Summary</CardTitle>
+             <Card className="lg:col-span-3 border border-neutral-200 shadow-none flex flex-col rounded-none bg-white">
+                <CardHeader className="pb-3 border-b border-neutral-100 flex flex-row items-center justify-between">
+                  <CardTitle className="text-xs font-bold uppercase text-black tracking-wider">Accounts Summary</CardTitle>
                 </CardHeader>
-                <CardContent className="flex flex-col h-full gap-6">
-                   <div className="flex-grow space-y-6">
+                <CardContent className="flex flex-col h-full gap-5 p-4">
+                   <div className="flex-grow space-y-4">
                       <div>
-                        <p className="text-[10px] font-black text-slate-400 uppercase mb-1">Total Revenue</p>
-                        <p className="text-lg font-black text-indigo-955 font-sans">₹ {data.stats.total_revenue.toLocaleString()}</p>
+                        <p className="text-[9px] font-bold text-neutral-500 uppercase tracking-wider mb-1">Total Revenue</p>
+                        <p className="text-base font-bold text-black font-mono">₹{data.stats.total_revenue.toLocaleString()}</p>
                       </div>
                       <div>
-                        <p className="text-[10px] font-black text-slate-400 uppercase mb-1">Total Expenses (Est.)</p>
-                        <p className="text-lg font-black text-rose-600 font-sans">₹ {(data.stats.total_revenue * 0.35).toLocaleString()}</p>
+                        <p className="text-[9px] font-bold text-neutral-500 uppercase tracking-wider mb-1">Total Expenses (Est.)</p>
+                        <p className="text-base font-bold text-neutral-700 font-mono">₹{(data.stats.total_revenue * 0.35).toLocaleString()}</p>
                       </div>
-                      <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
+                      <div className="pt-3 border-t border-neutral-200 flex items-center justify-between">
                         <div>
-                          <p className="text-[10px] font-black text-slate-400 uppercase mb-1">Net Profit</p>
-                          <p className="text-lg font-black text-emerald-750 font-sans">₹ {(data.stats.total_revenue * 0.65).toLocaleString()}</p>
+                          <p className="text-[9px] font-bold text-neutral-500 uppercase tracking-wider mb-1">Net Profit</p>
+                          <p className="text-base font-black text-black font-mono">₹{(data.stats.total_revenue * 0.65).toLocaleString()}</p>
                         </div>
-                        <div className="relative w-16 h-16">
-                           <PieChart width={64} height={64}>
-                              <Pie data={[{v:65},{v:35}]} innerRadius={0} outerRadius={32} dataKey="v">
-                                <Cell fill="#059669" />
-                                <Cell fill="#cbd5e1" />
+                        <div className="relative w-14 h-14">
+                           <PieChart width={56} height={56}>
+                              <Pie data={[{v:65},{v:35}]} innerRadius={0} outerRadius={28} dataKey="v">
+                                <Cell fill="#000000" />
+                                <Cell fill="#e5e5e5" />
                               </Pie>
                             </PieChart>
-                           <CreditCard size={12} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white" />
                         </div>
                       </div>
                    </div>
                    
                    {/* Payment Methods Chart */}
-                   <div className="pt-4 border-t border-slate-100">
-                      <p className="text-xs font-black text-indigo-655 mb-4 text-center tracking-wide uppercase">Payment Methods</p>
+                   <div className="pt-3 border-t border-neutral-200">
+                      <p className="text-[10px] font-bold text-black mb-3 text-center tracking-wider uppercase">Payment Methods</p>
                       <div className="flex items-center gap-4">
-                        <div className="w-24 h-24 relative">
-                          <PieChart width={96} height={96}>
+                        <div className="w-20 h-20 relative shrink-0">
+                          <PieChart width={80} height={80}>
                               <Pie 
                                 data={data.payment_methods || []} 
-                                innerRadius={30} 
-                                outerRadius={45} 
+                                innerRadius={24} 
+                                outerRadius={38} 
                                 dataKey="amount" 
                                 nameKey="method" 
-                                paddingAngle={2}
+                                paddingAngle={1}
                               >
                                 {(data.payment_methods || []).map((_, i) => (
                                   <Cell key={i} fill={COLORS[i % COLORS.length]} />
@@ -725,14 +726,8 @@ export const AdminDashboardView = ({
                               </Pie>
                               <Tooltip formatter={(value: any) => [`₹${parseFloat(value).toLocaleString()}`, 'Amount']} />
                             </PieChart>
-                          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center">
-                            <p className="text-[8px] font-bold text-slate-400 uppercase leading-none">Total</p>
-                            <p className="text-[10px] font-black text-slate-800 leading-tight">
-                              ₹ {((data.payment_methods || []).reduce((sum, item) => sum + item.amount, 0) / 100000).toFixed(2)}L
-                            </p>
-                          </div>
                         </div>
-                        <div className="flex-grow space-y-1 max-h-[100px] overflow-y-auto pr-1 custom-scrollbar">
+                        <div className="flex-grow space-y-1 max-h-[90px] overflow-y-auto pr-1">
                            {(data.payment_methods || []).map((item, i) => (
                              <LegendItem 
                                key={i}
@@ -746,18 +741,18 @@ export const AdminDashboardView = ({
                    </div>
 
                     {/* Booking Channels Chart */}
-                    <div className="pt-4 border-t border-slate-100">
-                       <p className="text-xs font-black text-indigo-655 mb-4 text-center tracking-wide uppercase">Booking Channels</p>
+                    <div className="pt-3 border-t border-neutral-200">
+                       <p className="text-[10px] font-bold text-black mb-3 text-center tracking-wider uppercase">Booking Channels</p>
                        <div className="flex items-center gap-4">
-                         <div className="w-24 h-24 relative">
-                           <PieChart width={96} height={96}>
+                         <div className="w-20 h-20 relative shrink-0">
+                           <PieChart width={80} height={80}>
                                <Pie 
                                  data={data.booking_sources || []} 
-                                 innerRadius={30} 
-                                 outerRadius={45} 
+                                 innerRadius={24} 
+                                 outerRadius={38} 
                                  dataKey="count" 
                                  nameKey="booking_source" 
-                                 paddingAngle={2}
+                                 paddingAngle={1}
                                >
                                  {(data.booking_sources || []).map((_, i) => (
                                    <Cell key={i} fill={COLORS[i % COLORS.length]} />
@@ -765,14 +760,8 @@ export const AdminDashboardView = ({
                                </Pie>
                                <Tooltip formatter={(value: any) => [`${value} bookings`, 'Volume']} />
                              </PieChart>
-                           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center">
-                             <p className="text-[8px] font-bold text-slate-400 uppercase leading-none">Total</p>
-                             <p className="text-[10px] font-black text-slate-800 leading-tight">
-                               {(data.booking_sources || []).reduce((sum: number, b: any) => sum + (parseInt(b.count) || 0), 0)}
-                             </p>
-                           </div>
                          </div>
-                         <div className="flex-grow space-y-1 max-h-[100px] overflow-y-auto pr-1 custom-scrollbar">
+                         <div className="flex-grow space-y-1 max-h-[90px] overflow-y-auto pr-1">
                             {(() => {
                               const totalCount = (data.booking_sources || []).reduce((sum: number, b: any) => sum + (parseInt(b.count) || 0), 0) || 1;
                               return (data.booking_sources || []).map((b: any, i: number) => {
@@ -797,11 +786,12 @@ export const AdminDashboardView = ({
       )}
 
       {activeSubTab === 'settings' && (
-        <div className="space-y-6 animate-in slide-in-from-bottom-4 duration-500">
-          <h2 className="text-[11px] font-black text-indigo-950 uppercase tracking-[0.3em] flex items-center gap-3">
-            <div className="w-8 h-[2px] bg-indigo-600"></div>
-            System Management & Settings
-          </h2>
+        <div className="space-y-6">
+          <div className="p-4 border-b border-neutral-200 flex items-center justify-between bg-white">
+            <h2 className="text-xs font-bold text-black uppercase tracking-[0.2em]">
+              System Management &amp; Settings
+            </h2>
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6">
              <SettingsGroup 
@@ -817,14 +807,14 @@ export const AdminDashboardView = ({
                action="Manage Settings"
              />
              <SettingsGroup 
-               title="Email & Notifications"
+               title="Email &amp; Notifications"
                icon={Mail}
                links={['Email Templates', 'Booking Confirmation', 'Invoice Email', 'Check-in Email']}
                action="Manage Emails"
                onActionClick={() => alert('Sending diagnostic mail... check logs.')}
              />
              <SettingsGroup 
-               title="Rooms & Pricing"
+               title="Rooms &amp; Pricing"
                icon={Hotel}
                links={['Room Types', 'Pricing Management', 'Taxes & Charges', 'Season & Offers']}
                action="Manage Pricing"
@@ -836,7 +826,7 @@ export const AdminDashboardView = ({
                action="Manage All"
              />
               <SettingsGroup 
-               title="Backup & Security"
+               title="Backup &amp; Security"
                icon={Shield}
                links={['Database Backup', 'System Logs', 'Activity Logs', 'Security Settings']}
                action="Manage Security"
@@ -858,100 +848,87 @@ export const AdminDashboardView = ({
 
 
 const ManagementBox = ({ title, items, footer, onFooterClick }: any) => (
-  <Card className="border border-slate-100 shadow-sm flex flex-col h-full bg-white rounded-2xl">
-    <CardHeader className="pb-4"><CardTitle className="text-xs font-black uppercase text-indigo-600 tracking-wider text-center">{title}</CardTitle></CardHeader>
+  <Card className="border border-gray-200 shadow-xs rounded-lg flex flex-col h-full bg-white">
+    <CardHeader className="pb-3 border-b border-gray-100">
+      <CardTitle className="text-sm font-medium text-gray-800 text-center">{title}</CardTitle>
+    </CardHeader>
     <CardContent className="p-0 flex-grow">
        {items.map((it: any, i: number) => (
-          <div key={i} className={`flex items-center gap-3 p-3 px-6 border-b border-slate-50 hover:bg-slate-55 transition-colors cursor-pointer group ${it.active ? 'bg-indigo-50/30' : ''}`}>
-             <div className={`p-1.5 rounded-lg ${it.active ? 'bg-indigo-100 text-indigo-700' : 'text-slate-400 group-hover:text-indigo-600'}`}>
-                {it.icon ? <it.icon size={14} /> : <div className="w-3.5 h-3.5 flex items-center justify-center font-black text-[10px]">●</div>}
+          <div key={i} className={`flex items-center gap-3 p-3 px-5 border-b border-gray-100 hover:bg-gray-50 transition-colors cursor-pointer group ${it.active ? 'bg-[#f0fdf4]' : ''}`}>
+             <div className={`p-1.5 border rounded-md ${it.active ? 'bg-[#ecfdf5] text-[#059669] border-[#a7f3d0]' : 'border-gray-200 text-gray-400 group-hover:text-gray-700 group-hover:border-gray-300'}`}>
+                {it.icon ? <it.icon size={14} /> : <div className="w-3.5 h-3.5 flex items-center justify-center font-bold text-[10px]">■</div>}
              </div>
-             <span className={`text-[11px] font-bold ${it.active ? 'text-indigo-950 font-extrabold' : it.color || 'text-slate-600'}`}>{it.label}</span>
+             <span className={`text-xs ${it.active ? 'text-[#059669] font-medium' : 'text-gray-600'}`}>{it.label}</span>
           </div>
        ))}
     </CardContent>
-    <div className="p-4">
-       <Button onClick={onFooterClick} className="w-full bg-indigo-600 hover:bg-indigo-700 text-white text-[9px] font-black uppercase h-9 rounded-xl shadow-md shadow-indigo-500/10 active:scale-95 transition-all">{footer}</Button>
+    <div className="p-4 border-t border-gray-100">
+       <Button onClick={onFooterClick} className="w-full bg-white hover:bg-gray-50 text-gray-800 border border-gray-300 text-xs font-medium h-9 rounded-md transition-colors shadow-xs">{footer}</Button>
     </div>
   </Card>
 );
 
-const PaymentStat = ({ icon: Icon, label, value, color }: any) => (
-  <div className="flex items-center gap-4 bg-slate-50/50 p-4 rounded-xl border border-white">
-    <div className={`w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center ${color}`}>
-      <Icon size={18} />
+const PaymentStat = ({ icon: Icon, label, value }: any) => (
+  <div className="flex items-center gap-3.5 bg-white p-4 rounded-lg border border-gray-200 shadow-xs">
+    <div className="w-9 h-9 rounded-md bg-gray-50 border border-gray-200 flex items-center justify-center text-gray-600">
+      <Icon size={16} />
     </div>
     <div className="flex flex-col">
-      <span className="text-[9px] font-black text-slate-400 uppercase tracking-wider">{label}</span>
-      <span className={`text-lg font-black tracking-tighter ${color}`}>{value}</span>
+      <span className="text-[11px] font-medium text-gray-500">{label}</span>
+      <span className="text-base font-semibold tracking-tight text-gray-900 font-mono">{value}</span>
     </div>
   </div>
 );
 
-const LegendItem = ({ color, colorHex, label, percent }: any) => (
-  <div className="flex items-center justify-between gap-3 group cursor-pointer hover:bg-slate-55 p-1 rounded transition-colors">
+const LegendItem = ({ colorHex, label, percent }: any) => (
+  <div className="flex items-center justify-between gap-3 group cursor-pointer hover:bg-gray-50 p-1.5 rounded transition-colors">
     <div className="flex items-center gap-2">
       <div 
-        className={`w-2 h-2 rounded-full ${color || ''}`} 
-        style={colorHex ? { backgroundColor: colorHex } : {}}
+        className="w-2.5 h-2.5 rounded-full" 
+        style={colorHex ? { backgroundColor: colorHex } : { backgroundColor: '#2563eb' }}
       />
-      <span className="text-[10px] font-bold text-slate-655">{label}</span>
+      <span className="text-xs text-gray-600">{label}</span>
     </div>
-    <span className="text-[10px] font-black text-slate-400">{percent}</span>
+    <span className="text-xs font-mono text-gray-400">{percent}</span>
   </div>
 );
 
-const MiniStat = ({ icon: Icon, label, value, color, onClick }: any) => {
-  const colorMap: any = {
-    'bg-blue-50 text-blue-600': { border: 'border-blue-100/60', text: 'text-blue-600', bg: 'bg-blue-50/50' },
-    'bg-emerald-50 text-emerald-600': { border: 'border-emerald-100/60', text: 'text-emerald-650', bg: 'bg-emerald-50/50' },
-    'bg-amber-50 text-amber-600': { border: 'border-amber-100/60', text: 'text-amber-655', bg: 'bg-amber-50/50' },
-    'bg-purple-50 text-purple-600': { border: 'border-purple-100/60', text: 'text-purple-600', bg: 'bg-purple-50/50' },
-    'bg-slate-50 text-slate-600': { border: 'border-slate-200/60', text: 'text-slate-705', bg: 'bg-slate-50/50' },
-    'bg-teal-50 text-teal-600': { border: 'border-teal-100/60', text: 'text-teal-655', bg: 'bg-teal-50/50' },
-    'bg-orange-50 text-orange-600': { border: 'border-orange-100/60', text: 'text-orange-655', bg: 'bg-orange-50/50' },
-    'bg-rose-50 text-rose-600': { border: 'border-rose-100/60', text: 'text-rose-655', bg: 'bg-rose-50/50' },
-  };
-  
-  const style = colorMap[color] || { border: 'border-slate-100', text: 'text-slate-655', bg: 'bg-slate-55' };
-
+const MiniStat = ({ icon: Icon, label, value, onClick }: any) => {
   return (
     <div 
       onClick={onClick}
-      className={`relative overflow-hidden bg-white p-5 rounded-2xl border ${style.border} flex flex-col justify-between shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group ${onClick ? 'cursor-pointer select-none active:scale-[0.99]' : ''}`}
+      className={`bg-white p-4.5 rounded-lg border border-gray-200 shadow-xs flex items-center justify-between hover:border-gray-300 hover:shadow-sm transition-all ${onClick ? 'cursor-pointer select-none active:bg-gray-50' : ''}`}
     >
-      <div className={`absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r ${color.includes('blue') ? 'from-blue-500 to-indigo-500' : color.includes('emerald') ? 'from-emerald-500 to-teal-500' : color.includes('amber') ? 'from-amber-500 to-yellow-500' : color.includes('purple') ? 'from-purple-500 to-violet-500' : color.includes('teal') ? 'from-teal-500 to-emerald-500' : color.includes('orange') ? 'from-orange-500 to-amber-500' : color.includes('rose') ? 'from-rose-500 to-red-500' : 'from-slate-400 to-slate-500'}`} />
-      <div className={`w-9 h-9 rounded-xl ${style.bg} ${style.text} flex items-center justify-center mb-3.5 group-hover:scale-110 transition-transform`}>
-        <Icon size={16} />
+      <div className="space-y-1">
+        <p className="text-xs font-medium text-gray-500">{label}</p>
+        <h4 className="text-xl font-semibold text-gray-900 tracking-tight leading-none tabular-nums">{value}</h4>
       </div>
-      <div className="space-y-1.5 z-10">
-        <h4 className="text-xl font-extrabold text-slate-900 tracking-tight leading-none font-sans">{value}</h4>
-        <p className="text-[8.5px] font-extrabold uppercase text-slate-400 tracking-wider leading-tight">{label}</p>
+      <div className="w-9 h-9 rounded-lg border border-gray-100 bg-gray-50 text-gray-600 flex items-center justify-center shrink-0">
+        <Icon size={17} />
       </div>
     </div>
   );
 };
 
 const SettingsGroup = ({ title, icon: Icon, links, action, onActionClick }: any) => (
-  <Card className="border border-slate-100 shadow-sm h-fit rounded-2xl bg-white">
-    <CardHeader className="pb-1 py-1"><CardTitle className="text-[10px] font-black uppercase text-slate-400 tracking-wider flex items-center gap-2">
-       <Icon size={12} className="text-indigo-600" /> {title}
+  <Card className="border border-gray-200 shadow-xs rounded-lg h-fit bg-white">
+    <CardHeader className="pb-2 border-b border-gray-100"><CardTitle className="text-xs font-medium text-gray-800 flex items-center gap-2">
+       <Icon size={14} className="text-gray-500" /> {title}
     </CardTitle></CardHeader>
-    <CardContent className="pb-3 px-3">
-       <div className="space-y-1.5 pt-2">
+    <CardContent className="p-3">
+       <div className="space-y-1.5">
           {links.map((link: string, i: number) => (
-            <div key={i} className="flex items-center gap-2 cursor-pointer hover:bg-slate-55 p-1 rounded group">
-               <div className="w-1.5 h-1.5 rounded-full bg-slate-200 group-hover:bg-indigo-600 transition-colors"></div>
-               <span className="text-[11px] font-bold text-slate-655">{link}</span>
+            <div key={i} className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 p-1.5 rounded group">
+               <div className="w-1.5 h-1.5 rounded-full bg-gray-300 group-hover:bg-blue-600 transition-colors"></div>
+               <span className="text-xs text-gray-600 group-hover:text-gray-900">{link}</span>
             </div>
           ))}
        </div>
-       <Button onClick={onActionClick} className="w-full mt-4 bg-indigo-600 hover:bg-indigo-700 text-white text-[9px] font-black uppercase h-8 py-0 rounded-lg active:scale-95 transition-all shadow-sm">
+       <Button onClick={onActionClick} className="w-full mt-4 bg-white hover:bg-gray-50 text-gray-800 border border-gray-300 text-xs font-medium h-8 py-0 rounded-md transition-colors shadow-xs">
           {action}
        </Button>
     </CardContent>
   </Card>
 );
-
 
 const XCircleIcon = ({ size, className }: any) => <AlertCircle size={size} className={`${className} rotate-45`} />;

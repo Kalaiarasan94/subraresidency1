@@ -1,13 +1,13 @@
 import { useState, useEffect, useRef } from 'react';
-import { Card } from '../../../components/ui/card';
 import { Button } from '../../../components/ui/button';
 import {
-  ChevronLeft, ChevronRight, Clock,
-  Search, RefreshCw, Filter,
-  CheckCircle, AlertCircle, Hammer,
-  X, User
+  ChevronLeft, ChevronRight,
+  Search, RefreshCw,
+  X, User, Plus, Tag, ChevronDown,
+  Printer, FileText, Download
 } from 'lucide-react';
 import { fetchRoomAvailability, updateRoomAvailability, API_BASE_URL, fetchBookingById } from '../../../lib/api';
+import { generateHotelReportPdf } from '../../../lib/pdfReportGenerator';
 
 export const RoomCalendar = () => {
   const [rooms, setRooms] = useState<any[]>([]);
@@ -20,13 +20,16 @@ export const RoomCalendar = () => {
   const [showModal, setShowModal] = useState<'actions' | 'booking' | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('All Categories');
+  const [statusFilter, setStatusFilter] = useState('All');
   const [rangeStart, setRangeStart] = useState('');
   const [rangeEnd, setRangeEnd] = useState('');
   const [isUpdatingStatus, setIsUpdatingStatus] = useState(false);
+  const [showReportModal, setShowReportModal] = useState(false);
+  const [reportDate, setReportDate] = useState(new Date().toISOString().split('T')[0]);
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  // Generate 31 days from startDate
-  const days = Array.from({ length: 31 }, (_, i) => {
+  // Generate 21 days from startDate for a clean readable timeline
+  const days = Array.from({ length: 28 }, (_, i) => {
     const d = new Date(startDate);
     d.setDate(startDate.getDate() + i);
     return d;
@@ -39,17 +42,15 @@ export const RoomCalendar = () => {
   const loadData = async () => {
     setLoading(true);
     try {
-      // 1. Fetch Rooms
       const rResp = await fetch(`${API_BASE_URL}/rooms/list`);
       const roomsData = await rResp.json();
       setRooms(roomsData);
 
-      // 2. Fetch Availability for the range
       const end = new Date(startDate);
       end.setDate(startDate.getDate() + 30);
 
       const availData = await fetchRoomAvailability(
-        0, // 0 handles all rooms
+        0,
         startDate.toISOString().split('T')[0],
         end.toISOString().split('T')[0]
       );
@@ -61,8 +62,8 @@ export const RoomCalendar = () => {
     }
   };
 
-  // Derive filtered rooms from search + category filter
   const uniqueCategories: string[] = ['All Categories', ...Array.from(new Set(rooms.map((r: any) => r.category_name as string).filter(Boolean)))];
+  
   const filteredRooms = rooms.filter((room: any) => {
     const matchSearch = !searchTerm.trim() ||
       (room.room_number || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -74,31 +75,6 @@ export const RoomCalendar = () => {
   const getAvailabilityRecord = (roomId: number, date: Date) => {
     const dateStr = date.toISOString().split('T')[0];
     return availability.find(a => Number(a.room_id) === Number(roomId) && a.date === dateStr);
-  };
-
-  const getStatus = (roomId: number, date: Date) => {
-    const record = getAvailabilityRecord(roomId, date);
-    return record ? record.status.toLowerCase() : 'available';
-  };
-
-  const getCategoryStats = (categoryName: string, date: Date) => {
-    const dateStr = date.toISOString().split('T')[0];
-    
-    // Find all rooms in this category
-    const roomsInCategory = rooms.filter(r => r.category_name === categoryName);
-    const totalRooms = roomsInCategory.length;
-    
-    // Count how many are checked-in (occupied)
-    let occupied = 0;
-    roomsInCategory.forEach(r => {
-      const rec = availability.find(a => Number(a.room_id) === Number(r.id) && a.date === dateStr);
-      if (rec && rec.status.toLowerCase() === 'booked' && rec.booking_status === 'checked-in') {
-        occupied++;
-      }
-    });
-    
-    const left = totalRooms - occupied;
-    return { left, occupied };
   };
 
   const handleCellClick = async (room: any, date: Date) => {
@@ -165,402 +141,360 @@ export const RoomCalendar = () => {
     }
   };
 
-  const shiftDate = (days: number) => {
+  const shiftDate = (amount: number) => {
     const next = new Date(startDate);
-    next.setDate(startDate.getDate() + days);
+    next.setDate(startDate.getDate() + amount);
     setStartDate(next);
   };
 
+  const isToday = (d: Date) => {
+    const today = new Date();
+    return d.getDate() === today.getDate() &&
+      d.getMonth() === today.getMonth() &&
+      d.getFullYear() === today.getFullYear();
+  };
+
   return (
-    <div className="space-y-6 animate-in fade-in duration-700 pb-20">
-      {/* Header Bar */}
-      <div className="bg-[#0b336b] text-white p-4 rounded-xl flex items-center justify-between shadow-lg">
-        <div className="flex items-center gap-4">
-          <div className="bg-white/10 p-2 rounded-lg">
-            <Clock size={20} className="text-indigo-400" />
+    <div className="space-y-6">
+      {/* SaaS Card Container (Like reference box "nox") */}
+      <div className="bg-white rounded-lg border border-gray-200 shadow-xs p-6 space-y-6">
+        
+        {/* Top Header Row */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-gray-100">
+          <div className="flex items-center gap-3">
+            <h2 className="text-xl font-medium text-gray-800 tracking-tight">Event calendar</h2>
+            {loading && (
+              <RefreshCw size={14} className="text-gray-400 animate-spin" />
+            )}
           </div>
-          <div>
-            <h2 className="text-lg font-black uppercase tracking-widest">Live Inventory Timeline</h2>
-            <p className="text-[10px] font-bold text-indigo-300 uppercase tracking-[0.2em]">Real-time Room Status & Availability</p>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-3">
-          <div className="flex bg-white/10 rounded-lg p-1 border border-white/10">
-            <Button variant="ghost" size="sm" onClick={() => shiftDate(-7)} className="text-white hover:bg-white/10 h-8 px-2"><ChevronLeft size={16} /></Button>
-            <div className="px-4 flex items-center text-[10px] font-black uppercase tracking-widest border-x border-white/10">
-              {startDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} -
-              {days[30].toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
-            </div>
-            <Button variant="ghost" size="sm" onClick={() => shiftDate(7)} className="text-white hover:bg-white/10 h-8 px-2"><ChevronRight size={16} /></Button>
-          </div>
-          <Button onClick={loadData} variant="ghost" size="sm" className="text-white hover:bg-white/10 h-10 w-10 p-0 rounded-lg border border-white/10">
-            <RefreshCw size={16} className={loading ? 'animate-spin' : ''} />
-          </Button>
-        </div>
-      </div>
-
-      {/* Control Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <div className="flex items-center gap-4">
-          <div className="relative group">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-indigo-600 transition-colors" size={14} />
-            <input
-              type="text"
-              placeholder="Filter rooms..."
-              value={searchTerm}
-              onChange={e => setSearchTerm(e.target.value)}
-              className="pl-10 pr-4 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 w-64 shadow-sm"
-            />
-          </div>
-          <div className="relative">
-            <select
-              value={categoryFilter}
-              onChange={e => setCategoryFilter(e.target.value)}
-              className="flex items-center gap-2 bg-white px-3 py-2 rounded-xl border border-slate-200 shadow-sm cursor-pointer hover:bg-slate-55 transition-all text-[10px] font-black uppercase text-slate-600 tracking-wider appearance-none pr-8 focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
-            >
-              {uniqueCategories.map(cat => (
-                <option key={cat} value={cat}>{cat}</option>
-              ))}
-            </select>
-            <Filter size={12} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
-          </div>
-        </div>
-
-        <div className="flex items-center gap-6 bg-white p-2 px-4 rounded-xl border border-slate-200 shadow-sm">
-          <div className="flex items-center gap-2">
-            <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]"></div>
-            <span className="text-[9px] font-black uppercase text-slate-400">Available</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-2.5 h-2.5 rounded-full bg-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.5)]"></div>
-            <span className="text-[9px] font-black uppercase text-slate-400">Booked</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-2.5 h-2.5 rounded-full bg-amber-500 shadow-[0_0_8_8px_rgba(245,158,11,0.5)]"></div>
-            <span className="text-[9px] font-black uppercase text-slate-400">Maintenance</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Timeline Grid */}
-      <Card className="border-none shadow-xl overflow-hidden rounded-2xl bg-white flex flex-col">
-        <div className="overflow-x-auto custom-scrollbar" ref={scrollRef}>
-          <table className="w-full border-collapse">
-            <thead>
-              <tr className="bg-slate-50/50">
-                <th className="sticky left-0 z-30 bg-slate-50 p-4 min-w-[200px] text-left border-b border-r border-slate-100 shadow-[2px_0_5px_rgba(0,0,0,0.02)]">
-                  <span className="text-[10px] font-black uppercase text-slate-400 tracking-[0.2em]">Rooms & Suites</span>
-                </th>
-                {days.map((day, i) => (
-                  <th key={i} className={`p-3 border-b border-r border-slate-100 min-w-[60px] ${day.getDay() === 0 || day.getDay() === 6 ? 'bg-amber-50/30' : ''}`}>
-                    <div className="flex flex-col items-center gap-1">
-                      <span className="text-[8px] font-black uppercase text-slate-400">{day.toLocaleDateString('en-US', { weekday: 'short' })}</span>
-                      <span className={`text-xs font-black p-1 px-2 rounded-lg ${day.toDateString() === new Date().toDateString() ? 'bg-[#0b336b] text-white' : 'text-slate-800'
-                        }`}>
-                        {day.getDate()}
-                      </span>
-                    </div>
-                  </th>
+          
+          <div className="flex flex-wrap items-center gap-2.5">
+            {/* - Event label - (Category filter) */}
+            <div className="relative">
+              <select 
+                value={categoryFilter}
+                onChange={e => setCategoryFilter(e.target.value)}
+                className="border border-gray-300 rounded-md bg-white text-gray-700 text-sm font-normal py-1.5 pl-3 pr-8 shadow-xs hover:bg-gray-50 focus:outline-none appearance-none cursor-pointer"
+              >
+                {uniqueCategories.map(cat => (
+                  <option key={cat} value={cat}>- {cat} -</option>
                 ))}
-              </tr>
-            </thead>
-            <tbody>
-              {loading ? Array(5).fill(0).map((_, i) => (
-                <tr key={i} className="animate-pulse">
-                  <td className="p-6 border-b border-r border-slate-100 bg-slate-50/30"></td>
-                  {Array(31).fill(0).map((_, j) => (
-                    <td key={j} className="p-6 border-b border-r border-slate-100"></td>
-                  ))}
-                </tr>
-              )) : filteredRooms.map((room) => (
-                <tr key={room.id} className="group hover:bg-slate-50/30 transition-colors">
-                  <td className="sticky left-0 z-20 bg-white group-hover:bg-slate-50 p-4 border-b border-r border-slate-100 shadow-[2px_0_5px_rgba(0,0,0,0.02)]">
-                    <div className="flex items-center gap-3">
-                      <div className="px-2 min-w-[36px] h-8 rounded-lg bg-slate-100 flex items-center justify-center text-[10px] font-black text-slate-600 whitespace-nowrap">
-                        {room.room_number || room.id}
-                      </div>
-                      <div className="flex flex-col">
-                        <span className="text-[11px] font-black text-slate-800 leading-tight">{room.title || room.room_name}</span>
-                        <span className="text-[8px] font-bold text-slate-400 uppercase tracking-tighter">{room.category_name}</span>
-                      </div>
-                    </div>
-                  </td>
+              </select>
+              <ChevronDown size={14} className="text-gray-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+            </div>
+
+            {/* Room Search */}
+            <div className="relative">
+              <Search size={14} className="text-gray-400 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <input
+                type="text"
+                placeholder="Search rooms..."
+                value={searchTerm}
+                onChange={e => setSearchTerm(e.target.value)}
+                className="border border-gray-300 rounded-md bg-white text-gray-700 text-sm font-normal py-1.5 pl-8 pr-3 shadow-xs focus:outline-none w-36 sm:w-44"
+              />
+            </div>
+
+            {/* Refresh / Manage labels */}
+            <button 
+              onClick={loadData}
+              className="border border-gray-300 rounded-md bg-white text-gray-700 text-sm font-normal py-1.5 px-3.5 shadow-xs hover:bg-gray-50 flex items-center gap-1.5 transition-colors cursor-pointer"
+            >
+              <Tag size={14} className="text-gray-500" />
+              <span>Manage rates</span>
+            </button>
+
+            {/* Daily Room Status & Occupancy Report Button */}
+            <button 
+              onClick={() => {
+                const initialDate = selectedCell ? selectedCell.date.toISOString().split('T')[0] : startDate.toISOString().split('T')[0];
+                setReportDate(initialDate);
+                setShowReportModal(true);
+              }}
+              className="border border-gray-300 rounded-md bg-white text-gray-800 text-sm font-medium py-1.5 px-3.5 shadow-xs hover:bg-gray-50 flex items-center gap-1.5 transition-colors cursor-pointer"
+              title="Daily Room Occupancy & Status Report"
+            >
+              <FileText size={15} className="text-emerald-700" />
+              <span>Room Report</span>
+            </button>
+
+            {/* + Add event / Add booking */}
+            <button 
+              onClick={() => {
+                if (filteredRooms[0]) handleCellClick(filteredRooms[0], new Date());
+              }}
+              className="border border-gray-300 rounded-md bg-white text-gray-800 text-sm font-medium py-1.5 px-3.5 shadow-xs hover:bg-gray-50 flex items-center gap-1.5 transition-colors cursor-pointer"
+            >
+              <Plus size={15} className="text-gray-600" />
+              <span>Add booking</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Calendar Navigation & Month Bar */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          {/* Navigation Controls: < > today */}
+          <div className="inline-flex rounded-md border border-gray-300 bg-white p-0.5 shadow-xs">
+            <button 
+              onClick={() => shiftDate(-7)}
+              className="p-1.5 px-2 hover:bg-gray-100 rounded text-gray-600 hover:text-gray-900 transition-colors"
+              title="Previous week"
+            >
+              <ChevronLeft size={16} />
+            </button>
+            <button 
+              onClick={() => shiftDate(7)}
+              className="p-1.5 px-2 hover:bg-gray-100 rounded text-gray-600 hover:text-gray-900 transition-colors border-l border-gray-200"
+              title="Next week"
+            >
+              <ChevronRight size={16} />
+            </button>
+            <button 
+              onClick={() => setStartDate(new Date())}
+              className="px-3 py-1 hover:bg-gray-100 rounded text-xs font-medium text-gray-700 transition-colors border-l border-gray-200"
+            >
+              today
+            </button>
+          </div>
+
+          {/* Large Month Year Header */}
+          <h3 className="text-2xl font-normal text-gray-800 tracking-tight text-center">
+            {startDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
+          </h3>
+
+          {/* View Mode Selector: month | week | day | list */}
+          <div className="inline-flex rounded-md border border-gray-300 bg-white p-0.5 shadow-xs text-xs font-normal text-gray-600 self-start sm:self-auto">
+            <button onClick={() => shiftDate(0)} className="px-3 py-1 bg-gray-100 text-gray-900 rounded font-medium">month</button>
+            <button onClick={() => shiftDate(7)} className="px-3 py-1 hover:bg-gray-50 rounded">week</button>
+            <button onClick={() => shiftDate(1)} className="px-3 py-1 hover:bg-gray-50 rounded">day</button>
+            <button onClick={() => {}} className="px-3 py-1 hover:bg-gray-50 rounded">list</button>
+          </div>
+        </div>
+
+        {/* Timeline Table Grid */}
+        <div className="border border-gray-200 rounded-lg overflow-hidden bg-white shadow-xs">
+          <div className="overflow-x-auto" ref={scrollRef}>
+            <table className="w-full border-collapse text-left">
+              <thead>
+                <tr className="bg-gray-50/80 border-b border-gray-200">
+                  <th className="sticky left-0 z-30 bg-gray-50 p-3.5 min-w-[190px] border-r border-gray-200 text-xs font-semibold text-gray-600">
+                    Room / Unit
+                  </th>
                   {days.map((day, i) => {
-                    const record = getAvailabilityRecord(room.id, day);
-                    const status = record ? record.status.toLowerCase() : 'available';
-
-                    // Compute start and end for continuous booking capsule display
-                    const prevDay = new Date(day);
-                    prevDay.setDate(day.getDate() - 1);
-                    const nextDay = new Date(day);
-                    nextDay.setDate(day.getDate() + 1);
-
-                    const prevRecord = getAvailabilityRecord(room.id, prevDay);
-                    const nextRecord = getAvailabilityRecord(room.id, nextDay);
-
-                    const prevStatus = prevRecord ? prevRecord.status.toLowerCase() : 'available';
-                    const nextStatus = nextRecord ? nextRecord.status.toLowerCase() : 'available';
-
-                    const isStart = status !== 'available' && (prevStatus !== status || prevRecord?.note !== record?.note);
-                    const isEnd = status !== 'available' && (nextStatus !== status || nextRecord?.note !== record?.note);
-
-                    // CSS styling based on type and capsule position
-                    let cellStyle = 'w-full h-9 cursor-pointer transition-all flex items-center ';
-                    let label = '';
-                    const isConfirmed = record?.booking_status === 'confirmed';
-
-                    if (status === 'available') {
-                      cellStyle += 'rounded-lg mx-1 hover:bg-emerald-100 text-slate-350 hover:text-emerald-600 justify-center';
-                    } else if (status === 'booked') {
-                      if (isConfirmed) {
-                        cellStyle += 'bg-indigo-50/40 hover:bg-indigo-100/30 text-indigo-650 font-bold border-y border-dashed border-indigo-300 ';
-                      } else {
-                        cellStyle += 'bg-indigo-50 hover:bg-indigo-100/80 text-indigo-700 font-extrabold border-y border-indigo-200/60 ';
-                      }
-                      if (isStart && isEnd) {
-                        cellStyle += 'rounded-xl mx-1 border-x ';
-                      } else if (isStart) {
-                        cellStyle += 'rounded-l-xl ml-1 border-l ';
-                      } else if (isEnd) {
-                        cellStyle += 'rounded-r-xl mr-1 border-r ';
-                      } else {
-                        cellStyle += 'rounded-none ';
-                      }
-                      if (isStart) {
-                        if (isConfirmed) {
-                          const stats = getCategoryStats(room.category_name, day);
-                          label = `${stats.left} Left, ${stats.occupied} Booked`;
-                        } else {
-                          label = record?.note ? record.note.replace('booking:', '').replace('Room is set to Occupied', 'Booked').substring(0, 9) : 'Booked';
-                        }
-                      }
-                    } else {
-                      // Maintenance block
-                      cellStyle += 'bg-amber-50 hover:bg-amber-100/80 text-amber-700 font-extrabold border-y border-amber-200 ';
-                      if (isStart && isEnd) {
-                        cellStyle += 'rounded-xl mx-1 border-x ';
-                      } else if (isStart) {
-                        cellStyle += 'rounded-l-xl ml-1 border-l ';
-                      } else if (isEnd) {
-                        cellStyle += 'rounded-r-xl mr-1 border-r ';
-                      } else {
-                        cellStyle += 'rounded-none ';
-                      }
-                      if (isStart) {
-                        label = 'Maint';
-                      }
-                    }
-
+                    const today = isToday(day);
                     return (
-                      <td key={i} className="py-2 px-0 border-b border-r border-slate-100 min-w-[60px] relative">
-                        <div
-                          onClick={() => handleCellClick(room, day)}
-                          className={cellStyle}
-                        >
-                          {status === 'available' ? (
-                            <CheckCircle size={12} className="opacity-0 hover:opacity-100 transition-opacity" />
-                          ) : (
-                            <div className="flex items-center gap-1 pl-2 truncate w-full pointer-events-none select-none">
-                              {status === 'booked' ? (
-                                isStart && <AlertCircle size={10} className="shrink-0 text-indigo-500" />
-                              ) : (
-                                isStart && <Hammer size={10} className="shrink-0 text-amber-500" />
-                              )}
-                              {label && (
-                                <span className="text-[8px] font-black uppercase tracking-wider truncate">
-                                  {label}
-                                </span>
-                              )}
-                            </div>
-                          )}
+                      <th 
+                        key={i} 
+                        className={`p-2.5 border-r border-gray-200 min-w-[54px] text-center ${
+                          today ? 'bg-[#fffbeb]' : ''
+                        }`}
+                      >
+                        <div className="flex flex-col items-center">
+                          <span className="text-[10px] font-medium text-gray-400 uppercase">
+                            {day.toLocaleDateString('en-US', { weekday: 'short' })}
+                          </span>
+                          <span className={`text-xs font-semibold mt-0.5 ${
+                            today ? 'text-amber-800' : 'text-gray-700'
+                          }`}>
+                            {day.getDate()}
+                          </span>
                         </div>
-                      </td>
+                      </th>
                     );
                   })}
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </Card>
+              </thead>
+              <tbody className="divide-y divide-gray-200">
+                {loading ? (
+                  Array(5).fill(0).map((_, i) => (
+                    <tr key={i} className="animate-pulse">
+                      <td className="p-4 border-r border-gray-200 bg-gray-50"></td>
+                      {days.map((_, j) => (
+                        <td key={j} className="p-4 border-r border-gray-200"></td>
+                      ))}
+                    </tr>
+                  ))
+                ) : filteredRooms.map((room) => (
+                  <tr key={room.id} className="hover:bg-gray-50/60 transition-colors">
+                    <td className="sticky left-0 z-20 bg-white hover:bg-gray-50 p-3.5 border-r border-gray-200 shadow-xs">
+                      <div className="flex items-center gap-2.5">
+                        <span className="w-7 h-7 rounded bg-gray-100 border border-gray-200 flex items-center justify-center text-xs font-semibold text-gray-700 font-mono">
+                          {room.room_number || room.id}
+                        </span>
+                        <div className="flex flex-col min-w-0">
+                          <span className="text-xs font-medium text-gray-800 truncate">
+                            {room.title || room.room_name}
+                          </span>
+                          <span className="text-[10px] text-gray-400 truncate">
+                            {room.category_name}
+                          </span>
+                        </div>
+                      </div>
+                    </td>
 
-      {/* Footer Info */}
-      <div className="flex items-center justify-between text-[9px] font-black uppercase text-slate-400 tracking-widest px-4">
-        <div className="flex items-center gap-4">
-          <span className="flex items-center gap-1"><div className="w-1.5 h-1.5 rounded-full bg-emerald-500" /> Click cell to manage availability / view booking details</span>
-          <span className="flex items-center gap-1"><div className="w-1.5 h-1.5 rounded-full bg-slate-350" /> Grey columns indicate weekends</span>
+                    {days.map((day, i) => {
+                      const record = getAvailabilityRecord(room.id, day);
+                      const status = record ? record.status.toLowerCase() : 'available';
+                      const today = isToday(day);
+
+                      let cellBg = today ? 'bg-[#fffbeb]/50 hover:bg-amber-100/30' : 'hover:bg-gray-50';
+                      let badge = null;
+
+                      if (status === 'booked') {
+                        badge = (
+                          <div className="w-full py-1 px-1.5 bg-[#ecfdf5] border border-[#a7f3d0] text-[#059669] rounded text-[10px] font-medium truncate text-center">
+                            {record?.booking_status === 'confirmed' ? 'Booked' : 'Occupied'}
+                          </div>
+                        );
+                      } else if (status === 'maintenance') {
+                        badge = (
+                          <div className="w-full py-1 px-1.5 bg-amber-50 border border-amber-200 text-amber-800 rounded text-[10px] font-medium truncate text-center">
+                            Maint
+                          </div>
+                        );
+                      }
+
+                      return (
+                        <td 
+                          key={i} 
+                          onClick={() => handleCellClick(room, day)}
+                          className={`p-1 border-r border-gray-200 cursor-pointer transition-colors align-middle text-center ${cellBg}`}
+                        >
+                          {badge || (
+                            <span className="text-gray-300 text-[10px] select-none hover:text-gray-600">·</span>
+                          )}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
-        <div>Last Updated: {new Date().toLocaleTimeString()}</div>
+
+        {/* Legend Row */}
+        <div className="flex flex-wrap items-center justify-between gap-4 pt-2 text-xs text-gray-500">
+          <div className="flex items-center gap-5">
+            <div className="flex items-center gap-1.5">
+              <span className="w-3 h-3 rounded bg-white border border-gray-300" />
+              <span>Available</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <span className="w-3 h-3 rounded bg-[#ecfdf5] border border-[#a7f3d0]" />
+              <span>Occupied / Booked</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <span className="w-3 h-3 rounded bg-amber-50 border border-amber-200" />
+              <span>Maintenance</span>
+            </div>
+          </div>
+          <div>Click any cell to manage room rates and guest status</div>
+        </div>
       </div>
 
-      {/* Availability / Booking Detail Popups */}
+      {/* Modal - Modern SaaS Dialog */}
       {showModal && selectedCell && (
-        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[999] flex items-center justify-center p-4 animate-in fade-in duration-300">
-          <div className="bg-white rounded-2xl shadow-2xl max-w-sm w-full overflow-hidden border border-slate-100 flex flex-col animate-in zoom-in-95 duration-200">
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-2xs z-[999] flex items-center justify-center p-4">
+          <div className="bg-white rounded-lg border border-gray-200 shadow-xl max-w-md w-full overflow-hidden flex flex-col">
             {/* Modal Header */}
-            <div className="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+            <div className="p-4 border-b border-gray-200 flex items-center justify-between bg-gray-50/50">
               <div>
-                <h3 className="text-xs font-black text-[#0b336b] uppercase tracking-widest">
-                  {showModal === 'booking' ? 'Booking Secured' : 'Room Availability'}
+                <h3 className="text-sm font-medium text-gray-900">
+                  Room {selectedCell.roomNumber} Availability
                 </h3>
-                <p className="text-[9px] text-slate-400 font-black uppercase mt-1 tracking-tight">
-                  Room {selectedCell.roomNumber} • {selectedCell.roomName}
+                <p className="text-xs text-gray-500 mt-0.5">
+                  {selectedCell.date?.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' })}
                 </p>
               </div>
               <button
                 onClick={() => setShowModal(null)}
-                className="text-slate-400 hover:text-slate-600 p-1.5 hover:bg-slate-100 rounded-lg transition-all"
+                className="p-1 text-gray-400 hover:text-gray-600 rounded hover:bg-gray-100 transition-colors"
               >
                 <X size={16} />
               </button>
             </div>
 
-            {/* Modal Content */}
-            <div className="p-5 space-y-4">
+            {/* Modal Body */}
+            <div className="p-5">
               {showModal === 'booking' ? (
                 loadingBooking ? (
-                  <div className="py-8 flex flex-col items-center justify-center gap-3">
-                    <RefreshCw size={24} className="text-indigo-600 animate-spin" />
-                    <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest animate-pulse">Loading Details...</span>
-                  </div>
-                ) : activeBookingDetails?.error ? (
-                  <div className="p-4 bg-rose-50 rounded-xl border border-rose-100 text-xs text-rose-700 font-bold">
-                    {activeBookingDetails.error}
+                  <div className="py-8 flex flex-col items-center justify-center gap-2">
+                    <RefreshCw size={20} className="text-gray-400 animate-spin" />
+                    <span className="text-xs text-gray-500">Loading details...</span>
                   </div>
                 ) : (
                   <div className="space-y-4">
-                    {/* Stay Dates */}
-                    <div className="flex gap-4 p-3 bg-indigo-50/40 rounded-xl border border-indigo-100/50">
-                      <div className="flex-1">
-                        <span className="text-[8px] font-black uppercase text-indigo-600 block tracking-wider">CHECK IN</span>
-                        <span className="text-xs font-bold text-slate-700">{activeBookingDetails?.check_in_date}</span>
+                    <div className="p-3 bg-gray-50 border border-gray-200 rounded-lg space-y-2">
+                      <div className="flex items-center gap-2 pb-2 border-b border-gray-200">
+                        <User size={14} className="text-gray-500" />
+                        <div>
+                          <span className="text-[10px] text-gray-400 uppercase block font-medium">Guest Profile</span>
+                          <span className="text-sm font-medium text-gray-800">{activeBookingDetails?.guest_name}</span>
+                        </div>
                       </div>
-                      <div className="w-px bg-indigo-250/20 self-stretch" />
-                      <div className="flex-1">
-                        <span className="text-[8px] font-black uppercase text-indigo-600 block tracking-wider">CHECK OUT</span>
-                        <span className="text-xs font-bold text-slate-700">{activeBookingDetails?.check_out_date}</span>
-                      </div>
-                    </div>
 
-                    {/* Guest Information */}
-                    <div className="space-y-3">
-                      <div className="flex items-center gap-3 text-slate-700 border-b border-slate-50 pb-2">
-                        <div className="p-1.5 bg-slate-100 rounded-lg">
-                          <User size={14} className="text-slate-500" />
+                      <div className="grid grid-cols-2 gap-2 text-xs text-gray-600">
+                        <div>
+                          <span className="text-[10px] text-gray-400 block font-medium">Phone</span>
+                          <span className="font-mono">{activeBookingDetails?.guest_phone || '—'}</span>
                         </div>
                         <div>
-                          <span className="text-[8px] font-black text-slate-400 block uppercase tracking-wider">GUEST PROFILE</span>
-                          <span className="text-xs font-bold text-slate-800">{activeBookingDetails?.guest_name}</span>
+                          <span className="text-[10px] text-gray-400 block font-medium">Total Paid</span>
+                          <span className="font-semibold text-gray-900">₹{Number(activeBookingDetails?.total_amount || 0).toLocaleString('en-IN')}</span>
                         </div>
                       </div>
-
-                      <div className="grid grid-cols-2 gap-3 text-slate-700">
-                        <div>
-                          <span className="text-[8px] font-black text-slate-400 block uppercase tracking-wider">PHONE</span>
-                          <span className="text-xs font-bold text-slate-700">{activeBookingDetails?.guest_phone || '—'}</span>
-                        </div>
-                        <div>
-                          <span className="text-[8px] font-black text-slate-400 block uppercase tracking-wider">EMAIL</span>
-                          <span className="text-xs font-bold text-slate-750 truncate block">{activeBookingDetails?.guest_email || '—'}</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Room Type */}
-                    {selectedCell?.categoryName && (
-                      <div className="flex items-center gap-3 text-slate-700 border-b border-slate-50 pb-3">
-                        <div className="p-1.5 bg-indigo-50 rounded-lg">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-indigo-500"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                        </div>
-                        <div>
-                          <span className="text-[8px] font-black text-slate-400 block uppercase tracking-wider">ROOM TYPE</span>
-                          <span className="text-xs font-bold text-slate-800">{selectedCell.categoryName}</span>
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Financials & Status */}
-                    <div className="grid grid-cols-2 gap-4 border-t border-slate-100 pt-4">
-                      <div>
-                        <span className="text-[8px] font-black text-slate-400 block uppercase tracking-wider">TOTAL AMOUNT</span>
-                        <span className="text-xs font-black text-slate-800">INR {Number(activeBookingDetails?.total_amount).toLocaleString()}</span>
-                      </div>
-                      <div>
-                        <span className="text-[8px] font-black text-slate-400 block uppercase tracking-wider">BILLING STATUS</span>
-                        <span className={`text-[9px] font-black px-2 py-0.5 rounded-full inline-block uppercase ${activeBookingDetails?.payment_status === 'success'
-                            ? 'bg-emerald-50 text-emerald-700'
-                            : 'bg-amber-100 text-amber-800'
-                          }`}>
-                          {activeBookingDetails?.payment_status || 'Pending'}
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Meta details */}
-                    <div className="bg-slate-50 p-2.5 rounded-lg flex items-center justify-between text-[8px] font-black uppercase text-slate-400 tracking-wider">
-                      <span>Source: {activeBookingDetails?.source || activeBookingDetails?.booking_source || 'Website'}</span>
-                      <span>ID: {activeBookingDetails?.booking_id}</span>
                     </div>
                   </div>
                 )
               ) : (
                 <div className="space-y-4">
-                  <div className="p-3 bg-slate-50 rounded-xl border border-slate-150 flex flex-col gap-2 text-slate-655 text-[10px] leading-relaxed font-bold">
-                    <div className="flex items-center gap-2">
-                      <span>💡</span>
-                      <span>Modifying availability for Room {selectedCell.roomNumber}</span>
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-3 p-3 bg-slate-50 rounded-xl border border-slate-100">
+                  <div className="grid grid-cols-2 gap-3">
                     <div className="space-y-1">
-                      <label className="block text-[8px] font-black text-slate-400 uppercase tracking-wider">Start Date</label>
+                      <label className="text-xs font-medium text-gray-600">Start Date</label>
                       <input
                         type="date"
                         value={rangeStart}
                         onChange={(e) => setRangeStart(e.target.value)}
-                        className="w-full bg-white border border-slate-200 rounded-lg p-2 text-xs font-bold text-slate-800 focus:outline-none focus:ring-1 focus:ring-[#0b336b]/30"
+                        className="w-full border border-gray-300 rounded-md p-2 text-xs font-mono text-gray-800 focus:outline-none focus:border-blue-500"
                       />
                     </div>
                     <div className="space-y-1">
-                      <label className="block text-[8px] font-black text-slate-400 uppercase tracking-wider">End Date</label>
+                      <label className="text-xs font-medium text-gray-600">End Date</label>
                       <input
                         type="date"
                         value={rangeEnd}
                         min={rangeStart}
                         onChange={(e) => setRangeEnd(e.target.value)}
-                        className="w-full bg-white border border-slate-200 rounded-lg p-2 text-xs font-bold text-slate-800 focus:outline-none focus:ring-1 focus:ring-[#0b336b]/30"
+                        className="w-full border border-gray-300 rounded-md p-2 text-xs font-mono text-gray-800 focus:outline-none focus:border-blue-500"
                       />
                     </div>
                   </div>
 
-                  <div className="flex flex-col gap-2 pt-1">
+                  <div className="flex flex-col gap-2 pt-2">
                     <button
                       disabled={isUpdatingStatus}
                       onClick={() => handleStatusChangeRange(selectedCell.roomId, rangeStart, rangeEnd, 'Available')}
-                      className="flex items-center justify-between p-3 rounded-xl border-2 border-emerald-600/30 bg-emerald-50 hover:bg-emerald-100/50 text-emerald-800 transition-all text-left font-bold disabled:opacity-50"
+                      className="p-2.5 rounded-md border border-gray-300 hover:bg-gray-50 text-gray-800 text-xs font-medium text-left transition-colors flex items-center justify-between"
                     >
-                      <span className="text-xs">Set as Available</span>
-                      <div className="w-3.5 h-3.5 rounded-full border-4 border-emerald-500 bg-white" />
+                      <span>Mark Available</span>
+                      <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
                     </button>
-
-                    <button
-                      disabled={isUpdatingStatus}
-                      onClick={() => handleStatusChangeRange(selectedCell.roomId, rangeStart, rangeEnd, 'Maintenance')}
-                      className="flex items-center justify-between p-3 rounded-xl border-2 border-amber-500/30 bg-amber-50 hover:bg-amber-100/50 text-amber-800 transition-all text-left font-bold disabled:opacity-50"
-                    >
-                      <span className="text-xs">Mark under Maintenance</span>
-                      <div className="w-3.5 h-3.5 rounded-full border-4 border-amber-500 bg-white" />
-                    </button>
-
                     <button
                       disabled={isUpdatingStatus}
                       onClick={() => handleStatusChangeRange(selectedCell.roomId, rangeStart, rangeEnd, 'Booked')}
-                      className="flex items-center justify-between p-3 rounded-xl border-2 border-rose-500/30 bg-rose-50 hover:bg-rose-100/50 text-rose-800 transition-all text-left font-bold disabled:opacity-50"
+                      className="p-2.5 rounded-md border border-gray-300 hover:bg-gray-50 text-gray-800 text-xs font-medium text-left transition-colors flex items-center justify-between"
                     >
-                      <span className="text-xs">Mark as Booked</span>
-                      <div className="w-3.5 h-3.5 rounded-full border-4 border-rose-500 bg-white" />
+                      <span>Mark Booked / Occupied</span>
+                      <span className="w-2.5 h-2.5 rounded-full bg-blue-600" />
+                    </button>
+                    <button
+                      disabled={isUpdatingStatus}
+                      onClick={() => handleStatusChangeRange(selectedCell.roomId, rangeStart, rangeEnd, 'Maintenance')}
+                      className="p-2.5 rounded-md border border-gray-300 hover:bg-gray-50 text-gray-800 text-xs font-medium text-left transition-colors flex items-center justify-between"
+                    >
+                      <span>Mark Maintenance</span>
+                      <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
                     </button>
                   </div>
                 </div>
@@ -568,10 +502,11 @@ export const RoomCalendar = () => {
             </div>
 
             {/* Modal Footer */}
-            <div className="p-4 bg-slate-50 border-t border-slate-100 flex justify-end">
+            <div className="p-3.5 bg-gray-50 border-t border-gray-200 flex justify-end">
               <Button
+                variant="outline"
                 onClick={() => setShowModal(null)}
-                className="bg-[#0b336b] hover:bg-[#072145] text-[10px] uppercase font-black tracking-widest text-white px-5 py-2 rounded-lg shadow-md transition-all active:scale-95"
+                className="text-xs font-medium border-gray-300 text-gray-700 hover:bg-white rounded-md px-4 py-1.5 h-auto"
               >
                 Close
               </Button>
@@ -579,6 +514,209 @@ export const RoomCalendar = () => {
           </div>
         </div>
       )}
+      {/* Daily Room Status & Occupancy Report Modal */}
+      {showReportModal && (() => {
+        const roomStatusList = rooms.map((room) => {
+          const record = availability.find(
+            (a) => Number(a.room_id) === Number(room.id) && a.date === reportDate
+          );
+          const rawStatus = record ? record.status.toLowerCase() : 'available';
+          let statusLabel = 'Available / Clean';
+          let statusColor = 'text-emerald-700 bg-emerald-50 border-emerald-200';
+          if (rawStatus === 'booked' || rawStatus === 'occupied') {
+            statusLabel = 'Occupied';
+            statusColor = 'text-blue-700 bg-blue-50 border-blue-200';
+          } else if (rawStatus === 'maintenance' || rawStatus === 'blocked') {
+            statusLabel = 'Maintenance';
+            statusColor = 'text-amber-700 bg-amber-50 border-amber-200';
+          }
+
+          const note = record?.note || '';
+          const bookingId = note.startsWith('booking:') ? note.replace('booking:', '') : '';
+
+          return {
+            roomId: room.id,
+            roomNumber: room.room_number || `R-${room.id}`,
+            roomTitle: room.title || room.room_name || 'Room',
+            category: room.category_name || 'Standard Room',
+            floor: room.floor_number ? `Floor ${room.floor_number}` : 'Ground Floor',
+            price: room.base_price ? `₹${parseFloat(room.base_price).toLocaleString('en-IN')}` : '₹2,500',
+            status: statusLabel,
+            statusColor,
+            bookingRef: bookingId || '—',
+            notes: note || 'Clean & Inspected'
+          };
+        });
+
+        const totalRoomCount = roomStatusList.length;
+        const occupiedCount = roomStatusList.filter((r) => r.status === 'Occupied').length;
+        const availableCount = roomStatusList.filter((r) => r.status.includes('Available')).length;
+        const maintenanceCount = roomStatusList.filter((r) => r.status === 'Maintenance').length;
+        const occupancyPercent = totalRoomCount > 0 ? Math.round((occupiedCount / totalRoomCount) * 100) : 0;
+
+        const handleDownloadRoomCalendarPdf = () => {
+          generateHotelReportPdf({
+            title: 'DAILY ROOM OCCUPANCY & STATUS AUDIT REPORT',
+            period: `Date: ${reportDate}`,
+            summaryCards: [
+              { label: 'Total Rooms', value: `${totalRoomCount} Units` },
+              { label: 'Occupied', value: `${occupiedCount} Rooms` },
+              { label: 'Available', value: `${availableCount} Rooms` },
+              { label: 'Occupancy Rate', value: `${occupancyPercent}%` }
+            ],
+            columns: [
+              { header: '#', dataKey: '_index', alignment: 'center', width: 10 },
+              { header: 'Room No', dataKey: 'roomNumber', alignment: 'center', width: 24 },
+              { header: 'Room Category', dataKey: 'category', alignment: 'left', width: 45 },
+              { header: 'Floor / Wing', dataKey: 'floor', alignment: 'left', width: 28 },
+              { header: 'Current Status', dataKey: 'status', alignment: 'center', width: 32 },
+              { header: 'Booking Ref', dataKey: 'bookingRef', alignment: 'center', width: 32 },
+              { header: 'Rate / Night', dataKey: 'price', alignment: 'right', width: 26 }
+            ],
+            data: roomStatusList,
+            filename: `Subra_Daily_Room_Report_${reportDate}.pdf`
+          });
+        };
+
+        return (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-xs animate-in fade-in">
+            <div className="bg-white rounded-xl shadow-2xl max-w-4xl w-full border border-gray-200 overflow-hidden flex flex-col max-h-[90vh]">
+              {/* Header */}
+              <div className="p-4 bg-gray-50 border-b border-gray-200 flex items-center justify-between no-print">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center border border-emerald-200">
+                    <FileText size={16} />
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-bold text-gray-900">Room Status &amp; Occupancy Report</h3>
+                    <p className="text-xs text-gray-500">Official daily property inventory and room allocation statement</p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1.5 bg-white border border-gray-300 rounded-lg px-2.5 py-1 text-xs">
+                    <span className="text-gray-500 font-medium">Date:</span>
+                    <input
+                      type="date"
+                      value={reportDate}
+                      onChange={(e) => setReportDate(e.target.value)}
+                      className="border-none focus:outline-none text-gray-800 font-semibold"
+                    />
+                  </div>
+
+                  <button
+                    onClick={() => window.print()}
+                    className="px-3 py-1.5 bg-white hover:bg-gray-50 text-gray-800 border border-gray-300 rounded-lg text-xs font-semibold shadow-xs flex items-center gap-1.5 transition-colors cursor-pointer"
+                  >
+                    <Printer size={14} className="text-blue-600" />
+                    <span>Print</span>
+                  </button>
+
+                  <button
+                    onClick={handleDownloadRoomCalendarPdf}
+                    className="px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-semibold shadow-xs flex items-center gap-1.5 transition-colors cursor-pointer"
+                  >
+                    <Download size={14} />
+                    <span>Download PDF</span>
+                  </button>
+
+                  <button
+                    onClick={() => setShowReportModal(false)}
+                    className="p-1.5 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-gray-100 transition-colors"
+                  >
+                    <X size={16} />
+                  </button>
+                </div>
+              </div>
+
+              {/* Printable Body Content */}
+              <div className="p-6 overflow-y-auto space-y-5 flex-1 bg-white printable-document" id="printable-calendar-report">
+                {/* Paper Header (visible on print & screen) */}
+                <div className="pb-4 border-b-2 border-emerald-900/30 flex justify-between items-start">
+                  <div>
+                    <h1 className="font-serif text-xl font-black text-[#0a3622]">SUBRA RESIDENCY</h1>
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-amber-700">RAGUPATHI ANANDHALAKSHMI &bull; PROPRIETORSHIP</p>
+                    <p className="text-[11px] text-gray-600 mt-0.5">NO.45-1/1187B2, Lal Bahadur Sastry Road, Kumbakonam &bull; GSTIN: 33AQQPA7394F2ZN</p>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-sm font-bold text-[#0a3622] uppercase">DAILY ROOM OCCUPANCY REPORT</div>
+                    <div className="text-xs font-semibold text-emerald-800 mt-0.5">Date: {reportDate}</div>
+                    <div className="text-[10px] text-gray-400 font-mono mt-1">Generated: {new Date().toLocaleTimeString()}</div>
+                  </div>
+                </div>
+
+                {/* KPI Summary Cards */}
+                <div className="grid grid-cols-4 gap-3">
+                  <div className="bg-gray-50 border border-gray-200 rounded-lg p-3">
+                    <span className="text-[10px] font-bold uppercase text-gray-500">Total Rooms</span>
+                    <p className="text-lg font-bold text-gray-900 mt-0.5 font-mono">{totalRoomCount}</p>
+                  </div>
+                  <div className="bg-blue-50/60 border border-blue-200 rounded-lg p-3">
+                    <span className="text-[10px] font-bold uppercase text-blue-700">Occupied Rooms</span>
+                    <p className="text-lg font-bold text-blue-900 mt-0.5 font-mono">{occupiedCount}</p>
+                  </div>
+                  <div className="bg-emerald-50/60 border border-emerald-200 rounded-lg p-3">
+                    <span className="text-[10px] font-bold uppercase text-emerald-700">Available Clean</span>
+                    <p className="text-lg font-bold text-emerald-900 mt-0.5 font-mono">{availableCount}</p>
+                  </div>
+                  <div className="bg-amber-50/60 border border-amber-200 rounded-lg p-3">
+                    <span className="text-[10px] font-bold uppercase text-amber-700">Occupancy Rate</span>
+                    <p className="text-lg font-bold text-amber-900 mt-0.5 font-mono">{occupancyPercent}%</p>
+                  </div>
+                </div>
+
+                {/* Room Status Table */}
+                <div className="border border-gray-200 rounded-lg overflow-hidden">
+                  <table className="w-full text-left text-xs border-collapse">
+                    <thead>
+                      <tr className="bg-gray-100 text-gray-700 text-[10px] font-bold uppercase tracking-wider border-b border-gray-200">
+                        <th className="px-3 py-2.5 text-center w-10">#</th>
+                        <th className="px-3 py-2.5 text-center w-24">Room No</th>
+                        <th className="px-3 py-2.5">Category</th>
+                        <th className="px-3 py-2.5 w-28">Floor</th>
+                        <th className="px-3 py-2.5 text-center w-32">Status</th>
+                        <th className="px-3 py-2.5 text-center w-36">Booking Ref</th>
+                        <th className="px-3 py-2.5 text-right w-28">Nightly Tariff</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-200">
+                      {roomStatusList.map((rm, idx) => (
+                        <tr key={rm.roomId} className={idx % 2 === 0 ? 'bg-white' : 'bg-gray-50/50'}>
+                          <td className="px-3 py-2 text-center text-gray-400 font-mono text-[11px]">{idx + 1}</td>
+                          <td className="px-3 py-2 text-center font-mono font-bold text-gray-900">{rm.roomNumber}</td>
+                          <td className="px-3 py-2 text-gray-800 font-medium">{rm.category}</td>
+                          <td className="px-3 py-2 text-gray-600 text-[11px]">{rm.floor}</td>
+                          <td className="px-3 py-2 text-center">
+                            <span className={`px-2 py-0.5 rounded text-[10px] font-bold border ${rm.statusColor}`}>
+                              {rm.status}
+                            </span>
+                          </td>
+                          <td className="px-3 py-2 text-center font-mono text-gray-700 text-[11px]">{rm.bookingRef}</td>
+                          <td className="px-3 py-2 text-right font-mono text-gray-800 font-semibold">{rm.price}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+
+                {/* Signature Block */}
+                <div className="pt-6 border-t border-gray-200 grid grid-cols-2 gap-6 text-center text-xs">
+                  <div>
+                    <div className="h-8 border-b border-gray-300 mx-auto w-1/2 mb-1"></div>
+                    <p className="font-bold text-gray-800 text-[11px]">Housekeeping Supervisor</p>
+                    <p className="text-[10px] text-gray-400">Cleanliness &amp; Inspection Sign-off</p>
+                  </div>
+                  <div>
+                    <div className="h-8 border-b border-gray-300 mx-auto w-1/2 mb-1"></div>
+                    <p className="font-bold text-gray-800 text-[11px]">Front Desk Duty Manager</p>
+                    <p className="text-[10px] text-gray-400">Night Audit &amp; Room Allocations</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      })()}
     </div>
   );
 };

@@ -9,6 +9,7 @@ import {
 import { fetchBookingById, createBooking, createPaymentOrder, verifyPayment, getPublicAppUrl } from '../../lib/api';
 import html2canvas from 'html2canvas';
 import QRCode from 'qrcode';
+import logoImg from '../../assets/logo.png';
 
 export default function BookingPage() {
   const location = useLocation();
@@ -602,23 +603,37 @@ export default function BookingPage() {
                 <div data-html2canvas-ignore="true" className="absolute bottom-0 left-0 w-64 h-64 rounded-full filter blur-3xl pointer-events-none" style={{ backgroundColor: hexColors.greenLight }} />
 
                 {/* Banner & Header */}
-                <div className="flex flex-col md:flex-row justify-between items-center pb-8 gap-6" style={{ borderBottom: '1px solid ' + hexColors.goldBorderSoft }}>
-                  <div className="text-center md:text-left space-y-2">
-                    <h2 className="font-playfair text-3xl font-black tracking-widest" style={{ color: hexColors.green }}>SUBRA RESIDENCY</h2>
-                    <p className="text-[10px] font-bold uppercase tracking-[0.3em]" style={{ color: hexColors.slate400 }}>Stay Away from Home • Kumbakonam</p>
-                    <p className="text-[11px] font-semibold leading-relaxed font-sans max-w-xs" style={{ color: hexColors.slate500 }}>
-                      L.B.S Road, Near Railway Station, Kumbakonam, Tamil Nadu<br />
-                      Ph: +91 73958 09991 | 73958 09992
-                    </p>
-                  </div>
-                  <div className="text-center md:text-right space-y-2">
-                    <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto md:ml-auto shadow-md" style={{ backgroundColor: hexColors.emerald50 }}>
-                      <CheckCircle2 size={32} className="text-emerald-600" style={{ color: hexColors.emerald600 }} />
+                <div className="flex flex-col md:flex-row justify-between items-start pb-6 gap-6" style={{ borderBottom: '1px solid ' + hexColors.goldBorderSoft }}>
+                  <div className="flex items-start gap-4 text-left">
+                    <img 
+                      src={logoImg} 
+                      alt="Subra Residency" 
+                      className="w-16 h-16 object-contain rounded-xl border border-gray-200 p-1 bg-white shadow-xs shrink-0" 
+                    />
+                    <div className="space-y-1">
+                      <h2 className="font-playfair text-2xl font-black tracking-wide" style={{ color: hexColors.green }}>SUBRA RESIDENCY</h2>
+                      <p className="text-[10px] font-extrabold uppercase tracking-widest text-amber-700">RAGUPATHI ANANDHALAKSHMI &bull; PROPRIETORSHIP</p>
+                      <p className="text-[11px] font-medium leading-relaxed font-sans max-w-sm text-gray-600">
+                        NO.45-1/1187B2, Lal Bahadur Sastry Road, Thanjavur, Tamil Nadu, 612001<br />
+                        Ph: +91 73958 09991 | 73958 09992 &bull; subraresidency@gmail.com
+                      </p>
+                      <div className="inline-flex items-center gap-1.5 mt-1 px-2.5 py-0.5 bg-gray-50 border border-gray-200 rounded text-[10.5px] font-bold text-gray-800">
+                        <span>GSTIN:</span>
+                        <span className="font-mono text-[#0a3622] font-black">33AQQPA7394F2ZN</span>
+                        <span className="text-gray-400 mx-1">&bull;</span>
+                        <span className="text-gray-600">State: TN (33)</span>
+                      </div>
                     </div>
-                    <span className="inline-block text-[10px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full shadow-sm" style={{ backgroundColor: hexColors.emerald100, color: hexColors.emerald800 }}>
+                  </div>
+
+                  <div className="text-center md:text-right space-y-2 shrink-0">
+                    <div className="text-lg font-black uppercase tracking-wider text-[#0a3622]">
+                      TAX INVOICE
+                    </div>
+                    <span className="inline-block text-[9.5px] font-black uppercase tracking-widest px-3 py-1 rounded-full shadow-xs bg-emerald-100 text-emerald-800 border border-emerald-200">
                       Booking Confirmed
                     </span>
-                    <p className="text-xs font-bold font-sans mt-1" style={{ color: hexColors.slate400 }}>Invoice Date: {activeBooking?.check_in_date || new Date().toISOString().split('T')[0]}</p>
+                    <p className="text-xs font-mono font-bold text-gray-500 mt-1">Invoice Date: {activeBooking?.check_in_date || new Date().toISOString().split('T')[0]}</p>
                   </div>
                 </div>
 
@@ -626,25 +641,28 @@ export default function BookingPage() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
                   
                   {/* Column 1 & 2: Details and Invoice (Span 2) */}
-                  <div className="md:col-span-2 space-y-8">
+                  <div className="md:col-span-2 space-y-6">
                     
                     {/* Invoice To section */}
                     <div className="text-left space-y-2">
-                      <h4 className="text-[10px] font-black uppercase tracking-[0.25em]" style={{ color: hexColors.gold }}>Invoice Recipient</h4>
+                      <div className="flex justify-between items-center">
+                        <h4 className="text-[10px] font-black uppercase tracking-[0.25em]" style={{ color: hexColors.gold }}>Billed To (Guest Details)</h4>
+                        <span className="text-[10px] text-gray-400 font-sans">Place of Supply: TN (33)</span>
+                      </div>
                       <p className="font-playfair text-xl font-black" style={{ color: hexColors.green }}>{activeBooking?.guest_name || bookingDetails.name}</p>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-1 gap-x-4 text-xs font-semibold font-sans" style={{ color: hexColors.slate500 }}>
                         <p className="flex items-center gap-2"><Mail size={12} /> {activeBooking?.guest_email || bookingDetails.email}</p>
                         <p className="flex items-center gap-2"><Phone size={12} /> {activeBooking?.guest_phone || bookingDetails.phone}</p>
-                        <p className="flex items-center gap-2"><Globe size={12} /> {activeBooking?.country || bookingDetails.country}</p>
-                        <p className="flex items-center gap-2"><MapPin size={12} /> {activeBooking?.address || bookingDetails.address}</p>
+                        <p className="flex items-center gap-2"><Globe size={12} /> {activeBooking?.country || bookingDetails.country || 'India'}</p>
+                        <p className="flex items-center gap-2"><MapPin size={12} /> {activeBooking?.address || bookingDetails.address || 'Thanjavur, Tamil Nadu'}</p>
                       </div>
                     </div>
 
                     {/* Booking metadata */}
-                    <div className="rounded-2xl p-6 grid grid-cols-2 gap-y-4 gap-x-6 text-xs text-left" style={{ backgroundColor: hexColors.slate50, border: '1px solid ' + hexColors.borderLight }}>
+                    <div className="rounded-2xl p-5 grid grid-cols-2 gap-y-3 gap-x-6 text-xs text-left" style={{ backgroundColor: hexColors.slate50, border: '1px solid ' + hexColors.borderLight }}>
                       <div>
                         <span className="text-[9px] font-bold uppercase tracking-widest block mb-0.5" style={{ color: hexColors.slate400 }}>Booking Identifier</span>
-                        <span className="font-black font-sans" style={{ color: hexColors.green }}>{bookingId}</span>
+                        <span className="font-mono font-black" style={{ color: hexColors.green }}>{bookingId}</span>
                       </div>
                       <div>
                         <span className="text-[9px] font-bold uppercase tracking-widest block mb-0.5" style={{ color: hexColors.slate400 }}>Assigned Sanctuary</span>
@@ -654,56 +672,66 @@ export default function BookingPage() {
                       </div>
                       <div>
                         <span className="text-[9px] font-bold uppercase tracking-widest block mb-0.5" style={{ color: hexColors.slate400 }}>Check-In Arrival</span>
-                        <span className="font-bold font-sans" style={{ color: hexColors.slate700 }}>{activeBooking?.check_in_date || bookingDetails.checkIn}</span>
+                        <span className="font-bold font-sans" style={{ color: hexColors.slate700 }}>{activeBooking?.check_in_date || bookingDetails.checkIn} (12:00 PM)</span>
                       </div>
                       <div>
                         <span className="text-[9px] font-bold uppercase tracking-widest block mb-0.5" style={{ color: hexColors.slate400 }}>Check-Out Departure</span>
-                        <span className="font-bold font-sans" style={{ color: hexColors.slate700 }}>{activeBooking?.check_out_date || bookingDetails.checkOut}</span>
+                        <span className="font-bold font-sans" style={{ color: hexColors.slate700 }}>{activeBooking?.check_out_date || bookingDetails.checkOut} (11:00 AM)</span>
                       </div>
                     </div>
 
                     {/* Invoice items table */}
-                    <div className="space-y-4">
-                      <h4 className="text-[10px] font-black uppercase tracking-[0.25em] text-left" style={{ color: hexColors.gold }}>Invoice Statement</h4>
-                      <div className="overflow-x-auto">
+                    <div className="space-y-3">
+                      <h4 className="text-[10px] font-black uppercase tracking-[0.25em] text-left" style={{ color: hexColors.gold }}>Itemized Services & GST Breakdown</h4>
+                      <div className="overflow-x-auto border border-gray-200 rounded-xl">
                         <table className="w-full text-xs font-semibold font-sans" style={{ color: hexColors.slate600 }}>
                           <thead>
-                            <tr className="text-slate-400 font-bold uppercase tracking-wider text-[10px]" style={{ borderBottom: '1px solid ' + hexColors.borderDark, color: hexColors.slate400 }}>
-                              <th className="pb-3 text-left">Description</th>
-                              <th className="pb-3 text-center">Qty</th>
-                              <th className="pb-3 text-right">Price</th>
-                              <th className="pb-3 text-right">Amount</th>
+                            <tr className="bg-gray-50 text-slate-500 font-bold uppercase tracking-wider text-[10px]" style={{ borderBottom: '1px solid ' + hexColors.borderLight }}>
+                              <th className="py-2.5 px-3 text-left">Description</th>
+                              <th className="py-2.5 px-3 text-center">SAC Code</th>
+                              <th className="py-2.5 px-3 text-center">Nights</th>
+                              <th className="py-2.5 px-3 text-right">Taxable Rate</th>
+                              <th className="py-2.5 px-3 text-right">Taxable Value</th>
                             </tr>
                           </thead>
                           <tbody>
-                            <tr style={{ borderBottom: '1px solid ' + hexColors.borderLight }}>
-                              <td className="py-4 text-left">
-                                <span className="font-bold uppercase" style={{ color: hexColors.slate800 }}>{activeRoom.room_name || activeRoom.title || room.title || 'Luxury Room'}</span><br />
-                                <span className="text-[10px]" style={{ color: hexColors.slate400 }}>Accomodation staying for {nights} Night(s)</span>
-                              </td>
-                              <td className="py-4 text-center font-bold font-sans" style={{ color: hexColors.slate800 }}>1</td>
-                              <td className="py-4 text-right font-bold font-sans" style={{ color: hexColors.slate800 }}>{formatCurrency(nightlyRate)}</td>
-                              <td className="py-4 text-right font-bold font-sans" style={{ color: hexColors.slate800 }}>{formatCurrency(subtotal)}</td>
-                            </tr>
-                            <tr style={{ borderBottom: '1px solid ' + hexColors.borderLight }}>
-                              <td className="py-3 text-left font-medium" style={{ color: hexColors.slate800 }}>Cleaning & Setup Service</td>
-                              <td className="py-3 text-center" style={{ color: hexColors.slate600 }}>1</td>
-                              <td className="py-3 text-right" style={{ color: hexColors.slate600 }}>{formatCurrency(cleaningFee)}</td>
-                              <td className="py-3 text-right" style={{ color: hexColors.slate600 }}>{formatCurrency(cleaningFee)}</td>
-                            </tr>
-                            <tr style={{ borderBottom: '1px solid ' + hexColors.borderDark }}>
-                              <td className="py-3 text-left font-medium" style={{ color: hexColors.slate800 }}>Hotel Service & Gst</td>
-                              <td className="py-3 text-center" style={{ color: hexColors.slate600 }}>1</td>
-                              <td className="py-3 text-right" style={{ color: hexColors.slate600 }}>{formatCurrency(serviceFee)}</td>
-                              <td className="py-3 text-right" style={{ color: hexColors.slate600 }}>{formatCurrency(serviceFee)}</td>
-                            </tr>
-                            <tr>
-                              <td colSpan={2} />
-                              <td className="py-4 text-right font-bold uppercase text-[10px]" style={{ color: hexColors.slate400 }}>Grand Total</td>
-                              <td className="py-4 text-right font-black text-sm font-sans" style={{ color: hexColors.green }}>
-                                {formatCurrency(activeBooking?.paid_amount || activeBooking?.total_amount || totalAmount)}
-                              </td>
-                            </tr>
+                            {(() => {
+                              const totalVal = parseFloat(activeBooking?.paid_amount || activeBooking?.total_amount || totalAmount);
+                              const taxVal = Math.round((totalVal / 1.12) * 100) / 100;
+                              const gstVal = Math.round((totalVal - taxVal) * 100) / 100;
+                              const cgstVal = Math.round((gstVal / 2) * 100) / 100;
+                              const sgstVal = Math.round((gstVal - cgstVal) * 100) / 100;
+                              const rateNight = Math.round((taxVal / Math.max(1, nights)) * 100) / 100;
+
+                              return (
+                                <>
+                                  <tr style={{ borderBottom: '1px solid ' + hexColors.borderLight }}>
+                                    <td className="py-3 px-3 text-left">
+                                      <span className="font-bold uppercase text-gray-900">{activeRoom.room_name || activeRoom.title || room.title || 'Luxury Room'}</span><br />
+                                      <span className="text-[10px] text-gray-400">Accommodations for {nights} Night(s)</span>
+                                    </td>
+                                    <td className="py-3 px-3 text-center font-mono text-gray-600">996311</td>
+                                    <td className="py-3 px-3 text-center font-bold text-gray-900">{nights}</td>
+                                    <td className="py-3 px-3 text-right font-bold text-gray-900">{formatCurrency(rateNight)}</td>
+                                    <td className="py-3 px-3 text-right font-bold text-gray-900">{formatCurrency(taxVal)}</td>
+                                  </tr>
+                                  <tr className="text-[11px] text-gray-500" style={{ borderBottom: '1px solid ' + hexColors.borderLight }}>
+                                    <td colSpan={3} className="py-2 px-3 text-left pl-6">Central Goods &amp; Services Tax (CGST @ 6%)</td>
+                                    <td colSpan={2} className="py-2 px-3 text-right font-medium">{formatCurrency(cgstVal)}</td>
+                                  </tr>
+                                  <tr className="text-[11px] text-gray-500" style={{ borderBottom: '1px solid ' + hexColors.borderDark }}>
+                                    <td colSpan={3} className="py-2 px-3 text-left pl-6">State Goods &amp; Services Tax (SGST @ 6%)</td>
+                                    <td colSpan={2} className="py-2 px-3 text-right font-medium">{formatCurrency(sgstVal)}</td>
+                                  </tr>
+                                  <tr className="bg-emerald-50/50">
+                                    <td colSpan={3} className="py-3 px-3 text-right font-bold uppercase text-[10px] text-gray-600">Grand Total (Inclusive of GST)</td>
+                                    <td colSpan={2} className="py-3 px-3 text-right font-black text-base font-sans" style={{ color: hexColors.green }}>
+                                      {formatCurrency(totalVal)}
+                                    </td>
+                                  </tr>
+                                </>
+                              );
+                            })()}
                           </tbody>
                         </table>
                       </div>

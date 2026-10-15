@@ -5,10 +5,11 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'gold' | 'outline' | 'ghost' | 'emerald' | 'link';
   size?: 'default' | 'sm' | 'lg' | 'icon';
+  ornate?: boolean;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant = 'primary', size = 'default', ...props }, ref) => {
+  ({ className, variant = 'primary', size = 'default', ornate, ...props }, ref) => {
     const variants = {
       primary: "bg-brand-emerald text-brand-cream hover:bg-brand-emerald/90 shadow-md",
       gold: "bg-brand-gold text-brand-charcoal hover:bg-brand-emerald hover:text-brand-cream font-bold shadow-lg",
@@ -25,10 +26,13 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       icon: "h-10 w-10",
     };
 
+    const isOrnate = ornate ?? (variant === 'gold');
+
     return (
       <button
         className={cn(
-          "inline-flex items-center justify-center text-sm font-medium ring-offset-white transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-emerald focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 active:scale-[0.98] ornate-shape ornate-border",
+          "inline-flex items-center justify-center text-sm font-medium ring-offset-white transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-emerald focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 active:scale-[0.98]",
+          isOrnate && "ornate-shape ornate-border",
           variants[variant],
           sizes[size],
           className

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Save, Plus, Trash2, Edit3, ArrowLeft, Loader2, Image as ImageIcon, MapPin, Clock, Car, Footprints } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../../../components/ui/card';
-import { Button } from '../../../components/ui/button';
-import { Input } from '../../../components/ui/input';
-import { Textarea } from '../../../components/ui/textarea';
+import { 
+  Save, Plus, Trash2, Edit3, ArrowLeft, Loader2, 
+  MapPin, Clock, Car, CheckCircle2, AlertCircle, 
+  Search, UploadCloud
+} from 'lucide-react';
 import { API_BASE_URL, BACKEND_URL } from '../../../lib/api';
 
 interface AdminAttractionsViewProps {
@@ -16,6 +16,7 @@ export const AdminAttractionsView: React.FC<AdminAttractionsViewProps> = ({ onBa
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
   // Form state
   const [editingAttraction, setEditingAttraction] = useState<any | null>(null);
@@ -150,7 +151,7 @@ export const AdminAttractionsView: React.FC<AdminAttractionsViewProps> = ({ onBa
       const data = await response.json();
       if (data && data.status === 'success') {
         setFormData(prev => ({ ...prev, image_path: data.image_path }));
-        setMessage({ type: 'success', text: 'Image uploaded successfully! Remember to save changes.' });
+        setMessage({ type: 'success', text: 'Image uploaded successfully! Remember to click "Save Attraction".' });
       } else {
         throw new Error(data.message || 'Upload failed');
       }
@@ -219,356 +220,474 @@ export const AdminAttractionsView: React.FC<AdminAttractionsViewProps> = ({ onBa
     }
   };
 
+  const filteredAttractions = attractions.filter(a => {
+    if (!searchQuery.trim()) return true;
+    const q = searchQuery.toLowerCase();
+    return (
+      (a.name && a.name.toLowerCase().includes(q)) ||
+      (a.specialFor && a.specialFor.toLowerCase().includes(q)) ||
+      (a.dist && a.dist.toLowerCase().includes(q))
+    );
+  });
+
   return (
-    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 pb-20">
-      <div className="flex items-center justify-between border-b border-slate-100 pb-6">
-        <div className="flex items-center gap-4">
-          <Button 
-            variant="outline" 
-            size="sm" 
+    <div className="space-y-6 antialiased pb-12">
+      {/* Top Banner / Navigation */}
+      <div className="bg-white rounded-xl p-5 border border-gray-200 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <button 
             onClick={editingAttraction ? () => { setEditingAttraction(null); setMessage(null); } : onBack}
-            className="border-slate-200 hover:bg-slate-50 rounded-full w-10 h-10 p-0"
+            className="p-2 border border-gray-200 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors cursor-pointer"
+            title="Back to Settings"
           >
-            <ArrowLeft size={18} />
-          </Button>
+            <ArrowLeft size={16} />
+          </button>
           <div>
-            <h1 className="text-2xl font-black text-slate-800 uppercase tracking-tighter">
-              {editingAttraction ? (editingAttraction.id === 'new' ? 'Add New Attraction' : `Edit ${editingAttraction.name}`) : 'Spiritual Attractions'}
-            </h1>
-            <p className="text-sm text-slate-500 font-medium">
-              {editingAttraction ? 'Configure details, distance, timings, and dynamic google maps settings.' : 'Manage temple details and local sights near Subra Residency.'}
+            <div className="flex items-center gap-2">
+              <h1 className="text-lg font-bold tracking-tight text-gray-900">
+                {editingAttraction ? (editingAttraction.id === 'new' ? 'Add New Attraction' : `Edit ${editingAttraction.name}`) : 'Spiritual Attractions & Temples'}
+              </h1>
+              <span className="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200">
+                {editingAttraction ? 'Editor' : `${attractions.length} Attractions`}
+              </span>
+            </div>
+            <p className="text-xs text-gray-500 mt-0.5">
+              {editingAttraction 
+                ? 'Configure details, distance, timings, and dynamic google maps route settings.' 
+                : 'Manage temple directory, travel distance, suggested timings, and Kumbakonam pilgrimage guide.'}
             </p>
           </div>
         </div>
+
         {!editingAttraction && (
-          <Button 
+          <button 
             onClick={handleAddNewClick}
-            className="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black uppercase tracking-widest px-6 h-12 shadow-xl shadow-indigo-500/10 rounded-xl"
+            className="px-3.5 py-2 bg-white hover:bg-gray-50 text-gray-800 border border-gray-300 text-xs font-medium rounded-lg shadow-xs flex items-center gap-1.5 transition-colors cursor-pointer self-start sm:self-auto"
           >
-            <Plus className="w-4 h-4 mr-2" />
-            Add Attraction
-          </Button>
+            <Plus size={14} className="text-gray-600" />
+            <span>Add Attraction</span>
+          </button>
         )}
       </div>
 
+      {/* Alert Messages */}
       {message && (
-        <div className={`p-4 rounded-xl flex items-center gap-3 ${message.type === 'success' ? 'bg-indigo-50 text-indigo-850 border border-indigo-150' : 'bg-rose-50 text-rose-700 border border-rose-100'}`}>
-          <span className="text-sm font-bold uppercase tracking-tight">{message.text}</span>
+        <div className={`p-3.5 rounded-xl flex items-center justify-between text-xs font-semibold border shadow-xs animate-in fade-in ${
+          message.type === 'success' 
+            ? 'bg-emerald-50 text-emerald-800 border-emerald-200' 
+            : 'bg-rose-50 text-rose-800 border-rose-200'
+        }`}>
+          <div className="flex items-center gap-2.5">
+            {message.type === 'success' ? <CheckCircle2 size={16} className="text-emerald-600 shrink-0" /> : <AlertCircle size={16} className="text-rose-600 shrink-0" />}
+            <span>{message.text}</span>
+          </div>
+          <button 
+            onClick={() => setMessage(null)} 
+            className="text-gray-400 hover:text-gray-600 text-xs px-2 py-0.5 cursor-pointer"
+          >
+            &times;
+          </button>
         </div>
       )}
 
       {loading ? (
-        <div className="flex flex-col items-center justify-center p-20 space-y-4">
-          <Loader2 className="w-10 h-10 text-indigo-600 animate-spin" />
-          <p className="text-indigo-900 font-bold uppercase tracking-widest text-xs">Loading Attractions...</p>
+        <div className="min-h-[300px] flex flex-col items-center justify-center p-12 bg-white rounded-xl border border-gray-200 text-gray-400 gap-3">
+          <Loader2 size={28} className="text-blue-600 animate-spin" />
+          <p className="text-xs font-medium text-gray-500">Loading spiritual attractions...</p>
         </div>
       ) : editingAttraction ? (
-        <form onSubmit={handleSave} className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        /* Edit or Add Form */
+        <form onSubmit={handleSave} className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2 space-y-6">
-            <Card className="border border-slate-100 shadow-sm rounded-2xl bg-white p-6">
-              <CardHeader className="p-0 pb-4 mb-4 border-b border-slate-100">
-                <CardTitle className="text-sm font-black uppercase text-indigo-950 tracking-wider">Attraction General Details</CardTitle>
-              </CardHeader>
-              <CardContent className="p-0 space-y-4">
+            <div className="bg-white rounded-xl p-5 border border-gray-200 shadow-xs space-y-4">
+              <div className="border-b border-gray-100 pb-3">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-gray-700">
+                  Attraction General Details
+                </h3>
+                <p className="text-xs text-gray-500 mt-0.5">
+                  Core information displayed in the Kumbakonam spiritual temples guide
+                </p>
+              </div>
+
+              <div className="space-y-3.5">
                 <div className="space-y-1">
-                  <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest">Attraction Name</label>
-                  <Input 
+                  <label className="text-xs font-semibold text-gray-700 block">
+                    Attraction / Temple Name <span className="text-rose-500">*</span>
+                  </label>
+                  <input 
+                    type="text"
                     name="name"
                     value={formData.name}
                     onChange={handleInputChange}
                     placeholder="e.g. Mahamaham Tank"
-                    className="bg-slate-50 border-slate-200 h-11 font-bold focus-visible:ring-indigo-600/20"
+                    className="w-full text-xs px-3 py-2 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600 bg-white shadow-2xs"
                     required
                   />
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                   <div className="space-y-1">
-                    <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest">Distance from Hotel</label>
-                    <Input 
+                    <label className="text-xs font-semibold text-gray-700 block">
+                      Distance from Subra Residency
+                    </label>
+                    <input 
+                      type="text"
                       name="distance"
                       value={formData.distance}
                       onChange={handleInputChange}
                       placeholder="e.g. Approximately 700 meters"
-                      className="bg-slate-50 border-slate-200 h-11 font-bold"
+                      className="w-full text-xs px-3 py-2 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600 bg-white shadow-2xs"
                     />
                   </div>
                   <div className="space-y-1">
-                    <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest">Mode of Travel</label>
-                    <Input 
+                    <label className="text-xs font-semibold text-gray-700 block">
+                      Recommended Mode of Travel
+                    </label>
+                    <input 
+                      type="text"
                       name="mode"
                       value={formData.mode}
                       onChange={handleInputChange}
                       placeholder="e.g. Walk / Auto"
-                      className="bg-slate-50 border-slate-200 h-11 font-bold"
+                      className="w-full text-xs px-3 py-2 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600 bg-white shadow-2xs"
                     />
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                   <div className="space-y-1">
-                    <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest">Suggested Timings</label>
-                    <Input 
+                    <label className="text-xs font-semibold text-gray-700 block">
+                      Suggested Darshan Timings
+                    </label>
+                    <input 
+                      type="text"
                       name="timing"
                       value={formData.timing}
                       onChange={handleInputChange}
-                      placeholder="e.g. 6:00 AM–12:00 PM"
-                      className="bg-slate-50 border-slate-200 h-11 font-bold"
+                      placeholder="e.g. 6:00 AM–12:00 PM & 4:00 PM–8:00 PM"
+                      className="w-full text-xs px-3 py-2 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600 bg-white shadow-2xs"
                     />
                   </div>
                   <div className="space-y-1">
-                    <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest">Dress Code</label>
-                    <Input 
+                    <label className="text-xs font-semibold text-gray-700 block">
+                      Dress Code / Protocol
+                    </label>
+                    <input 
+                      type="text"
                       name="dress_code"
                       value={formData.dress_code}
                       onChange={handleInputChange}
-                      placeholder="e.g. Modest attire recommended"
-                      className="bg-slate-50 border-slate-200 h-11 font-bold"
+                      placeholder="e.g. Traditional Indian attire recommended"
+                      className="w-full text-xs px-3 py-2 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600 bg-white shadow-2xs"
                     />
                   </div>
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest">Special For (Quick highlight)</label>
-                  <Input 
+                  <label className="text-xs font-semibold text-gray-700 block">
+                    Special For (Quick highlight / Deity)
+                  </label>
+                  <input 
+                    type="text"
                     name="special_for"
                     value={formData.special_for}
                     onChange={handleInputChange}
-                    placeholder="e.g. Chola architecture, sculptural beauty..."
-                    className="bg-slate-50 border-slate-200 h-11 font-semibold"
+                    placeholder="e.g. Chola architecture, sacred holy water tank, spiritual atmosphere"
+                    className="w-full text-xs px-3 py-2 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600 bg-white shadow-2xs"
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest">Detailed Description</label>
-                  <Textarea 
+                  <label className="text-xs font-semibold text-gray-700 block">
+                    Detailed History & Pilgrim Information
+                  </label>
+                  <textarea 
                     name="description"
                     value={formData.description}
                     onChange={handleInputChange}
-                    placeholder="Detailed history and description..."
-                    rows={5}
-                    className="bg-slate-50 border-slate-200 font-medium"
+                    placeholder="Provide details on temple history, mythology, festivals, and visitor guidelines..."
+                    rows={4}
+                    className="w-full text-xs px-3 py-2 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600 bg-white shadow-2xs"
                   />
                 </div>
 
-                <div className="space-y-1">
-                  <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest">Guest Note (Residency advice)</label>
-                  <Input 
-                    name="guest_note"
-                    value={formData.guest_note}
-                    onChange={handleInputChange}
-                    placeholder="e.g. Since it is very close to hotel, guests can visit by walk."
-                    className="bg-slate-50 border-slate-200 h-11 font-semibold"
-                  />
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                  <div className="space-y-1">
+                    <label className="text-xs font-semibold text-gray-700 block">
+                      Visitor Note / Tip for Guests
+                    </label>
+                    <input 
+                      type="text"
+                      name="guest_note"
+                      value={formData.guest_note}
+                      onChange={handleInputChange}
+                      placeholder="e.g. Best visited during early morning arati"
+                      className="w-full text-xs px-3 py-2 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600 bg-white shadow-2xs"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-xs font-semibold text-gray-700 block">
+                      Display Sort Order
+                    </label>
+                    <input 
+                      type="number"
+                      name="sort_order"
+                      value={formData.sort_order}
+                      onChange={handleInputChange}
+                      placeholder="e.g. 10"
+                      className="w-full text-xs px-3 py-2 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600 bg-white shadow-2xs"
+                    />
+                  </div>
                 </div>
-
-                <div className="space-y-1">
-                  <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest">Sort Order</label>
-                  <Input 
-                    name="sort_order"
-                    type="number"
-                    value={formData.sort_order}
-                    onChange={handleInputChange}
-                    className="bg-slate-50 border-slate-200 h-11 font-bold w-28"
-                  />
-                </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </div>
 
+          {/* Right Column: Image & Route Map Preview */}
           <div className="space-y-6">
-            <Card className="border border-slate-100 shadow-sm rounded-2xl bg-white p-6">
-              <CardHeader className="p-0 pb-4 mb-4 border-b border-slate-100">
-                <CardTitle className="text-sm font-black uppercase text-indigo-950 tracking-wider">Cover Image</CardTitle>
-              </CardHeader>
-              <CardContent className="p-0 space-y-4">
-                <div className="border-2 border-dashed border-slate-200 rounded-xl p-4 flex flex-col items-center justify-center bg-slate-50/50 hover:bg-slate-55 transition-colors relative min-h-[160px]">
-                  {formData.image_path ? (
-                    <div className="space-y-3 w-full text-center">
-                      <img 
-                        src={formData.image_path.startsWith('http') ? formData.image_path : `${BACKEND_URL}${formData.image_path}`} 
-                        alt="Preview" 
-                        className="w-full h-32 object-cover rounded-lg border border-slate-100" 
-                      />
-                      <button 
-                        type="button" 
-                        onClick={() => setFormData(prev => ({ ...prev, image_path: '' }))}
-                        className="text-[9px] font-black uppercase text-rose-500 hover:text-rose-700 tracking-widest"
-                      >
-                        Remove Image
-                      </button>
-                    </div>
-                  ) : (
-                    <div className="text-center py-6">
-                      <ImageIcon className="mx-auto text-slate-350 mb-2" size={32} />
-                      <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">No Image Configured</p>
-                    </div>
-                  )}
-                </div>
+            {/* Image Preview & Upload */}
+            <div className="bg-white rounded-xl p-5 border border-gray-200 shadow-xs space-y-4">
+              <div className="border-b border-gray-100 pb-2">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-gray-700">
+                  Attraction Photo
+                </h3>
+              </div>
 
-                <div className="space-y-2">
-                  <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest block">Upload New Photo</label>
-                  <input 
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageUpload}
-                    disabled={uploading}
-                    className="block w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-black file:uppercase file:bg-indigo-50 file:text-indigo-700 file:cursor-pointer hover:file:bg-indigo-100"
+              <div className="aspect-video bg-gray-50 border border-gray-200 rounded-lg overflow-hidden relative flex items-center justify-center">
+                {formData.image_path ? (
+                  <img 
+                    src={formData.image_path.startsWith('http') ? formData.image_path : `${BACKEND_URL}${formData.image_path}`} 
+                    alt="Attraction preview" 
+                    className="w-full h-full object-cover" 
                   />
-                  {uploading && (
-                    <div className="flex items-center gap-2 mt-1">
-                      <Loader2 className="w-3.5 h-3.5 text-indigo-600 animate-spin" />
-                      <span className="text-[9px] font-black uppercase tracking-wider text-slate-400">Uploading to server...</span>
-                    </div>
-                  )}
-                </div>
+                ) : (
+                  <div className="text-center p-4">
+                    <UploadCloud size={24} className="mx-auto text-gray-400 mb-1" />
+                    <span className="text-xs text-gray-400 font-medium">No image uploaded</span>
+                  </div>
+                )}
+                {uploading && (
+                  <div className="absolute inset-0 bg-white/80 backdrop-blur-xs flex items-center justify-center">
+                    <Loader2 size={24} className="animate-spin text-blue-600" />
+                  </div>
+                )}
+              </div>
+
+              <div className="space-y-2">
+                <label className="block">
+                  <span className="px-3 py-2 border border-gray-300 bg-white hover:bg-gray-50 text-gray-700 text-xs font-medium rounded-lg shadow-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer">
+                    <UploadCloud size={14} />
+                    <span>Upload New Photo</span>
+                  </span>
+                  <input 
+                    type="file" 
+                    accept="image/*" 
+                    onChange={handleImageUpload} 
+                    className="hidden" 
+                    disabled={uploading} 
+                  />
+                </label>
 
                 <div className="space-y-1">
-                  <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest">Direct Image URL / Path</label>
-                  <Input 
+                  <label className="text-[11px] font-medium text-gray-500">Image Asset Path / URL</label>
+                  <input 
+                    type="text"
                     name="image_path"
                     value={formData.image_path}
                     onChange={handleInputChange}
-                    placeholder="/uploads/attractions/mahamaham.jpg"
-                    className="bg-slate-50 border-slate-200 text-xs font-semibold font-mono"
+                    placeholder="/uploads/attractions/temple.jpg"
+                    className="w-full text-xs font-mono px-2.5 py-1.5 border border-gray-300 rounded-lg text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-600 bg-white"
                   />
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
 
-            <Card className="border border-slate-100 shadow-sm rounded-2xl bg-white p-6">
-              <CardHeader className="p-0 pb-4 mb-4 border-b border-slate-100">
-                <CardTitle className="text-sm font-black uppercase text-indigo-950 tracking-wider">Dynamic Map Preview</CardTitle>
-              </CardHeader>
-              <CardContent className="p-0 space-y-4">
-                <div className="aspect-video bg-slate-150 border border-slate-200 rounded-xl overflow-hidden relative">
-                  {formData.name ? (
-                    <iframe
-                      title="Route Preview"
-                      width="100%"
-                      height="100%"
-                      style={{ border: 0 }}
-                      src={`https://www.google.com/maps?q=Subra+Residency+Kumbakonam+to+${formData.name}&output=embed`}
-                      className="w-full h-full"
-                    ></iframe>
-                  ) : (
-                    <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center">
-                      <MapPin className="text-slate-400 mb-1" size={20} />
-                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Configure name to load route map</span>
-                    </div>
-                  )}
-                </div>
-                <div className="p-3 bg-indigo-50/50 rounded-xl border border-indigo-100 text-[10px] text-indigo-900 font-bold leading-normal">
-                  💡 The map iframe route will automatically update on the front-end to guide guests from Subra Residency directly to the configured attraction!
-                </div>
-              </CardContent>
-            </Card>
+            {/* Dynamic Map Route */}
+            <div className="bg-white rounded-xl p-5 border border-gray-200 shadow-xs space-y-3">
+              <div className="border-b border-gray-100 pb-2">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-gray-700">
+                  Google Maps Route Preview
+                </h3>
+              </div>
 
-            <Button 
-              type="submit"
-              disabled={saving}
-              className="w-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-black uppercase tracking-widest h-12 shadow-xl shadow-emerald-500/10 rounded-xl"
-            >
-              {saving ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Save className="w-4 h-4 mr-2" />}
-              Save Attraction Details
-            </Button>
+              <div className="aspect-video bg-gray-50 border border-gray-200 rounded-lg overflow-hidden relative">
+                {formData.name ? (
+                  <iframe
+                    title="Route Preview"
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    src={`https://www.google.com/maps?q=Subra+Residency+Kumbakonam+to+${encodeURIComponent(formData.name)}&output=embed`}
+                    className="w-full h-full"
+                  />
+                ) : (
+                  <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center">
+                    <MapPin className="text-gray-400 mb-1" size={20} />
+                    <span className="text-xs text-gray-400 font-medium">Enter temple name to load map</span>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex items-center gap-2 pt-2">
+              <button
+                type="button"
+                onClick={() => { setEditingAttraction(null); setMessage(null); }}
+                className="flex-1 py-2 border border-gray-300 bg-white hover:bg-gray-50 text-gray-700 text-xs font-medium rounded-lg shadow-xs transition-colors cursor-pointer text-center"
+              >
+                Cancel
+              </button>
+              <button 
+                type="submit"
+                disabled={saving}
+                className="flex-1 py-2 bg-white hover:bg-gray-50 text-gray-800 border border-gray-300 text-xs font-medium rounded-lg shadow-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer disabled:opacity-50"
+              >
+                {saving ? <Loader2 size={13} className="animate-spin text-gray-600" /> : <Save size={13} className="text-gray-600" />}
+                <span>{saving ? 'Saving...' : 'Save Attraction'}</span>
+              </button>
+            </div>
           </div>
         </form>
       ) : (
+        /* Attractions Table View */
         <div className="space-y-6">
-          <Card className="border border-slate-100 shadow-sm rounded-2xl bg-white p-6">
-            <CardHeader className="p-0 pb-4 mb-4 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          {/* Spiritual Sights Page Description Card */}
+          <div className="bg-white rounded-xl p-5 border border-gray-200 shadow-xs space-y-3">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
-                <CardTitle className="text-sm font-black uppercase text-indigo-950 tracking-wider">Spiritual Sights Page Description</CardTitle>
-                <CardDescription className="text-xs text-slate-500 font-medium mt-1">Edit the paragraph text shown above the temple details section on the customer website.</CardDescription>
+                <h3 className="text-xs font-bold uppercase tracking-wider text-gray-700">
+                  Spiritual Sights Page Description
+                </h3>
+                <p className="text-xs text-gray-500 mt-0.5">
+                  Introductory paragraph shown above temple cards on the guest website.
+                </p>
               </div>
-              <Button
+              <button
                 onClick={handleSaveSectionDesc}
                 disabled={isSavingDesc}
-                className="bg-emerald-600 hover:bg-emerald-700 text-white text-[10px] font-black uppercase tracking-widest px-4 h-9 shadow-md rounded-lg flex items-center gap-1.5 self-end sm:self-auto"
+                className="px-3.5 py-2 bg-white hover:bg-gray-50 text-gray-800 border border-gray-300 text-xs font-medium rounded-lg shadow-xs flex items-center gap-1.5 transition-colors cursor-pointer self-end sm:self-auto disabled:opacity-50"
               >
-                {isSavingDesc ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Save className="w-3.5 h-3.5" />}
-                Save Text
-              </Button>
-            </CardHeader>
-            <CardContent className="p-0">
-              <Textarea
-                value={sectionDesc}
-                onChange={(e) => setSectionDesc(e.target.value)}
-                placeholder="Enter description text..."
-                rows={3}
-                className="bg-slate-50 border-slate-200 text-xs font-semibold leading-relaxed"
-              />
-            </CardContent>
-          </Card>
+                {isSavingDesc ? <Loader2 size={13} className="animate-spin text-gray-600" /> : <Save size={13} className="text-gray-600" />}
+                <span>{isSavingDesc ? 'Saving...' : 'Save Description'}</span>
+              </button>
+            </div>
+            <textarea
+              value={sectionDesc}
+              onChange={(e) => setSectionDesc(e.target.value)}
+              placeholder="Enter descriptive text..."
+              rows={3}
+              className="w-full text-xs font-normal leading-relaxed p-3 bg-gray-50/60 border border-gray-200 rounded-lg text-gray-800 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600 focus:bg-white transition-all shadow-2xs"
+            />
+          </div>
 
-          <Card className="border border-slate-100 shadow-sm rounded-2xl bg-white overflow-hidden">
-            <CardContent className="p-0">
+          {/* Table Container */}
+          <div className="bg-white rounded-xl border border-gray-200 shadow-xs overflow-hidden">
+            <div className="p-4 border-b border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-3 bg-white">
+              <div className="relative w-full sm:w-72">
+                <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                <input
+                  type="text"
+                  placeholder="Search temples, deities, or distance..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-9 pr-3 py-1.5 bg-gray-50 border border-gray-200 rounded-lg text-xs text-gray-800 focus:outline-none focus:bg-white focus:border-gray-300 shadow-2xs"
+                />
+              </div>
+              <div className="text-xs text-gray-500 font-medium">
+                Showing {filteredAttractions.length} of {attractions.length} attractions
+              </div>
+            </div>
+
             <div className="overflow-x-auto">
-              <table className="w-full text-left">
-                <thead className="bg-slate-50/60 border-b border-slate-100 text-[9px] uppercase font-black text-slate-455 tracking-wider">
+              <table className="w-full text-left text-xs">
+                <thead className="bg-gray-50/80 border-b border-gray-200 text-[11px] font-semibold text-gray-500 uppercase tracking-wider">
                   <tr>
-                    <th className="px-6 py-4">Sort</th>
-                    <th className="px-6 py-4">Attraction</th>
-                    <th className="px-6 py-4">Distance</th>
-                    <th className="px-6 py-4">Mode</th>
-                    <th className="px-6 py-4">Timings</th>
-                    <th className="px-6 py-4 text-right">Actions</th>
+                    <th className="py-3 px-4 w-16">Sort</th>
+                    <th className="py-3 px-4">Temple / Attraction</th>
+                    <th className="py-3 px-4">Distance</th>
+                    <th className="py-3 px-4">Travel Mode</th>
+                    <th className="py-3 px-4">Suggested Timings</th>
+                    <th className="py-3 px-4 text-right">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-100 text-xs font-bold text-slate-700">
-                  {attractions.length > 0 ? (
-                    attractions.map((a: any) => (
-                      <tr key={a.id} className="hover:bg-slate-50/40 transition-colors">
-                        <td className="px-6 py-4 font-mono font-bold text-slate-400">{a.sort_order}</td>
-                        <td className="px-6 py-4">
+                <tbody className="divide-y divide-gray-100 text-gray-700">
+                  {filteredAttractions.length > 0 ? (
+                    filteredAttractions.map((a: any) => (
+                      <tr key={a.id} className="hover:bg-gray-50/60 transition-colors">
+                        <td className="py-3.5 px-4 font-mono font-medium text-gray-400">
+                          <span className="bg-gray-100 px-2 py-0.5 rounded border border-gray-200 text-[10px]">
+                            {a.sort_order}
+                          </span>
+                        </td>
+                        <td className="py-3.5 px-4">
                           <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-lg overflow-hidden shrink-0 border border-slate-100">
-                              <img src={a.image} alt={a.name} className="w-full h-full object-cover" />
+                            <div className="w-11 h-11 rounded-lg overflow-hidden shrink-0 border border-gray-200 bg-gray-100 shadow-2xs">
+                              <img 
+                                src={a.image ? (a.image.startsWith('http') ? a.image : `${BACKEND_URL}${a.image}`) : ''} 
+                                alt={a.name} 
+                                className="w-full h-full object-cover" 
+                                onError={(e: any) => { e.target.style.display = 'none'; }}
+                              />
                             </div>
                             <div>
-                              <p className="font-extrabold text-slate-900 leading-tight uppercase tracking-tight">{a.name}</p>
-                              <p className="text-[9px] text-slate-400 font-semibold mt-0.5 max-w-sm truncate">{a.specialFor}</p>
+                              <p className="font-semibold text-gray-900 leading-tight">{a.name}</p>
+                              {a.specialFor && (
+                                <p className="text-[11px] text-gray-500 mt-0.5 max-w-sm truncate">{a.specialFor}</p>
+                              )}
                             </div>
                           </div>
                         </td>
-                        <td className="px-6 py-4 text-slate-500 flex items-center gap-1.5 mt-3"><MapPin size={12} className="text-slate-350 shrink-0" /> {a.dist}</td>
-                        <td className="px-6 py-4 text-slate-500 font-semibold uppercase tracking-wider">{a.mode}</td>
-                        <td className="px-6 py-4 text-slate-400 font-medium">{a.timing}</td>
-                        <td className="px-6 py-4 text-right">
-                          <div className="flex justify-end gap-2">
-                            <Button 
-                              variant="outline" 
-                              size="sm" 
+                        <td className="py-3.5 px-4">
+                          <div className="flex items-center gap-1.5 text-gray-600">
+                            <MapPin size={13} className="text-gray-400 shrink-0" />
+                            <span>{a.dist || '—'}</span>
+                          </div>
+                        </td>
+                        <td className="py-3.5 px-4">
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-gray-100 text-gray-700 text-[11px] font-medium border border-gray-200">
+                            <Car size={12} className="text-gray-400" />
+                            <span>{a.mode || 'Walk / Auto'}</span>
+                          </span>
+                        </td>
+                        <td className="py-3.5 px-4">
+                          <div className="flex items-center gap-1.5 text-gray-600">
+                            <Clock size={13} className="text-gray-400 shrink-0" />
+                            <span>{a.timing || '—'}</span>
+                          </div>
+                        </td>
+                        <td className="py-3.5 px-4 text-right">
+                          <div className="flex items-center justify-end gap-1.5">
+                            <button 
                               onClick={() => handleEditClick(a)}
-                              className="border-slate-200 hover:bg-slate-50 hover:text-indigo-600 h-8 rounded-lg text-[10px] font-black uppercase tracking-wider"
+                              className="px-2.5 py-1.5 bg-white hover:bg-gray-50 text-gray-700 border border-gray-300 text-xs font-medium rounded-md shadow-xs transition-colors inline-flex items-center gap-1 cursor-pointer"
+                              title="Edit Attraction"
                             >
-                              <Edit3 size={12} className="mr-1.5" /> Edit
-                            </Button>
-                            <Button 
-                              variant="outline" 
-                              size="sm" 
+                              <Edit3 size={12} className="text-gray-500" />
+                              <span>Edit</span>
+                            </button>
+                            <button 
                               onClick={() => handleDelete(a.id, a.name)}
-                              className="border-slate-200 hover:bg-rose-50 text-slate-500 hover:text-rose-600 h-8 rounded-lg text-[10px] font-black uppercase tracking-wider"
+                              className="p-1.5 text-gray-400 hover:text-rose-600 hover:bg-rose-50 rounded-md transition-colors cursor-pointer"
+                              title="Delete Attraction"
                             >
-                              <Trash2 size={12} className="mr-1.5" /> Delete
-                            </Button>
+                              <Trash2 size={13} />
+                            </button>
                           </div>
                         </td>
                       </tr>
                     ))
                   ) : (
                     <tr>
-                      <td colSpan={6} className="text-center py-12 text-slate-400 uppercase tracking-widest font-black text-[10px]">
-                        No attractions configured.
+                      <td colSpan={6} className="text-center py-12 text-gray-400 font-medium text-xs">
+                        {searchQuery ? 'No attractions found matching your search.' : 'No spiritual attractions configured yet.'}
                       </td>
                     </tr>
                   )}
                 </tbody>
               </table>
             </div>
-          </CardContent>
-        </Card>
+          </div>
         </div>
       )}
     </div>

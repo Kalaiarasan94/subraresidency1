@@ -2,11 +2,26 @@ import React, { useState, useEffect } from 'react';
 import { 
   ArrowLeft, Star, MapPin, 
   CheckCircle2, Globe, Save, Loader2, Camera, Info,
-  Trash2, Plus, Crown
+  Trash2, Plus, Crown, Bed, Users, Layers, Sparkles,
+  Wrench, FileText, Check, AlertCircle, Image as ImageIcon
 } from 'lucide-react';
 import { Button } from '../../../components/ui/button';
-import { Card, CardContent } from '../../../components/ui/card';
-import { updateRoomDetails, uploadGalleryImage, deleteGalleryImage, BACKEND_URL, addSubRoom, updateSubRoom, deleteSubRoom, API_BASE_URL, deleteRoomCategory } from '../../../lib/api';
+import { 
+  updateRoomDetails, 
+  uploadGalleryImage, 
+  deleteGalleryImage, 
+  BACKEND_URL, 
+  addSubRoom, 
+  updateSubRoom, 
+  deleteSubRoom, 
+  API_BASE_URL, 
+  deleteRoomCategory 
+} from '../../../lib/api';
+import { 
+  resolveRoomImageUrl, 
+  handleImageError, 
+  extractRoomPrice 
+} from '../../../lib/roomImageHelper';
 
 interface Props {
   room: any;
@@ -16,42 +31,48 @@ interface Props {
 
 const ALL_AVAILABLE_AMENITIES = [
   "High-Speed WiFi",
-  "Smart TV",
-  "Mini Fridge",
-  "Room Service",
-  "Workspace",
-  "Temple View",
   "Air Conditioning",
-  "Tea/Coffee Maker",
-  "Iron & Board",
-  "Balcony",
-  "In-room Safe",
-  "Hair Dryer",
-  "Mini Bar",
-  "Daily Housekeeping",
+  "Smart TV",
+  "Temple View",
+  "Room Service",
+  "Attached Bathroom",
   "Hot Water",
-  "Attached Bathroom"
+  "Mini Fridge",
+  "Tea/Coffee Maker",
+  "Balcony",
+  "Workspace",
+  "Daily Housekeeping",
+  "In-room Safe",
+  "Iron & Board",
+  "Hair Dryer",
+  "Mini Bar"
 ];
 
 export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onRefresh }) => {
+  const [activeTab, setActiveTab] = useState<'specs' | 'gallery' | 'amenities' | 'units' | 'description'>('specs');
   const [isSaving, setIsSaving] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+
+  const initialPrice = extractRoomPrice(room);
+
   const [formData, setFormData] = useState({
     id: room.id,
-    room_name: room.title || room.room_name,
-    base_price: room.price_24h || room.price?.replace(/[^0-9]/g, '') || '',
+    room_name: room.title || room.room_name || '',
+    base_price: initialPrice > 0 ? String(initialPrice) : (room.price_24h || room.base_price_24h || ''),
+    price_12h: room.price_12h || room.base_price_12h || '',
     full_description: room.full_description || room.description || '',
+    highlights: room.highlights || '',
     house_rules: room.house_rules || '',
     status: room.status || 'Available',
     featured_image: room.image 
       ? room.image.replace('http://localhost:8001', '').replace(/https?:\/\/[^\/]+/i, '').replace(/^\/subraresidency1\/backend/i, '') 
       : '',
-    max_adults: room.adults || '',
-    max_children: room.children || '',
-    max_guests: room.max_guests || '',
-    floor_number: room.floor || room.floor_number || '',
-    bed_type: room.bed_type || '',
+    max_adults: room.adults || '2',
+    max_children: room.children || '1',
+    max_guests: room.max_guests || '3',
+    floor_number: room.floor || room.floor_number || '1',
+    bed_type: room.bed_type || 'King Bed',
     room_size: room.size || '',
     category_tag: room.category_tag || room.tag || 'Premium',
     maintenance_start: room.maintenance_start || '',
@@ -72,9 +93,12 @@ export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onRefresh }
   const [subRooms, setSubRooms] = useState<any[]>([]);
   const [loadingSubRooms, setLoadingSubRooms] = useState(true);
 
+  // Sub-room creation
   const [newRoomNumber, setNewRoomNumber] = useState('');
   const [newRoomName, setNewRoomName] = useState('');
   const [newFloorNumber, setNewFloorNumber] = useState('1');
+  
+  // Sub-room editing
   const [editingSubRoomId, setEditingSubRoomId] = useState<number | null>(null);
   const [editRoomNumber, setEditRoomNumber] = useState('');
   const [editRoomName, setEditRoomName] = useState('');
@@ -99,6 +123,35 @@ export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onRefresh }
   useEffect(() => {
     loadSubRooms();
   }, [room.id]);
+
+  useEffect(() => {
+    const price = extractRoomPrice(room);
+    setGalleryList(room.images && room.images.length > 0 ? room.images : (room.image ? [room.image] : []));
+    setSelectedAmenities(room.amenities || []);
+    setAvailableAmenities(Array.from(new Set([...ALL_AVAILABLE_AMENITIES, ...(room.amenities || [])])));
+    setFormData({
+      id: room.id,
+      room_name: room.title || room.room_name || '',
+      base_price: price > 0 ? String(price) : (room.price_24h || room.base_price_24h || ''),
+      price_12h: room.price_12h || room.base_price_12h || '',
+      full_description: room.full_description || room.description || '',
+      highlights: room.highlights || '',
+      house_rules: room.house_rules || '',
+      status: room.status || 'Available',
+      featured_image: room.image 
+        ? room.image.replace('http://localhost:8001', '').replace(/https?:\/\/[^\/]+/i, '').replace(/^\/subraresidency1\/backend/i, '') 
+        : '',
+      max_adults: room.adults || '2',
+      max_children: room.children || '1',
+      max_guests: room.max_guests || '3',
+      floor_number: room.floor || room.floor_number || '1',
+      bed_type: room.bed_type || 'King Bed',
+      room_size: room.size || '',
+      category_tag: room.category_tag || room.tag || 'Premium',
+      maintenance_start: room.maintenance_start || '',
+      maintenance_end: room.maintenance_end || ''
+    });
+  }, [room]);
 
   const handleAddSubRoom = async () => {
     if (!newRoomNumber.trim()) return;
@@ -168,30 +221,6 @@ export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onRefresh }
     }
   };
 
-  useEffect(() => {
-    setGalleryList(room.images && room.images.length > 0 ? room.images : (room.image ? [room.image] : []));
-    setSelectedAmenities(room.amenities || []);
-    setAvailableAmenities(Array.from(new Set([...ALL_AVAILABLE_AMENITIES, ...(room.amenities || [])])));
-    setFormData({
-      id: room.id,
-      room_name: room.title || room.room_name,
-      base_price: room.price_24h || room.price?.replace(/[^0-9]/g, '') || '',
-      full_description: room.full_description || room.description || '',
-      house_rules: room.house_rules || '',
-      status: room.status || 'Available',
-      featured_image: room.image 
-        ? room.image.replace('http://localhost:8001', '').replace(/https?:\/\/[^\/]+/i, '').replace(/^\/subraresidency1\/backend/i, '') 
-        : '',
-      max_adults: room.adults || '',
-      max_children: room.children || '',
-      max_guests: room.max_guests || '',
-      floor_number: room.floor || room.floor_number || '',
-      bed_type: room.bed_type || '',
-      room_size: room.size || '',
-      category_tag: room.category_tag || room.tag || 'Premium'
-    });
-  }, [room]);
-
   const handleAddCustomAmenity = () => {
     if (!customAmenity.trim()) return;
     const name = customAmenity.trim();
@@ -213,7 +242,6 @@ export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onRefresh }
       if (result && result.image_path) {
         const newUrl = `${BACKEND_URL}${result.image_path}`;
         setGalleryList(prev => [...prev, newUrl]);
-        // First photo added becomes the featured image automatically
         setFormData(prev => (prev.featured_image ? prev : { ...prev, featured_image: result.image_path }));
       } else {
         alert(result?.message || "Failed to upload image.");
@@ -316,597 +344,810 @@ export const AdminRoomDetailView: React.FC<Props> = ({ room, onBack, onRefresh }
   };
 
   return (
-    <div className="bg-white min-h-screen rounded-3xl border border-slate-200 overflow-hidden shadow-sm font-sans relative">
-      {/* Admin Action Bar */}
-      <div className="bg-emerald-900 px-8 py-4 flex justify-between items-center text-white sticky top-0 z-50 shadow-md">
-        <button 
-          onClick={onBack}
-          className="flex items-center gap-2 text-emerald-100 hover:text-white transition-colors group"
-        >
-          <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
-          <span className="font-bold text-xs uppercase tracking-widest">Back to Inventory</span>
-        </button>
-        
-        <div className="flex gap-4">
-           <Button
-             onClick={() => setShowDeleteModal(true)}
-             disabled={isSaving || isDeleting}
-             className="bg-rose-600 hover:bg-rose-700 text-white px-8 py-2 rounded-lg font-bold text-xs uppercase tracking-widest shadow-lg flex items-center gap-2"
-           >
-             <Trash2 size={14} />
-             Delete Room
-           </Button>
+    <div className="bg-white rounded-2xl border border-gray-200 shadow-sm font-sans relative overflow-hidden">
+      {/* Sleek SaaS Action Header Bar */}
+      <div className="bg-white border-b border-gray-200 px-6 py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sticky top-0 z-40">
+        <div className="flex items-center gap-3">
+          <button 
+            onClick={onBack}
+            className="flex items-center gap-1.5 text-gray-500 hover:text-gray-900 bg-gray-100 hover:bg-gray-200/80 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors"
+          >
+            <ArrowLeft size={14} />
+            <span>Back to Inventory</span>
+          </button>
+          
+          <div className="h-4 w-px bg-gray-200 hidden sm:block" />
 
-           <Button 
-             onClick={handleSave}
-             disabled={isSaving || isDeleting}
-             className="bg-white text-emerald-900 hover:bg-emerald-50 px-8 py-2 rounded-lg font-bold text-xs uppercase tracking-widest shadow-lg flex items-center gap-2 min-w-[140px]"
-           >
-             {isSaving ? <Loader2 size={14} className="animate-spin" /> : <Save size={14} />}
-             {isSaving ? 'Saving...' : 'Save All Changes'}
-           </Button>
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-semibold text-gray-900">{formData.room_name || 'Room Configuration'}</span>
+              <span className={`inline-flex items-center gap-1 text-[11px] font-medium px-2 py-0.5 rounded-full ${
+                formData.status === 'Maintenance' 
+                  ? 'bg-amber-50 text-amber-700 border border-amber-200' 
+                  : 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+              }`}>
+                <span className={`w-1.5 h-1.5 rounded-full ${formData.status === 'Maintenance' ? 'bg-amber-500' : 'bg-emerald-500 animate-pulse'}`} />
+                {formData.status}
+              </span>
+            </div>
+            <p className="text-[11px] text-gray-400">ID: #{room.id} • Category Editor</p>
+          </div>
+        </div>
+        
+        <div className="flex items-center gap-2.5 w-full sm:w-auto justify-end">
+          <Button
+            onClick={() => setShowDeleteModal(true)}
+            disabled={isSaving || isDeleting}
+            variant="outline"
+            className="border-rose-200 text-rose-600 hover:bg-rose-50 hover:text-rose-700 text-xs px-3.5 py-2 h-auto rounded-lg font-medium transition-colors"
+          >
+            <Trash2 size={13} className="mr-1.5" />
+            Delete Room
+          </Button>
+
+          <Button 
+            onClick={handleSave}
+            disabled={isSaving || isDeleting}
+            className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs px-5 py-2 h-auto rounded-lg font-medium shadow-xs transition-all flex items-center gap-1.5"
+          >
+            {isSaving ? <Loader2 size={14} className="animate-spin" /> : <Save size={14} />}
+            <span>{isSaving ? 'Saving...' : 'Save All Changes'}</span>
+          </Button>
         </div>
       </div>
 
-      <div className="p-8 max-w-6xl mx-auto">
-        {/* Mirror Frontend UI - Now with Editable Fields */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 border-b border-slate-100 pb-8">
-          <div className="flex-1">
-            <div className="flex items-center gap-2 mb-4">
-               <span className="bg-emerald-50 text-emerald-700 text-[10px] font-black px-2 py-0.5 rounded uppercase tracking-widest border border-emerald-100">Direct In-Place Editor</span>
-               {room.show_on_website ? (
-                 <span className="flex items-center gap-1 text-[10px] font-black text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded uppercase border border-emerald-100"><Globe size={10} /> Live on Website</span>
-               ) : (
-                 <span className="text-[10px] font-black text-slate-400 bg-slate-50 px-2 py-0.5 rounded uppercase border border-slate-100">Draft / Internal</span>
-               )}
-            </div>
-            
-            <div className="group relative">
-                <input 
-                    name="room_name"
-                    value={formData.room_name}
-                    onChange={handleChange}
-                    className="text-4xl font-bold text-slate-900 mb-1 tracking-tight w-full bg-transparent border-b-2 border-transparent hover:border-emerald-200 focus:border-emerald-500 focus:outline-none transition-all py-1"
-                    placeholder="Enter Room Category Name"
-                />
-                <span className="text-[10px] text-slate-400 font-bold uppercase tracking-widest block mb-3 pl-1">Room Category Title</span>
+      {/* Hero Overview Card */}
+      <div className="p-6 md:p-8 border-b border-gray-100 bg-gradient-to-b from-gray-50/60 to-white">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+          <div className="flex-1 space-y-3">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="bg-emerald-50 text-emerald-700 text-[10px] font-semibold px-2.5 py-0.5 rounded-full border border-emerald-200/60 flex items-center gap-1">
+                <Globe size={11} /> Live Website Category
+              </span>
+              <span className="bg-blue-50 text-blue-700 text-[10px] font-semibold px-2.5 py-0.5 rounded-full border border-blue-200/60 flex items-center gap-1">
+                <Sparkles size={11} /> {formData.category_tag || 'Premium'}
+              </span>
             </div>
 
-            <div className="flex flex-wrap items-center gap-4 text-sm text-slate-500 font-bold">
-              <div className="flex items-center gap-1">
-                <Star size={16} className="text-amber-500 fill-amber-500" />
-                <span className="text-slate-800">4.9 Internal Rating</span>
+            <div className="group">
+              <input 
+                name="room_name"
+                value={formData.room_name}
+                onChange={handleChange}
+                className="text-2xl sm:text-3xl font-bold text-gray-900 w-full bg-transparent border-b border-transparent hover:border-gray-300 focus:border-emerald-500 focus:outline-none transition-colors py-0.5"
+                placeholder="Enter Room Category Name"
+              />
+              <span className="text-[10px] text-gray-400 uppercase tracking-wider block mt-1">
+                Category Title • Click text above to rename
+              </span>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-4 text-xs text-gray-500 font-medium pt-1">
+              <div className="flex items-center gap-1 text-amber-600">
+                <Star size={14} className="fill-amber-400 text-amber-400" />
+                <span className="font-semibold text-gray-800">4.9 Internal Rating</span>
               </div>
               <span>•</span>
               <div className="flex items-center gap-1">
-                <MapPin size={16} />
+                <MapPin size={14} className="text-gray-400" />
                 <span>Kumbakonam Residency</span>
+              </div>
+              <span>•</span>
+              <div className="flex items-center gap-1 text-blue-600">
+                <Users size={14} />
+                <span>{subRooms.length} Physical Units Mapped</span>
               </div>
             </div>
           </div>
-          
-          <div className="text-right bg-emerald-50 p-4 rounded-2xl border border-emerald-100">
-             <p className="text-xs font-bold text-emerald-700 uppercase tracking-widest mb-2 flex items-center justify-end gap-1"><Info size={12}/> Nightly Rate (INR)</p>
-             <div className="flex items-center justify-end">
-                <span className="text-2xl font-bold text-emerald-600 mr-1">₹</span>
-                <input 
-                    name="base_price"
-                    type="number"
-                    value={formData.base_price}
-                    onChange={handleChange}
-                    className="text-3xl font-bold text-emerald-600 bg-transparent w-32 text-right focus:outline-none border-b-2 border-emerald-200 focus:border-emerald-600 appearance-none"
-                    style={{ MozAppearance: 'textfield' }}
-                />
-             </div>
+
+          {/* Pricing Highlight Pill Box */}
+          <div className="bg-white border border-emerald-100 rounded-xl p-4 shadow-2xs lg:w-72 shrink-0">
+            <p className="text-[10px] font-semibold text-emerald-700 uppercase tracking-wider mb-1 flex items-center gap-1">
+              <Info size={11} /> 24h Nightly Rate (INR)
+            </p>
+            <div className="flex items-baseline gap-1">
+              <span className="text-2xl font-bold text-emerald-600">₹</span>
+              <input 
+                name="base_price"
+                type="number"
+                value={formData.base_price}
+                onChange={handleChange}
+                className="text-2xl font-bold text-emerald-600 bg-transparent w-full focus:outline-none border-b border-emerald-200 focus:border-emerald-500"
+                placeholder="1999"
+              />
+            </div>
+            <p className="text-[10px] text-gray-400 mt-1.5">
+              Standard 24-hour check-in/out rate shown on portal.
+            </p>
           </div>
         </div>
 
-        {/* Gallery Preview / Image Editor Section */}
-        <div className="space-y-4 mb-12">
-            <div className="flex items-center justify-between">
-                <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2"><Camera size={14}/> Image Gallery Configuration</h3>
-                <div className="flex gap-3 items-center">
-                    <span className="text-[10px] font-black text-slate-400 uppercase">Featured Path:</span>
-                    <input 
-                        name="featured_image"
-                        value={formData.featured_image}
-                        onChange={handleChange}
-                        className="text-xs font-bold text-slate-700 bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 w-80 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                        placeholder="e.g. /uploads/rooms/room_1.png"
-                    />
-                    <label className="bg-[#0b336b] hover:bg-[#072145] text-white text-[10px] font-black uppercase px-4 py-2.5 rounded-lg active:scale-95 transition-all cursor-pointer flex items-center gap-2">
-                        <Plus size={12} /> Add Photo
-                        <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
-                    </label>
-                </div>
-            </div>
-            
-            <div className="grid grid-cols-4 gap-3 h-80 rounded-2xl overflow-hidden border border-slate-100 shadow-sm relative group">
-               {isUploading && (
-                  <div className="absolute inset-0 bg-white/80 z-20 flex flex-col items-center justify-center gap-2 rounded-2xl">
-                     <Loader2 className="animate-spin text-emerald-600" size={24} />
-                     <span className="text-[10px] font-black text-emerald-800 uppercase tracking-widest">Uploading Photo...</span>
-                  </div>
-               )}
-
-               {/* Left Main (Featured Image Panel) */}
-               <div className="col-span-2 row-span-2 overflow-hidden bg-slate-100 relative group/cell border-2 border-emerald-500 rounded-xl">
-                 {(() => {
-                   const featuredFullUrl = formData.featured_image 
-                     ? (formData.featured_image.startsWith('http') ? formData.featured_image : `${BACKEND_URL}${formData.featured_image}`)
-                     : (galleryList[0] || '');
-
-                   return featuredFullUrl ? (
-                     <>
-                       <img src={featuredFullUrl} className="w-full h-full object-cover" alt="Primary" />
-                       <div className="absolute top-3 left-3 bg-emerald-600 text-white text-[9px] font-black uppercase px-2.5 py-1 rounded-full shadow-md flex items-center gap-1">
-                         <Crown size={10} className="fill-white" /> Featured Primary
-                       </div>
-                       
-                       <div className="absolute inset-0 bg-black/45 opacity-0 group-hover/cell:opacity-100 transition-opacity flex items-center justify-center gap-3">
-                         <button 
-                           onClick={() => handleImageDelete(featuredFullUrl)}
-                           className="bg-rose-600 hover:bg-rose-700 text-white p-2.5 rounded-full shadow-lg transition-transform hover:scale-110"
-                           title="Delete Image"
-                         >
-                           <Trash2 size={16} />
-                         </button>
-                       </div>
-                     </>
-                   ) : (
-                     <label className="w-full h-full flex flex-col items-center justify-center border-2 border-dashed border-slate-300 rounded-xl cursor-pointer hover:bg-slate-50 transition-colors">
-                       <Plus size={24} className="text-slate-400 mb-1" />
-                       <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Upload Main Image</span>
-                       <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
-                     </label>
-                   );
-                 })()}
-               </div>
-
-               {/* Right Panels (remaining slots 1 to 4) */}
-               {(() => {
-                 const featuredClean = formData.featured_image.replace('http://localhost:8001', '').replace(BACKEND_URL, '').split('?')[0];
-                 const otherImages = galleryList.filter(img => {
-                   const cleanImg = img.replace('http://localhost:8001', '').replace(BACKEND_URL, '').split('?')[0];
-                   return cleanImg !== featuredClean;
-                 });
-
-                 const displayImages = [
-                   otherImages[0] || null,
-                   otherImages[1] || null,
-                   otherImages[2] || null,
-                   otherImages[3] || null
-                 ];
-
-                 return displayImages.map((imgUrl, idx) => (
-                   <div key={idx} className="overflow-hidden bg-slate-100 relative group/cell rounded-xl border border-slate-200 min-h-[140px]">
-                     {imgUrl ? (
-                       <>
-                         <img src={imgUrl} className="w-full h-full object-cover" alt={`Gallery ${idx + 1}`} />
-                         <div className="absolute inset-0 bg-black/55 opacity-0 group-hover/cell:opacity-100 transition-opacity flex items-center justify-center gap-2">
-                           <button 
-                             onClick={() => handleSetFeatured(imgUrl)}
-                             className="bg-indigo-600 hover:bg-indigo-700 text-white p-2 rounded-full shadow-lg transition-transform hover:scale-110"
-                             title="Set as Featured"
-                           >
-                             <Crown size={12} />
-                           </button>
-                           <button 
-                             onClick={() => handleImageDelete(imgUrl)}
-                             className="bg-rose-600 hover:bg-rose-700 text-white p-2 rounded-full shadow-lg transition-transform hover:scale-110"
-                             title="Delete Image"
-                           >
-                             <Trash2 size={12} />
-                           </button>
-                         </div>
-                       </>
-                     ) : (
-                       <label className="w-full h-full flex flex-col items-center justify-center border border-dashed border-slate-250 hover:border-indigo-400 hover:bg-indigo-50/20 rounded-xl cursor-pointer transition-all">
-                         <Plus size={16} className="text-slate-400" />
-                         <span className="text-[8px] font-black text-slate-400 uppercase tracking-wider mt-1">Add Photo</span>
-                         <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
-                       </label>
-                     )}
-                   </div>
-                 ));
-               })()}
-            </div>
+        {/* Tab Navigation Pill Bar */}
+        <div className="flex items-center gap-2 mt-8 border-b border-gray-200 overflow-x-auto pb-px">
+          {[
+            { id: 'specs', label: 'Pricing & Specs', icon: Layers },
+            { id: 'gallery', label: `Photo Gallery (${galleryList.length})`, icon: ImageIcon },
+            { id: 'amenities', label: `Amenities (${selectedAmenities.length})`, icon: CheckCircle2 },
+            { id: 'units', label: `Sub-Rooms (${subRooms.length} Units)`, icon: Bed },
+            { id: 'description', label: 'Public Description & Rules', icon: FileText }
+          ].map((tab) => {
+            const Icon = tab.icon;
+            const isActive = activeTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id as any)}
+                className={`flex items-center gap-2 px-4 py-2.5 text-xs font-medium border-b-2 transition-all whitespace-nowrap ${
+                  isActive
+                    ? 'border-emerald-600 text-emerald-700 font-semibold bg-emerald-50/40 rounded-t-lg'
+                    : 'border-transparent text-gray-500 hover:text-gray-800 hover:border-gray-300'
+                }`}
+              >
+                <Icon size={14} className={isActive ? 'text-emerald-600' : 'text-gray-400'} />
+                <span>{tab.label}</span>
+              </button>
+            );
+          })}
         </div>
+      </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-16">
-          <div className="lg:col-span-2 space-y-12">
-             <section className="pb-12 border-b border-slate-100">
-                <h3 className="text-sm font-bold text-[#4f46e5] uppercase tracking-widest mb-4">Official Public Description</h3>
-                <textarea 
-                    name="full_description"
-                    value={formData.full_description}
-                    onChange={handleChange}
-                    rows={8}
-                    className="w-full p-6 text-slate-700 leading-relaxed text-lg whitespace-pre-wrap font-medium bg-slate-50 rounded-2xl border-2 border-transparent hover:border-slate-200 focus:border-indigo-500 focus:bg-white focus:outline-none transition-all shadow-inner"
-                    placeholder="Describe this sanctuary for your guests..."
-                />
-             </section>
+      {/* Main Tab Content */}
+      <div className="p-6 md:p-8">
+        {/* TAB 1: PRICING & SPECS */}
+        {activeTab === 'specs' && (
+          <div className="space-y-8 max-w-4xl">
+            {/* Rates Section */}
+            <div className="bg-white border border-gray-200/80 rounded-xl p-5 shadow-2xs space-y-4">
+              <h3 className="text-sm font-semibold text-gray-900 flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                Nightly & Hourly Pricing Structures
+              </h3>
 
-             <section className="pb-12 border-b border-slate-100">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-                  <h3 className="text-sm font-bold text-[#4f46e5] uppercase tracking-widest">Amenity Highlights</h3>
-                  
-                  <div className="flex gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+                <div>
+                  <label className="block text-xs font-medium text-gray-700 mb-1">
+                    24-Hour Base Nightly Rate (₹ INR) <span className="text-rose-500">*</span>
+                  </label>
+                  <div className="relative">
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs font-semibold">₹</span>
                     <input 
-                      type="text"
-                      placeholder="Add custom amenity..."
-                      value={customAmenity}
-                      onChange={(e) => setCustomAmenity(e.target.value)}
-                      onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); handleAddCustomAmenity(); } }}
-                      className="text-xs font-bold text-slate-700 bg-slate-50 border border-slate-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 w-44"
+                      type="number"
+                      name="base_price"
+                      value={formData.base_price}
+                      onChange={handleChange}
+                      placeholder="1999"
+                      className="w-full text-xs pl-7 pr-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-emerald-500"
                     />
-                    <button 
-                      type="button"
-                      onClick={handleAddCustomAmenity}
-                      className="bg-[#4f46e5] hover:bg-[#3b35b3] text-white text-[10px] font-black uppercase px-3 py-1.5 rounded-lg active:scale-95 transition-all shadow-sm"
+                  </div>
+                  <p className="text-[10px] text-gray-400 mt-1">Default 24h occupancy rate applied across bookings.</p>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-medium text-gray-700 mb-1">
+                    12-Hour Flexible Rate (₹ INR) <span className="text-gray-400 text-[10px]">(Optional)</span>
+                  </label>
+                  <div className="relative">
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs font-semibold">₹</span>
+                    <input 
+                      type="number"
+                      name="price_12h"
+                      value={formData.price_12h}
+                      onChange={handleChange}
+                      placeholder="1200"
+                      className="w-full text-xs pl-7 pr-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                    />
+                  </div>
+                  <p className="text-[10px] text-gray-400 mt-1">Flex rate for short transit stays and temple visits.</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Room Specifications */}
+            <div className="bg-white border border-gray-200/80 rounded-xl p-5 shadow-2xs space-y-4">
+              <h3 className="text-sm font-semibold text-gray-900 flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-blue-500" />
+                Physical Specifications & Capacity
+              </h3>
+
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4 pt-1">
+                <div>
+                  <label className="block text-[11px] font-medium text-gray-500 uppercase mb-1">Max Guests</label>
+                  <input 
+                    name="max_guests"
+                    type="number"
+                    value={formData.max_guests}
+                    onChange={handleChange}
+                    className="w-full text-xs p-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-emerald-500 font-semibold"
+                    placeholder="3"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-[11px] font-medium text-gray-500 uppercase mb-1">Adults</label>
+                  <input 
+                    name="max_adults"
+                    type="number"
+                    value={formData.max_adults}
+                    onChange={handleChange}
+                    className="w-full text-xs p-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-emerald-500 font-semibold"
+                    placeholder="2"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-[11px] font-medium text-gray-500 uppercase mb-1">Children</label>
+                  <input 
+                    name="max_children"
+                    type="number"
+                    value={formData.max_children}
+                    onChange={handleChange}
+                    className="w-full text-xs p-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-emerald-500 font-semibold"
+                    placeholder="1"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-[11px] font-medium text-gray-500 uppercase mb-1">Bed Setup</label>
+                  <input 
+                    name="bed_type"
+                    type="text"
+                    value={formData.bed_type}
+                    onChange={handleChange}
+                    className="w-full text-xs p-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-emerald-500 font-semibold"
+                    placeholder="King Bed"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-[11px] font-medium text-gray-500 uppercase mb-1">Area (sq ft)</label>
+                  <input 
+                    name="room_size"
+                    type="text"
+                    value={formData.room_size}
+                    onChange={handleChange}
+                    className="w-full text-xs p-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-emerald-500 font-semibold"
+                    placeholder="420"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-[11px] font-medium text-gray-500 uppercase mb-1">Default Floor</label>
+                  <input 
+                    name="floor_number"
+                    type="text"
+                    value={formData.floor_number}
+                    onChange={handleChange}
+                    className="w-full text-xs p-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-emerald-500 font-semibold"
+                    placeholder="2"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-3 border-t border-gray-100">
+                <div>
+                  <label className="block text-xs font-medium text-gray-700 mb-1">Category Badge Tag</label>
+                  <input 
+                    name="category_tag"
+                    type="text"
+                    value={formData.category_tag}
+                    onChange={handleChange}
+                    placeholder="e.g. Royal Emerald, Luxury Suite, Deluxe"
+                    className="w-full text-xs p-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-emerald-500 font-medium"
+                  />
+                  <p className="text-[10px] text-gray-400 mt-1">Highlighted on website cards as the primary tier badge.</p>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-medium text-gray-700 mb-1">Inventory Operational Status</label>
+                  <select 
+                    name="status"
+                    value={formData.status}
+                    onChange={handleChange}
+                    className="w-full text-xs p-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-emerald-500 bg-white font-semibold"
+                  >
+                    <option value="Available">Available (Bookable Online & Reception)</option>
+                    <option value="Maintenance">Maintenance (Temporarily Closed)</option>
+                    <option value="Cleaning">Housekeeping / Cleaning</option>
+                    <option value="Booked">Fully Booked</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Maintenance Period Picker if active */}
+              {formData.status === 'Maintenance' && (
+                <div className="bg-amber-50/70 border border-amber-200 rounded-xl p-4 space-y-3 animate-in fade-in">
+                  <p className="text-xs font-semibold text-amber-800 flex items-center gap-1.5">
+                    <Wrench size={13} className="text-amber-600" />
+                    Scheduled Maintenance Window
+                  </p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-[11px] font-medium text-amber-800 mb-1">Start Date</label>
+                      <input 
+                        type="date"
+                        name="maintenance_start"
+                        value={formData.maintenance_start}
+                        onChange={handleChange}
+                        className="w-full text-xs p-2 bg-white border border-amber-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-amber-500 font-medium"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[11px] font-medium text-amber-800 mb-1">End Date</label>
+                      <input 
+                        type="date"
+                        name="maintenance_end"
+                        value={formData.maintenance_end}
+                        min={formData.maintenance_start}
+                        onChange={handleChange}
+                        className="w-full text-xs p-2 bg-white border border-amber-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-amber-500 font-medium"
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* TAB 2: PHOTO GALLERY */}
+        {activeTab === 'gallery' && (
+          <div className="space-y-6 max-w-5xl">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-gray-200 gap-3">
+              <div>
+                <h3 className="text-sm font-semibold text-gray-900">Photo Gallery & Hero Showcase</h3>
+                <p className="text-xs text-gray-500 mt-0.5">
+                  High-resolution photography representing this room class. The featured primary image will be displayed on the website card.
+                </p>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <label className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-medium px-4 py-2 rounded-lg cursor-pointer flex items-center gap-1.5 shadow-xs transition-colors">
+                  <Plus size={14} />
+                  <span>{isUploading ? 'Uploading...' : 'Upload New Photo'}</span>
+                  <input type="file" accept="image/*" onChange={handleImageUpload} disabled={isUploading} className="hidden" />
+                </label>
+              </div>
+            </div>
+
+            {/* Featured Primary Image Hero Banner */}
+            <div className="bg-gray-50 border border-gray-200 rounded-2xl p-4 sm:p-5">
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-xs font-semibold text-gray-700 flex items-center gap-1.5">
+                  <Crown size={14} className="text-amber-500 fill-amber-400" />
+                  Primary Featured Image
+                </span>
+                <span className="text-[11px] text-gray-400 font-mono">
+                  {formData.featured_image || 'Auto fallback'}
+                </span>
+              </div>
+
+              <div className="relative aspect-[21/9] sm:aspect-[2.5/1] bg-gray-200 rounded-xl overflow-hidden shadow-inner group">
+                <img 
+                  src={resolveRoomImageUrl(formData.featured_image, room.id)} 
+                  alt="Primary Featured"
+                  onError={(e) => handleImageError(e, room.id)}
+                  className="w-full h-full object-cover"
+                />
+                
+                <div className="absolute top-3 left-3 bg-emerald-600 text-white text-[10px] font-semibold px-2.5 py-1 rounded-full shadow-md flex items-center gap-1">
+                  <Crown size={11} className="fill-white" /> Active Cover Photo
+                </div>
+
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
+                  <label className="bg-white/95 hover:bg-white text-gray-800 text-xs font-medium px-3.5 py-2 rounded-lg cursor-pointer shadow-md flex items-center gap-1.5">
+                    <Plus size={13} /> Change Photo
+                    <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
+                  </label>
+                  {formData.featured_image && (
+                    <button
+                      onClick={() => handleImageDelete(formData.featured_image)}
+                      className="bg-rose-600 hover:bg-rose-700 text-white text-xs font-medium px-3.5 py-2 rounded-lg shadow-md flex items-center gap-1.5"
                     >
-                      Add
+                      <Trash2 size={13} /> Remove
                     </button>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                  {availableAmenities.map((amenity: string, i: number) => {
-                    const isSelected = selectedAmenities.includes(amenity);
-                    return (
-                      <button
-                        key={i}
-                        type="button"
-                        onClick={() => {
-                          if (isSelected) {
-                            setSelectedAmenities(prev => prev.filter(a => a !== amenity));
-                          } else {
-                            setSelectedAmenities(prev => [...prev, amenity]);
-                          }
-                        }}
-                        className={`flex items-center gap-3 px-4 py-3 rounded-xl border-2 text-left transition-all duration-200 active:scale-95 ${
-                          isSelected 
-                            ? 'border-[#4f46e5] bg-indigo-50/50 text-slate-900 font-bold' 
-                            : 'border-slate-100 hover:border-slate-200 text-slate-500 font-medium'
-                        }`}
-                      >
-                         <CheckCircle2 size={16} className={isSelected ? 'text-[#4f46e5] fill-indigo-50' : 'text-slate-300'} />
-                         <span className="text-xs tracking-tight">{amenity}</span>
-                      </button>
-                    );
-                  })}
-                </div>
-             </section>
-              <section className="pb-12 border-b border-slate-100">
-                <h3 className="text-sm font-bold text-[#4f46e5] uppercase tracking-widest mb-4">Internal Specs & Badge</h3>
-                <div className="grid grid-cols-2 md:grid-cols-7 gap-4 p-6 bg-slate-50 rounded-2xl border border-slate-100">
-                   <div className="text-center">
-                      <p className="text-[10px] text-slate-400 font-bold uppercase mb-1">Max Guests</p>
-                      <input 
-                        name="max_guests"
-                        type="number"
-                        value={formData.max_guests}
-                        onChange={handleChange}
-                        placeholder="5"
-                        className="text-lg font-bold text-slate-800 bg-transparent text-center border-b border-transparent hover:border-slate-300 focus:outline-none focus:border-indigo-500 w-14"
-                      />
-                   </div>
-                   <div className="text-center border-l border-slate-200 pl-3">
-                      <p className="text-[10px] text-slate-400 font-bold uppercase mb-1">Max Adults</p>
-                      <input 
-                        name="max_adults"
-                        type="number"
-                        value={formData.max_adults}
-                        onChange={handleChange}
-                        className="text-lg font-bold text-slate-800 bg-transparent text-center border-b border-transparent hover:border-slate-300 focus:outline-none focus:border-indigo-500 w-12"
-                      />
-                   </div>
-                   <div className="text-center border-l border-slate-200 pl-4">
-                      <p className="text-[10px] text-slate-400 font-bold uppercase mb-1">Max Children</p>
-                      <input 
-                        name="max_children"
-                        type="number"
-                        value={formData.max_children}
-                        onChange={handleChange}
-                        className="text-lg font-bold text-slate-800 bg-transparent text-center border-b border-transparent hover:border-slate-300 focus:outline-none focus:border-indigo-500 w-12"
-                      />
-                   </div>
-                   <div className="text-center border-l border-slate-200 pl-4">
-                      <p className="text-[10px] text-slate-400 font-bold uppercase mb-1">Bed Configuration</p>
-                      <input 
-                        name="bed_type"
-                        value={formData.bed_type}
-                        onChange={handleChange}
-                        className="text-lg font-bold text-slate-800 bg-transparent text-center border-b border-transparent hover:border-slate-300 focus:outline-none focus:border-indigo-500 w-full"
-                      />
-                   </div>
-                   <div className="text-center border-l border-slate-200 pl-4">
-                      <p className="text-[10px] text-slate-400 font-bold uppercase mb-1">Area (sq ft)</p>
-                      <input 
-                        name="room_size"
-                        value={formData.room_size}
-                        onChange={handleChange}
-                        className="text-lg font-bold text-slate-800 bg-transparent text-center border-b border-transparent hover:border-slate-300 focus:outline-none focus:border-indigo-500 w-20"
-                      />
-                   </div>
-                   <div className="text-center border-l border-slate-200 pl-4">
-                      <p className="text-[10px] text-slate-400 font-bold uppercase mb-1">Floor</p>
-                      <input 
-                        name="floor_number"
-                        value={formData.floor_number}
-                        onChange={handleChange}
-                        className="text-lg font-bold text-slate-800 bg-transparent text-center border-b border-transparent hover:border-slate-300 focus:outline-none focus:border-indigo-500 w-20"
-                      />
-                   </div>
-                   <div className="text-center border-l border-slate-200 pl-4">
-                      <p className="text-[10px] text-slate-400 font-bold uppercase mb-1">Badge Tag</p>
-                      <input 
-                        name="category_tag"
-                        type="text"
-                        value={formData.category_tag || ''}
-                        onChange={handleChange}
-                        placeholder="Premium"
-                        className="text-sm font-bold text-slate-850 bg-transparent text-center border-b border-transparent hover:border-slate-300 focus:outline-none focus:border-indigo-500 w-full font-black uppercase tracking-wider"
-                      />
-                   </div>
-                </div>
-              </section>
-
-              <section className="pb-12 border-b border-slate-100">
-                <h3 className="text-sm font-bold text-[#4f46e5] uppercase tracking-widest mb-4 flex items-center justify-between">
-                  <span>Assigned Room Numbers</span>
-                  <span className="text-[10px] text-slate-400 font-bold lowercase">({subRooms.length} rooms)</span>
-                </h3>
-
-                <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100 space-y-4">
-                  {/* Add sub-room form */}
-                  <div className="flex flex-col sm:flex-row gap-3 items-end bg-white p-4 rounded-xl border border-slate-200">
-                    <div className="flex-1 space-y-1 w-full">
-                      <label className="block text-[8px] font-black text-slate-400 uppercase tracking-wider">New Room Number</label>
-                      <input
-                        type="text"
-                        value={newRoomNumber}
-                        onChange={(e) => setNewRoomNumber(e.target.value)}
-                        placeholder="e.g. 101"
-                        className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-xs font-bold text-slate-800 focus:bg-white focus:outline-none focus:ring-1 focus:ring-indigo-500"
-                      />
-                    </div>
-                    <div className="flex-1 space-y-1 w-full">
-                      <label className="block text-[8px] font-black text-slate-400 uppercase tracking-wider">Room Name (Optional)</label>
-                      <input
-                        type="text"
-                        value={newRoomName}
-                        onChange={(e) => setNewRoomName(e.target.value)}
-                        placeholder="e.g. Deluxe Room 101"
-                        className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-xs font-bold text-slate-800 focus:bg-white focus:outline-none focus:ring-1 focus:ring-indigo-500"
-                      />
-                    </div>
-                    <div className="w-full sm:w-28 space-y-1">
-                      <label className="block text-[8px] font-black text-slate-400 uppercase tracking-wider">Floor</label>
-                      <input
-                        type="text"
-                        value={newFloorNumber}
-                        onChange={(e) => setNewFloorNumber(e.target.value)}
-                        placeholder="e.g. 1"
-                        className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-xs font-bold text-slate-800 focus:bg-white focus:outline-none focus:ring-1 focus:ring-indigo-500"
-                      />
-                    </div>
-                    <Button
-                      onClick={handleAddSubRoom}
-                      disabled={isActionSubRoom || !newRoomNumber.trim()}
-                      className="bg-[#4f46e5] hover:bg-[#3b35b3] text-white text-[10px] font-bold uppercase tracking-wider h-10 px-4 rounded-lg flex items-center gap-1.5 w-full sm:w-auto shadow-md"
-                    >
-                      <Plus size={14} /> Add Room
-                    </Button>
-                  </div>
-
-                  {/* List of sub-rooms */}
-                  {loadingSubRooms ? (
-                    <p className="text-[10px] text-slate-500 animate-pulse text-center py-4 font-bold">Loading rooms list...</p>
-                  ) : subRooms.length > 0 ? (
-                    <div className="divide-y divide-slate-100 bg-white border border-slate-200 rounded-xl overflow-hidden">
-                      {subRooms.map((subRoom) => {
-                        const isEditing = editingSubRoomId === subRoom.id;
-                        return (
-                          <div key={subRoom.id} className="p-4 flex items-center justify-between gap-4">
-                            {isEditing ? (
-                              <div className="flex flex-1 flex-col sm:flex-row gap-2 items-end">
-                                <div className="flex-1 space-y-1 w-full">
-                                  <label className="block text-[8px] font-black text-slate-400 uppercase tracking-wider">Room Number</label>
-                                  <input
-                                    type="text"
-                                    value={editRoomNumber}
-                                    onChange={(e) => setEditRoomNumber(e.target.value)}
-                                    className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs font-bold text-slate-800 focus:bg-white focus:outline-none"
-                                  />
-                                </div>
-                                <div className="flex-1 space-y-1 w-full">
-                                  <label className="block text-[8px] font-black text-slate-400 uppercase tracking-wider">Room Name</label>
-                                  <input
-                                    type="text"
-                                    value={editRoomName}
-                                    onChange={(e) => setEditRoomName(e.target.value)}
-                                    className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs font-bold text-slate-800 focus:bg-white focus:outline-none"
-                                  />
-                                </div>
-                                <div className="w-full sm:w-20 space-y-1">
-                                  <label className="block text-[8px] font-black text-slate-400 uppercase tracking-wider">Floor</label>
-                                  <input
-                                    type="text"
-                                    value={editFloorNumber}
-                                    onChange={(e) => setEditFloorNumber(e.target.value)}
-                                    className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs font-bold text-slate-800 focus:bg-white focus:outline-none"
-                                  />
-                                </div>
-                                <div className="flex gap-1.5 w-full sm:w-auto mt-2 sm:mt-0">
-                                  <Button
-                                    onClick={() => handleUpdateSubRoom(subRoom.id)}
-                                    disabled={isActionSubRoom}
-                                    className="bg-indigo-600 hover:bg-indigo-700 text-white text-[9px] font-bold uppercase h-8 px-2.5 rounded shadow-sm"
-                                  >
-                                    Save
-                                  </Button>
-                                  <Button
-                                    onClick={() => setEditingSubRoomId(null)}
-                                    className="bg-slate-100 hover:bg-slate-200 text-slate-700 text-[9px] font-bold uppercase h-8 px-2.5 rounded"
-                                  >
-                                    Cancel
-                                  </Button>
-                                </div>
-                              </div>
-                            ) : (
-                              <>
-                                <div className="flex items-center gap-3">
-                                  <div className="w-2.5 h-2.5 rounded-full bg-indigo-500 animate-pulse" />
-                                  <div>
-                                    <p className="text-xs font-bold text-slate-800">{subRoom.room_name || `Room ${subRoom.room_number}`}</p>
-                                    <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mt-0.5">Room No: {subRoom.room_number} • Floor {subRoom.floor_number || '1'}</p>
-                                  </div>
-                                </div>
-                                <div className="flex items-center gap-1.5">
-                                  <Button
-                                    onClick={() => {
-                                      setEditingSubRoomId(subRoom.id);
-                                      setEditRoomNumber(subRoom.room_number);
-                                      setEditRoomName(subRoom.room_name || '');
-                                      setEditFloorNumber(subRoom.floor_number || '1');
-                                    }}
-                                    className="bg-white text-slate-600 hover:bg-slate-50 hover:text-slate-900 border border-slate-200 text-[9px] font-bold uppercase h-8 px-2.5 rounded shadow-sm"
-                                  >
-                                    Edit
-                                  </Button>
-                                  <Button
-                                    onClick={() => handleDeleteSubRoom(subRoom.id)}
-                                    disabled={isActionSubRoom}
-                                    className="bg-rose-50 hover:bg-rose-100 text-rose-650 border border-rose-200 text-[9px] font-bold uppercase h-8 px-2.5 rounded shadow-sm"
-                                  >
-                                    Delete
-                                  </Button>
-                                </div>
-                              </>
-                            )}
-                          </div>
-                        );
-                      })}
-                    </div>
-                  ) : (
-                    <p className="text-xs text-slate-400 text-center py-6 border border-dashed border-slate-200 rounded-xl bg-white italic">No room numbers assigned yet. Add one above.</p>
                   )}
                 </div>
-             </section>
-          </div>           <div className="lg:col-span-1">
-             <Card className="rounded-3xl shadow-xl border-indigo-100 bg-indigo-50/20 overflow-hidden sticky top-28">
-                <CardContent className="p-8 space-y-6">
-                   <h3 className="text-xs font-bold text-indigo-700 uppercase tracking-widest mb-4 border-b border-indigo-150 pb-2 flex items-center justify-between">
-                       Status & Rules
-                       <span className="animate-pulse bg-indigo-500 h-2 w-2 rounded-full"></span>
-                   </h3>
-                   
-                   <div className="space-y-4">
-                      <div className="flex flex-col gap-2 bg-white p-4 rounded-2xl shadow-sm border border-slate-100">
-                         <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Live Inventory Status</span>
-                         <select 
-                            name="status"
-                            value={formData.status}
-                            onChange={handleChange}
-                            className={`text-sm font-black uppercase tracking-wider bg-transparent focus:outline-none border-none cursor-pointer ${formData.status === 'Available' ? 'text-indigo-600' : 'text-amber-600'}`}
-                         >
-                            <option value="Available">Available</option>
-                            <option value="Booked">Booked</option>
-                            <option value="Cleaning">Cleaning</option>
-                            <option value="Maintenance">Maintenance</option>
-                         </select>
-                      </div>
-                      
-                      {formData.status === 'Maintenance' && (
-                          <div className="flex flex-col gap-3 bg-white p-4 rounded-2xl shadow-sm border border-slate-100 animate-in slide-in-from-top duration-350">
-                             <div className="flex flex-col gap-1">
-                                <span className="text-[10px] font-bold text-slate-450 uppercase tracking-widest">Maintenance Start Date</span>
-                                <input 
-                                   type="date"
-                                   name="maintenance_start"
-                                   value={formData.maintenance_start}
-                                   onChange={handleChange}
-                                   className="text-sm font-bold bg-slate-50 p-2.5 rounded-xl border border-slate-200 text-slate-800 focus:bg-white focus:outline-none focus:ring-1 focus:ring-indigo-500"
-                                />
-                             </div>
-                             <div className="flex flex-col gap-1">
-                                <span className="text-[10px] font-bold text-slate-450 uppercase tracking-widest">Maintenance End Date</span>
-                                <input 
-                                   type="date"
-                                   name="maintenance_end"
-                                   value={formData.maintenance_end}
-                                   min={formData.maintenance_start}
-                                   onChange={handleChange}
-                                   className="text-sm font-bold bg-slate-50 p-2.5 rounded-xl border border-slate-200 text-slate-800 focus:bg-white focus:outline-none focus:ring-1 focus:ring-indigo-500"
-                                />
-                             </div>
-                          </div>
-                       )}
-                      
-                      <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-                         <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">House Rules Summary</p>
-                         <textarea 
-                            name="house_rules"
-                            value={formData.house_rules}
-                            onChange={handleChange}
-                            rows={4}
-                            className="w-full text-sm font-medium text-slate-600 leading-relaxed bg-slate-50 p-3 rounded-xl border border-transparent focus:border-indigo-500 focus:bg-white focus:outline-none transition-all italic"
-                            placeholder="e.g. No loud music. Check-out by 11 AM."
-                         />
-                      </div>
-                   </div>
+              </div>
+            </div>
 
-                   <Button 
-                     onClick={handleSave}
-                     disabled={isSaving}
-                     className="w-full bg-[#4f46e5] hover:bg-[#3b35b3] text-white font-bold uppercase tracking-widest py-8 rounded-2xl shadow-xl h-auto transition-all active:scale-95 group shadow-indigo-500/20"
-                   >
-                     {isSaving ? (
-                        <span className="flex items-center gap-3">
-                            <Loader2 className="animate-spin" /> COMMITTING CHANGES...
-                        </span>
-                     ) : (
-                        <span className="flex flex-col items-center">
-                            <span className="text-sm">Save Sanctuary Update</span>
-                            <span className="text-[9px] text-indigo-200 font-black mt-1 group-hover:text-white">FORCE GLOBAL SYNC</span>
-                        </span>
-                     )}
-                   </Button>
+            {/* Gallery Grid */}
+            <div>
+              <h4 className="text-xs font-semibold text-gray-700 uppercase tracking-wider mb-3">
+                All Gallery Photos ({galleryList.length})
+              </h4>
 
-                   <div className="text-center pt-2">
-                       <p className="text-[9px] text-slate-400 font-bold uppercase tracking-widest opacity-50 px-4">
-                           Updates take place immediately on the customer-facing website and mobile app.
-                       </p>
-                   </div>
-                </CardContent>
-             </Card>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                {galleryList.map((imgUrl, idx) => {
+                  const resolved = resolveRoomImageUrl(imgUrl, idx);
+                  const isFeatured = formData.featured_image && imgUrl.includes(formData.featured_image.replace(/^\//, ''));
+
+                  return (
+                    <div 
+                      key={idx} 
+                      className={`relative aspect-[4/3] bg-gray-100 rounded-xl overflow-hidden border group shadow-2xs ${
+                        isFeatured ? 'ring-2 ring-emerald-500 border-transparent' : 'border-gray-200'
+                      }`}
+                    >
+                      <img 
+                        src={resolved} 
+                        alt={`Room photo ${idx + 1}`}
+                        onError={(e) => handleImageError(e, idx)}
+                        className="w-full h-full object-cover transition-transform group-hover:scale-105 duration-300"
+                        loading="lazy"
+                      />
+
+                      {isFeatured && (
+                        <div className="absolute top-2 left-2 bg-emerald-600 text-white text-[9px] font-semibold px-2 py-0.5 rounded-full shadow-xs flex items-center gap-1">
+                          <Crown size={10} className="fill-white" /> Featured
+                        </div>
+                      )}
+
+                      <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 p-2">
+                        {!isFeatured && (
+                          <button
+                            onClick={() => handleSetFeatured(imgUrl)}
+                            className="bg-white/90 hover:bg-white text-gray-800 p-2 rounded-lg shadow-xs text-xs font-medium flex items-center gap-1"
+                            title="Set as featured cover"
+                          >
+                            <Crown size={12} className="text-amber-500 fill-amber-400" />
+                          </button>
+                        )}
+                        <button
+                          onClick={() => handleImageDelete(imgUrl)}
+                          className="bg-rose-600 hover:bg-rose-700 text-white p-2 rounded-lg shadow-xs"
+                          title="Delete photo"
+                        >
+                          <Trash2 size={12} />
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
+
+                {/* Upload Card Dropzone */}
+                <label className="aspect-[4/3] border-2 border-dashed border-gray-300 hover:border-emerald-500 hover:bg-emerald-50/20 rounded-xl flex flex-col items-center justify-center p-4 cursor-pointer transition-all text-center">
+                  <div className="w-9 h-9 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mb-1.5">
+                    <Plus size={18} />
+                  </div>
+                  <span className="text-xs font-semibold text-gray-700">Add Photo</span>
+                  <span className="text-[10px] text-gray-400 mt-0.5">JPG, PNG, WEBP</span>
+                  <input type="file" accept="image/*" onChange={handleImageUpload} disabled={isUploading} className="hidden" />
+                </label>
+              </div>
+            </div>
           </div>
-        </div>
+        )}
+
+        {/* TAB 3: AMENITIES */}
+        {activeTab === 'amenities' && (
+          <div className="space-y-6 max-w-4xl">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-gray-200 gap-3">
+              <div>
+                <h3 className="text-sm font-semibold text-gray-900">Room Amenities & Inclusions</h3>
+                <p className="text-xs text-gray-500 mt-0.5">
+                  Select amenities offered in this category. Guests see these features during booking.
+                </p>
+              </div>
+
+              {/* Custom Amenity Adder */}
+              <div className="flex items-center gap-2">
+                <input 
+                  type="text"
+                  placeholder="Custom amenity..."
+                  value={customAmenity}
+                  onChange={(e) => setCustomAmenity(e.target.value)}
+                  onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); handleAddCustomAmenity(); } }}
+                  className="text-xs px-3 py-1.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-emerald-500 w-44"
+                />
+                <Button 
+                  onClick={handleAddCustomAmenity}
+                  className="bg-gray-900 hover:bg-emerald-600 text-white text-xs px-3 py-1.5 h-auto rounded-lg"
+                >
+                  Add
+                </Button>
+              </div>
+            </div>
+
+            {/* Grid of Amenity Chips */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+              {availableAmenities.map((amenity: string, i: number) => {
+                const isSelected = selectedAmenities.includes(amenity);
+                return (
+                  <button
+                    key={i}
+                    type="button"
+                    onClick={() => {
+                      if (isSelected) {
+                        setSelectedAmenities(prev => prev.filter(a => a !== amenity));
+                      } else {
+                        setSelectedAmenities(prev => [...prev, amenity]);
+                      }
+                    }}
+                    className={`flex items-center gap-2.5 p-3 rounded-xl border text-left transition-all text-xs font-medium ${
+                      isSelected 
+                        ? 'border-emerald-500 bg-emerald-50/50 text-emerald-900 shadow-2xs' 
+                        : 'border-gray-200 hover:border-gray-300 text-gray-600 bg-white hover:bg-gray-50'
+                    }`}
+                  >
+                    <div className={`w-4 h-4 rounded-md flex items-center justify-center shrink-0 border ${
+                      isSelected 
+                        ? 'bg-emerald-600 border-emerald-600 text-white' 
+                        : 'border-gray-300 bg-white'
+                    }`}>
+                      {isSelected && <Check size={11} strokeWidth={3} />}
+                    </div>
+                    <span className="truncate">{amenity}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* TAB 4: PHYSICAL SUB-ROOMS (INVENTORY) */}
+        {activeTab === 'units' && (
+          <div className="space-y-6 max-w-4xl">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-gray-200 gap-3">
+              <div>
+                <h3 className="text-sm font-semibold text-gray-900">Physical Room Units ({subRooms.length})</h3>
+                <p className="text-xs text-gray-500 mt-0.5">
+                  Assign individual room numbers (e.g. 101, 102, 201) to this category for the reception grid.
+                </p>
+              </div>
+            </div>
+
+            {/* Add Sub-Room Card */}
+            <div className="bg-gray-50/70 border border-gray-200 rounded-xl p-4">
+              <h4 className="text-xs font-semibold text-gray-700 uppercase tracking-wider mb-3">
+                + Add Physical Room Number
+              </h4>
+              <div className="grid grid-cols-1 sm:grid-cols-4 gap-3 items-end">
+                <div>
+                  <label className="block text-[11px] font-medium text-gray-600 mb-1">Room Number *</label>
+                  <input
+                    type="text"
+                    value={newRoomNumber}
+                    onChange={(e) => setNewRoomNumber(e.target.value)}
+                    placeholder="e.g. 204"
+                    className="w-full text-xs p-2 bg-white border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-emerald-500 font-semibold"
+                  />
+                </div>
+
+                <div className="sm:col-span-2">
+                  <label className="block text-[11px] font-medium text-gray-600 mb-1">Room Title (Optional)</label>
+                  <input
+                    type="text"
+                    value={newRoomName}
+                    onChange={(e) => setNewRoomName(e.target.value)}
+                    placeholder="e.g. Executive Temple View 204"
+                    className="w-full text-xs p-2 bg-white border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-emerald-500 font-medium"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-[11px] font-medium text-gray-600 mb-1">Floor</label>
+                  <input
+                    type="text"
+                    value={newFloorNumber}
+                    onChange={(e) => setNewFloorNumber(e.target.value)}
+                    placeholder="2"
+                    className="w-full text-xs p-2 bg-white border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-emerald-500 font-semibold"
+                  />
+                </div>
+              </div>
+
+              <div className="mt-3 flex justify-end">
+                <Button
+                  onClick={handleAddSubRoom}
+                  disabled={isActionSubRoom || !newRoomNumber.trim()}
+                  className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs px-4 py-2 h-auto rounded-lg font-medium shadow-xs"
+                >
+                  <Plus size={14} className="mr-1" />
+                  Add Room Number
+                </Button>
+              </div>
+            </div>
+
+            {/* List of Sub-Rooms */}
+            {loadingSubRooms ? (
+              <div className="py-8 text-center text-gray-400 text-xs">
+                <Loader2 size={18} className="animate-spin mx-auto mb-2 text-emerald-600" />
+                Loading physical inventory...
+              </div>
+            ) : subRooms.length === 0 ? (
+              <div className="border border-dashed border-gray-300 rounded-xl p-8 text-center bg-white">
+                <Bed size={22} className="mx-auto text-gray-300 mb-2" />
+                <p className="text-xs font-semibold text-gray-700">No Room Numbers Assigned Yet</p>
+                <p className="text-[11px] text-gray-400 mt-0.5">Use the form above to add your first room number (e.g. 101).</p>
+              </div>
+            ) : (
+              <div className="divide-y divide-gray-100 bg-white border border-gray-200 rounded-xl overflow-hidden shadow-2xs">
+                {subRooms.map((subRoom) => {
+                  const isEditing = editingSubRoomId === subRoom.id;
+
+                  return (
+                    <div key={subRoom.id} className="p-3.5 flex items-center justify-between gap-4 hover:bg-gray-50/60 transition-colors">
+                      {isEditing ? (
+                        <div className="flex flex-1 flex-col sm:flex-row gap-2.5 items-end">
+                          <div className="w-28">
+                            <label className="block text-[10px] font-medium text-gray-500 uppercase">Room No</label>
+                            <input
+                              type="text"
+                              value={editRoomNumber}
+                              onChange={(e) => setEditRoomNumber(e.target.value)}
+                              className="w-full bg-white border border-gray-200 rounded-lg p-1.5 text-xs font-semibold"
+                            />
+                          </div>
+
+                          <div className="flex-1">
+                            <label className="block text-[10px] font-medium text-gray-500 uppercase">Title</label>
+                            <input
+                              type="text"
+                              value={editRoomName}
+                              onChange={(e) => setEditRoomName(e.target.value)}
+                              className="w-full bg-white border border-gray-200 rounded-lg p-1.5 text-xs"
+                            />
+                          </div>
+
+                          <div className="w-20">
+                            <label className="block text-[10px] font-medium text-gray-500 uppercase">Floor</label>
+                            <input
+                              type="text"
+                              value={editFloorNumber}
+                              onChange={(e) => setEditFloorNumber(e.target.value)}
+                              className="w-full bg-white border border-gray-200 rounded-lg p-1.5 text-xs"
+                            />
+                          </div>
+
+                          <div className="flex items-center gap-1.5">
+                            <Button
+                              onClick={() => handleUpdateSubRoom(subRoom.id)}
+                              disabled={isActionSubRoom}
+                              className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs px-3 py-1.5 h-auto rounded"
+                            >
+                              Save
+                            </Button>
+                            <Button
+                              onClick={() => setEditingSubRoomId(null)}
+                              variant="outline"
+                              className="text-xs px-3 py-1.5 h-auto rounded"
+                            >
+                              Cancel
+                            </Button>
+                          </div>
+                        </div>
+                      ) : (
+                        <>
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center font-bold text-xs border border-emerald-200/60">
+                              {subRoom.room_number}
+                            </div>
+                            <div>
+                              <p className="text-xs font-semibold text-gray-900">
+                                {subRoom.room_name || `Room ${subRoom.room_number}`}
+                              </p>
+                              <p className="text-[11px] text-gray-400">
+                                Floor {subRoom.floor_number || '1'} • Status: {subRoom.status || 'Available'}
+                              </p>
+                            </div>
+                          </div>
+
+                          <div className="flex items-center gap-1.5">
+                            <Button
+                              onClick={() => {
+                                setEditingSubRoomId(subRoom.id);
+                                setEditRoomNumber(subRoom.room_number);
+                                setEditRoomName(subRoom.room_name || '');
+                                setEditFloorNumber(subRoom.floor_number || '1');
+                              }}
+                              variant="outline"
+                              className="text-gray-600 hover:text-gray-900 border-gray-200 text-xs px-2.5 py-1.5 h-auto rounded-lg"
+                            >
+                              Edit
+                            </Button>
+                            <Button
+                              onClick={() => handleDeleteSubRoom(subRoom.id)}
+                              disabled={isActionSubRoom}
+                              variant="outline"
+                              className="text-rose-600 hover:bg-rose-50 border-rose-200 text-xs px-2.5 py-1.5 h-auto rounded-lg"
+                            >
+                              Delete
+                            </Button>
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* TAB 5: PUBLIC DESCRIPTION & RULES */}
+        {activeTab === 'description' && (
+          <div className="space-y-6 max-w-4xl">
+            <div className="pb-3 border-b border-gray-200">
+              <h3 className="text-sm font-semibold text-gray-900">Public Website Description & House Rules</h3>
+              <p className="text-xs text-gray-500 mt-0.5">
+                These descriptions appear on the guest-facing room overview and booking confirmation vouchers.
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              <div>
+                <label className="block text-xs font-medium text-gray-700 mb-1">
+                  Official Public Description
+                </label>
+                <textarea 
+                  name="full_description"
+                  value={formData.full_description}
+                  onChange={handleChange}
+                  rows={5}
+                  className="w-full p-3.5 text-xs text-gray-800 leading-relaxed bg-white rounded-xl border border-gray-200 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 focus:outline-none transition-all"
+                  placeholder="Describe this room category for your guests..."
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-medium text-gray-700 mb-1">
+                  Highlights / Short Bullet Summary
+                </label>
+                <input 
+                  type="text"
+                  name="highlights"
+                  value={formData.highlights}
+                  onChange={handleChange}
+                  placeholder="e.g. Mahamaham Tank View, Traditional Teak Decor, Soundproof Sanctuary"
+                  className="w-full text-xs p-3 bg-white rounded-xl border border-gray-200 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-medium text-gray-700 mb-1">
+                  House Rules & Policies
+                </label>
+                <textarea 
+                  name="house_rules"
+                  value={formData.house_rules}
+                  onChange={handleChange}
+                  rows={3}
+                  className="w-full p-3.5 text-xs text-gray-800 leading-relaxed bg-white rounded-xl border border-gray-200 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 focus:outline-none"
+                  placeholder="e.g. Check-in from 12 PM, Check-out by 11 AM. No smoking inside the suite."
+                />
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Delete Confirmation Modal */}
       {showDeleteModal && (
-        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl border border-slate-100 animate-in fade-in zoom-in-95 duration-200">
-            <h3 className="text-xl font-bold text-slate-950 mb-3 font-playfair uppercase tracking-tight">Delete Room Category</h3>
-            <p className="text-sm text-slate-500 mb-8 leading-relaxed font-semibold">
-              Are you sure you want to delete <span className="text-slate-900 font-bold">"{formData.room_name}"</span>? This action is permanent and will delete all associated physical rooms and bookings.
+        <div className="fixed inset-0 bg-gray-900/50 backdrop-blur-xs z-[100] flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl p-6 max-w-md w-full shadow-xl border border-gray-200 animate-in fade-in zoom-in-95">
+            <div className="w-10 h-10 rounded-full bg-rose-50 text-rose-600 flex items-center justify-center mb-3">
+              <AlertCircle size={22} />
+            </div>
+            <h3 className="text-base font-bold text-gray-900 mb-1.5">Delete Room Category</h3>
+            <p className="text-xs text-gray-500 mb-6 leading-relaxed">
+              Are you sure you want to permanently delete <span className="font-semibold text-gray-800">"{formData.room_name}"</span>? 
+              This will remove all associated physical room units and booking associations.
             </p>
-            <div className="flex gap-4 justify-end">
+            <div className="flex gap-2.5 justify-end">
               <Button
                 onClick={() => setShowDeleteModal(false)}
                 disabled={isDeleting}
-                className="bg-slate-100 hover:bg-slate-200 text-slate-800 px-6 py-2 rounded-xl font-bold text-xs uppercase tracking-widest"
+                variant="outline"
+                className="text-xs px-4 py-2 border-gray-200"
               >
                 Cancel
               </Button>
               <Button
                 onClick={handleDeleteCategory}
                 disabled={isDeleting}
-                className="bg-rose-600 hover:bg-rose-700 text-white px-6 py-2 rounded-xl font-bold text-xs uppercase tracking-widest flex items-center gap-2"
+                className="bg-rose-600 hover:bg-rose-700 text-white text-xs px-4 py-2 flex items-center gap-1.5"
               >
-                {isDeleting ? <Loader2 size={12} className="animate-spin" /> : <Trash2 size={12} />}
+                {isDeleting ? <Loader2 size={13} className="animate-spin" /> : <Trash2 size={13} />}
                 Confirm Delete
               </Button>
             </div>

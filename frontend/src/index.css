@@ -310,38 +310,134 @@ option,
 .reception-portal-theme,
 .admin-portal-theme *,
 .reception-portal-theme * {
-  font-family: "Outfit", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
 }
 
-/* Enable tabular numbers for tables, metrics, and calendar grids to ensure clean numeric alignments */
+.admin-portal-theme h1,
+.admin-portal-theme h2,
+.admin-portal-theme h3,
+.admin-portal-theme h4,
+.admin-portal-theme h5,
+.admin-portal-theme h6,
+.reception-portal-theme h1,
+.reception-portal-theme h2,
+.reception-portal-theme h3,
+.reception-portal-theme h4,
+.reception-portal-theme h5,
+.reception-portal-theme h6 {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  letter-spacing: normal !important;
+}
+
+/* Modern SaaS Box / Card styling */
+.admin-portal-theme .crm-card,
+.reception-portal-theme .crm-card {
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+/* Normalize oversized rounded corners in admin and reception portals to sleek 8px SaaS boxes */
+.admin-portal-theme .rounded-\[2\.5rem\],
+.admin-portal-theme .rounded-\[2rem\],
+.admin-portal-theme .rounded-\[1\.5rem\],
+.admin-portal-theme .rounded-3xl,
+.admin-portal-theme .rounded-2xl,
+.reception-portal-theme .rounded-\[2\.5rem\],
+.reception-portal-theme .rounded-\[2rem\],
+.reception-portal-theme .rounded-\[1\.5rem\],
+.reception-portal-theme .rounded-3xl,
+.reception-portal-theme .rounded-2xl {
+  border-radius: 0.5rem !important;
+}
+
+/* Normalize heavy shadows to subtle SaaS shadows */
+.admin-portal-theme .shadow-2xl,
+.admin-portal-theme .shadow-xl,
+.reception-portal-theme .shadow-2xl,
+.reception-portal-theme .shadow-xl {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.08), 0 1px 2px -1px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Active Nav Item - Mint highlight with soft green border like in reference */
+.admin-portal-theme .crm-nav-active,
+.reception-portal-theme .crm-nav-active {
+  background-color: #f0fdf4 !important;
+  color: #059669 !important;
+  border: 1px solid #a7f3d0 !important;
+  font-weight: 500;
+}
+
+/* Tabular numbers for clean data alignment */
 .admin-portal-theme table,
 .reception-portal-theme table,
 .admin-portal-theme .tabular-nums,
-.reception-portal-theme .tabular-nums,
-.admin-portal-theme [class*="text-"],
-.reception-portal-theme [class*="text-"] {
+.reception-portal-theme .tabular-nums {
   font-variant-numeric: tabular-nums;
 }
 
-/* Disable ornate styles for admin and receptionist portals to keep them clean and professional */
-.admin-portal-theme .ornate-shape,
-.reception-portal-theme .ornate-shape,
-.admin-portal-theme button.ornate-shape,
-.reception-portal-theme button.ornate-shape,
-.admin-portal-theme .ornate-border,
-.reception-portal-theme .ornate-border {
-  clip-path: none !important;
-  border-radius: 8px !important;
+/* Print Media Formatting for Reports and Statements */
+@media print {
+  /* Hide all interactive elements, navigation, buttons, and sidebars */
+  header,
+  aside,
+  nav,
+  .no-print,
+  button,
+  .print\:hidden {
+    display: none !important;
+  }
+
+  /* Reset body and background for crisp printer output */
+  body, html {
+    background: #ffffff !important;
+    color: #111827 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    font-size: 10pt !important;
+  }
+
+  .admin-portal-theme,
+  .reception-portal-theme {
+    background: #ffffff !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  main {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
+  .printable-document {
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
+  table {
+    width: 100% !important;
+    page-break-inside: auto;
+  }
+
+  tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+
+  thead {
+    display: table-header-group;
+  }
+
+  tfoot {
+    display: table-footer-group;
+  }
 }
 
-.admin-portal-theme .ornate-border::before,
-.reception-portal-theme .ornate-border::before {
-  display: none !important;
-}
-
-/* Also ensure normal solid border colors for buttons if they have ornate-border */
-.admin-portal-theme button.ornate-border,
-.reception-portal-theme button.ornate-border {
-  border: 1px solid #e2e8f0 !important;
-}
 
