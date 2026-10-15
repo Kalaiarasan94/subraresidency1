@@ -1,0 +1,51 @@
+================================================================================
+SUBRA RESIDENCY – HOTEL BOOKING SOFTWARE DETAILS
+================================================================================
+
+1. Landing Page
+--------------------------------------------------------------------------------
+Website: https://subraresidency.com
+
+
+2. Admin Login
+--------------------------------------------------------------------------------
+URL: https://subraresidency.com/admin
+Username: admin
+Password: admin123
+
+
+3. Reception Login
+--------------------------------------------------------------------------------
+URL: https://subraresidency.com/reception
+Username: receptionist
+Password: recep123
+
+
+4. Email & Notification Services (Brevo)
+--------------------------------------------------------------------------------
+Connected Email: subraresidency@gmail.com
+Provider: Brevo (formerly Sendinblue)
+
+
+5. Domain and Server Renewal Details – Subra Residency
+--------------------------------------------------------------------------------
+* Domain Renewal Date: 5 September 2027
+* Server Renewal Date: 5 September 2030
+
+We will notify you one month before each renewal date to ensure timely renewal
+and avoid any service interruptions. All renewal reminders and related updates
+will be shared in this group.
+
+
+6. Annual Maintenance Contract (AMC)
+--------------------------------------------------------------------------------
+The AMC plan will be valid from November 2026 to November 2027.
+
+All software support requests, domain renewal charges, server maintenance
+expenses, and related updates will be discussed and shared in this group for
+easy reference.
+
+The support team will be available during business hours to assist with
+software-related issues under the AMC plan.
+
+================================================================================
