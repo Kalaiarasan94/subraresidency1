@@ -33,9 +33,169 @@ export const getPublicAppUrl = (): string => {
     return 'https://subraresidency.com';
 };
 
+// Generic fetch with credentials for multi-user session isolation
+export const apiFetch = async (endpoint: string, options: RequestInit = {}) => {
+    const defaultOptions: RequestInit = {
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json',
+            ...(options.headers || {})
+        }
+    };
+    return fetch(`${API_BASE_URL}${endpoint.startsWith('/') ? endpoint : '/' + endpoint}`, {
+        ...defaultOptions,
+        ...options,
+        headers: {
+            ...defaultOptions.headers,
+            ...(options.headers || {})
+        }
+    });
+};
+
+export interface CartItem {
+    id: number;
+    category_id: number;
+    category_name: string;
+    room_id: number | null;
+    room_number: string;
+    room_name: string;
+    featured_image?: string;
+    check_in: string;
+    check_out: string;
+    nights: number;
+    guests: number;
+    adults: number;
+    children: number;
+    price_per_night: number;
+    total_price: number;
+    created_at?: string;
+}
+
+export interface CartData {
+    id: number;
+    items: CartItem[];
+    total_items: number;
+    subtotal: number;
+    total_amount: number;
+}
+
+// ==========================================
+// CART APIS (Multi-User Session Isolated)
+// ==========================================
+
+export const fetchCart = async (): Promise<CartData | null> => {
+    try {
+        const res = await apiFetch('/cart', { method: 'GET' });
+        if (!res.ok) throw new Error('Failed to fetch cart');
+        const data = await res.json();
+        return data.cart || { id: 0, items: [], total_items: 0, subtotal: 0, total_amount: 0 };
+    } catch (err) {
+        console.error('fetchCart Error:', err);
+        return null;
+    }
+};
+
+export const addToCart = async (payload: {
+    category_id: number;
+    room_id?: number;
+    room_number?: string;
+    check_in: string;
+    check_out: string;
+    guests?: number;
+    adults?: number;
+    children?: number;
+}): Promise<{ status: string; message: string; cart: CartData } | null> => {
+    try {
+        const res = await apiFetch('/cart/add', {
+            method: 'POST',
+            body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        return data;
+    } catch (err) {
+        console.error('addToCart Error:', err);
+        return null;
+    }
+};
+
+export const updateCartItem = async (payload: {
+    item_id: number;
+    check_in?: string;
+    check_out?: string;
+    guests?: number;
+    adults?: number;
+    children?: number;
+    room_id?: number;
+}): Promise<{ status: string; message: string; cart: CartData } | null> => {
+    try {
+        const res = await apiFetch('/cart/update', {
+            method: 'POST',
+            body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        return data;
+    } catch (err) {
+        console.error('updateCartItem Error:', err);
+        return null;
+    }
+};
+
+export const removeFromCart = async (itemId: number): Promise<{ status: string; message: string; cart: CartData } | null> => {
+    try {
+        const res = await apiFetch('/cart/remove', {
+            method: 'POST',
+            body: JSON.stringify({ item_id: itemId })
+        });
+        const data = await res.json();
+        return data;
+    } catch (err) {
+        console.error('removeFromCart Error:', err);
+        return null;
+    }
+};
+
+export const clearCart = async (): Promise<{ status: string; message: string; cart: CartData } | null> => {
+    try {
+        const res = await apiFetch('/cart/clear', {
+            method: 'POST'
+        });
+        const data = await res.json();
+        return data;
+    } catch (err) {
+        console.error('clearCart Error:', err);
+        return null;
+    }
+};
+
+export const checkoutCart = async (payload: {
+    name: string;
+    email: string;
+    phone: string;
+    address?: string;
+    country?: string;
+    special_requests?: string;
+    payment_method?: string;
+}): Promise<{ status: string; booking_id: string; booking_ids?: string[]; total_amount: number; message: string } | null> => {
+    try {
+        const res = await apiFetch('/cart/checkout', {
+            method: 'POST',
+            body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        return data;
+    } catch (err) {
+        console.error('checkoutCart Error:', err);
+        return null;
+    }
+};
+
+// ==========================================
+// ROOMS & BOOKINGS APIS
+// ==========================================
+
 export const fetchRoomCategories = async () => {
     try {
-        const response = await fetch(`${API_BASE_URL}/rooms/categories`);
+        const response = await apiFetch('/rooms/categories', { method: 'GET' });
         if (!response.ok) throw new Error('Failed to fetch rooms');
         const data = await response.json();
         return data;
@@ -47,9 +207,8 @@ export const fetchRoomCategories = async () => {
 
 export const createBooking = async (bookingData: any) => {
     try {
-        const response = await fetch(`${API_BASE_URL}/bookings/create`, {
+        const response = await apiFetch('/bookings/create', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(bookingData)
         });
         return await response.json();
@@ -61,9 +220,8 @@ export const createBooking = async (bookingData: any) => {
 
 export const createPaymentOrder = async (payload: { booking_id: string; amount: number; currency?: string }) => {
     try {
-        const response = await fetch(`${API_BASE_URL}/payments/createOrder`, {
+        const response = await apiFetch('/payments/createOrder', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
         });
         return await response.json();
@@ -75,9 +233,8 @@ export const createPaymentOrder = async (payload: { booking_id: string; amount: 
 
 export const verifyPayment = async (payload: any) => {
     try {
-        const response = await fetch(`${API_BASE_URL}/payments/verify`, {
+        const response = await apiFetch('/payments/verify', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
         });
         return await response.json();
@@ -89,32 +246,31 @@ export const verifyPayment = async (payload: any) => {
 
 export const fetchBookingById = async (bookingId: string) => {
     try {
-        const resp = await fetch(`${API_BASE_URL}/bookings/view?booking_id=${encodeURIComponent(bookingId)}`);
-        if (!resp.ok) throw new Error('Failed to fetch booking');
+        const resp = await apiFetch(`/bookings/view?booking_id=${encodeURIComponent(bookingId)}`, { method: 'GET' });
+        if (!resp.ok) throw new Error('Booking not found');
         return await resp.json();
-    } catch (e) {
-        console.error(e);
+    } catch (error) {
+        console.error('API Error:', error);
         return null;
     }
 };
 
-export const notifyQrScan = async (bookingId: string, arrivalNote?: string) => {
+export const scanQrCode = async (code: string) => {
     try {
-        const resp = await fetch(`${API_BASE_URL}/bookings/qrScan`, {
+        const resp = await apiFetch('/bookings/qrScan', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ booking_id: bookingId, arrival_note: arrivalNote })
+            body: JSON.stringify({ code })
         });
         return await resp.json();
     } catch (e) {
         console.error(e);
-        return null;
+        return { success: false, message: 'Network or server error during QR scan' };
     }
 };
 
-export const fetchAdminBookings = async (limit = 50, offset = 0) => {
+export const fetchAdminBookings = async (limit: number = 50, offset: number = 0) => {
     try {
-        const resp = await fetch(`${API_BASE_URL}/admin/bookings/list?limit=${limit}&offset=${offset}`);
+        const resp = await apiFetch(`/admin/bookings/list?limit=${limit}&offset=${offset}`, { method: 'GET' });
         if (!resp.ok) throw new Error('Failed to fetch admin bookings');
         return await resp.json();
     } catch (e) {
@@ -123,14 +279,12 @@ export const fetchAdminBookings = async (limit = 50, offset = 0) => {
     }
 };
 
-export const cancelBooking = async (bookingId: string) => {
+export const cancelBooking = async (bookingId: string, reason?: string) => {
     try {
-        const resp = await fetch(`${API_BASE_URL}/admin/bookings/cancel`, {
+        const resp = await apiFetch('/admin/bookings/cancel', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ booking_id: bookingId })
+            body: JSON.stringify({ booking_id: bookingId, reason })
         });
-        if (!resp.ok) throw new Error('Failed to cancel booking');
         return await resp.json();
     } catch (e) {
         console.error(e);
@@ -138,39 +292,35 @@ export const cancelBooking = async (bookingId: string) => {
     }
 };
 
-export const fetchRoomAvailability = async (roomId: number, start?: string, end?: string) => {
+export const fetchAvailabilityList = async (month: number, year: number, category_id?: number) => {
     try {
-        const params = new URLSearchParams();
-        if (roomId) params.set('room_id', String(roomId));
-        if (start) params.set('start', start);
-        if (end) params.set('end', end);
-        params.set('_cb', String(Date.now()));
-        const response = await fetch(`${API_BASE_URL}/rooms/availabilityList?` + params.toString());
-        if (!response.ok) throw new Error('Failed to fetch availability');
+        const params = new URLSearchParams({ month: String(month), year: String(year) });
+        if (category_id) params.append('category_id', String(category_id));
+        const response = await apiFetch('/rooms/availabilityList?' + params.toString(), { method: 'GET' });
+        if (!response.ok) throw new Error('Failed to query availability list');
         return await response.json();
-    } catch (error) {
-        console.error('API Error:', error);
+    } catch (e) {
+        console.error(e);
         return null;
     }
 };
 
-export const updateRoomAvailability = async (payload: any) => {
+export const updateAvailability = async (payload: { room_id: number; date: string; status: string; notes?: string; price_override?: number }) => {
     try {
-        const response = await fetch(`${API_BASE_URL}/rooms/availabilityUpdate`, {
+        const response = await apiFetch('/rooms/availabilityUpdate', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
         });
         return await response.json();
-    } catch (error) {
-        console.error('API Error:', error);
+    } catch (e) {
+        console.error(e);
         return null;
     }
 };
 
-export const fetchBookingForRoomDate = async (roomId: number, date: string) => {
+export const fetchAvailabilityBooking = async (roomId: number, date: string) => {
     try {
-        const resp = await fetch(`${API_BASE_URL}/rooms/availabilityBooking?room_id=${roomId}&date=${date}`);
+        const resp = await apiFetch(`/rooms/availabilityBooking?room_id=${roomId}&date=${date}`, { method: 'GET' });
         if (!resp.ok) throw new Error('Failed to fetch booking');
         return await resp.json();
     } catch (e) {
@@ -178,11 +328,11 @@ export const fetchBookingForRoomDate = async (roomId: number, date: string) => {
         return null;
     }
 };
+
 export const updateRoomDetails = async (payload: any) => {
     try {
-        const response = await fetch(`${API_BASE_URL}/rooms/updateDetails`, {
+        const response = await apiFetch('/rooms/updateDetails', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
         });
         return await response.json();
@@ -194,9 +344,8 @@ export const updateRoomDetails = async (payload: any) => {
 
 export const deleteRoomCategory = async (categoryId: number | string) => {
     try {
-        const response = await fetch(`${API_BASE_URL}/rooms/deleteCategory`, {
+        const response = await apiFetch('/rooms/deleteCategory', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ id: categoryId })
         });
         return await response.json();
@@ -214,6 +363,7 @@ export const uploadGalleryImage = async (roomId: number | string, file: File) =>
 
         const response = await fetch(`${API_BASE_URL}/rooms/uploadGalleryImage`, {
             method: 'POST',
+            credentials: 'include',
             body: formData
         });
         return await response.json();
@@ -225,9 +375,8 @@ export const uploadGalleryImage = async (roomId: number | string, file: File) =>
 
 export const deleteGalleryImage = async (roomId: number | string, imagePath: string) => {
     try {
-        const response = await fetch(`${API_BASE_URL}/rooms/deleteGalleryImage`, {
+        const response = await apiFetch('/rooms/deleteGalleryImage', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ room_id: roomId, image_path: imagePath })
         });
         return await response.json();
@@ -239,7 +388,7 @@ export const deleteGalleryImage = async (roomId: number | string, imagePath: str
 
 export const checkAvailability = async (checkin: string, checkout: string) => {
     try {
-        const response = await fetch(`${API_BASE_URL}/rooms/checkAvailability?checkin=${checkin}&checkout=${checkout}`);
+        const response = await apiFetch(`/rooms/checkAvailability?checkin=${checkin}&checkout=${checkout}`, { method: 'GET' });
         if (!response.ok) throw new Error('Failed to query availability');
         return await response.json();
     } catch (error) {
@@ -250,9 +399,8 @@ export const checkAvailability = async (checkin: string, checkout: string) => {
 
 export const addSubRoom = async (payload: { category_id: number; room_number: string; room_name?: string; floor_number?: string }) => {
     try {
-        const response = await fetch(`${API_BASE_URL}/rooms/addSubRoom`, {
+        const response = await apiFetch('/rooms/addSubRoom', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
         });
         return await response.json();
@@ -264,9 +412,8 @@ export const addSubRoom = async (payload: { category_id: number; room_number: st
 
 export const updateSubRoom = async (payload: { id: number; room_number: string; room_name?: string; floor_number?: string }) => {
     try {
-        const response = await fetch(`${API_BASE_URL}/rooms/updateSubRoom`, {
+        const response = await apiFetch('/rooms/updateSubRoom', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
         });
         return await response.json();
@@ -276,11 +423,33 @@ export const updateSubRoom = async (payload: { id: number; room_number: string; 
     }
 };
 
+export const fetchRoomAvailability = async (roomId: number, start: string, end: string) => {
+    try {
+        const response = await apiFetch(`/rooms/availability?room_id=${roomId}&start=${start}&end=${end}`, { method: 'GET' });
+        if (!response.ok) throw new Error('Failed to fetch availability');
+        return await response.json();
+    } catch (e) {
+        console.error(e);
+        return [];
+    }
+};
+
+export const updateRoomAvailability = async (payload: { room_id: number; date: string; status: string; notes?: string; price_override?: number }) => {
+    return updateAvailability(payload);
+};
+
+export const notifyQrScan = async (code: string) => {
+    return scanQrCode(code);
+};
+
+export const fetchBookingForRoomDate = async (roomId: number, date: string) => {
+    return fetchAvailabilityBooking(roomId, date);
+};
+
 export const deleteSubRoom = async (id: number) => {
     try {
-        const response = await fetch(`${API_BASE_URL}/rooms/deleteSubRoom`, {
+        const response = await apiFetch('/rooms/deleteSubRoom', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ id })
         });
         return await response.json();
@@ -289,4 +458,3 @@ export const deleteSubRoom = async (id: number) => {
         return null;
     }
 };
-

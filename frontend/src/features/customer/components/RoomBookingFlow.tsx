@@ -62,12 +62,16 @@ export const RoomBookingFlow = ({ isOpen, onClose, room }: { isOpen: boolean, on
     if (step === 'details') setStep('form');
     else if (step === 'form') setStep('payment');
     else if (step === 'payment') {
+    const rawPriceVal = room?.price_24h ?? room?.base_price ?? (typeof room?.price === 'string' ? room.price.replace(/[^0-9.]/g, '') : room?.price);
+    const numericRate = Math.round(parseFloat(String(rawPriceVal || '1600')) || 1600);
+    const amountValue = numericRate <= 1 ? 1 : numericRate;
+
     // 1) create booking as pending (server marks payment_status pending)
     setIsSubmitting(true);
     const bookingResp = await createBooking({
       ...bookingDetails,
       category_id: room.id,
-      amount: room.price_24h || 3500
+      amount: amountValue
     });
     if (!bookingResp || bookingResp.status !== 'success') {
       setIsSubmitting(false);
@@ -78,7 +82,6 @@ export const RoomBookingFlow = ({ isOpen, onClose, room }: { isOpen: boolean, on
   const bookingId = bookingResp.booking_id;
 
   // 2) determine amount (in rupees) and request Razorpay order from backend
-  const amountValue = Number(room?.price_24h || room?.price || 3500);
   let orderResp = null;
   try {
     orderResp = await createPaymentOrder({ booking_id: bookingId, amount: amountValue });

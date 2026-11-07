@@ -1,0 +1,60 @@
+<?php
+// backend/controllers/AuthController.php
+
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json; charset=UTF-8");
+header("Access-Control-Allow-Methods: POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With, Cache-Control, cache-control, Pragma, Expires, *");
+
+include_once __DIR__ . '/../config/db.php';
+
+class AuthController {
+    private $db;
+
+    public function __construct() {
+        $database = new Database();
+        $this->db = $database->getConnection();
+    }
+
+    public function login($user_type) {
+        $data = json_decode(file_get_contents("php://input"));
+
+        if (!empty($data->username) && !empty($data->password)) {
+            $table = ($user_type == 'admin') ? 'admins' : 'reception_users';
+            
+            // Map 'receptionist' to 'reception' for consistency if needed
+            $role_name = ($user_type == 'admin') ? 'admin' : 'receptionist';
+
+            $query = "SELECT id, username, password, full_name FROM " . $table . " WHERE username = ?";
+            $stmt = $this->db->prepare($query);
+            $stmt->execute([$data->username]);
+            
+            if ($stmt->rowCount() > 0) {
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                if (password_verify($data->password, $row['password'])) {
+                    http_response_code(200);
+                    echo json_encode(array(
+                        "status" => "success",
+                        "message" => "Login successful",
+                        "user" => array(
+                            "id" => $row['id'],
+                            "username" => $row['username'],
+                            "full_name" => $row['full_name'],
+                            "role" => $role_name
+                        )
+                    ));
+                } else {
+                    http_response_code(401);
+                    echo json_encode(array("status" => "error", "message" => "Invalid credentials"));
+                }
+            } else {
+                http_response_code(401);
+                echo json_encode(array("status" => "error", "message" => "User not found"));
+            }
+        } else {
+            http_response_code(400);
+            echo json_encode(array("status" => "error", "message" => "Data incomplete"));
+        }
+    }
+}
+?>

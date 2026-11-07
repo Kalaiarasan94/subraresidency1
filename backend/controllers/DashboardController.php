@@ -417,6 +417,8 @@ class DashboardController
     {
         try {
             $this->db->exec("SET FOREIGN_KEY_CHECKS = 0;");
+            try { $this->db->exec("DELETE FROM `cart_items`;"); } catch (Exception $e) {}
+            try { $this->db->exec("DELETE FROM `carts`;"); } catch (Exception $e) {}
             $this->db->exec("DELETE FROM `booking_details`;");
             $this->db->exec("ALTER TABLE `booking_details` AUTO_INCREMENT = 1;");
             $this->db->exec("DELETE FROM `booking_rooms`;");
@@ -433,11 +435,15 @@ class DashboardController
             $this->db->exec("ALTER TABLE `bookings` AUTO_INCREMENT = 1;");
             $this->db->exec("DELETE FROM `users`;");
             $this->db->exec("ALTER TABLE `users` AUTO_INCREMENT = 1;");
-            $this->db->exec("UPDATE `rooms_new` SET `status` = 'Available' WHERE `status` = 'Occupied';");
-            $this->db->exec("UPDATE `rooms` SET `status` = 'available' WHERE `status` = 'occupied';");
+            try {
+                $this->db->exec("DELETE FROM `expenses`;");
+                $this->db->exec("ALTER TABLE `expenses` AUTO_INCREMENT = 1;");
+            } catch (Exception $e) {}
+            $this->db->exec("UPDATE `rooms_new` SET `status` = 'Available' WHERE `status` IN ('Occupied', 'Booked');");
+            $this->db->exec("UPDATE `rooms` SET `status` = 'available' WHERE `status` IN ('occupied', 'booked');");
             $this->db->exec("SET FOREIGN_KEY_CHECKS = 1;");
 
-            echo json_encode(['status' => 'success', 'message' => 'All customer booking data cleared successfully.']);
+            echo json_encode(['status' => 'success', 'message' => 'All test bookings, payments, and guest records have been cleared, and rooms reset to Available.']);
         } catch (Exception $e) {
             http_response_code(500);
             echo json_encode(["status" => "error", "message" => $e->getMessage()]);

@@ -4,6 +4,7 @@ import { AnimatePresence } from 'framer-motion';
 import { CustomerNavigation } from './components/CustomerNavigation';
 import { CustomerRoutes } from './components/CustomerRoutes';
 import { RoomDetailPage } from './components/RoomDetailPage';
+import { PromotionalBannerModal } from './components/PromotionalBannerModal';
 import { Footer, ROOMS_DATA, RoomBookingFlow, TempleModal } from './components/CustomerPortalContent';
 
 export const CustomerPortal = () => {
@@ -88,6 +89,8 @@ export const CustomerPortal = () => {
           <TempleModal temple={selectedTemple} onClose={() => setSelectedTemple(null)} />
         )}
       </AnimatePresence>
+
+      <PromotionalBannerModal />
 
       {!hideHeaderFooter && <Footer />}
     </div>

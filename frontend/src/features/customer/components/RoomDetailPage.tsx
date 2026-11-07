@@ -1,13 +1,14 @@
-// react hooks imported below (useState, useEffect)
 import {
   ShieldCheck, ArrowLeft, Star, MapPin,
-  Info, CheckCircle2, User, Bed, Ruler, Calendar, AlertTriangle
+  Info, CheckCircle2, User, Bed, Ruler, Calendar, AlertTriangle,
+  X, ChevronLeft, ChevronRight, Eye, Utensils, Sparkles, Building2, Maximize2
 } from 'lucide-react';
 import { Button } from '../../../components/ui/button';
 import { Card, CardContent } from '../../../components/ui/card';
 import { Badge } from '../../../components/ui/badge';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { fetchRoomAvailability, fetchRoomCategories, checkAvailability, API_BASE_URL } from '../../../lib/api';
+import { resolveRoomImageUrl } from '../../../lib/roomImageHelper';
 
 interface Props {
   room: any;
@@ -201,13 +202,14 @@ export const RoomDetailPage: React.FC<Props> = ({ room, onBack, onBook, searchFi
   // --- Dynamic data mapping from Admin DB ---
   const title = room.title || room.room_name || 'Luxury Sanctuary';
   const price = formatPrice(room.price || room.base_price);
-  // parseFloat (not a digit-stripping regex) so "2700.00" reads as 2700, not 270000
-  const numericRate = Math.round(parseFloat(String(room.base_price || room.price_24h || room.price || '3500')) || 3500);
+  const rawPriceVal = room.price_24h ?? room.base_price ?? (typeof room.price === 'string' ? room.price.replace(/[^0-9.]/g, '') : room.price);
+  const numericRate = Math.round(parseFloat(String(rawPriceVal || '1600')) || 1600);
+  const isTestModePrice = numericRate <= 1;
 
-  const roomFeeTotal = numericRate * nights;
-  const cleaningFee = 500;
-  const serviceFee = 850;
-  const grandTotal = roomFeeTotal + cleaningFee + serviceFee;
+  const roomFeeTotal = isTestModePrice ? 1 : numericRate * nights;
+  const cleaningFee = isTestModePrice ? 0 : 500;
+  const serviceFee = isTestModePrice ? 0 : 850;
+  const grandTotal = isTestModePrice ? 1 : (roomFeeTotal + cleaningFee + serviceFee);
 
   const handleReserve = () => {
     if (isStayBlocked) return;
@@ -220,10 +222,40 @@ export const RoomDetailPage: React.FC<Props> = ({ room, onBack, onBook, searchFi
     });
   };
 
+  // Lightbox state
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
+
   // Images
   const mainImage = room.featured_image || room.image || 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&q=80';
-  const rawGallery = room.images || (room.galleries ? room.galleries : []);
-  const galleryImages = rawGallery.length > 0 ? rawGallery : [mainImage];
+  const rawGallery = Array.isArray(room.images) && room.images.length > 0
+    ? room.images
+    : (room.galleries && room.galleries.length > 0 ? room.galleries : [mainImage]);
+  const galleryImages: string[] = rawGallery.map((img: string) => resolveRoomImageUrl(img));
+
+  const openLightbox = (idx: number) => {
+    setLightboxIndex(Math.max(0, Math.min(idx, galleryImages.length - 1)));
+    setLightboxOpen(true);
+  };
+
+  const nextImage = useCallback(() => {
+    setLightboxIndex((prev) => (prev + 1) % (galleryImages.length || 1));
+  }, [galleryImages.length]);
+
+  const prevImage = useCallback(() => {
+    setLightboxIndex((prev) => (prev - 1 + galleryImages.length) % (galleryImages.length || 1));
+  }, [galleryImages.length]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!lightboxOpen) return;
+      if (e.key === 'Escape') setLightboxOpen(false);
+      if (e.key === 'ArrowRight') nextImage();
+      if (e.key === 'ArrowLeft') prevImage();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [lightboxOpen, nextImage, prevImage]);
 
   // Specs
   const maxGuests = room.max_guests || room.adults || room.max_adults || 2;
@@ -232,15 +264,20 @@ export const RoomDetailPage: React.FC<Props> = ({ room, onBack, onBook, searchFi
   const size = room.size || room.room_size || '450';
   const floor = room.floor || room.floor_number || '3';
 
-  // Amenities
-  let amenities: any[] = [];
+  // Amenities (client request: strictly exclude breakfast & parking)
+  let rawAmenities: any[] = [];
   try {
-    amenities = Array.isArray(room.amenities)
+    rawAmenities = Array.isArray(room.amenities)
       ? room.amenities
       : typeof room.amenities === 'string'
         ? JSON.parse(room.amenities)
         : [];
-  } catch { amenities = []; }
+  } catch { rawAmenities = []; }
+
+  const amenities = rawAmenities.filter((amenity: any) => {
+    const text = (typeof amenity === 'string' ? amenity : (amenity?.name || amenity?.amenity_name || '')).toLowerCase();
+    return !text.includes('breakfast') && !text.includes('parking');
+  });
 
   return (
     <div className="min-h-screen bg-slate-50/30">
@@ -291,26 +328,52 @@ export const RoomDetailPage: React.FC<Props> = ({ room, onBack, onBook, searchFi
 
         {/* Gallery */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-16 h-[550px] min-h-0">
-          <div className="md:col-span-2 h-full min-h-0 rounded-2xl overflow-hidden group border border-slate-100 shadow-sm relative">
+          <div 
+            onClick={() => openLightbox(0)}
+            className="md:col-span-2 h-full min-h-0 rounded-2xl overflow-hidden group border border-slate-100 shadow-sm relative cursor-pointer"
+          >
             <img src={galleryImages[0]} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" alt="Main" />
-            <div className="absolute inset-0 bg-black/5" />
+            <div className="absolute inset-0 bg-black/5 group-hover:bg-black/15 transition-colors" />
+            <div className="absolute top-4 left-4">
+              <Badge className="bg-catalogue-green/90 backdrop-blur-md text-white text-[9px] font-bold uppercase tracking-wider border-none shadow-sm">
+                Primary Room Photo
+              </Badge>
+            </div>
           </div>
           <div className="grid grid-rows-2 h-full min-h-0 gap-4">
-            <div className="min-h-0 rounded-2xl overflow-hidden group border border-slate-100 shadow-sm">
+            <div 
+              onClick={() => openLightbox(1)}
+              className="min-h-0 rounded-2xl overflow-hidden group border border-slate-100 shadow-sm relative cursor-pointer"
+            >
               <img src={galleryImages[1] || galleryImages[0]} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Detail 1" />
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-colors" />
             </div>
-            <div className="min-h-0 rounded-2xl overflow-hidden group border border-slate-100 shadow-sm">
+            <div 
+              onClick={() => openLightbox(2)}
+              className="min-h-0 rounded-2xl overflow-hidden group border border-slate-100 shadow-sm relative cursor-pointer"
+            >
               <img src={galleryImages[2] || galleryImages[0]} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Detail 2" />
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-colors" />
             </div>
           </div>
           <div className="grid grid-rows-2 h-full min-h-0 gap-4">
-            <div className="min-h-0 rounded-2xl overflow-hidden group border border-slate-100 shadow-sm">
+            <div 
+              onClick={() => openLightbox(3)}
+              className="min-h-0 rounded-2xl overflow-hidden group border border-slate-100 shadow-sm relative cursor-pointer"
+            >
               <img src={galleryImages[3] || galleryImages[0]} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Detail 3" />
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-colors" />
             </div>
-            <div className="min-h-0 rounded-2xl overflow-hidden group border border-slate-100 shadow-sm relative">
+            <div 
+              onClick={() => openLightbox(4)}
+              className="min-h-0 rounded-2xl overflow-hidden group border border-slate-100 shadow-sm relative cursor-pointer"
+            >
               <img src={galleryImages[4] || galleryImages[0]} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Detail 4" />
-              <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                <span className="text-white font-bold text-xs uppercase tracking-widest">Show All</span>
+              <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-90 group-hover:opacity-100 transition-opacity">
+                <span className="text-white font-bold text-xs uppercase tracking-widest bg-black/70 px-4 py-2 rounded-xl backdrop-blur-md border border-white/20 flex items-center gap-2 shadow-lg">
+                  <Maximize2 size={13} />
+                  View All ({galleryImages.length})
+                </span>
               </div>
             </div>
           </div>
@@ -370,6 +433,71 @@ export const RoomDetailPage: React.FC<Props> = ({ room, onBack, onBook, searchFi
                     <p className="text-xs text-slate-400 font-bold uppercase tracking-widest">Standard Essentials Provided</p>
                   </div>
                 )}
+              </div>
+            </div>
+
+            {/* Visual Gallery: Room Photos, Facilities, Dining, Property Views */}
+            <div className="space-y-8 pt-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
+                <div>
+                  <h3 className="text-[10px] font-bold text-catalogue-gold uppercase tracking-[0.4em] mb-1">Visual Experience</h3>
+                  <h2 className="text-2xl font-black font-playfair text-catalogue-green uppercase">Room, Facilities & Property Views</h2>
+                </div>
+                <Button 
+                  onClick={() => openLightbox(0)}
+                  variant="outline"
+                  className="border-catalogue-gold/40 text-catalogue-green hover:bg-catalogue-gold/10 font-bold uppercase tracking-wider text-[11px] rounded-xl self-start sm:self-auto cursor-pointer"
+                >
+                  <Maximize2 size={14} className="mr-2 text-catalogue-gold" />
+                  View Lightbox ({galleryImages.length} Photos)
+                </Button>
+              </div>
+
+              {/* Grid of all images: room images (1, 2, 3...) first, followed by Properties Views, Facilities, and Dining */}
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+                {galleryImages.map((img: string, idx: number) => {
+                  let label = 'Room';
+                  let icon = <Building2 size={11} className="text-catalogue-gold" />;
+                  const lower = String(img).toLowerCase();
+                  if (lower.includes('properties') || lower.includes('view') || lower.includes('proprties')) {
+                    label = 'Properties';
+                    icon = <Eye size={11} className="text-catalogue-gold" />;
+                  } else if (lower.includes('facility') || lower.includes('facilit')) {
+                    label = 'Facilities';
+                    icon = <Sparkles size={11} className="text-catalogue-gold" />;
+                  } else if (lower.includes('dining')) {
+                    label = 'Dining';
+                    icon = <Utensils size={11} className="text-catalogue-gold" />;
+                  } else if (idx === 0) {
+                    label = 'Room (Main)';
+                  }
+
+                  return (
+                    <div 
+                      key={idx}
+                      onClick={() => openLightbox(idx)}
+                      className="group relative aspect-[4/3] rounded-xl overflow-hidden bg-slate-100 cursor-pointer border border-slate-200/80 shadow-xs hover:shadow-md transition-all"
+                    >
+                      <img 
+                        src={img} 
+                        alt={`${title} - Gallery Photo ${idx + 1}`} 
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                      />
+                      <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <span className="bg-white/90 text-slate-800 text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full shadow-sm flex items-center gap-1">
+                          <Eye size={12} />
+                          Enlarge
+                        </span>
+                      </div>
+                      <div className="absolute bottom-1.5 left-1.5 pointer-events-none">
+                        <span className="bg-black/70 backdrop-blur-xs text-white text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded flex items-center gap-1">
+                          {icon}
+                          {label}
+                        </span>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
 
@@ -580,6 +708,76 @@ export const RoomDetailPage: React.FC<Props> = ({ room, onBack, onBook, searchFi
           </div>
         </div>
       </div>
+
+      {/* Fullscreen Photo Lightbox Modal */}
+      {lightboxOpen && galleryImages.length > 0 && (
+        <div 
+          className="fixed inset-0 z-50 bg-black/95 backdrop-blur-md flex flex-col justify-between p-4 md:p-6"
+          onClick={() => setLightboxOpen(false)}
+        >
+          {/* Top Bar */}
+          <div 
+            className="flex items-center justify-between text-white max-w-7xl w-full mx-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center gap-3">
+              <span className="text-xs font-bold uppercase tracking-widest text-catalogue-gold">{title}</span>
+              <span className="text-xs text-slate-400 font-sans">({lightboxIndex + 1} of {galleryImages.length})</span>
+            </div>
+            <button 
+              onClick={() => setLightboxOpen(false)}
+              className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors cursor-pointer"
+              title="Close (Esc)"
+            >
+              <X size={20} />
+            </button>
+          </div>
+
+          {/* Main Photo with Navigation Arrows */}
+          <div 
+            className="relative flex-grow flex items-center justify-center my-3 max-w-7xl w-full mx-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button 
+              onClick={prevImage}
+              className="absolute left-2 md:left-6 z-10 w-12 h-12 rounded-full bg-black/60 hover:bg-catalogue-gold text-white flex items-center justify-center transition-all cursor-pointer shadow-lg"
+              title="Previous (Left Arrow)"
+            >
+              <ChevronLeft size={24} />
+            </button>
+            <img 
+              src={galleryImages[lightboxIndex]} 
+              alt={`${title} - View ${lightboxIndex + 1}`} 
+              className="max-h-[72vh] max-w-[90vw] object-contain rounded-xl shadow-2xl select-none"
+            />
+            <button 
+              onClick={nextImage}
+              className="absolute right-2 md:right-6 z-10 w-12 h-12 rounded-full bg-black/60 hover:bg-catalogue-gold text-white flex items-center justify-center transition-all cursor-pointer shadow-lg"
+              title="Next (Right Arrow)"
+            >
+              <ChevronRight size={24} />
+            </button>
+          </div>
+
+          {/* Thumbnails Tray */}
+          <div 
+            className="flex items-center justify-center gap-2 overflow-x-auto py-2 max-w-5xl mx-auto w-full px-2"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {galleryImages.map((img: string, idx: number) => (
+              <button
+                key={idx}
+                onClick={() => setLightboxIndex(idx)}
+                className={`relative w-14 h-11 md:w-16 md:h-12 rounded-lg overflow-hidden shrink-0 border-2 transition-all cursor-pointer ${
+                  idx === lightboxIndex ? 'border-catalogue-gold scale-105 shadow-md' : 'border-transparent opacity-40 hover:opacity-100'
+                }`}
+              >
+                <img src={img} alt="thumb" className="w-full h-full object-cover" />
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

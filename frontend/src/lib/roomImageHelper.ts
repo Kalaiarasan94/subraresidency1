@@ -1,11 +1,11 @@
 import { BACKEND_URL } from './api';
 
-import roomPhoto1 from '../assets/hotel/rooms/ChatGPT Image May 16, 2026, 07_23_42 PM (8).png';
-import roomPhoto2 from '../assets/hotel/rooms/ChatGPT Image May 16, 2026, 07_23_38 PM (3).png';
-import roomPhoto3 from '../assets/hotel/rooms/ChatGPT Image May 16, 2026, 07_23_42 PM (6).png';
-import roomPhoto4 from '../assets/hotel/rooms/ChatGPT Image May 16, 2026, 07_23_43 PM (9).png';
-import roomPhoto5 from '../assets/hotel/rooms/ChatGPT Image May 16, 2026, 07_25_12 PM.png';
-import roomPhoto6 from '../assets/hotel/rooms/ChatGPT Image May 16, 2026, 07_32_13 PM (2).png';
+import roomPhoto1 from '../assets/room_details/Deluxe/1.webp';
+import roomPhoto2 from '../assets/room_details/Super_Deluxe/1.webp';
+import roomPhoto3 from '../assets/room_details/Suite/1.webp';
+import roomPhoto4 from '../assets/room_details/Properties_Views/1.webp';
+import roomPhoto5 from '../assets/room_details/Dining/1.jpg';
+import roomPhoto6 from '../assets/room_details/Facilities/1.jpeg';
 
 export const LUXURY_FALLBACK_IMAGES = [
   roomPhoto1,
@@ -51,6 +51,11 @@ export const resolveRoomImageUrl = (url?: string | null, fallbackKey?: string | 
 
   // If already absolute URL
   if (clean.startsWith('http://') || clean.startsWith('https://')) {
+    return clean;
+  }
+
+  // If data URI, blob, or dev server Vite internal path
+  if (clean.startsWith('data:') || clean.startsWith('blob:') || clean.startsWith('/src/') || clean.startsWith('/@fs/')) {
     return clean;
   }
 

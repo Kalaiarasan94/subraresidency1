@@ -140,9 +140,9 @@ export const RoomsPage = ({
   };
 
   const formatPrice = (price: any) => {
-    if (!price) return '₹3,500';
+    if (!price) return '₹1,600';
     const stringPrice = String(price);
-    return stringPrice.includes('₹') ? stringPrice : `₹${stringPrice}`;
+    return stringPrice.includes('₹') ? stringPrice : `₹${Number(stringPrice).toLocaleString('en-IN')}`;
   };
 
   return (

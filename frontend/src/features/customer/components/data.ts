@@ -1,9 +1,39 @@
-import room1 from '../../../assets/hotel/rooms/ChatGPT Image May 16, 2026, 07_23_38 PM (3).png';
-import room2 from '../../../assets/hotel/rooms/ChatGPT Image May 16, 2026, 07_23_42 PM (6).png';
-import room3 from '../../../assets/hotel/rooms/ChatGPT Image May 16, 2026, 07_23_42 PM (7).png';
-import room4 from '../../../assets/hotel/rooms/ChatGPT Image May 16, 2026, 07_23_42 PM (8).png';
-import room5 from '../../../assets/hotel/rooms/ChatGPT Image May 16, 2026, 07_23_43 PM (10).png';
-import room6 from '../../../assets/hotel/rooms/ChatGPT Image May 16, 2026, 07_23_43 PM (9).png';
+// Deluxe Room photos (in order: 1, 2)
+import deluxe1 from '../../../assets/room_details/Deluxe/1.webp';
+import deluxe2 from '../../../assets/room_details/Deluxe/2.jpeg';
+
+// Super Deluxe photos (in order: 1, 2, 3, 4, 5)
+import superDeluxe1 from '../../../assets/room_details/Super_Deluxe/1.webp';
+import superDeluxe2 from '../../../assets/room_details/Super_Deluxe/2.webp';
+import superDeluxe3 from '../../../assets/room_details/Super_Deluxe/3.jpeg';
+import superDeluxe4 from '../../../assets/room_details/Super_Deluxe/4.jpeg';
+import superDeluxe5 from '../../../assets/room_details/Super_Deluxe/5.jpeg';
+
+// Suite Room photos (in order: 1, 2, 3, 4, 5, 6)
+import suite1 from '../../../assets/room_details/Suite/1.webp';
+import suite2 from '../../../assets/room_details/Suite/2.webp';
+import suite3 from '../../../assets/room_details/Suite/3.jpeg';
+import suite4 from '../../../assets/room_details/Suite/4.jpeg';
+import suite5 from '../../../assets/room_details/Suite/5.jpeg';
+import suite6 from '../../../assets/room_details/Suite/6.webp';
+
+// Properties Views photos (ordered right after room images: 1, 2, 3, 4, 5, 6)
+import propView1 from '../../../assets/room_details/Properties_Views/1.webp';
+import propView2 from '../../../assets/room_details/Properties_Views/2.jpeg';
+import propView3 from '../../../assets/room_details/Properties_Views/3.jpeg';
+import propView4 from '../../../assets/room_details/Properties_Views/4.jpeg';
+import propView5 from '../../../assets/room_details/Properties_Views/5.webp';
+import propView6 from '../../../assets/room_details/Properties_Views/6.webp';
+
+// Facilities photos (ordered after properties: 1, 2)
+import facility1 from '../../../assets/room_details/Facilities/1.jpeg';
+import facility2 from '../../../assets/room_details/Facilities/2.jpeg';
+
+// Dining photos (ordered after facilities: 1, 2, 3)
+import dining1 from '../../../assets/room_details/Dining/1.jpg';
+import dining2 from '../../../assets/room_details/Dining/2.jpeg';
+import dining3 from '../../../assets/room_details/Dining/3.jpeg';
+
 import hidden1 from '../../../assets/hidden/IMG_5703.PNG';
 import hidden2 from '../../../assets/hidden/IMG_5704.PNG';
 import hidden3 from '../../../assets/hidden/IMG_5705.PNG';
@@ -11,18 +41,88 @@ import hidden4 from '../../../assets/hidden/IMG_5706.PNG';
 import hidden5 from '../../../assets/hidden/IMG_5707.PNG';
 import hidden6 from '../../../assets/hidden/IMG_5709.PNG';
 import { airavatesvaraImg, mahamahamImg, ramaswamyImg, sarangapaniImg, uppiliappanImg } from './assets';
+
+export const COMMON_PROPERTIES_IMAGES = [
+  propView1,
+  propView2,
+  propView3,
+  propView4,
+  propView5,
+  propView6,
+];
+
+export const COMMON_FACILITIES_IMAGES = [
+  facility1,
+  facility2,
+];
+
+export const COMMON_DINING_IMAGES = [
+  dining1,
+  dining2,
+  dining3,
+];
+
+// In exact requested order: Room images (1, 2, 3...) -> Properties Views -> Facilities -> Dining
+export const COMMON_HOTEL_IMAGES = [
+  ...COMMON_PROPERTIES_IMAGES,
+  ...COMMON_FACILITIES_IMAGES,
+  ...COMMON_DINING_IMAGES,
+];
+
 export const ROOMS_DATA = [
   {
-    id: 'deluxe',
-    title: "Deluxe Room",
-    price: "₹3,500",
-    image: room1,
-    images: [room1, room4],
+    id: 1,
+    title: "Deluxe",
+    name: "Deluxe",
+    category_name: "Deluxe",
+    subtitle: "Deluxe Room",
+    price: "₹1,600",
+    base_price: "1600.00",
+    base_price_24h: "1600.00",
+    price_24h: 1600,
+    base_price_12h: "1000.00",
+    price_12h: 1000,
+    image: deluxe1,
+    featured_image: deluxe1,
+    images: [
+      deluxe1,
+      deluxe2,
+      ...COMMON_HOTEL_IMAGES,
+    ],
+    room_images: [deluxe1, deluxe2],
+    properties_images: COMMON_PROPERTIES_IMAGES,
+    facility_images: COMMON_FACILITIES_IMAGES,
+    dining_images: COMMON_DINING_IMAGES,
+    view_images: COMMON_PROPERTIES_IMAGES,
     adults: 2,
     children: 1,
-    desc: "A comfortable and thoughtfully arranged room for a calm, restful stay. Ideal for up to 2 guests. (Kids can be allowed if any).",
+    max_guests: 3,
+    size: "240",
+    room_size: "240",
+    floor: "1st - 3rd",
+    floor_number: "1",
+    bed_type: "Queen Size Bed",
+    category_tag: "Deluxe AC",
+    tag: "Deluxe AC",
+    desc: "A comfortable and thoughtfully arranged air-conditioned room for a calm, restful stay. Ideal for up to 2 guests.",
+    description: "A comfortable and thoughtfully arranged air-conditioned room for a calm, restful stay. Ideal for up to 2 guests.",
+    full_description: "Designed for pilgrims and leisure travelers, the Deluxe Room at Subra Residency offers a peaceful sanctuary in the heart of Kumbakonam. Enjoy premium bedding, climate control air conditioning, modern attached bathroom with 24/7 hot water, high-speed Wi-Fi, smart LED TV, and attentive room service.",
+    highlights: "Climate Controlled AC • High-Speed Wi-Fi • 24/7 Hot Water • Daily Housekeeping • Smart TV",
+    house_rules: "Check-in from 12:00 PM. Check-out by 11:00 AM. No smoking. No loud music.",
+    amenities: [
+      "Air Conditioning",
+      "High-Speed Free Wi-Fi",
+      "42-inch Smart TV",
+      "Attached Modern Bathroom",
+      "24/7 Hot Water",
+      "Daily Housekeeping",
+      "Room Service",
+      "Electric Kettle / Coffee Maker",
+      "Wardrobe",
+      "Work Desk"
+    ],
     details: {
-      bed: "King Size Bed",
+      bed: "Queen Size Bed",
       ac: "Fully Air Conditioned",
       wifi: "High Speed Free Wi-Fi",
       tv: "42 inch Smart TV",
@@ -30,31 +130,129 @@ export const ROOMS_DATA = [
     }
   },
   {
-    id: 'super-deluxe',
-    title: "Super Deluxe Room",
-    price: "₹4,500",
-    image: room2,
-    images: [room2, room5],
+    id: 2,
+    title: "Super Deluxe",
+    name: "Super Deluxe",
+    category_name: "Super Deluxe",
+    subtitle: "Executive 1 Bedroom Family Suite with Balcony",
+    price: "₹2,600",
+    base_price: "2600.00",
+    base_price_24h: "2600.00",
+    price_24h: 2600,
+    base_price_12h: "1600.00",
+    price_12h: 1600,
+    image: superDeluxe1,
+    featured_image: superDeluxe1,
+    images: [
+      superDeluxe1,
+      superDeluxe2,
+      superDeluxe3,
+      superDeluxe4,
+      superDeluxe5,
+      ...COMMON_HOTEL_IMAGES,
+    ],
+    room_images: [superDeluxe1, superDeluxe2, superDeluxe3, superDeluxe4, superDeluxe5],
+    properties_images: COMMON_PROPERTIES_IMAGES,
+    facility_images: COMMON_FACILITIES_IMAGES,
+    dining_images: COMMON_DINING_IMAGES,
+    view_images: COMMON_PROPERTIES_IMAGES,
     adults: 3,
     children: 1,
-    desc: "A spacious 1 BHK-style stay with added living comfort. Suitable for 2 or 3 guests.",
+    max_guests: 4,
+    size: "420",
+    room_size: "420",
+    floor: "2nd - 3rd",
+    floor_number: "2",
+    bed_type: "King Size Bed + Extra Bed",
+    category_tag: "Executive 1 BHK with Balcony",
+    tag: "Executive 1 BHK with Balcony",
+    desc: "A spacious 1 BHK-style suite featuring a private balcony with town views, separate living area, and premium conveniences.",
+    description: "A spacious 1 BHK-style suite featuring a private balcony with town views, separate living area, and premium conveniences.",
+    full_description: "The Super Deluxe Suite (Executive 1 Bedroom Family Suite with Balcony) offers generous living space and refined comfort in Kumbakonam. Step out onto your private balcony to soak in morning temple town views. Complete with a master bedroom, inviting living zone, air conditioning, luxury bath fittings, and smart entertainment, this suite is the quintessential choice for families and devotees seeking extra privacy, comfort, and space.",
+    highlights: "Private Balcony with Town View • 1 BHK Layout with Living Area • Climate Control AC • High-Speed Wi-Fi • Rain Shower",
+    house_rules: "Check-in from 12:00 PM. Check-out by 11:00 AM. No smoking. No loud music.",
+    amenities: [
+      "Private Balcony",
+      "1 BHK Living Area",
+      "Air Conditioning",
+      "High-Speed Free Wi-Fi",
+      "43-inch Smart TV",
+      "Attached Modern Bathroom",
+      "24/7 Hot Water",
+      "Mini Refrigerator",
+      "Electric Kettle",
+      "Daily Housekeeping",
+      "Room Service",
+      "Workstation & Sofa Seating"
+    ],
     details: {
-      bed: "Queen Size + Single Bed",
+      bed: "King Size Bed + Extra Bed",
       ac: "Fully Air Conditioned",
       wifi: "High Speed Free Wi-Fi",
-      tv: "50 inch Smart TV",
-      view: "Temple View"
+      tv: "43 inch Smart TV",
+      view: "Temple View with Balcony"
     }
   },
   {
-    id: 'executive-family',
-    title: "Executive Family Suite Room",
-    price: "₹7,500",
-    image: room3,
-    images: [room3, room6],
-    adults: 6,
+    id: 3,
+    title: "Suite",
+    name: "Suite",
+    category_name: "Suite",
+    subtitle: "Executive 2 Bedroom Apartment",
+    price: "₹3,600",
+    base_price: "3600.00",
+    base_price_24h: "3600.00",
+    price_24h: 3600,
+    base_price_12h: "2200.00",
+    price_12h: 2200,
+    image: suite1,
+    featured_image: suite1,
+    images: [
+      suite1,
+      suite2,
+      suite3,
+      suite4,
+      suite5,
+      suite6,
+      ...COMMON_HOTEL_IMAGES,
+    ],
+    room_images: [suite1, suite2, suite3, suite4, suite5, suite6],
+    properties_images: COMMON_PROPERTIES_IMAGES,
+    facility_images: COMMON_FACILITIES_IMAGES,
+    dining_images: COMMON_DINING_IMAGES,
+    view_images: COMMON_PROPERTIES_IMAGES,
+    adults: 5,
     children: 2,
-    desc: "A premium family stay with spacious interiors and enhanced comfort. Suitable for 4 to 6 guests.",
+    max_guests: 6,
+    size: "650",
+    room_size: "650",
+    floor: "3rd - 4th",
+    floor_number: "3",
+    bed_type: "2 King Size Beds",
+    category_tag: "Executive 2 BHK Apartment",
+    tag: "Executive 2 BHK Apartment",
+    desc: "A lavish 2 BHK apartment suite with two private master bedrooms, spacious living hall, dining space, and panoramic views.",
+    description: "A lavish 2 BHK apartment suite with two private master bedrooms, spacious living hall, dining space, and panoramic views.",
+    full_description: "The Suite Room (Executive 2 Bedroom Apartment) is the premier luxury accommodation at Subra Residency, tailored for large families, group pilgrimages, and extended holidays. Featuring two expansive master bedrooms with plush King bedding, an independent central living hall, private balcony, and en-suite contemporary bathrooms. Revel in residential luxury, superior privacy, and premium amenities just moments away from Kumbakonam's sacred heritage and famous temples.",
+    highlights: "2 BHK Apartment Layout • 2 Independent Master Bedrooms • Expansive Living Hall • Private Balconies • Luxury Rain Showers",
+    house_rules: "Check-in from 12:00 PM. Check-out by 11:00 AM. No smoking. No loud music.",
+    amenities: [
+      "2 Independent Master Bedrooms",
+      "2 BHK Apartment Layout",
+      "Private Balconies",
+      "Air Conditioning",
+      "High-Speed Free Wi-Fi",
+      "55-inch Smart TV",
+      "Spacious Living Hall",
+      "Dining Table & Seating",
+      "2 Attached Modern Bathrooms",
+      "24/7 Hot Water",
+      "Mini Refrigerator",
+      "Electric Kettle & Tea Station",
+      "Daily Housekeeping",
+      "Room Service",
+      "Dedicated Work Desk"
+    ],
     details: {
       bed: "2 King Size Beds",
       ac: "Centrally Air Conditioned",

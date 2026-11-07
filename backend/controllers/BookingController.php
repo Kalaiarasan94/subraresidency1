@@ -42,9 +42,38 @@ class BookingController {
                     }
                 }
 
+                // Check for Razorpay ₹1 Live Test Mode override
+                $isTestMode = false;
+                try {
+                    $tStmt = $this->db->prepare("SELECT setting_value FROM settings WHERE setting_key = 'razorpay_test_mode_1_rupee'");
+                    $tStmt->execute();
+                    $tVal = $tStmt->fetchColumn();
+                    $isTestMode = ($tVal === '1' || $tVal === 1 || $tVal === 'true');
+                } catch (Exception $e) {}
+
+                $category_id = $data->category_id ?? null;
+                $isDeluxe = false;
+                if ($category_id) {
+                    if ((int)$category_id === 1) {
+                        $isDeluxe = true;
+                    } else {
+                        try {
+                            $catStmt = $this->db->prepare("SELECT name FROM room_categories WHERE id = ?");
+                            $catStmt->execute([$category_id]);
+                            $catName = $catStmt->fetchColumn();
+                            if ($catName && stripos($catName, 'deluxe') !== false) {
+                                $isDeluxe = true;
+                            }
+                        } catch (Exception $e) {}
+                    }
+                }
+
                 $total_amount = isset($data->total_amount) ? floatval($data->total_amount) : (isset($data->amount) ? floatval($data->amount) : 3500.00);
-                $actual_amount = isset($data->actual_amount) && floatval($data->actual_amount) > 0 ? floatval($data->actual_amount) : $total_amount;
-                $platform_fee = isset($data->platform_fee) ? floatval($data->platform_fee) : max(0.00, $total_amount - $actual_amount);
+                if ($isTestMode && $isDeluxe) {
+                    $total_amount = 1.00;
+                }
+                $actual_amount = ($isTestMode && $isDeluxe) ? 1.00 : (isset($data->actual_amount) && floatval($data->actual_amount) > 0 ? floatval($data->actual_amount) : $total_amount);
+                $platform_fee = ($isTestMode && $isDeluxe) ? 0.00 : (isset($data->platform_fee) ? floatval($data->platform_fee) : max(0.00, $total_amount - $actual_amount));
 
                 $extra_guest_charge = isset($data->extra_guest_charge) ? floatval($data->extra_guest_charge) : (isset($data->extra_charge) ? floatval($data->extra_charge) : 0.00);
                 $extra_adults = isset($data->extra_adults) ? intval($data->extra_adults) : 0;

@@ -221,6 +221,42 @@ CREATE TABLE IF NOT EXISTS audit_logs (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Multi-User Isolated Cart Tables
+CREATE TABLE IF NOT EXISTS `carts` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `session_id` VARCHAR(128) NOT NULL,
+    `user_id` INT NULL,
+    `status` ENUM('active', 'converted', 'abandoned') DEFAULT 'active',
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    UNIQUE KEY `uniq_session` (`session_id`),
+    KEY `idx_user` (`user_id`),
+    KEY `idx_status` (`status`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `cart_items` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `cart_id` INT NOT NULL,
+    `category_id` INT NOT NULL,
+    `room_id` INT NULL,
+    `room_number` VARCHAR(50) NULL,
+    `room_name` VARCHAR(150) NULL,
+    `check_in` DATE NOT NULL,
+    `check_out` DATE NOT NULL,
+    `guests` INT DEFAULT 2,
+    `adults` INT DEFAULT 2,
+    `children` INT DEFAULT 0,
+    `price_per_night` DECIMAL(10,2) NOT NULL,
+    `total_price` DECIMAL(10,2) NOT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    KEY `idx_cart` (`cart_id`),
+    KEY `idx_category` (`category_id`),
+    KEY `idx_room` (`room_id`),
+    KEY `idx_dates` (`check_in`, `check_out`),
+    CONSTRAINT `fk_cart_items_cart` FOREIGN KEY (`cart_id`) REFERENCES `carts` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 -- Seed Data for Authentication
 INSERT INTO admins (username, password, full_name, email) VALUES ('admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Subra Admin', 'admin@subraresidency.com'); -- password is 'admin123' (hashed)
 INSERT INTO reception_users (username, password, full_name, email) VALUES ('rec', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Subra Reception', 'rec@subraresidency.com'); -- password is 'rec123' or 'admin123'? User said rec123.

@@ -4,12 +4,8 @@ $log_file = __DIR__ . '/../logs/payment.log';
 if (!file_exists(dirname($log_file))) mkdir(dirname($log_file), 0777, true);
 error_log("[" . date('Y-m-d H:i:s') . "] INDEX.PHP REACHED\n", 3, $log_file);
 
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With, Cache-Control, cache-control, Pragma, Expires, *");
-header("Cache-Control: no-cache, no-store, must-revalidate");
-header("Pragma: no-cache");
-header("Expires: 0");
+include_once __DIR__ . '/../utils/CorsHelper.php';
+CorsHelper::handle();
 
 // Global error handler for debugging 500 errors
 set_error_handler(function($errno, $errstr, $errfile, $errline) {
@@ -120,6 +116,24 @@ switch ($resource) {
             include_once __DIR__ . '/receptionist/notifications.php';
         } elseif ($sub === 'markRead') {
             include_once __DIR__ . '/receptionist/mark_read.php';
+        }
+        break;
+
+    case 'cart':
+        include_once __DIR__ . '/../controllers/CartController.php';
+        $controller = new CartController();
+        if ($action === 'add') {
+            $controller->add();
+        } elseif ($action === 'update') {
+            $controller->update();
+        } elseif ($action === 'remove') {
+            $controller->remove();
+        } elseif ($action === 'clear') {
+            $controller->clear();
+        } elseif ($action === 'checkout') {
+            $controller->checkout();
+        } else {
+            $controller->get();
         }
         break;
 

@@ -106,12 +106,14 @@ export default function BookingPage() {
   const nights = calculateNights(bookingDetails.checkIn, bookingDetails.checkOut);
   
   // Calculate pricing breakdown
-  const nightlyRate = parseInt(String(room.price || room.price_24h || room.base_price || '3500').replace(/[^0-9]/g, ''), 10) || 3500;
-  const subtotal = nightlyRate * nights;
+  const rawPriceVal = room.price_24h ?? room.base_price ?? (typeof room.price === 'string' ? room.price.replace(/[^0-9.]/g, '') : room.price);
+  const nightlyRate = Math.round(parseFloat(String(rawPriceVal || '1600')) || 1600);
+  const isTestModePrice = nightlyRate <= 1;
+  const subtotal = isTestModePrice ? 1 : nightlyRate * nights;
   // Extra taxes/fees: cleaning 500, service 850 (matches room details page)
-  const cleaningFee = 500;
-  const serviceFee = 850;
-  const totalAmount = subtotal + cleaningFee + serviceFee;
+  const cleaningFee = isTestModePrice ? 0 : 500;
+  const serviceFee = isTestModePrice ? 0 : 850;
+  const totalAmount = isTestModePrice ? 1 : (subtotal + cleaningFee + serviceFee);
 
   const handleStartPayment = async () => {
     if (!bookingDetails.name || !bookingDetails.phone || !bookingDetails.email || !bookingDetails.address) {

@@ -6,42 +6,40 @@ $db = $database->getConnection();
 
 try {
     $db->beginTransaction();
-    
-    // Clear existing for clean start (optional, but good for debugging empty state)
-    // $db->exec("DELETE FROM room_images_new");
-    // $db->exec("DELETE FROM room_amenities");
-    // $db->exec("DELETE FROM rooms_new");
 
     $rooms = [
         [
-            'name' => 'Royal Heritage Suite',
-            'number' => 'SH-501',
-            'price' => 5500,
-            'image' => '/uploads/rooms/room_1.png',
-            'desc' => 'A masterclass in tradition and luxury, featuring hand-carved teak wood interiors and panoramic temple views.',
-            'full_desc' => 'Welcome to our signature Royal Heritage Suite. This room is a tribute to the architectural brilliance of Kumbakonam, blending centuries-old design with 21st-century comfort. Relax on a custom-made King bed surrounded by artisanal woodwork, or enjoy a private sunset on the balcony with a view of the grand gopurams.',
-            'highlights' => 'Panoramic Temple View • Hand-Carved Teak Wood • Private Balcony • Rain Shower',
-            'amenities' => ['High-Speed WiFi', 'Smart TV', 'Mini Fridge', 'Room Service', 'Workspace', 'Temple View']
+            'name' => 'Deluxe',
+            'number' => 'DEL-101',
+            'category_id' => 1,
+            'price' => 1600,
+            'image' => '/uploads/room_details/Deluxe/1.webp',
+            'desc' => 'A comfortable and thoughtfully arranged air-conditioned room for a calm, restful stay. Ideal for up to 2 guests.',
+            'full_desc' => 'Designed for pilgrims and leisure travelers, the Deluxe Room at Subra Residency offers a peaceful sanctuary in the heart of Kumbakonam. Enjoy premium bedding, climate control air conditioning, modern attached bathroom with 24/7 hot water, high-speed Wi-Fi, smart LED TV, and attentive room service.',
+            'highlights' => 'Climate Controlled AC • High-Speed Wi-Fi • 24/7 Hot Water • Daily Housekeeping • Smart TV',
+            'amenities' => ['Air Conditioning', 'High-Speed Free Wi-Fi', '42-inch Smart TV', 'Attached Modern Bathroom', '24/7 Hot Water', 'Daily Housekeeping', 'Room Service']
         ],
         [
-            'name' => 'Executive Garden Room',
-            'number' => 'SH-204',
-            'price' => 3800,
-            'image' => '/uploads/rooms/room_2.png',
-            'desc' => 'Premium executive room with twin beds and a serene view of our lush internal courtyards.',
-            'full_desc' => 'Perfect for business travelers and heritage seekers alike, the Executive Garden Room offers a tranquil escape from the bustling city. Featuring ergonomic workspaces, twin beds with premium linens, and floor-to-ceiling windows overlooking our botanical gardens.',
-            'highlights' => 'Garden View • Twin Beds • Ergonomic Workspace • Soundproof Glazing',
-            'amenities' => ['WiFi', 'Workspace', 'City View', 'Room Service', 'Mini Fridge']
+            'name' => 'Super Deluxe',
+            'number' => 'SD-201',
+            'category_id' => 2,
+            'price' => 2600,
+            'image' => '/uploads/room_details/Super_Deluxe/1.webp',
+            'desc' => 'A spacious 1 BHK-style suite featuring a private balcony with town views, separate living area, and premium conveniences.',
+            'full_desc' => 'The Super Deluxe Suite (Executive 1 Bedroom Family Suite with Balcony) offers generous living space and refined comfort in Kumbakonam. Step out onto your private balcony to soak in morning temple town views. Complete with a master bedroom, inviting living zone, air conditioning, luxury bath fittings, and smart entertainment.',
+            'highlights' => 'Private Balcony with Town View • 1 BHK Layout with Living Area • Climate Control AC • High-Speed Wi-Fi • Rain Shower',
+            'amenities' => ['Private Balcony', '1 BHK Living Area', 'Air Conditioning', 'High-Speed Free Wi-Fi', '43-inch Smart TV', 'Attached Modern Bathroom', '24/7 Hot Water', 'Mini Refrigerator']
         ],
         [
-            'name' => 'Legacy Gold Suite',
-            'number' => 'SH-305',
-            'price' => 4500,
-            'image' => '/uploads/rooms/room_3.png',
-            'desc' => 'A beautifully appointed suite with golden-hour balcony views and traditional South Indian charm.',
-            'full_desc' => 'The Legacy Gold Suite captures the essence of South Indian hospitality. With golden-hour views from your private balcony and pillars inspired by ancient temple architecture, this suite is designed for those who appreciate the finer details of heritage living.',
-            'highlights' => 'Golden Hour Balcony • Pillar Architecture • Luxury Spa Bathtub • Premium Linens',
-            'amenities' => ['WiFi', 'Bathtub', 'Temple View', 'Room Service', 'Smart TV']
+            'name' => 'Suite',
+            'number' => 'ST-301',
+            'category_id' => 3,
+            'price' => 3600,
+            'image' => '/uploads/room_details/Suite/1.webp',
+            'desc' => 'A lavish 2 BHK apartment suite with two private master bedrooms, spacious living hall, dining space, and panoramic views.',
+            'full_desc' => 'The Suite Room (Executive 2 Bedroom Apartment) is the premier luxury accommodation at Subra Residency, tailored for large families, group pilgrimages, and extended holidays. Featuring two expansive master bedrooms with plush King bedding, an independent central living hall, private balcony, and en-suite contemporary bathrooms.',
+            'highlights' => '2 BHK Apartment Layout • 2 Independent Master Bedrooms • Expansive Living Hall • Private Balconies • Luxury Rain Showers',
+            'amenities' => ['2 Independent Master Bedrooms', '2 BHK Apartment Layout', 'Private Balconies', 'Central Air Conditioning', 'High-Speed Free Wi-Fi', '55-inch Smart TV', 'Spacious Living Hall']
         ]
     ];
 
@@ -54,9 +52,9 @@ try {
             short_description, full_description, highlights, house_rules, 
             status, show_on_website, featured_image
         ) VALUES (
-            ?, ?, ?, 1, 3, 
+            ?, ?, ?, ?, 2, 
             ?, 2, 1, 3, 
-            '450', 'King Size', 1, 
+            '350', 'King Size', 1, 
             1, 1, 0, 
             ?, ?, ?, 'No loud music. Check-out by 11 AM.', 
             'Available', 1, ?
@@ -67,6 +65,7 @@ try {
             $room['name'],
             $room['number'],
             str_replace(' ', '', $room['name']),
+            $room['category_id'],
             $room['price'],
             $room['desc'],
             $room['full_desc'],
@@ -77,17 +76,17 @@ try {
         $room_id = $db->lastInsertId();
         
         // Amenities
-        $stmt_amenity = $db->prepare("INSERT INTO room_amenities (room_id, amenity_name) VALUES (?, ?)");
+        $stmt_amenity = $db->prepare("INSERT INTO room_amenities (room_id, category_id, amenity_name) VALUES (?, ?, ?)");
         foreach ($room['amenities'] as $amenity) {
-            $stmt_amenity->execute([$room_id, $amenity]);
+            $stmt_amenity->execute([$room_id, $room['category_id'], $amenity]);
         }
         
-        // Gallery (Use the same featured as first gallery item)
-        $db->prepare("INSERT INTO room_images_new (room_id, image_path, sort_order) VALUES (?, ?, 0)")->execute([$room_id, $room['image']]);
+        // Gallery
+        $db->prepare("INSERT INTO room_images_new (room_id, category_id, image_path, sort_order) VALUES (?, ?, ?, 0)")->execute([$room_id, $room['category_id'], $room['image']]);
     }
 
     $db->commit();
-    echo "Seed successful: 3 Professional Rooms created.\n";
+    echo "Seed successful: Deluxe, Super Deluxe, Suite Rooms created.\n";
 
 } catch (Exception $e) {
     if ($db->inTransaction()) $db->rollBack();

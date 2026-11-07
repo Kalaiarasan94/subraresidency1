@@ -1,0 +1,280 @@
+<?php
+// backend/api/index.php
+$log_file = __DIR__ . '/../logs/payment.log';
+if (!file_exists(dirname($log_file))) mkdir(dirname($log_file), 0777, true);
+error_log("[" . date('Y-m-d H:i:s') . "] INDEX.PHP REACHED\n", 3, $log_file);
+
+include_once __DIR__ . '/../utils/CorsHelper.php';
+CorsHelper::handle();
+
+// Global error handler for debugging 500 errors
+set_error_handler(function($errno, $errstr, $errfile, $errline) {
+    if (!(error_reporting() & $errno)) {
+        return false;
+    }
+    $msg = "Error [$errno] $errstr in $errfile on line $errline";
+    $log_file = __DIR__ . '/../logs/payment.log';
+    if (!file_exists(dirname($log_file))) mkdir(dirname($log_file), 0777, true);
+    error_log("[" . date('Y-m-d H:i:s') . "] " . $msg . "\n", 3, $log_file);
+});
+
+register_shutdown_function(function() {
+    $error = error_get_last();
+    if ($error !== NULL && $error['type'] === E_ERROR) {
+        $msg = "Fatal Error: {$error['message']} in {$error['file']} on line {$error['line']}";
+        $log_file = __DIR__ . '/../logs/payment.log';
+        error_log("[" . date('Y-m-d H:i:s') . "] " . $msg . "\n", 3, $log_file);
+    }
+});
+
+if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+    http_response_code(200);
+    exit();
+}
+
+    // Determine the request path
+    $request_uri = $_SERVER['REQUEST_URI'];
+    $script_name = $_SERVER['SCRIPT_NAME']; // e.g. /subraresidency1/backend/api/index.php
+    
+    // The path we care about is what comes after index.php
+    $path = str_replace($script_name, '', $request_uri);
+    // Remove query string
+    $path = parse_url($path, PHP_URL_PATH);
+    
+    // Log request
+    $log_file = __DIR__ . '/../logs/payment.log';
+    error_log("[" . date('Y-m-d H:i:s') . "] REQUEST: " . $_SERVER['REQUEST_METHOD'] . " " . $request_uri . " (Path: $path)\n", 3, $log_file);
+
+    $parts = explode('/', trim($path, '/'));
+
+
+$resource = $parts[0] ?? '';
+$action = $parts[1] ?? '';
+
+switch ($resource) {
+    case 'rooms':
+        include_once __DIR__ . '/../controllers/RoomController.php';
+        $controller = new RoomController();
+        if ($action == 'categories') {
+            $controller->getCategories();
+        } elseif ($action == 'list') {
+            $controller->getAllRooms();
+        } elseif ($action == 'create') {
+            $controller->create();
+        } elseif ($action == 'createCategory') {
+            $controller->createCategory();
+        } elseif ($action == 'deleteCategory') {
+            $controller->deleteCategory();
+        } elseif ($action == 'details') {
+            $id = $_GET['id'] ?? null;
+            $controller->getRoomById($id);
+        } elseif ($action == 'subRooms') {
+            $categoryId = $_GET['category_id'] ?? null;
+            $controller->getSubRooms($categoryId);
+        } elseif ($action == 'addSubRoom') {
+            $controller->addSubRoom();
+        } elseif ($action == 'updateSubRoom') {
+            $controller->updateSubRoom();
+        } elseif ($action == 'deleteSubRoom') {
+            $controller->deleteSubRoom();
+        } elseif ($action == 'updateStatus') {
+            $controller->updateStatus();
+        } elseif ($action == 'updateDetails') {
+            $controller->updateRoomDetails();
+        } elseif ($action == 'uploadGalleryImage') {
+            $controller->uploadGalleryImage();
+        } elseif ($action == 'deleteGalleryImage') {
+            $controller->deleteGalleryImage();
+        } elseif ($action == 'availabilityList') {
+            include_once __DIR__ . '/admin/rooms/availability_list.php';
+        } elseif ($action == 'availabilityBooking') {
+            include_once __DIR__ . '/admin/rooms/availability_booking.php';
+        } elseif ($action == 'availabilityUpdate') {
+            include_once __DIR__ . '/admin/rooms/availability_update.php';
+        } elseif ($action == 'checkAvailability') {
+            include_once __DIR__ . '/admin/rooms/check_availability.php';
+        }
+        break;
+
+    case 'admin':
+        // further nested: /admin/bookings/list, /admin/bookings/cancel
+        $sub = $parts[1] ?? '';
+        $subAction = $parts[2] ?? '';
+        if ($sub === 'bookings') {
+            if ($subAction === 'list') {
+                include_once __DIR__ . '/admin/bookings/list.php';
+            } elseif ($subAction === 'cancel') {
+                include_once __DIR__ . '/admin/bookings/cancel.php';
+            } elseif ($subAction === 'checkin') {
+                include_once __DIR__ . '/admin/bookings/checkin.php';
+            } elseif ($subAction === 'view') {
+                include_once __DIR__ . '/admin/bookings/view.php';
+            } elseif ($subAction === 'updateGuests') {
+                include_once __DIR__ . '/admin/bookings/update_guests.php';
+            }
+        } elseif ($sub === 'notifications') {
+            include_once __DIR__ . '/receptionist/notifications.php';
+        } elseif ($sub === 'markRead') {
+            include_once __DIR__ . '/receptionist/mark_read.php';
+        }
+        break;
+
+    case 'cart':
+        include_once __DIR__ . '/../controllers/CartController.php';
+        $controller = new CartController();
+        if ($action === 'add') {
+            $controller->add();
+        } elseif ($action === 'update') {
+            $controller->update();
+        } elseif ($action === 'remove') {
+            $controller->remove();
+        } elseif ($action === 'clear') {
+            $controller->clear();
+        } elseif ($action === 'checkout') {
+            $controller->checkout();
+        } else {
+            $controller->get();
+        }
+        break;
+
+    case 'bookings':
+        include_once __DIR__ . '/../controllers/BookingController.php';
+        $controller = new BookingController();
+        if ($action == 'create') {
+            $controller->create();
+        } elseif ($action == 'view') {
+            include_once __DIR__ . '/admin/rooms/booking_view.php';
+        } elseif ($action == 'qrScan') {
+            include_once __DIR__ . '/bookings/qr_scan.php';
+        } elseif ($action == 'sendConfirmation') {
+            $controller->sendConfirmation();
+        }
+        break;
+
+        case 'payments':
+            // payments/createOrder -> create Razorpay order for a booking
+            if ($action == 'createOrder') {
+                include_once __DIR__ . '/payments/create_order.php';
+            } elseif ($action == 'verify') {
+                include_once __DIR__ . '/payments/verify.php';
+            }
+            break;
+
+    case 'auth':
+        include_once __DIR__ . '/../controllers/AuthController.php';
+        $controller = new AuthController();
+        if ($action == 'admin' || $action == 'reception' || $action == 'receptionist') {
+            $controller->login($action);
+        }
+        break;
+
+    case 'receptionist':
+        if ($action == 'notifications') {
+            include_once __DIR__ . '/receptionist/notifications.php';
+        } elseif ($action == 'markRead') {
+            include_once __DIR__ . '/receptionist/mark_read.php';
+        }
+        break;
+
+    case 'dashboard':
+        include_once __DIR__ . '/../controllers/DashboardController.php';
+        $controller = new DashboardController();
+        if ($action == 'admin') {
+            $controller->getAdminStats();
+        } elseif ($action == 'receptionist') {
+            $controller->getReceptionistStats();
+        } elseif ($action == 'clearData') {
+            $controller->clearBookingData();
+        }
+        break;
+
+    case 'management':
+        include_once __DIR__ . '/../controllers/ManagementController.php';
+        $controller = new ManagementController();
+        if ($action == 'guests') {
+            $controller->getGuestDirectory();
+        } elseif ($action == 'guest-bookings') {
+            $controller->getGuestBookings();
+        } elseif ($action == 'vacate') {
+            $controller->vacateBooking();
+        } elseif ($action == 'settlements') {
+            $controller->getSettlements();
+        } elseif ($action == 'logs') {
+            $controller->getStayLogs();
+        } elseif ($action == 'updatePaymentStatus') {
+            $controller->updatePaymentStatus();
+        } elseif ($action == 'deletePayment') {
+            $controller->deletePayment();
+        }
+        break;
+
+    case 'settings':
+        include_once __DIR__ . '/../controllers/SettingsController.php';
+        $controller = new SettingsController();
+        if ($action === 'uploadBanner') {
+            $controller->uploadBanner();
+        } elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $controller->getAllSettings();
+        } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $controller->updateSettings();
+        }
+        break;
+
+    case 'attractions':
+        include_once __DIR__ . '/../controllers/AttractionController.php';
+        $controller = new AttractionController();
+        if ($action === 'list') {
+            $controller->list();
+        } elseif ($action === 'create') {
+            $controller->create();
+        } elseif ($action === 'update') {
+            $controller->update();
+        } elseif ($action === 'delete') {
+            $controller->delete();
+        } elseif ($action === 'uploadImage') {
+            $controller->uploadImage();
+        }
+        break;
+
+    case 'users':
+        include_once __DIR__ . '/../controllers/UserController.php';
+        $controller = new UserController();
+        if ($action == 'list') {
+            $controller->getUsers();
+        } elseif ($action == 'create') {
+            $controller->createUser();
+        } elseif ($action == 'update') {
+            $controller->updateUser();
+        } elseif ($action == 'delete') {
+            $controller->deleteUser();
+        }
+        break;
+
+    case 'accounts':
+        include_once __DIR__ . '/../controllers/AccountsController.php';
+        $controller = new AccountsController();
+        if ($action == 'summary') {
+            $controller->getSummary();
+        }
+        break;
+
+    case 'expenses':
+        include_once __DIR__ . '/../controllers/AccountsController.php';
+        $controller = new AccountsController();
+        if ($action == 'list') {
+            $controller->getExpenses();
+        } elseif ($action == 'create') {
+            $controller->createExpense();
+        } elseif ($action == 'update') {
+            $controller->updateExpense();
+        } elseif ($action == 'delete') {
+            $controller->deleteExpense();
+        }
+        break;
+
+    default:
+        http_response_code(404);
+        echo json_encode(array("message" => "Endpoint not found. Path: " . $path));
+        break;
+}
+?>

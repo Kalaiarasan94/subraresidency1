@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { 
   Save, Globe, Mail, Phone, MapPin, Share2, ArrowLeft, 
   CheckCircle2, AlertCircle, Loader2, Sparkles, Image as ImageIcon,
-  Clock, ExternalLink, Trash2, UploadCloud, RefreshCw
+  Clock, ExternalLink, Trash2, UploadCloud, RefreshCw, CreditCard, Zap, Database
 } from 'lucide-react';
 import { API_BASE_URL, BACKEND_URL } from '../../../lib/api';
 
@@ -14,9 +14,10 @@ export const AdminWebsiteSettings: React.FC<WebsiteSettingsProps> = ({ onBack })
   const [settings, setSettings] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [clearingData, setClearingData] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
   const [uploadingBanner, setUploadingBanner] = useState(false);
-  const [activeTab, setActiveTab] = useState<'general' | 'contact' | 'seo' | 'banner'>('general');
+  const [activeTab, setActiveTab] = useState<'general' | 'contact' | 'seo' | 'banner' | 'payment'>('general');
 
   useEffect(() => {
     fetchSettings();
@@ -88,6 +89,30 @@ export const AdminWebsiteSettings: React.FC<WebsiteSettingsProps> = ({ onBack })
       setMessage({ type: 'error', text: 'Failed to save settings to server.' });
     } finally {
       setSaving(false);
+    }
+  };
+
+  const handleClearTestData = async () => {
+    if (!window.confirm("ARE YOU SURE?\n\nThis will permanently delete all customer test bookings, payments, and QR codes, and reset all rooms back to Available.\n\nClick OK to proceed.")) {
+      return;
+    }
+    setClearingData(true);
+    setMessage(null);
+    try {
+      const response = await fetch(`${API_BASE_URL}/dashboard/clearData`, {
+        method: 'POST'
+      });
+      const data = await response.json();
+      if (data && data.status === 'success') {
+        setMessage({ type: 'success', text: data.message || 'Test data cleared and room inventory reset to Available successfully!' });
+      } else {
+        throw new Error(data.message || 'Failed to clear test data');
+      }
+    } catch (error: any) {
+      console.error('Error clearing test data:', error);
+      setMessage({ type: 'error', text: error.message || 'Failed to connect to clearData endpoint.' });
+    } finally {
+      setClearingData(false);
     }
   };
 
@@ -223,6 +248,21 @@ export const AdminWebsiteSettings: React.FC<WebsiteSettingsProps> = ({ onBack })
           <span>Popup Offer Banner</span>
           {settings.popup_banner_enabled === 'true' && (
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+          )}
+        </button>
+
+        <button
+          onClick={() => setActiveTab('payment')}
+          className={`px-3.5 py-1.5 font-semibold rounded-lg transition-all flex items-center gap-1.5 ${
+            activeTab === 'payment'
+              ? 'bg-amber-50 text-amber-900 border border-amber-300 shadow-xs'
+              : 'text-gray-600 hover:text-gray-900'
+          }`}
+        >
+          <Zap size={14} className={settings.razorpay_test_mode_1_rupee === '1' ? 'text-amber-600 fill-amber-500' : 'text-gray-500'} />
+          <span>Razorpay ₹1 Testing</span>
+          {settings.razorpay_test_mode_1_rupee === '1' && (
+            <span className="w-2 h-2 rounded-full bg-amber-500 animate-ping" />
           )}
         </button>
       </div>
@@ -480,20 +520,36 @@ export const AdminWebsiteSettings: React.FC<WebsiteSettingsProps> = ({ onBack })
             </label>
           </div>
 
-          {/* Banner Redirect Link */}
-          <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-gray-700">Redirect Link on Banner Click (Optional)</label>
-            <div className="relative">
-              <ExternalLink className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={14} />
-              <input 
-                type="text"
-                value={settings.popup_banner_link || ''} 
-                onChange={(e) => handleChange('popup_banner_link', e.target.value)}
-                placeholder="e.g. /rooms or https://..."
-                className="w-full text-xs pl-8 pr-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-gray-900 focus:bg-white focus:outline-none focus:ring-1 focus:ring-slate-900 focus:border-slate-900"
-              />
+          {/* Banner Redirect Link & Display Delay */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-1.5">
+              <label className="text-xs font-semibold text-gray-700">Redirect Link on Banner Click (Optional)</label>
+              <div className="relative">
+                <ExternalLink className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={14} />
+                <input 
+                  type="text"
+                  value={settings.popup_banner_link || ''} 
+                  onChange={(e) => handleChange('popup_banner_link', e.target.value)}
+                  placeholder="e.g. /rooms or https://..."
+                  className="w-full text-xs pl-8 pr-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-gray-900 focus:bg-white focus:outline-none focus:ring-1 focus:ring-slate-900 focus:border-slate-900"
+                />
+              </div>
+              <span className="text-[11px] text-gray-400">Guests clicking the banner will be routed to this URL</span>
             </div>
-            <span className="text-[11px] text-gray-400">Guests clicking the banner will be routed to this URL</span>
+
+            <div className="space-y-1.5">
+              <label className="text-xs font-semibold text-gray-700">Popup Display Delay (Seconds)</label>
+              <input 
+                type="number"
+                min="1"
+                max="300"
+                value={settings.popup_banner_delay || '33'} 
+                onChange={(e) => handleChange('popup_banner_delay', e.target.value)}
+                placeholder="33"
+                className="w-full text-xs px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-gray-900 focus:bg-white focus:outline-none focus:ring-1 focus:ring-slate-900 focus:border-slate-900 font-mono"
+              />
+              <span className="text-[11px] text-gray-400">Modal pops up after this many seconds of guest arrival (default: 33s)</span>
+            </div>
           </div>
 
           {/* Banner Image Preview & Upload */}
@@ -565,6 +621,132 @@ export const AdminWebsiteSettings: React.FC<WebsiteSettingsProps> = ({ onBack })
                   Recommended aspect ratio: 16:9 or 4:3 (e.g. 1200 &times; 800 px)
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* TAB 5: PAYMENT & RAZORPAY LIVE TESTING */}
+      {activeTab === 'payment' && (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+          {/* Card 1: Live ₹1 Testing Mode */}
+          <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-xs space-y-5">
+            <div className="flex items-center justify-between pb-3 border-b border-gray-100">
+              <div className="flex items-center gap-2">
+                <Zap size={18} className="text-amber-500 fill-amber-500" />
+                <div>
+                  <h2 className="text-sm font-bold text-gray-900">Razorpay Live Testing Mode</h2>
+                  <p className="text-[11px] text-gray-500">Temporarily set Deluxe room rate to ₹1 for live gateway testing</p>
+                </div>
+              </div>
+
+              {/* Modern iOS Toggle */}
+              <label className="inline-flex items-center gap-2 cursor-pointer">
+                <button
+                  type="button"
+                  role="switch"
+                  aria-checked={settings.razorpay_test_mode_1_rupee === '1'}
+                  onClick={() => handleChange('razorpay_test_mode_1_rupee', settings.razorpay_test_mode_1_rupee === '1' ? '0' : '1')}
+                  className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
+                    settings.razorpay_test_mode_1_rupee === '1' ? 'bg-amber-500' : 'bg-gray-300'
+                  }`}
+                >
+                  <span
+                    className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-sm ring-0 transition duration-200 ease-in-out ${
+                      settings.razorpay_test_mode_1_rupee === '1' ? 'translate-x-5' : 'translate-x-0'
+                    }`}
+                  />
+                </button>
+              </label>
+            </div>
+
+            {/* Status Indicator */}
+            {settings.razorpay_test_mode_1_rupee === '1' ? (
+              <div className="p-3 bg-amber-50 border border-amber-200 rounded-xl flex items-start gap-3">
+                <Zap size={18} className="text-amber-600 fill-amber-500 shrink-0 mt-0.5" />
+                <div>
+                  <div className="text-xs font-bold text-amber-900">
+                    ⚡ Live ₹1 Testing is ACTIVE!
+                  </div>
+                  <div className="text-[11px] text-amber-700 mt-0.5 leading-relaxed">
+                    The <strong>Deluxe Room</strong> is dynamically priced at <strong>₹1.00</strong> on the website. You can book it and test real live Razorpay payments (UPI, Cards, Netbanking) with only ₹1 deduction (100 paise).
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="p-3 bg-gray-50 border border-gray-200 rounded-xl flex items-start gap-3">
+                <CheckCircle2 size={18} className="text-gray-500 shrink-0 mt-0.5" />
+                <div>
+                  <div className="text-xs font-bold text-gray-800">
+                    Standard Production Pricing (₹1,600)
+                  </div>
+                  <div className="text-[11px] text-gray-500 mt-0.5 leading-relaxed">
+                    Deluxe Room is set to standard rate <strong>₹1,600/night</strong>. Super Deluxe is <strong>₹2,600</strong>, and Suite is <strong>₹3,600</strong>.
+                  </div>
+                </div>
+              </div>
+            )}
+
+            <div className="space-y-2 text-xs text-gray-600 bg-slate-50 p-3.5 rounded-xl border border-slate-200">
+              <div className="font-bold text-slate-800 flex items-center gap-1.5">
+                <CreditCard size={14} className="text-slate-600" />
+                Step-by-step testing workflow:
+              </div>
+              <ol className="list-decimal pl-4 space-y-1.5 text-[11px] text-slate-600 leading-relaxed">
+                <li>Toggle <strong>Razorpay Live Testing Mode</strong> to ON above and click <strong>Save Configuration</strong>.</li>
+                <li>Go to the customer website, select <strong>Deluxe Room</strong>, and click <strong>Book Now</strong>.</li>
+                <li>Total checkout amount will be exactly <strong>₹1</strong>. Complete the payment using your actual UPI or debit card.</li>
+                <li>Confirm that Razorpay authorizes the payment and redirects to your booking confirmation.</li>
+                <li>Return here, click <strong>Clear Test Data & Reset Rooms</strong> to erase the test record, and switch the toggle back OFF!</li>
+              </ol>
+            </div>
+          </div>
+
+          {/* Card 2: Purge Test Data */}
+          <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-xs space-y-5 flex flex-col justify-between">
+            <div className="space-y-4">
+              <div className="flex items-center gap-2 pb-3 border-b border-gray-100">
+                <Trash2 size={18} className="text-rose-600" />
+                <div>
+                  <h2 className="text-sm font-bold text-gray-900">Purge Test Bookings & Reset Rooms</h2>
+                  <p className="text-[11px] text-gray-500">Wipe test transactions and release occupied test rooms</p>
+                </div>
+              </div>
+
+              <div className="p-3.5 bg-rose-50 border border-rose-200 rounded-xl text-xs text-rose-800 space-y-1.5">
+                <div className="font-bold flex items-center gap-1.5 text-rose-900">
+                  <AlertCircle size={15} className="text-rose-600" />
+                  Irreversible Cleanup Action
+                </div>
+                <div className="text-[11px] text-rose-700 leading-relaxed">
+                  Clicking the button below deletes all test bookings, test payment rows, customer records, and resets all occupied rooms in the live inventory back to <strong>Available</strong>.
+                </div>
+              </div>
+
+              <div className="text-[11px] text-gray-500 leading-relaxed bg-gray-50 p-3 rounded-lg border border-gray-200">
+                ℹ️ <strong>Safe & Protected:</strong> Your admin accounts, receptionist logins, website settings, and room categories will remain 100% safe and intact.
+              </div>
+            </div>
+
+            <div className="pt-4">
+              <button
+                type="button"
+                disabled={clearingData}
+                onClick={handleClearTestData}
+                className="w-full py-3 px-4 bg-rose-600 hover:bg-rose-700 active:scale-[0.99] text-white font-bold text-xs rounded-xl shadow-xs transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+              >
+                {clearingData ? (
+                  <>
+                    <Loader2 size={16} className="animate-spin" />
+                    <span>Clearing Database Records...</span>
+                  </>
+                ) : (
+                  <>
+                    <Trash2 size={16} />
+                    <span>Clear Test Data & Reset Rooms</span>
+                  </>
+                )}
+              </button>
             </div>
           </div>
         </div>

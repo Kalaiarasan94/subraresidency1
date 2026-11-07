@@ -22,6 +22,18 @@ class RoomController
         $this->room = new Room($this->db);
     }
 
+    private function isTestMode()
+    {
+        try {
+            $stmt = $this->db->prepare("SELECT setting_value FROM settings WHERE setting_key = 'razorpay_test_mode_1_rupee'");
+            $stmt->execute();
+            $val = $stmt->fetchColumn();
+            return ($val === '1' || $val === 1 || $val === 'true');
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
     private function getBaseUrl()
     {
         $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443)) ? "https://" : "http://";
@@ -56,7 +68,8 @@ class RoomController
     public function getCategories()
     {
         $baseUrl = $this->getBaseUrl();
-        $query = "SELECT * FROM room_categories WHERE show_on_website = 1 ORDER BY created_at DESC";
+        $isTestMode = $this->isTestMode();
+        $query = "SELECT * FROM room_categories WHERE show_on_website = 1 ORDER BY base_price_24h ASC, id ASC";
         $stmt = $this->db->prepare($query);
         $stmt->execute();
 
@@ -91,12 +104,18 @@ class RoomController
             $avail_stmt->execute([$row['id']]);
             $available_rooms = (int) $avail_stmt->fetchColumn();
 
+            $isDeluxe = (strtolower(trim($row['name'])) === 'deluxe' || (int)$row['id'] === 1);
+            $price24h = ($isTestMode && $isDeluxe) ? 1.00 : (float)$row['base_price_24h'];
+            $price12h = ($isTestMode && $isDeluxe) ? 1.00 : (float)$row['base_price_12h'];
+
             $rooms[] = [
                 "id" => $row['id'],
                 "title" => $row['name'],
-                "price" => "₹" . number_format($row['base_price_24h']),
-                "price_24h" => $row['base_price_24h'],
-                "price_12h" => $row['base_price_12h'],
+                "price" => "₹" . number_format($price24h),
+                "price_24h" => $price24h,
+                "price_12h" => $price12h,
+                "base_price_24h" => $price24h,
+                "base_price" => $price24h,
                 "adults" => $row['adults_count'],
                 "children" => $row['children_count'],
                 "max_guests" => $row['max_guests'] !== null && $row['max_guests'] !== '' ? (int)$row['max_guests'] : ((int)$row['adults_count'] + (int)($row['children_count'] ?? 0)),
@@ -446,6 +465,7 @@ class RoomController
     // Fetch all physical sub-rooms from rooms_new, joined to their category
     public function getAllRooms()
     {
+        $isTestMode = $this->isTestMode();
         $query = "
             SELECT r.id, r.room_name, r.room_number, r.floor_number, r.status,
                    r.category_id, c.name AS category_name, c.base_price_24h
@@ -457,6 +477,8 @@ class RoomController
         $stmt->execute();
         $rooms = [];
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $isDeluxe = ((int)$row['category_id'] === 1 || stripos($row['category_name'] ?? '', 'deluxe') !== false);
+            $price = ($isTestMode && $isDeluxe) ? 1.00 : $row['base_price_24h'];
             $rooms[] = [
                 'id' => $row['id'],
                 'room_number' => $row['room_number'],
@@ -465,7 +487,7 @@ class RoomController
                 'category' => $row['category_name'],
                 'title' => $row['category_name'],
                 'floor' => $row['floor_number'],
-                'price' => $row['base_price_24h'],
+                'price' => $price,
                 'status' => strtolower($row['status']) === 'available' ? 'available' : 'occupied'
             ];
         }
@@ -477,6 +499,7 @@ class RoomController
     public function getRoomById($id)
     {
         $baseUrl = $this->getBaseUrl();
+        $isTestMode = $this->isTestMode();
         $query = "SELECT * FROM rooms_new WHERE id = ?";
         $stmt = $this->db->prepare($query);
         $stmt->execute([$id]);
@@ -495,6 +518,10 @@ class RoomController
             $amenities_stmt->execute([$id]);
             $amenities = $amenities_stmt->fetchAll(PDO::FETCH_COLUMN);
 
+            $isDeluxe = ((int)$row['category_id'] === 1 || stripos($row['room_name'] ?? '', 'deluxe') !== false);
+            $price24h = ($isTestMode && $isDeluxe) ? 1.00 : (float)$row['base_price'];
+            $price12h = ($isTestMode && $isDeluxe) ? 1.00 : (float)$row['price_12_hours'];
+
             $room = [
                 "id" => $row['id'],
                 "title" => $row['room_name'],
@@ -503,9 +530,10 @@ class RoomController
                 "room_code" => $row['room_code'],
                 "category_id" => $row['category_id'],
                 "floor_number" => $row['floor_number'],
-                "price" => "₹" . number_format($row['base_price']),
-                "price_24h" => $row['base_price'],
-                "price_12h" => $row['price_12_hours'],
+                "price" => "₹" . number_format($price24h),
+                "price_24h" => $price24h,
+                "base_price" => $price24h,
+                "price_12h" => $price12h,
                 "weekend_price" => $row['weekend_price'],
                 "festival_price" => $row['festival_price'],
                 "extra_bed_price" => $row['extra_bed_price'],

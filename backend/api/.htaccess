@@ -9,9 +9,9 @@
 AcceptPathInfo On
 
 <IfModule mod_headers.c>
-    Header set Access-Control-Allow-Origin "*"
+    # Note: Access-Control-Allow-Origin is handled dynamically in PHP with Access-Control-Allow-Credentials: true
     Header set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
-    Header set Access-Control-Allow-Headers "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With, Cache-Control, cache-control, Pragma, Expires, *"
+    Header set Access-Control-Allow-Headers "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With, Cache-Control, cache-control, Pragma, Expires, X-Cart-Session, *"
     Header set Cache-Control "no-cache, no-store, must-revalidate"
     Header set Pragma "no-cache"
     Header set Expires 0

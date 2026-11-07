@@ -111,4 +111,3 @@ export const CustomerNavigation = ({ isMobileMenuOpen, onMobileMenuToggle, onMob
     </motion.nav>
   );
 };
-
