@@ -28,6 +28,7 @@ export const Home = ({
   const [rooms, setRooms] = useState<any[]>(ROOMS_DATA);
 
   useEffect(() => {
+    document.title = "Subra Residency | Hotel in Kumbakonam near Railway Station";
     const loadRooms = async () => {
       const data = await fetchRoomCategories();
       if (data && Array.isArray(data) && data.length > 0) {
@@ -143,7 +144,7 @@ export const Home = ({
                       onClick={(e) => { e.stopPropagation(); onBookRoom(room); }}
                       className="w-full bg-catalogue-green text-white hover:bg-catalogue-gold font-black uppercase tracking-[0.2em] py-5 rounded-xl shadow-lg transition-all text-[10px]"
                     >
-                      Reserve Now
+                      Book Now
                     </Button>
                   </CardContent>
                 </Card>

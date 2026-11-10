@@ -23,6 +23,7 @@ export default function BookingPage() {
   const [bookingFull, setBookingFull] = useState<any>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [qrDataUrl, setQrDataUrl] = useState<string>('');
+  const [agreedToTerms, setAgreedToTerms] = useState(true);
   
   // Form states pre-filled from search criteria
   const [bookingDetails, setBookingDetails] = useState({
@@ -118,6 +119,11 @@ export default function BookingPage() {
   const handleStartPayment = async () => {
     if (!bookingDetails.name || !bookingDetails.phone || !bookingDetails.email || !bookingDetails.address) {
       alert('Please fill in all the required guest details.');
+      return;
+    }
+
+    if (!agreedToTerms) {
+      alert('Please accept the Terms & Conditions and Cancellation Policy to complete your reservation.');
       return;
     }
 
@@ -479,6 +485,7 @@ export default function BookingPage() {
               <div className="sticky top-8 space-y-6">
                 <Card className="rounded-3xl border border-catalogue-gold/20 shadow-xl overflow-hidden bg-white">
                   <div className="bg-catalogue-gold/15 px-6 py-5 text-catalogue-green border-b border-catalogue-gold/10">
+                    <p className="text-[10px] font-bold text-catalogue-gold uppercase tracking-[0.2em]">Subra Residency • Kumbakonam</p>
                     <h3 className="text-sm font-black uppercase tracking-widest font-playfair">Reservation Summary</h3>
                   </div>
 
@@ -539,6 +546,26 @@ export default function BookingPage() {
                         <span className="text-lg font-black text-catalogue-green font-sans">{formatCurrency(totalAmount)}</span>
                       </div>
                     </div>
+
+                    {/* Terms Agreement Checkbox for Razorpay Compliance */}
+                    <label className="flex items-start gap-2.5 text-[11px] text-slate-600 cursor-pointer pt-2 select-none">
+                      <input 
+                        type="checkbox" 
+                        checked={agreedToTerms} 
+                        onChange={(e) => setAgreedToTerms(e.target.checked)} 
+                        className="mt-0.5 rounded border-slate-300 text-catalogue-green focus:ring-catalogue-gold cursor-pointer" 
+                      />
+                      <span className="leading-tight">
+                        I agree to Subra Residency&apos;s{' '}
+                        <a href="/terms" target="_blank" rel="noopener noreferrer" className="text-catalogue-gold font-bold underline hover:text-catalogue-green">
+                          Terms & Conditions
+                        </a>{' '}
+                        and{' '}
+                        <a href="/cancellation-refund" target="_blank" rel="noopener noreferrer" className="text-catalogue-gold font-bold underline hover:text-catalogue-green">
+                          Cancellation & Refund Policy
+                        </a>.
+                      </span>
+                    </label>
 
                     <Button 
                       onClick={handleStartPayment}

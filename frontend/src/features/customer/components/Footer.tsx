@@ -1,62 +1,189 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { Search, MapPin, Calendar, Users, Star, ArrowRight, ShieldCheck, ChevronDown, X, CheckCircle2, CreditCard, QrCode, Info, ChevronRight, Phone, Clock, Droplets, Shirt, Footprints, Car } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { cn } from '../../../lib/utils';
-import { Button } from '../../../components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../../components/ui/card';
-import { Badge } from '../../../components/ui/badge';
-import { fadeInUp, fadeInLeft, fadeInRight, staggerContainer, heroStagger, heroItem } from './animations';
-import { ROOMS_DATA, ATTRACTIONS_DATA, HIDDEN_TRAILS_DATA, RECOMMENDED_TRAILS_DATA, TEMPLE_DETAILS_DATA } from './data';
-import { logo, pillerImg, leafImg, templeBotImg, bgImg, locationMapImg, hotelBuildingImg, diningImg, hallImg, sarangapaniImg, mahamahamImg, airavatesvaraImg, uppiliappanImg, ramaswamyImg } from './assets';
-import { AvailabilityBar } from './AvailabilityBar';
-import { OrnateDivider } from './OrnateDivider';
-import { SectionWrapper, DecorativeLayout } from './Layout';
-import { HeroSky } from './HeroSky';
-export const Footer = () => (
-  <footer className="bg-catalogue-green py-10 text-center border-t border-catalogue-gold/40 relative z-20">
-    <div className="max-w-7xl mx-auto px-6 space-y-12">
-      <div className="flex flex-col md:flex-row items-center justify-center gap-8 border-b border-catalogue-gold/10 pb-12">
-        <div className="flex flex-col items-center gap-4">
-          <img src={logo} alt="Logo" className="h-20 brightness-0 invert" />
-          <p className="font-playfair text-catalogue-gold italic text-lg">Home, Away from Home</p>
-        </div>
-      </div>
+import { MapPin, Phone, Mail, Clock, ShieldCheck, ChevronRight } from 'lucide-react';
+import { logo } from './assets';
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-catalogue-cream/80">
+export const Footer = () => (
+  <footer className="bg-catalogue-green text-catalogue-cream/90 pt-16 pb-8 border-t border-catalogue-gold/40 relative z-20 font-sans">
+    <div className="max-w-7xl mx-auto px-6">
+      
+      {/* 4-Column Main Footer Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-catalogue-gold/20">
+        
+        {/* Column 1: Subra Residency */}
         <div className="space-y-4">
-          <MapPin size={24} className="mx-auto text-catalogue-gold" />
-          <h4 className="font-playfair text-xl font-bold text-white uppercase tracking-widest">Location</h4>
-          <p className="text-sm leading-relaxed">45, L.B.S Road, Near Railway Station,<br />Kumbakonam - 612001, Tamil Nadu, India.</p>
-        </div>
-        <div className="space-y-4 border-x border-catalogue-gold/10 px-8">
-          <QrCode size={24} className="mx-auto text-catalogue-gold" />
-          <h4 className="font-playfair text-xl font-bold text-white uppercase tracking-widest">Contact Info</h4>
-          <p className="text-sm font-bold">7395809991 | 7395809992</p>
-          <p className="text-xs italic">subraresidencykum@gmail.com</p>
-        </div>
-        <div className="space-y-4">
-          <Calendar size={24} className="mx-auto text-catalogue-gold" />
-          <h4 className="font-playfair text-xl font-bold text-white uppercase tracking-widest">Stay Info</h4>
-          <div className="text-sm space-y-1">
-            <p>Check-in: 12:00 PM</p>
-            <p>Check-out: 11:00 AM</p>
-            <p className="text-catalogue-gold text-xs mt-2 italic font-bold">24 hours from check-in for direct bookings</p>
+          <div className="flex items-center gap-3">
+            <img src={logo} alt="Subra Residency" className="h-14 w-auto brightness-0 invert" />
+            <div className="flex flex-col">
+              <span className="font-playfair text-xl font-black tracking-widest text-white leading-none">SUBRA</span>
+              <span className="font-playfair text-[9px] font-bold tracking-[0.25em] text-catalogue-gold uppercase mt-1">Residency Kumbakonam</span>
+            </div>
+          </div>
+          <p className="font-playfair text-catalogue-gold italic text-sm font-semibold">
+            &quot;Home, Away from Home&quot;
+          </p>
+          <p className="text-xs text-catalogue-cream/75 leading-relaxed">
+            A peaceful, air-conditioned hospitality destination in the sacred temple city of Kumbakonam. Providing hygienic, family-friendly accommodations just 300 meters from the Railway Station.
+          </p>
+          <div className="flex items-start gap-2 text-xs text-catalogue-gold pt-1">
+            <MapPin size={15} className="shrink-0 mt-0.5" />
+            <span>45, L.B.S Road, Near Railway Station, Kumbakonam - 612001, Tamil Nadu.</span>
           </div>
         </div>
+
+        {/* Column 2: Explore Navigation */}
+        <div className="space-y-4 lg:pl-6">
+          <h4 className="font-playfair text-base font-bold text-white uppercase tracking-widest border-b border-catalogue-gold/20 pb-2">
+            Explore
+          </h4>
+          <ul className="space-y-2.5 text-xs">
+            <li>
+              <Link to="/" className="hover:text-catalogue-gold transition-colors flex items-center gap-1.5">
+                <ChevronRight size={13} className="text-catalogue-gold" />
+                <span>Home</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="/about" className="hover:text-catalogue-gold transition-colors flex items-center gap-1.5">
+                <ChevronRight size={13} className="text-catalogue-gold" />
+                <span>About Us</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="/rooms" className="hover:text-catalogue-gold transition-colors flex items-center gap-1.5">
+                <ChevronRight size={13} className="text-catalogue-gold" />
+                <span>Rooms & Accommodation</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="/pricing" className="hover:text-catalogue-gold transition-colors flex items-center gap-1.5">
+                <ChevronRight size={13} className="text-catalogue-gold" />
+                <span>Room Pricing & Tariffs</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="/attractions" className="hover:text-catalogue-gold transition-colors flex items-center gap-1.5">
+                <ChevronRight size={13} className="text-catalogue-gold" />
+                <span>Temple Trails & Attractions</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="/contact" className="hover:text-catalogue-gold transition-colors flex items-center gap-1.5">
+                <ChevronRight size={13} className="text-catalogue-gold" />
+                <span>Contact Us</span>
+              </Link>
+            </li>
+          </ul>
+        </div>
+
+        {/* Column 3: Legal & Regulatory Policies */}
+        <div className="space-y-4">
+          <h4 className="font-playfair text-base font-bold text-white uppercase tracking-widest border-b border-catalogue-gold/20 pb-2">
+            Policies & Legal
+          </h4>
+          <ul className="space-y-2.5 text-xs">
+            <li>
+              <Link to="/terms" className="hover:text-catalogue-gold transition-colors flex items-center gap-1.5">
+                <ShieldCheck size={13} className="text-catalogue-gold" />
+                <span>Terms & Conditions</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="/privacy" className="hover:text-catalogue-gold transition-colors flex items-center gap-1.5">
+                <ShieldCheck size={13} className="text-catalogue-gold" />
+                <span>Privacy Policy</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="/cancellation-refund" className="hover:text-catalogue-gold transition-colors flex items-center gap-1.5">
+                <ShieldCheck size={13} className="text-catalogue-gold" />
+                <span>Cancellation & Refund Policy</span>
+              </Link>
+            </li>
+          </ul>
+          <div className="p-3 rounded-xl bg-white/5 border border-catalogue-gold/15 text-[11px] text-catalogue-cream/70 space-y-1">
+            <p className="font-bold text-catalogue-gold uppercase text-[10px] tracking-wider">
+              100% Secure Payments
+            </p>
+            <p>
+              Digital payments processed securely via PCI-DSS certified Razorpay gateway. Card details are never stored.
+            </p>
+          </div>
+        </div>
+
+        {/* Column 4: Contact & Front Desk */}
+        <div className="space-y-4">
+          <h4 className="font-playfair text-base font-bold text-white uppercase tracking-widest border-b border-catalogue-gold/20 pb-2">
+            Contact Front Desk
+          </h4>
+          <div className="space-y-3 text-xs">
+            <div>
+              <p className="text-[10px] text-catalogue-gold uppercase font-bold tracking-wider mb-1">
+                24/7 Telephone Helpline
+              </p>
+              <a href="tel:+917395809991" className="font-bold text-white hover:text-catalogue-gold block font-sans">
+                +91 73958 09991
+              </a>
+              <a href="tel:+917395809992" className="font-bold text-white hover:text-catalogue-gold block font-sans">
+                +91 73958 09992
+              </a>
+            </div>
+
+            <div>
+              <p className="text-[10px] text-catalogue-gold uppercase font-bold tracking-wider mb-1">
+                Official Email
+              </p>
+              <a href="mailto:subraresidencykum@gmail.com" className="text-catalogue-cream hover:text-catalogue-gold block truncate font-sans">
+                subraresidencykum@gmail.com
+              </a>
+              <a href="mailto:subraresidency@gmail.com" className="text-catalogue-cream/70 hover:text-catalogue-gold block truncate font-sans text-[11px]">
+                subraresidency@gmail.com
+              </a>
+            </div>
+
+            <div>
+              <p className="text-[10px] text-catalogue-gold uppercase font-bold tracking-wider mb-1">
+                Stay Hours
+              </p>
+              <p className="text-[11px] text-catalogue-cream/80">
+                Check-in: 12:00 PM | Check-out: 11:00 AM<br />
+                <span className="text-catalogue-gold font-semibold">24-hr stay policy applies for direct bookings</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
       </div>
 
-      <div className="space-y-6 pt-12">
-        <p className="font-playfair text-xl md:text-3xl text-catalogue-gold font-bold tracking-[0.1em] uppercase">
-          STAY BLESSED. STAY COMFORTABLE. STAY WITH SUBRA.
+      {/* Bottom Bar: Copyright and Legal Links */}
+      <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-catalogue-cream/60">
+        <p className="font-playfair text-sm text-catalogue-gold/90 tracking-wider">
+          © 2026 Subra Residency. All Rights Reserved.
         </p>
-        <p className="text-[10px] text-catalogue-gold/40 uppercase tracking-[0.5em]">
-          © {new Date().getFullYear()} Subra Residency • Kumbakonam
-        </p>
+
+        <div className="flex flex-wrap items-center gap-4 text-[11px]">
+          <Link to="/terms" className="hover:text-catalogue-gold transition-colors">
+            Terms & Conditions
+          </Link>
+          <span>•</span>
+          <Link to="/privacy" className="hover:text-catalogue-gold transition-colors">
+            Privacy Policy
+          </Link>
+          <span>•</span>
+          <Link to="/cancellation-refund" className="hover:text-catalogue-gold transition-colors">
+            Cancellation & Refund
+          </Link>
+          <span>•</span>
+          <Link to="/pricing" className="hover:text-catalogue-gold transition-colors">
+            Pricing
+          </Link>
+          <span>•</span>
+          <Link to="/contact" className="hover:text-catalogue-gold transition-colors">
+            Contact
+          </Link>
+        </div>
       </div>
+
     </div>
   </footer>
 );
-
-
-

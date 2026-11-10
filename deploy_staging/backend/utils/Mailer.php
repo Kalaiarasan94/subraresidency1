@@ -298,6 +298,15 @@ class Mailer {
         return self::sendViaBrevo($toEmail, $toName, "Booking Cancelled - {$bookingId}", $htmlContent);
     }
 
+    public static function sendGenericMail($toEmail, $subject, $htmlContent, $toName = 'Subra Residency Team') {
+        try {
+            return self::sendViaBrevo($toEmail, $toName, $subject, $htmlContent);
+        } catch (\Throwable $t) {
+            error_log("[Mailer] sendGenericMail failed: " . $t->getMessage());
+            return false;
+        }
+    }
+
     private static function sendViaBrevo($toEmail, $toName, $subject, $htmlContent, $attachments = []) {
         $env = self::getEnvVars();
         $apiKey = $env['BREVO_API_KEY'] ?? '';

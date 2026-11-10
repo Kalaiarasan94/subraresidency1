@@ -236,6 +236,12 @@ export const RoomsPage = ({
                          </Badge>
                       </div>
 
+                      <div className="absolute top-4 right-4">
+                         <Badge className={`${room.available_rooms === 0 || room.fully_booked ? 'bg-rose-600' : 'bg-emerald-600'} text-white font-black uppercase tracking-widest text-[8px] px-2.5 py-1 border-none shadow-sm`}>
+                           {room.available_rooms === 0 || room.fully_booked ? 'Fully Booked' : 'Available'}
+                         </Badge>
+                      </div>
+
                       <div className="absolute bottom-4 left-6 right-6">
                          <h3 className="text-2xl font-sans font-black text-white tracking-widest drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] tabular-nums">
                             {formatPrice(room.price || room.base_price)}
@@ -268,15 +274,29 @@ export const RoomsPage = ({
                         </div>
                       </div>
 
+                      {/* Included Amenities Chips */}
+                      <div className="flex flex-wrap gap-1.5 mb-3">
+                        <span className="text-[9px] bg-slate-50 text-slate-700 px-2 py-0.5 rounded font-semibold border border-slate-100">AC</span>
+                        <span className="text-[9px] bg-slate-50 text-slate-700 px-2 py-0.5 rounded font-semibold border border-slate-100">Free Wi-Fi</span>
+                        <span className="text-[9px] bg-slate-50 text-slate-700 px-2 py-0.5 rounded font-semibold border border-slate-100">Smart TV</span>
+                        <span className="text-[9px] bg-slate-50 text-slate-700 px-2 py-0.5 rounded font-semibold border border-slate-100">24h Hot Water</span>
+                      </div>
+
+                      <div className="text-[10px] text-catalogue-gold font-bold mb-3 flex items-center justify-between border-t border-slate-50 pt-2">
+                        <span>Check-In: 12 PM | Check-Out: 11 AM</span>
+                        <span className="text-[9px] text-slate-500 font-semibold">24h Stay Policy</span>
+                      </div>
+
                       <p className="text-slate-400 font-medium text-[11px] leading-relaxed mb-6 flex-grow line-clamp-2 italic">
                         {room.description || room.short_description || "A masterfully crafted sanctuary featuring hand-picked decor."}
                       </p>
 
                       <Button 
                         onClick={(e) => { e.stopPropagation(); onBookRoom(room); }}
-                        className="w-full bg-catalogue-green text-white hover:bg-catalogue-gold font-black uppercase tracking-[0.2em] py-5 rounded-xl shadow-lg transition-all text-[10px]"
+                        disabled={room.available_rooms === 0 || room.fully_booked}
+                        className="w-full bg-catalogue-green text-white hover:bg-catalogue-gold font-black uppercase tracking-[0.2em] py-5 rounded-xl shadow-lg transition-all text-[10px] disabled:opacity-50"
                       >
-                        Reserve Now
+                        {room.available_rooms === 0 || room.fully_booked ? 'Fully Booked' : 'Book Now'}
                       </Button>
                     </CardContent>
                   </Card>

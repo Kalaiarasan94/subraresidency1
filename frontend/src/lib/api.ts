@@ -458,3 +458,34 @@ export const deleteSubRoom = async (id: number) => {
         return null;
     }
 };
+
+export const submitContactForm = async (payload: {
+    name: string;
+    email: string;
+    phone?: string;
+    subject?: string;
+    message: string;
+}) => {
+    try {
+        const response = await apiFetch('/contact', {
+            method: 'POST',
+            body: JSON.stringify(payload)
+        });
+        const text = await response.text();
+        try {
+            return JSON.parse(text);
+        } catch (jsonErr) {
+            console.error('Non-JSON response from /contact:', text);
+            if (response.ok) {
+                return { status: 'success', message: 'Thank you! Your message has been received.' };
+            }
+            return { 
+                status: 'error', 
+                message: 'Server error processing enquiry. Please contact front desk directly at +91 73958 09991.' 
+            };
+        }
+    } catch (error: any) {
+        console.error('submitContactForm Error:', error);
+        return { status: 'error', message: error.message || 'Unable to submit enquiry' };
+    }
+};

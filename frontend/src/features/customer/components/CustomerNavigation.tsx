@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ShieldCheck, ChevronRight } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Button } from '../../../components/ui/button';
 import { cn } from '../../../lib/utils';
@@ -14,10 +14,16 @@ type CustomerNavigationProps = {
 const navigationLinks = [
   { path: "/", label: "Home" },
   { path: "/about", label: "About Us" },
-  { path: "/about-kumbakonam", label: "About Kumbakonam" },
   { path: "/rooms", label: "Rooms" },
+  { path: "/pricing", label: "Room Pricing" },
   { path: "/attractions", label: "Attractions" },
-  { path: "/contact", label: "Contact" }
+  { path: "/contact", label: "Contact Us" }
+];
+
+const policyLinks = [
+  { path: "/terms", label: "Terms & Conditions" },
+  { path: "/privacy", label: "Privacy Policy" },
+  { path: "/cancellation-refund", label: "Cancellation & Refund" }
 ];
 
 export const CustomerNavigation = ({ isMobileMenuOpen, onMobileMenuToggle, onMobileMenuClose }: CustomerNavigationProps) => {
@@ -39,13 +45,13 @@ export const CustomerNavigation = ({ isMobileMenuOpen, onMobileMenuToggle, onMob
           </div>
         </Link>
 
-        <div className="hidden md:flex items-center gap-10">
+        <div className="hidden lg:flex items-center gap-8">
           {navigationLinks.map((link) => (
             <Link
               key={link.path}
               to={link.path}
               className={cn(
-                "text-xs font-bold uppercase tracking-[0.2em] transition-all duration-300 relative py-1",
+                "text-xs font-bold uppercase tracking-[0.18em] transition-all duration-300 relative py-1",
                 location.pathname === link.path ? "text-catalogue-gold" : "text-catalogue-green hover:text-catalogue-gold"
               )}
             >
@@ -62,7 +68,7 @@ export const CustomerNavigation = ({ isMobileMenuOpen, onMobileMenuToggle, onMob
           ))}
           <Link to="/rooms">
             <Button
-              className="lux-button bg-catalogue-gold text-white hover:bg-catalogue-green transition-all font-bold uppercase tracking-widest text-[10px] px-8 py-6 rounded-none shadow-lg"
+              className="lux-button bg-catalogue-gold text-white hover:bg-catalogue-green transition-all font-bold uppercase tracking-widest text-[10px] px-7 py-5 rounded-none shadow-lg"
             >
               Book Now
             </Button>
@@ -70,10 +76,11 @@ export const CustomerNavigation = ({ isMobileMenuOpen, onMobileMenuToggle, onMob
         </div>
 
         <button
-          className="md:hidden text-catalogue-green"
+          className="lg:hidden text-catalogue-green p-1"
           onClick={onMobileMenuToggle}
+          aria-label="Toggle navigation menu"
         >
-          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          {isMobileMenuOpen ? <X size={26} /> : <Menu size={26} />}
         </button>
       </div>
 
@@ -83,27 +90,47 @@ export const CustomerNavigation = ({ isMobileMenuOpen, onMobileMenuToggle, onMob
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-white border-t border-catalogue-gold/10 overflow-hidden"
+            className="lg:hidden bg-white border-t border-catalogue-gold/15 overflow-hidden shadow-2xl"
           >
-            <div className="flex flex-col p-6 space-y-4">
+            <div className="flex flex-col p-6 space-y-3 font-sans">
+              <span className="text-[10px] uppercase font-bold text-catalogue-gold tracking-[0.3em]">Menu</span>
               {navigationLinks.map((link) => (
                 <Link
                   key={link.path}
                   to={link.path}
                   onClick={onMobileMenuClose}
                   className={cn(
-                    "text-sm font-bold uppercase tracking-widest py-2 border-b border-catalogue-gold/5",
+                    "text-xs font-bold uppercase tracking-wider py-2 border-b border-catalogue-gold/10 flex items-center justify-between",
                     location.pathname === link.path ? "text-catalogue-gold" : "text-catalogue-green"
                   )}
                 >
-                  {link.label}
+                  <span>{link.label}</span>
+                  <ChevronRight size={14} className="text-catalogue-gold/60" />
                 </Link>
               ))}
-              <Link to="/rooms" onClick={onMobileMenuClose}>
-                <Button className="w-full bg-catalogue-gold text-white font-bold uppercase tracking-widest rounded-none py-6 mt-4">
-                  Book Now
-                </Button>
-              </Link>
+
+              <div className="pt-3 space-y-2">
+                <span className="text-[10px] uppercase font-bold text-catalogue-gold tracking-[0.3em]">Legal & Policies</span>
+                {policyLinks.map((link) => (
+                  <Link
+                    key={link.path}
+                    to={link.path}
+                    onClick={onMobileMenuClose}
+                    className="text-[11px] font-semibold text-slate-600 hover:text-catalogue-gold flex items-center gap-2 py-1"
+                  >
+                    <ShieldCheck size={13} className="text-catalogue-gold" />
+                    <span>{link.label}</span>
+                  </Link>
+                ))}
+              </div>
+
+              <div className="pt-4">
+                <Link to="/rooms" onClick={onMobileMenuClose}>
+                  <Button className="w-full bg-catalogue-gold hover:bg-catalogue-green text-white font-bold uppercase tracking-widest rounded-none py-6 text-xs shadow-md">
+                    Book Room Now
+                  </Button>
+                </Link>
+              </div>
             </div>
           </motion.div>
         )}

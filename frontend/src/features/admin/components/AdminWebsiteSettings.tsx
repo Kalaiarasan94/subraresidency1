@@ -15,13 +15,31 @@ export const AdminWebsiteSettings: React.FC<WebsiteSettingsProps> = ({ onBack })
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [clearingData, setClearingData] = useState(false);
+  const [enquiries, setEnquiries] = useState<any[]>([]);
+  const [loadingEnquiries, setLoadingEnquiries] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
   const [uploadingBanner, setUploadingBanner] = useState(false);
   const [activeTab, setActiveTab] = useState<'general' | 'contact' | 'seo' | 'banner' | 'payment'>('general');
 
   useEffect(() => {
     fetchSettings();
+    fetchEnquiries();
   }, []);
+
+  const fetchEnquiries = async () => {
+    setLoadingEnquiries(true);
+    try {
+      const response = await fetch(`${API_BASE_URL}/contact/list`);
+      const data = await response.json();
+      if (data && data.status === 'success' && Array.isArray(data.data)) {
+        setEnquiries(data.data);
+      }
+    } catch (err) {
+      console.error('Error loading contact enquiries:', err);
+    } finally {
+      setLoadingEnquiries(false);
+    }
+  };
 
   const fetchSettings = async () => {
     try {
@@ -429,6 +447,84 @@ export const AdminWebsiteSettings: React.FC<WebsiteSettingsProps> = ({ onBack })
                 className="w-full text-xs px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-gray-900 focus:bg-white focus:outline-none focus:ring-1 focus:ring-slate-900 focus:border-slate-900"
               />
             </div>
+          </div>
+
+          {/* Guest Enquiries Inbox Table */}
+          <div className="lg:col-span-2 bg-white rounded-xl border border-gray-200 p-5 shadow-xs space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-gray-100">
+              <div className="flex items-center gap-2">
+                <Mail size={16} className="text-slate-700" />
+                <div>
+                  <h2 className="text-sm font-bold text-gray-900">Website Contact Enquiries Inbox</h2>
+                  <p className="text-[11px] text-gray-500">Messages and callback requests submitted by visitors from the Contact Us page</p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={fetchEnquiries}
+                className="px-2.5 py-1 text-xs text-slate-600 hover:text-slate-900 font-semibold flex items-center gap-1.5 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+              >
+                <RefreshCw size={12} className={loadingEnquiries ? "animate-spin" : ""} />
+                <span>Refresh Inbox</span>
+              </button>
+            </div>
+
+            {loadingEnquiries ? (
+              <div className="py-10 text-center text-xs text-gray-400">
+                <Loader2 size={20} className="mx-auto mb-2 animate-spin text-slate-700" />
+                <span>Loading enquiries...</span>
+              </div>
+            ) : enquiries.length === 0 ? (
+              <div className="py-10 text-center text-xs text-gray-400 bg-gray-50 rounded-lg border border-dashed border-gray-200">
+                <Mail size={24} className="mx-auto mb-2 text-gray-300" />
+                <p className="font-semibold text-gray-600">No contact enquiries received yet.</p>
+                <p className="text-[11px] text-gray-400 mt-0.5">When website visitors submit questions through the Contact Us page, they will appear here.</p>
+              </div>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs border-collapse">
+                  <thead>
+                    <tr className="border-b border-gray-100 bg-gray-50/80 text-gray-500 font-bold uppercase text-[10px] tracking-wider">
+                      <th className="py-2.5 px-3">Date</th>
+                      <th className="py-2.5 px-3">Guest Name</th>
+                      <th className="py-2.5 px-3">Contact Details</th>
+                      <th className="py-2.5 px-3">Subject</th>
+                      <th className="py-2.5 px-3">Message</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-100 text-gray-700">
+                    {enquiries.map((enq) => (
+                      <tr key={enq.id} className="hover:bg-gray-50/60 transition-colors">
+                        <td className="py-3 px-3 whitespace-nowrap text-gray-400 text-[11px] font-mono">
+                          {enq.created_at ? new Date(enq.created_at).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '—'}
+                        </td>
+                        <td className="py-3 px-3 font-bold text-gray-900 whitespace-nowrap">
+                          {enq.name}
+                        </td>
+                        <td className="py-3 px-3 whitespace-nowrap">
+                          <div className="space-y-0.5">
+                            {enq.phone && (
+                              <a href={`tel:${enq.phone}`} className="text-blue-600 hover:underline block font-mono font-medium">
+                                📞 {enq.phone}
+                              </a>
+                            )}
+                            <a href={`mailto:${enq.email}`} className="text-gray-500 hover:text-gray-800 block text-[11px]">
+                              ✉️ {enq.email}
+                            </a>
+                          </div>
+                        </td>
+                        <td className="py-3 px-3 font-semibold text-slate-800 whitespace-nowrap">
+                          {enq.subject || 'General Enquiry'}
+                        </td>
+                        <td className="py-3 px-3 max-w-xs text-gray-600 leading-relaxed">
+                          {enq.message}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </div>
         </div>
       )}

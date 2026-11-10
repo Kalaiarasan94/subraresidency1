@@ -208,6 +208,16 @@ switch ($resource) {
         }
         break;
 
+    case 'contact':
+        include_once __DIR__ . '/../controllers/ContactController.php';
+        $controller = new ContactController();
+        if ($action === 'list') {
+            $controller->list();
+        } else {
+            $controller->submit();
+        }
+        break;
+
     case 'settings':
         include_once __DIR__ . '/../controllers/SettingsController.php';
         $controller = new SettingsController();
