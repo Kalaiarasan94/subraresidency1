@@ -242,11 +242,13 @@ export const RoomsPage = ({
                          </Badge>
                       </div>
 
-                      <div className="absolute bottom-4 left-6 right-6">
-                         <h3 className="metal-gold-bright text-2xl font-sans font-black tracking-widest tabular-nums">
-                            {formatPrice(room.price || room.base_price)}
-                            <span className="text-[11px] font-bold opacity-90 ml-1 uppercase tracking-widest">/ NT</span>
-                         </h3>
+                      <div className="absolute bottom-4 left-4">
+                         <div className="lux-price-plate">
+                            <h3 className="text-xl font-sans font-bold metal-gold-bright tracking-wider tabular-nums">
+                               {formatPrice(room.price || room.base_price)}
+                            </h3>
+                            <span className="text-[9px] font-semibold text-white/75 uppercase tracking-[0.2em]">/ night</span>
+                         </div>
                       </div>
                     </div>
 
