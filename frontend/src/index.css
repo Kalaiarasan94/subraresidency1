@@ -29,6 +29,9 @@ option,
     scroll-behavior: smooth;
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none;  /* IE and Edge */
+    /* Stop the macOS/iOS "rubber-band" bounce at the top/bottom of the page,
+       which otherwise reveals the fixed background below the footer */
+    overscroll-behavior-y: none;
   }
   
   html::-webkit-scrollbar {
@@ -37,6 +40,7 @@ option,
   
   body {
     @apply bg-brand-cream text-brand-charcoal antialiased;
+    overscroll-behavior-y: none;
     scrollbar-width: none;
     -ms-overflow-style: none;
   }
@@ -70,6 +74,209 @@ option,
 }
 
 @layer utilities {
+  /* ---------- Polished metallic text (fonts unchanged, only the finish) ----------
+     --metal : banded gradient = polished metal reflections (dark / light / dark)
+     --shine : soft light band that glides across slowly                        */
+  .metal-gold,
+  .metal-gold-bright,
+  .metal-emerald,
+  .metal-champagne {
+    --shine: linear-gradient(100deg, transparent 40%, rgba(255,255,255,0.35) 47%, rgba(255,255,255,0.7) 50%, rgba(255,255,255,0.35) 53%, transparent 60%);
+    background-image: var(--shine), var(--metal);
+    background-size: 300% 100%, 100% 100%;
+    background-size: 300% 100%, 100% 1lh;          /* metal repeats per text line (wrapped headings) */
+    background-repeat: no-repeat, repeat-y;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    background-position: 130% 0, 0 0;
+    animation: metalShine 2.2s ease-out 0.5s 1;
+  }
+
+  .metal-gold:hover, .metal-gold-bright:hover, .metal-emerald:hover, .metal-champagne:hover,
+  .group:hover .metal-hover-gold {
+    animation: metalShineHover 1.2s ease-out 1;
+  }
+
+  /* Gold on light backgrounds – labels, accents */
+  .metal-gold {
+    --metal: linear-gradient(180deg, #8C6A22 0%, #D9B45A 22%, #FFF0B8 38%, #C99A35 52%, #7A5A1A 68%, #B8892E 84%, #E8C873 100%);
+  }
+
+  /* Bright gold – for dark plates / photo backgrounds (prices) */
+  .metal-gold-bright {
+    --metal: linear-gradient(180deg, #C9A04A 0%, #FFF3C8 30%, #E2BC62 50%, #9E7628 70%, #F1D58A 100%);
+  }
+
+  /* Polished emerald – main headings (keeps the brand green) */
+  .metal-emerald {
+    --metal: linear-gradient(180deg, #0A4A43 0%, #2F7D71 22%, #8CC5B8 38%, #0F5B52 52%, #04312C 70%, #1A6B60 86%, #4F9A8D 100%);
+  }
+
+  /* Champagne silver – text on dark / photo backgrounds */
+  .metal-champagne {
+    --metal: linear-gradient(180deg, #CFC6B4 0%, #FFFFFF 32%, #BDB29C 52%, #8F8571 70%, #E6DFD0 100%);
+  }
+
+  /* Small text (labels, captions): softer two-tone metal so no band reads as a line through the letters */
+  .metal-flat.metal-emerald     { --metal: linear-gradient(180deg, #0F5B52 0%, #2F7D71 45%, #0A4A43 100%); }
+  .metal-flat.metal-gold        { --metal: linear-gradient(180deg, #A07A2A 0%, #C99A35 45%, #8C6A22 100%); }
+  .metal-flat.metal-gold-bright { --metal: linear-gradient(180deg, #F1D58A 0%, #E2BC62 50%, #C9A04A 100%); }
+
+  /* Swap emerald -> gold when a card (.group) is hovered */
+  .group:hover .metal-hover-gold {
+    --metal: linear-gradient(180deg, #8C6A22 0%, #D9B45A 22%, #FFF0B8 38%, #C99A35 52%, #7A5A1A 68%, #B8892E 84%, #E8C873 100%);
+  }
+
+  /* ---------- Professional room card ---------- */
+  .lux-card {
+    position: relative;
+    background: #FFFDF8;
+    border: 1px solid rgba(200, 155, 60, 0.28);
+    border-radius: 14px;
+    box-shadow:
+      0 1px 2px rgba(28, 28, 28, 0.04),
+      0 10px 30px -12px rgba(11, 77, 70, 0.18);
+    transition: transform 450ms cubic-bezier(.2,.7,.2,1), box-shadow 450ms ease, border-color 450ms ease;
+  }
+  .lux-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(200, 155, 60, 0.6);
+    box-shadow:
+      0 1px 2px rgba(28, 28, 28, 0.05),
+      0 22px 44px -18px rgba(11, 77, 70, 0.28);
+  }
+  /* Thin inner gold hairline – the classic "framed" hotel look */
+  .lux-card::before {
+    content: "";
+    position: absolute;
+    inset: 6px;
+    border: 1px solid rgba(200, 155, 60, 0.18);
+    border-radius: 10px;
+    pointer-events: none;
+    z-index: 2;
+  }
+  /* Same frame for large containers (no hover lift) */
+  .lux-panel {
+    position: relative;
+    background: #FFFDF8;
+    border: 1px solid rgba(200, 155, 60, 0.28);
+    border-radius: 14px;
+    box-shadow:
+      0 1px 2px rgba(28, 28, 28, 0.04),
+      0 10px 30px -12px rgba(11, 77, 70, 0.18);
+  }
+  .lux-panel::before {
+    content: "";
+    position: absolute;
+    inset: 6px;
+    border: 1px solid rgba(200, 155, 60, 0.18);
+    border-radius: 10px;
+    pointer-events: none;
+    z-index: 2;
+  }
+  /* Dark green variant (call-to-action banners) */
+  .lux-panel-dark {
+    position: relative;
+    border: 1px solid rgba(241, 217, 142, 0.4);
+    border-radius: 14px;
+    box-shadow: 0 18px 40px -18px rgba(4, 40, 36, 0.55);
+  }
+  .lux-panel-dark::before {
+    content: "";
+    position: absolute;
+    inset: 6px;
+    border: 1px solid rgba(241, 217, 142, 0.22);
+    border-radius: 10px;
+    pointer-events: none;
+    z-index: 2;
+  }
+  /* Highlighted card (e.g. most popular room) */
+  .lux-card-featured {
+    border-color: rgba(200, 155, 60, 0.75);
+    box-shadow:
+      0 1px 2px rgba(28, 28, 28, 0.05),
+      0 16px 36px -14px rgba(200, 155, 60, 0.35);
+  }
+
+  /* Keep page content clear of the fixed temple pillar (pillar width grows with screen height) */
+  @media (min-width: 768px) {
+    .decor-safe {
+      padding-left: calc(11vh + 16px);
+      padding-right: calc(11vh + 16px);
+    }
+  }
+
+  .lux-card-media {
+    position: relative;
+    margin: 6px 6px 0;
+    border-radius: 10px 10px 4px 4px;
+    overflow: hidden;
+  }
+  /* Dark frosted plate so prices read cleanly over any photo */
+  .lux-price-plate {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: 8px;
+    background: rgba(6, 40, 36, 0.82);
+    border: 1px solid rgba(241, 217, 142, 0.35);
+  }
+
+  /* ---------- Simple site animations ---------- */
+  /* Gold underline draws in from left when the page loads */
+  .anim-line-grow {
+    width: 0;
+    animation: lineGrow 1.1s 0.4s cubic-bezier(.22,1,.36,1) forwards;
+  }
+  /* Card lifts slightly on hover */
+  .anim-lift {
+    transition: transform 350ms cubic-bezier(.22,1,.36,1), box-shadow 350ms ease, border-color 350ms ease;
+  }
+  .anim-lift:hover {
+    transform: translateY(-5px);
+    border-color: rgba(200, 155, 60, 0.5);
+    box-shadow: 0 18px 36px -16px rgba(11, 77, 70, 0.25);
+  }
+  /* Icon gently bobs up and down */
+  .anim-icon-float {
+    animation: iconFloat 3.2s ease-in-out infinite;
+  }
+  .anim-lift:nth-child(2) .anim-icon-float { animation-delay: -0.8s; }
+  .anim-lift:nth-child(3) .anim-icon-float { animation-delay: -1.6s; }
+  .anim-lift:nth-child(4) .anim-icon-float { animation-delay: -2.4s; }
+  /* Photo slowly zooms in on hover */
+  .anim-img-zoom {
+    transition: transform 1.2s cubic-bezier(.22,1,.36,1);
+  }
+  .anim-img-zoom:hover {
+    transform: scale(1.06);
+  }
+
+  /* ---------- Site background photo ----------
+     Warm sepia tone + low saturation + slight blur makes the busy photo
+     sit quietly behind the content and match the cream/gold palette. */
+  .site-bg-photo {
+    background-size: cover;
+    background-position: center 35%;
+    background-repeat: no-repeat;
+  }
+  /* About page background video: fades in over the still image once it can play */
+  .site-bg-video {
+    object-fit: cover;
+    object-position: center 35%;
+    opacity: 0;
+    transition: opacity 0.9s ease;
+  }
+  .site-bg-video.is-ready { opacity: 1; }
+
+  /* Soft highlight behind the hero text (plain gradient – cheap to draw) */
+  .site-bg-wash {
+    background: radial-gradient(ellipse at 50% 30%, rgba(255, 246, 232, 0.6), transparent 60%);
+  }
+
   .bg-ivory-texture {
     background-color: #F5E6CA;
     background-image: radial-gradient(circle at center, transparent 0%, rgba(200, 170, 130, 0.1) 100%),
@@ -243,6 +450,25 @@ option,
   .animate-slide-up {
     animation: slideUp 0.8s ease-out forwards;
   }
+}
+
+@keyframes metalShine {
+  from { background-position: 130% 0, 0 0; }
+  to   { background-position: -30% 0, 0 0; }
+}
+
+@keyframes metalShineHover {
+  from { background-position: 130% 0, 0 0; }
+  to   { background-position: -30% 0, 0 0; }
+}
+
+@keyframes lineGrow {
+  to { width: 5rem; }
+}
+
+@keyframes iconFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
 }
 
 @keyframes fadeIn {

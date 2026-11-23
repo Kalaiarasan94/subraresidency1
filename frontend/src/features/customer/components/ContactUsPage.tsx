@@ -89,10 +89,10 @@ export const ContactUsPage = () => {
           <Badge className="bg-catalogue-gold/15 text-catalogue-green border border-catalogue-gold/30 font-bold uppercase tracking-[0.3em] px-4 py-1 text-[10px]">
             Guest Assistance & Location
           </Badge>
-          <h1 className="font-playfair text-4xl md:text-6xl text-catalogue-green font-black uppercase tracking-tight">
+          <h1 className="font-playfair text-4xl md:text-6xl metal-emerald font-black uppercase tracking-tight">
             Contact Subra Residency
           </h1>
-          <p className="font-playfair text-lg md:text-xl text-catalogue-gold italic font-bold">
+          <p className="font-playfair text-lg md:text-xl metal-gold italic font-bold">
             We are here to assist your pilgrimage and holiday stay in Kumbakonam
           </p>
           <div className="flex justify-center pt-2">
@@ -104,14 +104,14 @@ export const ContactUsPage = () => {
         </div>
 
         {/* 4 Info Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16 md:mb-24">
           {/* Card 1: Address */}
-          <Card className="rounded-3xl border border-slate-200 bg-white shadow-md p-6 flex flex-col justify-between hover:border-catalogue-gold/40 transition-all">
+          <Card className="lux-card p-6 flex flex-col justify-between">
             <div className="space-y-3">
               <div className="w-12 h-12 rounded-2xl bg-catalogue-gold/15 text-catalogue-green flex items-center justify-center">
                 <MapPin size={22} className="text-catalogue-gold" />
               </div>
-              <h3 className="font-playfair text-lg font-bold text-catalogue-green uppercase">Hotel Address</h3>
+              <h3 className="font-playfair text-lg font-bold metal-emerald uppercase">Hotel Address</h3>
               <p className="text-xs text-slate-600 leading-relaxed font-sans">
                 <strong>Subra Residency</strong><br />
                 45, L.B.S Road, Near Railway Station,<br />
@@ -125,12 +125,12 @@ export const ContactUsPage = () => {
           </Card>
 
           {/* Card 2: Phone */}
-          <Card className="rounded-3xl border border-slate-200 bg-white shadow-md p-6 flex flex-col justify-between hover:border-catalogue-gold/40 transition-all">
+          <Card className="lux-card p-6 flex flex-col justify-between">
             <div className="space-y-3">
               <div className="w-12 h-12 rounded-2xl bg-catalogue-gold/15 text-catalogue-green flex items-center justify-center">
                 <Phone size={22} className="text-catalogue-gold" />
               </div>
-              <h3 className="font-playfair text-lg font-bold text-catalogue-green uppercase">Direct Helpline</h3>
+              <h3 className="font-playfair text-lg font-bold metal-emerald uppercase">Direct Helpline</h3>
               <p className="text-xs text-slate-600 leading-relaxed font-sans">
                 Reception Counter:<br />
                 <a href="tel:+917395809991" className="font-bold text-slate-900 hover:text-catalogue-gold block mt-0.5">
@@ -147,12 +147,12 @@ export const ContactUsPage = () => {
           </Card>
 
           {/* Card 3: Email */}
-          <Card className="rounded-3xl border border-slate-200 bg-white shadow-md p-6 flex flex-col justify-between hover:border-catalogue-gold/40 transition-all">
+          <Card className="lux-card p-6 flex flex-col justify-between">
             <div className="space-y-3">
               <div className="w-12 h-12 rounded-2xl bg-catalogue-gold/15 text-catalogue-green flex items-center justify-center">
                 <Mail size={22} className="text-catalogue-gold" />
               </div>
-              <h3 className="font-playfair text-lg font-bold text-catalogue-green uppercase">Official Email</h3>
+              <h3 className="font-playfair text-lg font-bold metal-emerald uppercase">Official Email</h3>
               <p className="text-xs text-slate-600 leading-relaxed font-sans">
                 Reservations & Inquiries:<br />
                 <a href="mailto:subraresidencykum@gmail.com" className="font-bold text-slate-900 hover:text-catalogue-gold block truncate mt-0.5">
@@ -169,12 +169,12 @@ export const ContactUsPage = () => {
           </Card>
 
           {/* Card 4: Hours */}
-          <Card className="rounded-3xl border border-slate-200 bg-white shadow-md p-6 flex flex-col justify-between hover:border-catalogue-gold/40 transition-all">
+          <Card className="lux-card p-6 flex flex-col justify-between">
             <div className="space-y-3">
               <div className="w-12 h-12 rounded-2xl bg-catalogue-gold/15 text-catalogue-green flex items-center justify-center">
                 <Clock size={22} className="text-catalogue-gold" />
               </div>
-              <h3 className="font-playfair text-lg font-bold text-catalogue-green uppercase">Front Desk Hours</h3>
+              <h3 className="font-playfair text-lg font-bold metal-emerald uppercase">Front Desk Hours</h3>
               <p className="text-xs text-slate-600 leading-relaxed font-sans">
                 <strong>24 Hours / 7 Days a Week</strong><br />
                 Check-In: 12:00 PM<br />
@@ -189,11 +189,11 @@ export const ContactUsPage = () => {
         </div>
 
         {/* Main Content Grid: Contact Form + Interactive Map */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-20 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-16 md:mb-24 items-start">
           {/* Contact Enquiry Form (7 Cols) */}
-          <div className="lg:col-span-7 bg-white rounded-3xl border border-catalogue-gold/30 shadow-xl p-8 md:p-10 space-y-6">
+          <div className="lux-panel lg:col-span-7 p-8 md:p-10 space-y-6">
             <div className="space-y-2 border-b border-slate-100 pb-5">
-              <h2 className="font-playfair text-2xl md:text-3xl font-bold text-catalogue-green uppercase">
+              <h2 className="font-playfair text-2xl md:text-3xl font-bold metal-emerald uppercase">
                 Send an Online Enquiry
               </h2>
               <p className="text-xs text-slate-500">
@@ -327,9 +327,9 @@ export const ContactUsPage = () => {
 
           {/* Map & Landmark Info (5 Cols) */}
           <div className="lg:col-span-5 space-y-6">
-            <div className="bg-white rounded-3xl border border-catalogue-gold/30 shadow-xl overflow-hidden">
+            <div className="lux-panel overflow-hidden">
               <div className="p-6 border-b border-slate-100 bg-slate-50/50">
-                <h3 className="font-playfair text-lg font-bold text-catalogue-green uppercase">
+                <h3 className="font-playfair text-lg font-bold metal-emerald uppercase">
                   Location Map
                 </h3>
                 <p className="text-xs text-slate-500">
@@ -353,7 +353,7 @@ export const ContactUsPage = () => {
               </div>
 
               <div className="p-6 space-y-3 bg-card-ivory/60 border-t border-slate-100 text-xs">
-                <h4 className="font-bold text-catalogue-green uppercase tracking-wider text-[11px]">
+                <h4 className="font-bold metal-emerald uppercase tracking-wider text-[11px] metal-flat">
                   Key Travel Proximities:
                 </h4>
                 <ul className="space-y-1.5 text-slate-700">

@@ -18,10 +18,10 @@ export const PrivacyPolicyPage = () => {
           <Badge className="bg-catalogue-gold/15 text-catalogue-green border border-catalogue-gold/30 font-bold uppercase tracking-[0.3em] px-4 py-1 text-[10px]">
             Data Protection & Privacy
           </Badge>
-          <h1 className="font-playfair text-4xl md:text-6xl text-catalogue-green font-black uppercase tracking-tight">
+          <h1 className="font-playfair text-4xl md:text-6xl metal-emerald font-black uppercase tracking-tight">
             Privacy Policy
           </h1>
-          <p className="font-playfair text-lg md:text-xl text-catalogue-gold italic font-bold">
+          <p className="font-playfair text-lg md:text-xl metal-gold italic font-bold">
             How Subra Residency protects and respects your personal information
           </p>
           <div className="flex justify-center pt-2">
@@ -33,7 +33,7 @@ export const PrivacyPolicyPage = () => {
         </div>
 
         {/* Content Container */}
-        <div className="max-w-4xl mx-auto bg-white rounded-3xl border border-catalogue-gold/30 shadow-xl p-8 md:p-14 space-y-10 text-slate-700 text-xs md:text-sm leading-relaxed">
+        <div className="lux-panel max-w-4xl mx-auto p-8 md:p-14 space-y-10 text-slate-700 text-xs md:text-sm leading-relaxed">
           
           {/* Commitment Highlight */}
           <div className="p-5 bg-card-ivory/80 rounded-2xl border border-catalogue-gold/20 space-y-2">
@@ -48,7 +48,7 @@ export const PrivacyPolicyPage = () => {
 
           {/* Section 1 */}
           <section className="space-y-3">
-            <h2 className="font-playfair text-xl font-bold text-catalogue-green border-b border-slate-100 pb-2">
+            <h2 className="font-playfair text-xl font-bold metal-emerald border-b border-slate-100 pb-2">
               1. Information We Collect
             </h2>
             <p>
@@ -64,7 +64,7 @@ export const PrivacyPolicyPage = () => {
 
           {/* Section 2 */}
           <section className="space-y-3">
-            <h2 className="font-playfair text-xl font-bold text-catalogue-green border-b border-slate-100 pb-2">
+            <h2 className="font-playfair text-xl font-bold metal-emerald border-b border-slate-100 pb-2">
               2. Purpose of Collecting Guest Data
             </h2>
             <p>
@@ -81,7 +81,7 @@ export const PrivacyPolicyPage = () => {
 
           {/* Section 3 - Razorpay Payment Gateway Transparency */}
           <section className="space-y-3">
-            <h2 className="font-playfair text-xl font-bold text-catalogue-green border-b border-slate-100 pb-2">
+            <h2 className="font-playfair text-xl font-bold metal-emerald border-b border-slate-100 pb-2">
               3. Payment Processing via Razorpay (Zero Card Storage Policy)
             </h2>
             <div className="p-5 bg-slate-50 rounded-2xl border border-slate-200 text-xs space-y-2.5">
@@ -102,7 +102,7 @@ export const PrivacyPolicyPage = () => {
 
           {/* Section 4 */}
           <section className="space-y-3">
-            <h2 className="font-playfair text-xl font-bold text-catalogue-green border-b border-slate-100 pb-2">
+            <h2 className="font-playfair text-xl font-bold metal-emerald border-b border-slate-100 pb-2">
               4. Data Security & Storage Measures
             </h2>
             <p>
@@ -117,7 +117,7 @@ export const PrivacyPolicyPage = () => {
 
           {/* Section 5 */}
           <section className="space-y-3">
-            <h2 className="font-playfair text-xl font-bold text-catalogue-green border-b border-slate-100 pb-2">
+            <h2 className="font-playfair text-xl font-bold metal-emerald border-b border-slate-100 pb-2">
               5. Data Retention Period
             </h2>
             <p>
@@ -131,7 +131,7 @@ export const PrivacyPolicyPage = () => {
 
           {/* Section 6 */}
           <section className="space-y-3">
-            <h2 className="font-playfair text-xl font-bold text-catalogue-green border-b border-slate-100 pb-2">
+            <h2 className="font-playfair text-xl font-bold metal-emerald border-b border-slate-100 pb-2">
               6. Third-Party Service Providers
             </h2>
             <p>
@@ -146,7 +146,7 @@ export const PrivacyPolicyPage = () => {
 
           {/* Section 7 */}
           <section className="space-y-3">
-            <h2 className="font-playfair text-xl font-bold text-catalogue-green border-b border-slate-100 pb-2">
+            <h2 className="font-playfair text-xl font-bold metal-emerald border-b border-slate-100 pb-2">
               7. Cookies & Website Analytics
             </h2>
             <p>
@@ -156,7 +156,7 @@ export const PrivacyPolicyPage = () => {
 
           {/* Section 8 */}
           <section className="space-y-3">
-            <h2 className="font-playfair text-xl font-bold text-catalogue-green border-b border-slate-100 pb-2">
+            <h2 className="font-playfair text-xl font-bold metal-emerald border-b border-slate-100 pb-2">
               8. Customer Privacy Rights
             </h2>
             <p>
@@ -172,7 +172,7 @@ export const PrivacyPolicyPage = () => {
 
           {/* Section 9 */}
           <section className="space-y-3 pt-4 border-t border-slate-200">
-            <h2 className="font-playfair text-xl font-bold text-catalogue-green">
+            <h2 className="font-playfair text-xl font-bold metal-emerald">
               9. Privacy Officer & Grievance Redressal
             </h2>
             <p className="text-xs text-slate-600">

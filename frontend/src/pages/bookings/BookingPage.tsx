@@ -319,10 +319,10 @@ export default function BookingPage() {
             <ArrowLeft size={16} /> Return to Home
           </button>
           
-          <h1 className="font-playfair text-4xl md:text-5xl font-black text-catalogue-green tracking-wide">
+          <h1 className="font-playfair text-4xl md:text-5xl font-black metal-emerald tracking-wide">
             SUBRA RESIDENCY
           </h1>
-          <p className="font-playfair italic text-catalogue-gold text-lg">Hotel Reservation & Check-in Portal</p>
+          <p className="font-playfair italic metal-gold text-lg">Hotel Reservation & Check-in Portal</p>
           
           {/* Visual Stepper */}
           <div className="flex items-center justify-center gap-4 pt-6 w-full max-w-md">
@@ -357,7 +357,7 @@ export default function BookingPage() {
             <div className="lg:col-span-2 space-y-6">
               <Card className="rounded-3xl border border-catalogue-gold/20 shadow-xl overflow-hidden bg-white">
                 <div className="bg-catalogue-green px-8 py-6 text-white">
-                  <h3 className="text-xl font-bold uppercase tracking-wider font-playfair">Guest Information</h3>
+                  <h3 className="metal-gold-bright text-xl font-bold uppercase tracking-wider font-playfair">Guest Information</h3>
                   <p className="text-white/70 text-xs mt-1">Please enter correct details as per government issued photo ID.</p>
                 </div>
                 
@@ -447,7 +447,7 @@ export default function BookingPage() {
               {/* Secure Payment Gateway Selector */}
               <Card className="rounded-3xl border border-catalogue-gold/20 shadow-xl overflow-hidden bg-white">
                 <div className="px-8 py-6 border-b border-slate-100">
-                  <h4 className="text-md font-bold uppercase tracking-wider text-catalogue-green font-playfair">Select Payment Method</h4>
+                  <h4 className="text-md font-bold uppercase tracking-wider metal-emerald font-playfair">Select Payment Method</h4>
                 </div>
                 
                 <CardContent className="p-8">
@@ -485,8 +485,8 @@ export default function BookingPage() {
               <div className="sticky top-8 space-y-6">
                 <Card className="rounded-3xl border border-catalogue-gold/20 shadow-xl overflow-hidden bg-white">
                   <div className="bg-catalogue-gold/15 px-6 py-5 text-catalogue-green border-b border-catalogue-gold/10">
-                    <p className="text-[10px] font-bold text-catalogue-gold uppercase tracking-[0.2em]">Subra Residency • Kumbakonam</p>
-                    <h3 className="text-sm font-black uppercase tracking-widest font-playfair">Reservation Summary</h3>
+                    <p className="text-[10px] font-bold metal-gold uppercase tracking-[0.2em] metal-flat">Subra Residency • Kumbakonam</p>
+                    <h3 className="metal-emerald text-sm font-black uppercase tracking-widest font-playfair metal-flat">Reservation Summary</h3>
                   </div>
 
                   <CardContent className="p-6 space-y-6">
@@ -498,7 +498,7 @@ export default function BookingPage() {
                         className="w-20 h-16 object-cover rounded-lg border border-catalogue-gold/20"
                       />
                       <div className="text-left">
-                        <h4 className="text-sm font-black text-catalogue-green uppercase truncate max-w-[160px]">{room.title || 'Room Details'}</h4>
+                        <h4 className="text-sm font-black metal-emerald uppercase truncate max-w-[160px] metal-flat">{room.title || 'Room Details'}</h4>
                         <span className="text-[9px] font-bold uppercase tracking-wider text-slate-400">{room.category || 'Luxury stay'}</span>
                         <p className="text-xs font-black text-catalogue-gold tracking-widest mt-1 font-sans">{formatCurrency(nightlyRate)} <span className="text-[10px] font-normal text-slate-400">/ NT</span></p>
                       </div>
@@ -594,7 +594,7 @@ export default function BookingPage() {
             <div className="bg-white border border-catalogue-gold/20 rounded-2xl p-5 shadow-lg max-w-4xl mx-auto flex flex-col sm:flex-row gap-4 items-center justify-between">
               <div className="text-center sm:text-left">
                 <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Transaction Successful</p>
-                <h4 className="text-md font-bold text-catalogue-green uppercase">Booking ID: {bookingId}</h4>
+                <h4 className="text-md font-bold metal-emerald uppercase">Booking ID: {bookingId}</h4>
               </div>
               <div className="flex gap-4">
                 <Button 

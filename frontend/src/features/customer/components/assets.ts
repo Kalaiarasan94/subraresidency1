@@ -2,7 +2,11 @@ import logo from '../../../assets/logo.png';
 import pillerImg from '../../../assets/piller.png';
 import leafImg from '../../../assets/leaf.png';
 import templeBotImg from '../../../assets/temple-bot.png';
-import bgImg from '../../../assets/bg.png';
+// Page background (previous: bg.png)
+import bgImg from '../../../assets/bg-mahamaham-soft.jpg'; // colour grade + blur + haze baked in (no live CSS filters = smooth scrolling)
+// Animated page background (same scene as bgImg; tone/blur baked in)
+import bgVideoDesktop from '../../../assets/video/about-desktop.mp4';
+import bgVideoMobile from '../../../assets/video/about-mobile.mp4';
 import locationMapImg from '../../../assets/location map.png';
 import hotelBuildingImg from '../../../assets/hotel/IMG_5592 (2).png';
 import diningImg from '../../../assets/hotel/dinning.png';
@@ -19,6 +23,8 @@ export {
   leafImg,
   templeBotImg,
   bgImg,
+  bgVideoDesktop,
+  bgVideoMobile,
   locationMapImg,
   hotelBuildingImg,
   diningImg,

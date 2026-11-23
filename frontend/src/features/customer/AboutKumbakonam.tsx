@@ -31,14 +31,14 @@ const AboutKumbakonam: React.FC = () => {
           transition={{ duration: 0.9 }}
           className="max-w-7xl mx-auto text-center mb-16"
         >
-          <h1 className="font-playfair text-3xl md:text-5xl text-catalogue-green font-black leading-tight mb-6 uppercase tracking-tight">
+          <h1 className="font-playfair text-3xl md:text-5xl metal-emerald font-black leading-tight mb-6 uppercase tracking-tight">
             WHY KUMBAKONAM IS CALLED<br />THE TEMPLE TOWN
           </h1>
-          <p className="font-playfair text-lg md:text-xl text-catalogue-gold italic font-bold">
+          <p className="font-playfair text-lg md:text-xl metal-gold italic font-bold">
             "A sacred city where devotion, heritage and living tradition meet."
           </p>
           <div className="mt-12 max-w-3xl mx-auto text-left bg-white/50 backdrop-blur-sm p-8 border border-catalogue-gold/20 shadow-lg">
-            <h2 className="font-playfair text-2xl md:text-3xl text-catalogue-green font-black mb-6 uppercase tracking-tight text-center">
+            <h2 className="font-playfair text-2xl md:text-3xl metal-emerald font-black mb-6 uppercase tracking-tight text-center">
               Why Kumbakonam is Called Kumbakonam
             </h2>
             <div className="space-y-4 text-catalogue-green/90 font-medium leading-relaxed">
@@ -105,7 +105,7 @@ const AboutKumbakonam: React.FC = () => {
           <motion.div {...fadeInUp} className="bg-white/90 backdrop-blur-md p-8 md:p-12 shadow-xl border border-catalogue-gold/20 relative">
             <div className="absolute inset-2 border border-catalogue-gold/10 pointer-events-none" />
             <div className="relative z-10 space-y-6">
-              <h2 className="font-playfair text-2xl font-black text-catalogue-green uppercase tracking-tight">A Town Woven Around Temples</h2>
+              <h2 className="font-playfair text-2xl font-black metal-emerald uppercase tracking-tight">A Town Woven Around Temples</h2>
               <div className="space-y-4 text-catalogue-green/90 font-medium leading-relaxed">
                 <p>
                   Kumbakonam is called the Temple Town because temples are woven into the daily rhythm of the town. The streets, neighbourhoods and sacred water bodies are surrounded by shrines, temple towers, mandapams and traditional houses.
@@ -128,7 +128,7 @@ const AboutKumbakonam: React.FC = () => {
           <motion.div {...fadeInUp} className="md:order-2 bg-white/90 backdrop-blur-md p-8 md:p-12 shadow-xl border border-catalogue-gold/20 relative">
             <div className="absolute inset-2 border border-catalogue-gold/10 pointer-events-none" />
             <div className="relative z-10 space-y-6">
-              <h2 className="font-playfair text-2xl font-black text-catalogue-green uppercase tracking-tight">The Sacred Identity of Mahamaham Tank</h2>
+              <h2 className="font-playfair text-2xl font-black metal-emerald uppercase tracking-tight">The Sacred Identity of Mahamaham Tank</h2>
               <div className="space-y-4 text-catalogue-green/90 font-medium leading-relaxed">
                 <p>
                   Mahamaham Tank is one of the most important sacred landmarks of Kumbakonam. It is deeply connected with the religious identity of the town and is especially known for the Mahamaham festival, celebrated once in twelve years.
@@ -151,7 +151,7 @@ const AboutKumbakonam: React.FC = () => {
           <motion.div {...fadeInUp} className="bg-white/90 backdrop-blur-md p-8 md:p-12 shadow-xl border border-catalogue-gold/20 relative">
             <div className="absolute inset-2 border border-catalogue-gold/10 pointer-events-none" />
             <div className="relative z-10 space-y-6">
-              <h2 className="font-playfair text-2xl font-black text-catalogue-green uppercase tracking-tight">The Origin Legend and Adi Kumbeswarar Temple</h2>
+              <h2 className="font-playfair text-2xl font-black metal-emerald uppercase tracking-tight">The Origin Legend and Adi Kumbeswarar Temple</h2>
               <div className="space-y-4 text-catalogue-green/90 font-medium leading-relaxed">
                 <p>
                   One of the most important spiritual landmarks of Kumbakonam is Arulmigu Adi Kumbeswarar Temple. This temple is closely connected with the origin legend of Kumbakonam and the sacred identity of the town.
@@ -177,7 +177,7 @@ const AboutKumbakonam: React.FC = () => {
           <motion.div {...fadeInUp} className="md:order-2 bg-white/90 backdrop-blur-md p-8 md:p-12 shadow-xl border border-catalogue-gold/20 relative">
             <div className="absolute inset-2 border border-catalogue-gold/10 pointer-events-none" />
             <div className="relative z-10 space-y-6">
-              <h2 className="font-playfair text-2xl font-black text-catalogue-green uppercase tracking-tight">A Rare Meeting Place of Shaivite and Vaishnavite Traditions</h2>
+              <h2 className="font-playfair text-2xl font-black metal-emerald uppercase tracking-tight">A Rare Meeting Place of Shaivite and Vaishnavite Traditions</h2>
               <div className="space-y-4 text-catalogue-green/90 font-medium leading-relaxed">
                 <p>
                   Kumbakonam is spiritually rich because it carries both Shaivite and Vaishnavite traditions with great importance. Shaivite temples such as Arulmigu Adi Kumbeswarar Temple, Kasi Viswanathar Temple and Nageswaran Temple reflect the town's deep connection with Lord Shiva worship.
@@ -205,7 +205,7 @@ const AboutKumbakonam: React.FC = () => {
              <div className="bg-white/90 backdrop-blur-md p-10 md:p-16 shadow-2xl border border-catalogue-gold/20 relative">
                 <div className="absolute inset-4 border border-catalogue-gold/10 pointer-events-none" />
                 <div className="relative z-10 space-y-6">
-                  <h2 className="font-playfair text-3xl font-black text-catalogue-green uppercase tracking-tight">Temple Architecture That Carries Centuries of Craftsmanship</h2>
+                  <h2 className="font-playfair text-3xl font-black metal-emerald uppercase tracking-tight">Temple Architecture That Carries Centuries of Craftsmanship</h2>
                   <p className="text-catalogue-green/90 font-medium leading-relaxed text-lg">
                     Kumbakonam and its surrounding region are known for beautiful South Indian temple architecture. The temples here display tall gopurams, sculpted stone walls, pillared corridors, carved mandapams, sacred tanks and traditional temple layouts.
                   </p>
@@ -227,7 +227,7 @@ const AboutKumbakonam: React.FC = () => {
               </motion.div>
            </div>
 
-           <motion.div {...fadeInUp} className="bg-white/90 backdrop-blur-md p-10 border border-catalogue-gold/20 shadow-xl relative rounded-xl overflow-hidden">
+           <motion.div {...fadeInUp} className="lux-panel p-10 relative overflow-hidden">
               <div className="absolute inset-2 border border-catalogue-gold/10 pointer-events-none" />
               <div className="relative z-10 space-y-8">
                 <p className="text-catalogue-green/90 font-medium leading-relaxed text-lg text-center max-w-4xl mx-auto">
@@ -247,7 +247,7 @@ const AboutKumbakonam: React.FC = () => {
             <div className="absolute inset-2 border border-catalogue-gold/10 pointer-events-none" />
             <div className="relative z-10 space-y-12">
               <div className="space-y-6">
-                <h2 className="font-playfair text-3xl font-bold text-catalogue-green">Living Rituals, Festivals and Devotional Culture</h2>
+                <h2 className="font-playfair text-3xl font-bold metal-emerald">Living Rituals, Festivals and Devotional Culture</h2>
                 <p className="text-catalogue-green/90 font-medium leading-relaxed">
                   Kumbakonam's temple identity is alive because rituals continue every day. The town is known for regular poojas, temple festivals, processions, lamps, alankarams, music and local devotional traditions.
                 </p>
@@ -256,7 +256,7 @@ const AboutKumbakonam: React.FC = () => {
                 </p>
               </div>
               <div className="space-y-6">
-                <h2 className="font-playfair text-3xl font-bold text-catalogue-green">Sacred Tanks and Temple Streets</h2>
+                <h2 className="font-playfair text-3xl font-bold metal-emerald">Sacred Tanks and Temple Streets</h2>
                 <p className="text-catalogue-green/90 font-medium leading-relaxed">
                   Sacred tanks are an important part of Kumbakonam's spiritual geography. These water bodies are connected with temple rituals, festivals, purification practices and local tradition.
                 </p>
@@ -280,7 +280,7 @@ const AboutKumbakonam: React.FC = () => {
               <motion.div {...fadeInUp} className="bg-white/90 backdrop-blur-md p-8 md:p-12 shadow-xl border border-catalogue-gold/20 relative">
                  <div className="absolute inset-2 border border-catalogue-gold/10 pointer-events-none" />
                  <div className="relative z-10 space-y-6">
-                   <h2 className="font-playfair text-3xl font-bold text-catalogue-green">A Gateway to Nearby Sacred Destinations</h2>
+                   <h2 className="font-playfair text-3xl font-bold metal-emerald">A Gateway to Nearby Sacred Destinations</h2>
                    <p className="text-catalogue-green/90 font-medium leading-relaxed">
                       Kumbakonam is also called the Temple Town because it serves as a convenient base for visiting several important temples nearby. From Kumbakonam, guests can visit Darasuram, Oppiliappan Temple, Swamimalai, Thiruvidaimarudur and other sacred places.
                    </p>
@@ -292,7 +292,7 @@ const AboutKumbakonam: React.FC = () => {
               <motion.div {...fadeInUp} className="bg-white/90 backdrop-blur-md p-8 md:p-12 shadow-xl border border-catalogue-gold/20 relative">
                  <div className="absolute inset-2 border border-catalogue-gold/10 pointer-events-none" />
                  <div className="relative z-10 space-y-6">
-                   <h2 className="font-playfair text-3xl font-bold text-catalogue-green">Why Visitors Feel a Deep Connection With Kumbakonam</h2>
+                   <h2 className="font-playfair text-3xl font-bold metal-emerald">Why Visitors Feel a Deep Connection With Kumbakonam</h2>
                    <p className="text-catalogue-green/90 font-medium leading-relaxed">
                       People visit Kumbakonam for many reasons. Some come for temple darshan, some for family rituals, others for architecture or festivals. What makes Kumbakonam special is that it offers all these experiences together.
                    </p>
@@ -311,7 +311,7 @@ const AboutKumbakonam: React.FC = () => {
                  <img src={heroImg} className="w-full h-full object-cover" alt="Background" />
               </div>
               <div className="relative z-10 space-y-8">
-                 <h2 className="font-playfair text-4xl md:text-5xl font-bold">Stay Close to the Spirit of the Temple Town</h2>
+                 <h2 className="metal-gold-bright font-playfair text-4xl md:text-5xl font-bold">Stay Close to the Spirit of the Temple Town</h2>
                  <p className="max-w-3xl mx-auto text-white/80 text-lg leading-relaxed font-medium">
                     Subra Residency places guests close to the heart of Kumbakonam. With easy access to the railway station, bus stand, temples, sacred tanks and nearby spiritual landmarks, the property is suitable for pilgrims, families, senior citizens, heritage travellers and guests visiting for functions or celebrations.
                  </p>

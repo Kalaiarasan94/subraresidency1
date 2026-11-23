@@ -69,7 +69,7 @@ export const AvailabilityBar = ({ onSearch }: { onSearch?: (filters: any) => voi
 
   return (
     <div className="w-full max-w-5xl mx-auto">
-    <div className="bg-white shadow-2xl p-4 md:p-6 grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-8 items-end border border-catalogue-gold/20 ornate-shape ornate-border">
+    <div className="lux-panel p-4 md:p-6 grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-8 items-end">
       <div className="space-y-2">
         <label className="text-[10px] uppercase font-bold text-catalogue-gold tracking-widest block">Check-in</label>
         <div className="relative">

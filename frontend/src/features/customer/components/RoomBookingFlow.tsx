@@ -192,7 +192,7 @@ export const RoomBookingFlow = ({ isOpen, onClose, room }: { isOpen: boolean, on
             
             <div className="absolute bottom-12 left-12 right-12 text-white space-y-4">
               <Badge className="bg-catalogue-gold text-white rounded-none px-4 py-1 uppercase tracking-widest border-none font-playfair">Luxury Stay</Badge>
-              <h2 className="font-playfair text-6xl font-bold leading-tight drop-shadow-lg">{room?.title}</h2>
+              <h2 className="metal-champagne font-playfair text-6xl font-bold leading-tight">{room?.title}</h2>
               <p className="text-2xl font-bold text-catalogue-gold tracking-widest drop-shadow-md">{room?.price} <span className="text-sm font-normal text-white/70">/ Night</span></p>
             </div>
           </div>
@@ -228,7 +228,7 @@ export const RoomBookingFlow = ({ isOpen, onClose, room }: { isOpen: boolean, on
                 className="space-y-8"
               >
                 <div className="space-y-6">
-                  <h3 className="font-playfair text-4xl font-bold text-catalogue-green border-b border-catalogue-gold/20 pb-4 uppercase tracking-wider">Specifications</h3>
+                  <h3 className="font-playfair text-4xl font-bold metal-emerald border-b border-catalogue-gold/20 pb-4 uppercase tracking-wider">Specifications</h3>
                   <div className="grid grid-cols-1 gap-6">
                     <div className="flex items-center gap-4 text-catalogue-green group">
                       <div className="p-3 bg-catalogue-gold/10 group-hover:bg-catalogue-gold transition-colors text-catalogue-gold group-hover:text-white">
@@ -290,7 +290,7 @@ export const RoomBookingFlow = ({ isOpen, onClose, room }: { isOpen: boolean, on
                 exit={{ opacity: 0, x: -20 }}
                 className="space-y-8"
               >
-                <h3 className="font-playfair text-3xl font-bold text-catalogue-green border-b border-catalogue-gold/20 pb-4">Stay Details</h3>
+                <h3 className="font-playfair text-3xl font-bold metal-emerald border-b border-catalogue-gold/20 pb-4">Stay Details</h3>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2 col-span-2 md:col-span-1">
                     <label className="text-[10px] uppercase font-bold text-catalogue-gold">Check-in</label>
@@ -359,7 +359,7 @@ export const RoomBookingFlow = ({ isOpen, onClose, room }: { isOpen: boolean, on
                 exit={{ opacity: 0, x: -20 }}
                 className="space-y-8 text-center"
               >
-                <h3 className="font-playfair text-3xl font-bold text-catalogue-green border-b border-catalogue-gold/20 pb-4 uppercase tracking-widest">Payment</h3>
+                <h3 className="font-playfair text-3xl font-bold metal-emerald border-b border-catalogue-gold/20 pb-4 uppercase tracking-widest">Payment</h3>
                 <div className="bg-catalogue-green p-6 text-white text-left space-y-3 mb-6">
                   <div className="flex justify-between border-b border-white/20 pb-2">
                     <span className="text-xs uppercase opacity-70">Room</span>
@@ -412,7 +412,7 @@ export const RoomBookingFlow = ({ isOpen, onClose, room }: { isOpen: boolean, on
                   <CheckCircle2 size={40} className="text-white" />
                 </div>
                 <div className="space-y-1">
-                  <h3 className="font-playfair text-3xl font-bold text-catalogue-green uppercase tracking-tighter">Reservation Secured</h3>
+                  <h3 className="font-playfair text-3xl font-bold metal-emerald uppercase tracking-tighter">Reservation Secured</h3>
                   <p className="text-catalogue-green/60 text-xs italic">Thank you for choosing Subra Residency</p>
                 </div>
                 
@@ -431,7 +431,7 @@ export const RoomBookingFlow = ({ isOpen, onClose, room }: { isOpen: boolean, on
                       )}
                     </div>
                   </div>
-                  <p className="mt-2 text-[10px] font-bold text-catalogue-gold uppercase tracking-[0.2em]">Booking ID: {realBookingId || '—'}</p>
+                  <p className="mt-2 text-[10px] font-bold metal-gold uppercase tracking-[0.2em] metal-flat">Booking ID: {realBookingId || '—'}</p>
                   <p className="mt-1 text-[9px] font-semibold text-slate-500 uppercase tracking-wider">Scan with mobile camera to start check-in</p>
                 </div>
 

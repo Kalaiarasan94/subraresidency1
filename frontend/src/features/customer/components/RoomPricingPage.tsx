@@ -64,10 +64,10 @@ export const RoomPricingPage = ({ onBookRoom, onRoomClick }: RoomPricingPageProp
           <Badge className="bg-catalogue-gold/15 text-catalogue-green border border-catalogue-gold/30 font-bold uppercase tracking-[0.3em] px-4 py-1 text-[10px]">
             Direct Booking Transparency
           </Badge>
-          <h1 className="font-playfair text-4xl md:text-6xl text-catalogue-green font-black uppercase tracking-tight">
+          <h1 className="font-playfair text-4xl md:text-6xl metal-emerald font-black uppercase tracking-tight">
             Room Tariffs & Pricing
           </h1>
-          <p className="font-playfair text-lg md:text-xl text-catalogue-gold italic font-bold">
+          <p className="font-playfair text-lg md:text-xl metal-gold italic font-bold">
             Guaranteed best rates with zero hidden charges and flexible 24-hour stay policy
           </p>
           <div className="flex justify-center pt-2">
@@ -83,7 +83,7 @@ export const RoomPricingPage = ({ onBookRoom, onRoomClick }: RoomPricingPageProp
           variants={staggerContainer}
           initial="initial"
           animate="animate"
-          className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20"
+          className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16 md:mb-24"
         >
           {categories.map((room, idx) => {
             const priceStr = formatPrice(room.price || room.price_24h || room.base_price);
@@ -93,14 +93,10 @@ export const RoomPricingPage = ({ onBookRoom, onRoomClick }: RoomPricingPageProp
 
             return (
               <motion.div key={room.id || idx} variants={fadeInUp} className="flex">
-                <Card className={`w-full rounded-3xl overflow-hidden border shadow-xl flex flex-col justify-between transition-all duration-500 hover:-translate-y-1.5 ${
-                  isSuperDeluxe 
-                    ? 'border-catalogue-gold bg-white ring-2 ring-catalogue-gold/30 shadow-catalogue-gold/20' 
-                    : 'border-slate-200 bg-white hover:border-catalogue-gold/40'
-                }`}>
+                <Card className={`lux-card w-full overflow-hidden flex flex-col justify-between ${isSuperDeluxe ? 'lux-card-featured' : ''}`}>
                   <div>
                     {/* Top Tag */}
-                    <div className="relative aspect-[16/10] overflow-hidden">
+                    <div className="lux-card-media aspect-[16/10]">
                       <img 
                         src={room.image || room.featured_image || 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&q=80'} 
                         alt={room.title || room.name}
@@ -113,7 +109,7 @@ export const RoomPricingPage = ({ onBookRoom, onRoomClick }: RoomPricingPageProp
                         </Badge>
                       </div>
                       <div className="absolute bottom-4 left-6 right-6 text-white">
-                        <h3 className="font-playfair text-xl md:text-2xl font-bold uppercase tracking-wide truncate">
+                        <h3 className="metal-gold-bright font-playfair text-xl md:text-2xl font-bold uppercase tracking-wide truncate">
                           {room.title || room.name}
                         </h3>
                         <p className="text-[11px] text-white/80 font-medium">
@@ -219,9 +215,9 @@ export const RoomPricingPage = ({ onBookRoom, onRoomClick }: RoomPricingPageProp
         </motion.div>
 
         {/* Detailed Comparison Table */}
-        <div className="bg-white rounded-3xl border border-catalogue-gold/20 shadow-xl overflow-hidden mb-20 p-6 md:p-10">
+        <div className="lux-panel overflow-hidden mb-16 md:mb-24 p-6 md:p-10">
           <div className="text-center mb-8">
-            <h2 className="font-playfair text-2xl md:text-3xl font-bold text-catalogue-green uppercase">
+            <h2 className="font-playfair text-2xl md:text-3xl font-bold metal-emerald uppercase">
               Complete Category Comparison
             </h2>
             <p className="text-xs text-slate-500 mt-1">
@@ -294,11 +290,11 @@ export const RoomPricingPage = ({ onBookRoom, onRoomClick }: RoomPricingPageProp
         </div>
 
         {/* Pricing Policies & Transparency Notice */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20">
-          <div className="bg-card-ivory p-6 md:p-8 rounded-3xl border border-catalogue-gold/30 shadow-md space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16 md:mb-24">
+          <div className="lux-card p-6 md:p-8 space-y-4">
             <div className="flex items-center gap-3 text-catalogue-green">
               <ShieldCheck size={22} className="text-catalogue-gold" />
-              <h3 className="font-playfair text-xl font-bold uppercase">Taxes & Fee Disclosures</h3>
+              <h3 className="metal-emerald font-playfair text-xl font-bold uppercase">Taxes & Fee Disclosures</h3>
             </div>
             <ul className="space-y-2 text-xs text-slate-600 leading-relaxed list-disc pl-5">
               <li><strong>GST & Statutory Levies:</strong> Applicable Goods & Services Tax (GST) is computed transparently in accordance with current Indian hotel accommodation tax slabs.</li>
@@ -308,10 +304,10 @@ export const RoomPricingPage = ({ onBookRoom, onRoomClick }: RoomPricingPageProp
             </ul>
           </div>
 
-          <div className="bg-card-ivory p-6 md:p-8 rounded-3xl border border-catalogue-gold/30 shadow-md space-y-4">
+          <div className="lux-card p-6 md:p-8 space-y-4">
             <div className="flex items-center gap-3 text-catalogue-green">
               <Clock size={22} className="text-catalogue-gold" />
-              <h3 className="font-playfair text-xl font-bold uppercase">Stay & Booking Conditions</h3>
+              <h3 className="metal-emerald font-playfair text-xl font-bold uppercase">Stay & Booking Conditions</h3>
             </div>
             <ul className="space-y-2 text-xs text-slate-600 leading-relaxed list-disc pl-5">
               <li><strong>Standard Check-In:</strong> 12:00 PM | <strong>Standard Check-Out:</strong> 11:00 AM.</li>
@@ -325,7 +321,7 @@ export const RoomPricingPage = ({ onBookRoom, onRoomClick }: RoomPricingPageProp
         {/* FAQ Section */}
         <div className="max-w-3xl mx-auto space-y-6 mb-16">
           <div className="text-center space-y-2">
-            <h3 className="font-playfair text-2xl font-bold text-catalogue-green uppercase">
+            <h3 className="font-playfair text-2xl font-bold metal-emerald uppercase">
               Frequently Asked Questions
             </h3>
             <p className="text-xs text-slate-500">
@@ -334,8 +330,8 @@ export const RoomPricingPage = ({ onBookRoom, onRoomClick }: RoomPricingPageProp
           </div>
 
           <div className="space-y-4 text-xs">
-            <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-1.5">
-              <h4 className="font-bold text-catalogue-green text-sm">
+            <div className="lux-card p-5 space-y-1.5">
+              <h4 className="font-bold metal-emerald text-sm metal-flat">
                 Is upfront payment mandatory to confirm a room?
               </h4>
               <p className="text-slate-600 leading-relaxed">
@@ -343,8 +339,8 @@ export const RoomPricingPage = ({ onBookRoom, onRoomClick }: RoomPricingPageProp
               </p>
             </div>
 
-            <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-1.5">
-              <h4 className="font-bold text-catalogue-green text-sm">
+            <div className="lux-card p-5 space-y-1.5">
+              <h4 className="font-bold metal-emerald text-sm metal-flat">
                 What payment modes does the Razorpay gateway accept?
               </h4>
               <p className="text-slate-600 leading-relaxed">
@@ -352,8 +348,8 @@ export const RoomPricingPage = ({ onBookRoom, onRoomClick }: RoomPricingPageProp
               </p>
             </div>
 
-            <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-1.5">
-              <h4 className="font-bold text-catalogue-green text-sm">
+            <div className="lux-card p-5 space-y-1.5">
+              <h4 className="font-bold metal-emerald text-sm metal-flat">
                 What is your cancellation policy?
               </h4>
               <p className="text-slate-600 leading-relaxed">
@@ -364,8 +360,8 @@ export const RoomPricingPage = ({ onBookRoom, onRoomClick }: RoomPricingPageProp
         </div>
 
         {/* Direct CTA */}
-        <div className="bg-catalogue-green rounded-3xl p-8 md:p-12 text-center text-white space-y-6 border border-catalogue-gold/40 shadow-2xl">
-          <h3 className="font-playfair text-2xl md:text-4xl font-bold tracking-wide">
+        <div className="lux-panel-dark bg-catalogue-green p-8 md:p-12 text-center text-white space-y-6">
+          <h3 className="metal-gold-bright font-playfair text-2xl md:text-4xl font-bold tracking-wide">
             Plan Your Spiritual Journey to Kumbakonam
           </h3>
           <p className="text-xs md:text-sm text-catalogue-cream/90 max-w-xl mx-auto leading-relaxed">

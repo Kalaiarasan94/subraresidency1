@@ -18,10 +18,10 @@ export const TermsAndConditionsPage = () => {
           <Badge className="bg-catalogue-gold/15 text-catalogue-green border border-catalogue-gold/30 font-bold uppercase tracking-[0.3em] px-4 py-1 text-[10px]">
             Legal Agreement & Policies
           </Badge>
-          <h1 className="font-playfair text-4xl md:text-6xl text-catalogue-green font-black uppercase tracking-tight">
+          <h1 className="font-playfair text-4xl md:text-6xl metal-emerald font-black uppercase tracking-tight">
             Terms & Conditions
           </h1>
-          <p className="font-playfair text-lg md:text-xl text-catalogue-gold italic font-bold">
+          <p className="font-playfair text-lg md:text-xl metal-gold italic font-bold">
             Subra Residency – Official Hotel Reservation & Service Terms
           </p>
           <div className="flex justify-center pt-2">
@@ -33,7 +33,7 @@ export const TermsAndConditionsPage = () => {
         </div>
 
         {/* Content Container */}
-        <div className="max-w-4xl mx-auto bg-white rounded-3xl border border-catalogue-gold/30 shadow-xl p-8 md:p-14 space-y-10 text-slate-700 text-xs md:text-sm leading-relaxed">
+        <div className="lux-panel max-w-4xl mx-auto p-8 md:p-14 space-y-10 text-slate-700 text-xs md:text-sm leading-relaxed">
           
           {/* Introduction */}
           <div className="p-5 bg-card-ivory/80 rounded-2xl border border-catalogue-gold/20 space-y-2">
@@ -48,7 +48,7 @@ export const TermsAndConditionsPage = () => {
 
           {/* Section 1 */}
           <section className="space-y-3">
-            <h2 className="font-playfair text-xl font-bold text-catalogue-green border-b border-slate-100 pb-2">
+            <h2 className="font-playfair text-xl font-bold metal-emerald border-b border-slate-100 pb-2">
               1. Website Usage & Eligibility
             </h2>
             <p>
@@ -63,7 +63,7 @@ export const TermsAndConditionsPage = () => {
 
           {/* Section 2 */}
           <section className="space-y-3">
-            <h2 className="font-playfair text-xl font-bold text-catalogue-green border-b border-slate-100 pb-2">
+            <h2 className="font-playfair text-xl font-bold metal-emerald border-b border-slate-100 pb-2">
               2. Room Reservation Policies
             </h2>
             <p>
@@ -78,7 +78,7 @@ export const TermsAndConditionsPage = () => {
 
           {/* Section 3 */}
           <section className="space-y-3">
-            <h2 className="font-playfair text-xl font-bold text-catalogue-green border-b border-slate-100 pb-2">
+            <h2 className="font-playfair text-xl font-bold metal-emerald border-b border-slate-100 pb-2">
               3. Booking Confirmation & Digital Voucher
             </h2>
             <p>
@@ -93,7 +93,7 @@ export const TermsAndConditionsPage = () => {
 
           {/* Section 4 */}
           <section className="space-y-3">
-            <h2 className="font-playfair text-xl font-bold text-catalogue-green border-b border-slate-100 pb-2">
+            <h2 className="font-playfair text-xl font-bold metal-emerald border-b border-slate-100 pb-2">
               4. Payment Terms & Currency
             </h2>
             <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 text-xs space-y-2">
@@ -117,7 +117,7 @@ export const TermsAndConditionsPage = () => {
 
           {/* Section 5 */}
           <section className="space-y-3">
-            <h2 className="font-playfair text-xl font-bold text-catalogue-green border-b border-slate-100 pb-2">
+            <h2 className="font-playfair text-xl font-bold metal-emerald border-b border-slate-100 pb-2">
               5. Check-In & Check-Out Policies (24-Hour Stay Benefit)
             </h2>
             <ul className="list-disc pl-5 space-y-2 text-xs text-slate-600">
@@ -134,7 +134,7 @@ export const TermsAndConditionsPage = () => {
 
           {/* Section 6 */}
           <section className="space-y-3">
-            <h2 className="font-playfair text-xl font-bold text-catalogue-green border-b border-slate-100 pb-2">
+            <h2 className="font-playfair text-xl font-bold metal-emerald border-b border-slate-100 pb-2">
               6. Guest Responsibilities & Hotel Regulations
             </h2>
             <ul className="list-disc pl-5 space-y-1.5 text-xs text-slate-600">
@@ -147,7 +147,7 @@ export const TermsAndConditionsPage = () => {
 
           {/* Section 7 */}
           <section className="space-y-3">
-            <h2 className="font-playfair text-xl font-bold text-catalogue-green border-b border-slate-100 pb-2">
+            <h2 className="font-playfair text-xl font-bold metal-emerald border-b border-slate-100 pb-2">
               7. Additional Charges & Taxes
             </h2>
             <ul className="list-disc pl-5 space-y-1.5 text-xs text-slate-600">
@@ -159,7 +159,7 @@ export const TermsAndConditionsPage = () => {
 
           {/* Section 8 */}
           <section className="space-y-3">
-            <h2 className="font-playfair text-xl font-bold text-catalogue-green border-b border-slate-100 pb-2">
+            <h2 className="font-playfair text-xl font-bold metal-emerald border-b border-slate-100 pb-2">
               8. Booking Modifications & Rescheduling
             </h2>
             <p>
@@ -169,7 +169,7 @@ export const TermsAndConditionsPage = () => {
 
           {/* Section 9 */}
           <section className="space-y-3">
-            <h2 className="font-playfair text-xl font-bold text-catalogue-green border-b border-slate-100 pb-2">
+            <h2 className="font-playfair text-xl font-bold metal-emerald border-b border-slate-100 pb-2">
               9. Cancellation & Refund Rules
             </h2>
             <p>
@@ -185,7 +185,7 @@ export const TermsAndConditionsPage = () => {
 
           {/* Section 10 */}
           <section className="space-y-3">
-            <h2 className="font-playfair text-xl font-bold text-catalogue-green border-b border-slate-100 pb-2">
+            <h2 className="font-playfair text-xl font-bold metal-emerald border-b border-slate-100 pb-2">
               10. Limitation of Liability & Force Majeure
             </h2>
             <ul className="list-disc pl-5 space-y-1.5 text-xs text-slate-600">
@@ -197,7 +197,7 @@ export const TermsAndConditionsPage = () => {
 
           {/* Section 11 */}
           <section className="space-y-3 pt-4 border-t border-slate-200">
-            <h2 className="font-playfair text-xl font-bold text-catalogue-green">
+            <h2 className="font-playfair text-xl font-bold metal-emerald">
               11. Official Contact Information
             </h2>
             <p className="text-xs text-slate-600">

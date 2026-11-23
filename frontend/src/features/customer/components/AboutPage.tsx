@@ -70,10 +70,10 @@ export const AboutPage = ({ onSelectTemple }: { onSelectTemple: (temple: any) =>
           <Badge className="bg-catalogue-gold/15 text-catalogue-green border border-catalogue-gold/30 font-bold uppercase tracking-[0.3em] px-4 py-1 text-[10px]">
             Hospitality Heritage
           </Badge>
-          <h1 className="font-playfair text-4xl md:text-6xl text-catalogue-green font-black uppercase tracking-tight">
+          <h1 className="font-playfair text-4xl md:text-6xl metal-emerald font-black uppercase tracking-tight">
             About Subra Residency
           </h1>
-          <p className="font-playfair text-xl md:text-2xl text-catalogue-gold italic font-bold">
+          <p className="font-playfair text-xl md:text-2xl metal-gold italic font-bold">
             &quot;Home, Away from Home&quot; in the Sacred Temple City of Kumbakonam
           </p>
           <div className="flex justify-center pt-2">
@@ -85,13 +85,13 @@ export const AboutPage = ({ onSelectTemple }: { onSelectTemple: (temple: any) =>
         </div>
 
         {/* Hotel Overview & Photographic Highlights */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center mb-24">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center mb-16 md:mb-24">
           <div className="lg:col-span-6 space-y-6 text-xs md:text-sm text-slate-700 leading-relaxed">
             <div className="space-y-3">
-              <h2 className="font-playfair text-2xl md:text-3xl font-bold text-catalogue-green uppercase">
+              <h2 className="font-playfair text-2xl md:text-3xl font-bold metal-emerald uppercase">
                 A Tranquil Haven for Pilgrims & Families
               </h2>
-              <div className="w-20 h-1 bg-catalogue-gold" />
+              <div className="h-1 bg-catalogue-gold anim-line-grow" />
             </div>
 
             <p>
@@ -103,7 +103,7 @@ export const AboutPage = ({ onSelectTemple }: { onSelectTemple: (temple: any) =>
             </p>
 
             <div className="p-4 bg-card-ivory rounded-2xl border border-catalogue-gold/30 space-y-2">
-              <h4 className="font-bold text-catalogue-green uppercase text-xs">
+              <h4 className="font-bold metal-emerald uppercase text-xs metal-flat">
                 Our Signature 24-Hour Stay Privilege
               </h4>
               <p className="text-[11px] text-slate-600 leading-relaxed">
@@ -114,20 +114,20 @@ export const AboutPage = ({ onSelectTemple }: { onSelectTemple: (temple: any) =>
 
           <div className="lg:col-span-6 grid grid-cols-2 gap-4">
             <div className="space-y-4">
-              <div className="rounded-2xl overflow-hidden shadow-xl border border-catalogue-gold/20 aspect-[4/5]">
-                <img src={hotelBuildingImg} alt="Subra Residency Property Exterior" className="w-full h-full object-cover" />
+              <div className="rounded-[14px] overflow-hidden shadow-xl border border-catalogue-gold/30 aspect-[4/5]">
+                <img src={hotelBuildingImg} alt="Subra Residency Property Exterior" className="w-full h-full object-cover anim-img-zoom" />
               </div>
-              <div className="p-3 bg-white rounded-xl border border-slate-100 text-center shadow-xs">
+              <div className="p-3 bg-[#FFFDF8] rounded-lg border border-catalogue-gold/25 text-center">
                 <p className="font-bold text-catalogue-green text-xs">Prime Property</p>
                 <p className="text-[10px] text-slate-500">45, L.B.S Road, Kumbakonam</p>
               </div>
             </div>
 
             <div className="space-y-4 pt-6">
-              <div className="rounded-2xl overflow-hidden shadow-xl border border-catalogue-gold/20 aspect-[4/5]">
-                <img src={hallImg} alt="Lobby & Reception Hall" className="w-full h-full object-cover" />
+              <div className="rounded-[14px] overflow-hidden shadow-xl border border-catalogue-gold/30 aspect-[4/5]">
+                <img src={hallImg} alt="Lobby & Reception Hall" className="w-full h-full object-cover anim-img-zoom" />
               </div>
-              <div className="p-3 bg-white rounded-xl border border-slate-100 text-center shadow-xs">
+              <div className="p-3 bg-[#FFFDF8] rounded-lg border border-catalogue-gold/25 text-center">
                 <p className="font-bold text-catalogue-green text-xs">Reception & Lounge</p>
                 <p className="text-[10px] text-slate-500">24/7 Front Desk Assistance</p>
               </div>
@@ -136,9 +136,9 @@ export const AboutPage = ({ onSelectTemple }: { onSelectTemple: (temple: any) =>
         </div>
 
         {/* Accommodation Facilities & Services Grid */}
-        <div className="bg-card-ivory/70 rounded-3xl border border-catalogue-gold/25 p-8 md:p-14 mb-24 ornate-border shadow-xl">
+        <div className="lux-panel p-8 md:p-14 mb-16 md:mb-24">
           <div className="text-center mb-12 space-y-3">
-            <h2 className="font-playfair text-3xl md:text-4xl font-bold text-catalogue-green uppercase">
+            <h2 className="font-playfair text-3xl md:text-4xl font-bold metal-emerald uppercase">
               Hospitality Facilities & Amenities
             </h2>
             <p className="text-xs md:text-sm text-slate-600 max-w-xl mx-auto">
@@ -147,41 +147,41 @@ export const AboutPage = ({ onSelectTemple }: { onSelectTemple: (temple: any) =>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-3">
-              <div className="w-10 h-10 rounded-xl bg-catalogue-gold/15 text-catalogue-gold flex items-center justify-center">
+            <div className="lux-card anim-lift p-6 space-y-3">
+              <div className="anim-icon-float w-10 h-10 rounded-xl bg-catalogue-gold/15 text-catalogue-gold flex items-center justify-center">
                 <Wind size={20} />
               </div>
-              <h3 className="font-playfair font-bold text-base text-catalogue-green">Full Air Conditioning</h3>
+              <h3 className="font-playfair font-bold text-base metal-emerald metal-flat">Full Air Conditioning</h3>
               <p className="text-xs text-slate-600 leading-relaxed">
                 Individually controlled, energy-efficient air conditioning in every room for pleasant indoor climate.
               </p>
             </div>
 
-            <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-3">
-              <div className="w-10 h-10 rounded-xl bg-catalogue-gold/15 text-catalogue-gold flex items-center justify-center">
+            <div className="lux-card anim-lift p-6 space-y-3">
+              <div className="anim-icon-float w-10 h-10 rounded-xl bg-catalogue-gold/15 text-catalogue-gold flex items-center justify-center">
                 <Building2 size={20} />
               </div>
-              <h3 className="font-playfair font-bold text-base text-catalogue-green">Elevator / Lift Access</h3>
+              <h3 className="font-playfair font-bold text-base metal-emerald metal-flat">Elevator / Lift Access</h3>
               <p className="text-xs text-slate-600 leading-relaxed">
                 Modern passenger elevator servicing all accommodation floors, ensuring ease of access for senior citizen pilgrims.
               </p>
             </div>
 
-            <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-3">
-              <div className="w-10 h-10 rounded-xl bg-catalogue-gold/15 text-catalogue-gold flex items-center justify-center">
+            <div className="lux-card anim-lift p-6 space-y-3">
+              <div className="anim-icon-float w-10 h-10 rounded-xl bg-catalogue-gold/15 text-catalogue-gold flex items-center justify-center">
                 <Clock size={20} />
               </div>
-              <h3 className="font-playfair font-bold text-base text-catalogue-green">24/7 Power Backup</h3>
+              <h3 className="font-playfair font-bold text-base metal-emerald metal-flat">24/7 Power Backup</h3>
               <p className="text-xs text-slate-600 leading-relaxed">
                 Heavy-duty silent diesel generator ensures uninterrupted lighting, fans, and elevators round the clock.
               </p>
             </div>
 
-            <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-3">
-              <div className="w-10 h-10 rounded-xl bg-catalogue-gold/15 text-catalogue-gold flex items-center justify-center">
+            <div className="lux-card anim-lift p-6 space-y-3">
+              <div className="anim-icon-float w-10 h-10 rounded-xl bg-catalogue-gold/15 text-catalogue-gold flex items-center justify-center">
                 <Wifi size={20} />
               </div>
-              <h3 className="font-playfair font-bold text-base text-catalogue-green">High-Speed Wi-Fi</h3>
+              <h3 className="font-playfair font-bold text-base metal-emerald metal-flat">High-Speed Wi-Fi</h3>
               <p className="text-xs text-slate-600 leading-relaxed">
                 Complimentary optical fiber internet connection across all guest rooms and public reception lounges.
               </p>
@@ -190,9 +190,9 @@ export const AboutPage = ({ onSelectTemple }: { onSelectTemple: (temple: any) =>
         </div>
 
         {/* Accommodation Categories Summary */}
-        <div className="mb-24 space-y-8">
+        <div className="mb-16 md:mb-24 space-y-8">
           <div className="text-center space-y-3">
-            <h2 className="font-playfair text-3xl md:text-4xl font-bold text-catalogue-green uppercase">
+            <h2 className="font-playfair text-3xl md:text-4xl font-bold metal-emerald uppercase">
               Our Room Categories
             </h2>
             <p className="text-xs md:text-sm text-slate-600">
@@ -201,9 +201,9 @@ export const AboutPage = ({ onSelectTemple }: { onSelectTemple: (temple: any) =>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Card className="rounded-3xl border border-slate-200 bg-white shadow-md p-6 space-y-4">
+            <Card className="lux-card anim-lift p-6 space-y-4">
               <Badge className="bg-slate-100 text-slate-700 font-bold uppercase text-[9px]">Deluxe Room</Badge>
-              <h3 className="font-playfair text-xl font-bold text-catalogue-green">Deluxe Room</h3>
+              <h3 className="font-playfair text-xl font-bold metal-emerald">Deluxe Room</h3>
               <p className="text-xs text-slate-600 leading-relaxed">
                 Intimate and elegantly furnished room with king bed, attached bathroom with 24-hr geyser, and LED TV.
               </p>
@@ -213,9 +213,9 @@ export const AboutPage = ({ onSelectTemple }: { onSelectTemple: (temple: any) =>
               <p className="text-[11px] text-slate-500 font-medium">Ideal for: 2 Adults</p>
             </Card>
 
-            <Card className="rounded-3xl border border-catalogue-gold bg-white shadow-lg p-6 space-y-4 ring-1 ring-catalogue-gold/20">
+            <Card className="lux-card lux-card-featured anim-lift p-6 space-y-4">
               <Badge className="bg-catalogue-gold text-white font-bold uppercase text-[9px]">Super Deluxe</Badge>
-              <h3 className="font-playfair text-xl font-bold text-catalogue-green">Executive 1-BHK Suite</h3>
+              <h3 className="font-playfair text-xl font-bold metal-emerald">Executive 1-BHK Suite</h3>
               <p className="text-xs text-slate-600 leading-relaxed">
                 Generous family suite with separate living area, private open-air balcony, and superior furnishings.
               </p>
@@ -225,9 +225,9 @@ export const AboutPage = ({ onSelectTemple }: { onSelectTemple: (temple: any) =>
               <p className="text-[11px] text-slate-500 font-medium">Ideal for: 3 Adults / Family with Kids</p>
             </Card>
 
-            <Card className="rounded-3xl border border-slate-200 bg-white shadow-md p-6 space-y-4">
+            <Card className="lux-card anim-lift p-6 space-y-4">
               <Badge className="bg-slate-100 text-slate-700 font-bold uppercase text-[9px]">Suite Apartment</Badge>
-              <h3 className="font-playfair text-xl font-bold text-catalogue-green">Executive 2-BHK Apartment</h3>
+              <h3 className="font-playfair text-xl font-bold metal-emerald">Executive 2-BHK Apartment</h3>
               <p className="text-xs text-slate-600 leading-relaxed">
                 Expansive two-bedroom apartment layout with dedicated master suites, spacious hall, and dual air conditioning.
               </p>
@@ -240,7 +240,7 @@ export const AboutPage = ({ onSelectTemple }: { onSelectTemple: (temple: any) =>
 
           <div className="text-center pt-2">
             <Link to="/pricing">
-              <Button className="bg-catalogue-green hover:bg-catalogue-gold text-white font-bold uppercase tracking-widest text-xs px-8 py-5 rounded-none shadow-md">
+              <Button className="lux-button bg-catalogue-green hover:bg-catalogue-gold text-white font-bold uppercase tracking-widest text-xs px-8 py-5 rounded-none shadow-md">
                 View Full Pricing & Tariffs &rarr;
               </Button>
             </Link>
@@ -249,29 +249,29 @@ export const AboutPage = ({ onSelectTemple }: { onSelectTemple: (temple: any) =>
 
         {/* Existing Interactive Transport & Temple Trail Section */}
         <div className="text-center mb-16 space-y-4">
-          <h2 className="font-playfair text-3xl md:text-5xl text-catalogue-green font-black max-w-3xl mx-auto leading-tight">
+          <h2 className="font-playfair text-3xl md:text-5xl metal-emerald font-black max-w-3xl mx-auto leading-tight">
             PRIME LOCATION & TRAVEL PROXIMITIES
           </h2>
-          <p className="font-playfair text-lg md:text-xl text-catalogue-gold italic font-bold">
+          <p className="font-playfair text-lg md:text-xl metal-gold italic font-bold">
             Stay in the heart of Kumbakonam – close to temples and transport.
           </p>
           <OrnateDivider className="my-6" />
         </div>
 
         {/* Map Visualization */}
-        <motion.div variants={fadeInUp} className="relative aspect-[3/2] w-full max-w-5xl mx-auto bg-card-ivory rounded-none border border-catalogue-gold/20 flex flex-col items-center justify-center mb-20 overflow-hidden shadow-2xl ornate-shape ornate-border">
+        <motion.div variants={fadeInUp} className="lux-panel relative aspect-[3/2] w-full max-w-5xl mx-auto flex flex-col items-center justify-center mb-16 md:mb-24 overflow-hidden">
           <div className="relative w-full h-full p-2 md:p-3">
             <img src={locationMapImg} alt="Location Map" className="w-full h-full object-cover" />
           </div>
         </motion.div>
 
         {/* 3 Columns: Transport Points / Live Map / Spiritual Trail */}
-        <div className="grid grid-cols-1 lg:grid-cols-[0.8fr_1.4fr_0.8fr] gap-8 items-start border-t border-catalogue-gold/20 pt-16 mb-24 bg-card-ivory p-6 md:p-8 ornate-shape ornate-border shadow-xl">
+        <div className="lux-panel grid grid-cols-1 lg:grid-cols-[0.8fr_1.4fr_0.8fr] gap-8 items-start mb-16 md:mb-24 p-6 md:p-8">
           {/* Transport Points */}
           <motion.div variants={fadeInLeft} className="space-y-10">
             <div className="flex items-center gap-3 text-catalogue-green border-b border-catalogue-gold/20 pb-5">
               <QrCode size={24} className="text-catalogue-gold" />
-              <h3 className="font-playfair text-2xl font-bold uppercase tracking-widest leading-none">Transport <br/>Points</h3>
+              <h3 className="metal-emerald font-playfair text-2xl font-bold uppercase tracking-widest leading-none">Transport <br/>Points</h3>
             </div>
             <table className="w-full text-left font-playfair">
               <thead>
@@ -326,9 +326,9 @@ export const AboutPage = ({ onSelectTemple }: { onSelectTemple: (temple: any) =>
           <motion.div variants={fadeInUp} className="space-y-10 lg:mt-0">
             <div className="flex items-center gap-3 text-catalogue-green border-b border-catalogue-gold/20 pb-5">
               <MapPin size={24} className="text-catalogue-gold" />
-              <h3 className="font-playfair text-2xl font-bold uppercase tracking-widest leading-none">Map <br/>View</h3>
+              <h3 className="metal-emerald font-playfair text-2xl font-bold uppercase tracking-widest leading-none">Map <br/>View</h3>
             </div>
-            <div className="aspect-square w-full bg-white border border-catalogue-gold/20 shadow-2xl relative overflow-hidden group ornate-border">
+            <div className="aspect-square w-full bg-white border border-catalogue-gold/30 rounded-[10px] shadow-xl relative overflow-hidden group">
               <iframe
                 title="Location Map"
                 width="100%"
@@ -361,7 +361,7 @@ export const AboutPage = ({ onSelectTemple }: { onSelectTemple: (temple: any) =>
           <motion.div variants={fadeInRight} className="space-y-10">
             <div className="flex items-center gap-3 text-catalogue-green border-b border-catalogue-gold/20 pb-5">
               <MapPin size={24} className="text-catalogue-gold" />
-              <h3 className="font-playfair text-2xl font-bold uppercase tracking-widest leading-none">Spiritual <br/>Trail</h3>
+              <h3 className="metal-emerald font-playfair text-2xl font-bold uppercase tracking-widest leading-none">Spiritual <br/>Trail</h3>
             </div>
             <div className="grid grid-cols-1 gap-0">
                <div className="flex text-[10px] text-catalogue-gold font-bold uppercase tracking-[0.2em] border-b border-catalogue-gold/20 pb-4 mb-2">
@@ -396,12 +396,12 @@ export const AboutPage = ({ onSelectTemple }: { onSelectTemple: (temple: any) =>
         </div>
 
         {/* Temple Details Near Subra Residency */}
-        <div className="space-y-16 py-12 border-t border-catalogue-gold/20">
+        <div className="space-y-12 pt-16 md:pt-20 border-t border-catalogue-gold/20">
           <div className="text-center space-y-4">
-            <h2 className="font-playfair text-3xl md:text-5xl text-catalogue-green font-black uppercase tracking-tight">
+            <h2 className="font-playfair text-3xl md:text-5xl metal-emerald font-black uppercase tracking-tight">
               TEMPLE DETAILS NEAR SUBRA RESIDENCY
             </h2>
-            <p className="font-playfair text-xl text-catalogue-gold italic font-bold">
+            <p className="font-playfair text-xl metal-gold italic font-bold">
               Explore the Sacred Trail Around Kumbakonam
             </p>
             <p className="font-playfair text-base md:text-lg text-catalogue-green max-w-4xl mx-auto leading-relaxed font-semibold">
@@ -413,13 +413,16 @@ export const AboutPage = ({ onSelectTemple }: { onSelectTemple: (temple: any) =>
             {temples.map((temple, i) => (
               <motion.div 
                 key={i} 
-                variants={fadeInUp} 
-                whileHover={{ y: -6, scale: 1.01 }} 
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.6, delay: (i % 3) * 0.12, ease: [0.22, 1, 0.36, 1] }}
+                whileHover={{ y: -6 }} 
                 onClick={() => onSelectTemple(temple)}
-                className="animated-card bg-card-ivory p-8 border border-catalogue-gold/10 flex flex-col h-full ornate-shape ornate-border shadow-lg group cursor-pointer"
+                className="lux-card animated-card p-8 flex flex-col h-full group cursor-pointer"
               >
                 <div className="space-y-6 flex-grow">
-                   <h4 className="font-playfair text-2xl font-black text-catalogue-green leading-tight group-hover:text-catalogue-gold transition-colors">{temple.name}</h4>
+                   <h4 className="font-playfair text-2xl font-black metal-emerald leading-tight metal-hover-gold">{temple.name}</h4>
                    
                    <div className="space-y-3">
                      <div className="flex items-center gap-3 text-sm">
@@ -437,7 +440,7 @@ export const AboutPage = ({ onSelectTemple }: { onSelectTemple: (temple: any) =>
                    </div>
 
                    <div className="pt-4 border-t border-catalogue-gold/10">
-                     <p className="text-[10px] font-bold text-catalogue-gold uppercase tracking-widest mb-1">Special For</p>
+                     <p className="text-[10px] font-bold metal-gold uppercase tracking-widest mb-1 metal-flat">Special For</p>
                      <p className="text-sm text-catalogue-green font-bold italic leading-relaxed">{temple.specialFor}</p>
                    </div>
 
@@ -446,7 +449,7 @@ export const AboutPage = ({ onSelectTemple }: { onSelectTemple: (temple: any) =>
                    </p>
 
                    <div className="mt-4 pt-4 border-t border-catalogue-gold/5 flex justify-end">
-                      <p className="text-[10px] font-bold text-catalogue-gold uppercase tracking-[0.2em] group-hover:translate-x-2 transition-transform">Click to View Map & Info →</p>
+                      <p className="text-[10px] font-bold metal-gold uppercase tracking-[0.2em] group-hover:translate-x-2 transition-transform metal-flat">Click to View Map & Info →</p>
                    </div>
                 </div>
               </motion.div>

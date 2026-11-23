@@ -149,15 +149,15 @@ export const RoomsPage = ({
     <DecorativeLayout>
       <SectionWrapper className="pt-20">
         <div className="text-center mb-12 space-y-4">
-          <p className="font-bold text-catalogue-gold uppercase tracking-[0.4em] text-sm">Exclusive Collection</p>
-          <h2 className="font-playfair text-4xl md:text-6xl text-catalogue-green font-black uppercase tracking-tight">Our Sanctuaries</h2>
+          <p className="font-bold metal-gold uppercase tracking-[0.4em] text-sm metal-flat">Exclusive Collection</p>
+          <h2 className="font-playfair text-4xl md:text-6xl metal-emerald font-black uppercase tracking-tight">Our Sanctuaries</h2>
           <div className="flex justify-center pt-2">
             <OrnateDivider className="w-32" />
           </div>
         </div>
 
         {effectiveFilters && (
-          <div className="max-w-2xl mx-auto mb-16 p-5 bg-white/90 backdrop-blur-md rounded-2xl border border-catalogue-gold/30 flex items-center justify-between text-xs font-bold text-catalogue-green uppercase tracking-widest shadow-md ornate-border">
+          <div className="lux-panel max-w-2xl mx-auto mb-16 p-5 flex items-center justify-between text-xs font-bold text-catalogue-green uppercase tracking-widest">
             <div className="flex gap-6 items-center flex-wrap">
               <div className="space-y-1">
                 <span className="text-[10px] text-catalogue-gold block tracking-wider font-semibold">Check-In</span>
@@ -219,10 +219,10 @@ export const RoomsPage = ({
                   transition={{ delay: index * 0.1 }}
                 >
                   <Card 
-                    className="group overflow-hidden border-none shadow-xl bg-white rounded-3xl flex flex-col h-full hover:shadow-catalogue-gold/10 transition-all duration-700 cursor-pointer"
+                    className="lux-card group overflow-hidden flex flex-col h-full cursor-pointer"
                     onClick={() => onRoomClick(room)}
                   >
-                    <div className="relative aspect-[16/10] overflow-hidden">
+                    <div className="lux-card-media aspect-[16/10]">
                       <img 
                         src={room.image || room.featured_image || 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&q=80'} 
                         alt={room.title || room.room_name} 
@@ -243,7 +243,7 @@ export const RoomsPage = ({
                       </div>
 
                       <div className="absolute bottom-4 left-6 right-6">
-                         <h3 className="text-2xl font-sans font-black text-white tracking-widest drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] tabular-nums">
+                         <h3 className="metal-gold-bright text-2xl font-sans font-black tracking-widest tabular-nums">
                             {formatPrice(room.price || room.base_price)}
                             <span className="text-[11px] font-bold opacity-90 ml-1 uppercase tracking-widest">/ NT</span>
                          </h3>
@@ -252,7 +252,7 @@ export const RoomsPage = ({
 
                     <CardContent className="p-6 flex-grow flex flex-col">
                       <div className="mb-4">
-                        <h4 className="text-lg font-black font-playfair text-catalogue-green uppercase tracking-tight mb-1 group-hover:text-catalogue-gold transition-colors truncate">{room.title || room.room_name}</h4>
+                        <h4 className="text-lg font-black font-playfair metal-emerald uppercase tracking-tight mb-1 metal-hover-gold truncate">{room.title || room.room_name}</h4>
                         <div className="flex items-center gap-2 text-slate-400 text-[10px] font-bold uppercase tracking-widest">
                            <MapPin size={10} className="text-catalogue-gold" />
                            {room.category || 'Suite'} • Level {room.floor || '3'}
@@ -304,8 +304,8 @@ export const RoomsPage = ({
               ))}
             </div>
           ) : (
-            <div className="text-center py-20 bg-white border border-slate-100 rounded-3xl shadow-sm">
-               <h3 className="text-2xl font-playfair font-black text-catalogue-green mb-2">No Matching Sanctuaries</h3>
+            <div className="lux-panel text-center py-20">
+               <h3 className="text-2xl font-playfair font-black metal-emerald mb-2">No Matching Sanctuaries</h3>
                <p className="text-slate-500">We couldn't find rooms for your specific criteria. Please try adjusting your filters.</p>
             </div>
           )}

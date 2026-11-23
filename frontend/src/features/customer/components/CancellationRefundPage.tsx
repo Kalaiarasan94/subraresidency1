@@ -18,10 +18,10 @@ export const CancellationRefundPage = () => {
           <Badge className="bg-catalogue-gold/15 text-catalogue-green border border-catalogue-gold/30 font-bold uppercase tracking-[0.3em] px-4 py-1 text-[10px]">
             Guest Safeguard & Policies
           </Badge>
-          <h1 className="font-playfair text-4xl md:text-6xl text-catalogue-green font-black uppercase tracking-tight">
+          <h1 className="font-playfair text-4xl md:text-6xl metal-emerald font-black uppercase tracking-tight">
             Cancellation & Refund Policy
           </h1>
-          <p className="font-playfair text-lg md:text-xl text-catalogue-gold italic font-bold">
+          <p className="font-playfair text-lg md:text-xl metal-gold italic font-bold">
             Transparent, fair, and reliable room cancellation & refund procedures
           </p>
           <div className="flex justify-center pt-2">
@@ -33,7 +33,7 @@ export const CancellationRefundPage = () => {
         </div>
 
         {/* Content Container */}
-        <div className="max-w-4xl mx-auto bg-white rounded-3xl border border-catalogue-gold/30 shadow-xl p-8 md:p-14 space-y-10 text-slate-700 text-xs md:text-sm leading-relaxed">
+        <div className="lux-panel max-w-4xl mx-auto p-8 md:p-14 space-y-10 text-slate-700 text-xs md:text-sm leading-relaxed">
 
           {/* Quick Summary Box */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-5 bg-card-ivory/80 rounded-2xl border border-catalogue-gold/25">
@@ -58,7 +58,7 @@ export const CancellationRefundPage = () => {
 
           {/* Section 1: Detailed Cancellation Timelines */}
           <section className="space-y-3">
-            <h2 className="font-playfair text-xl font-bold text-catalogue-green border-b border-slate-100 pb-2">
+            <h2 className="font-playfair text-xl font-bold metal-emerald border-b border-slate-100 pb-2">
               1. Cancellation Deadlines & Eligibility
             </h2>
             <p>
@@ -99,7 +99,7 @@ export const CancellationRefundPage = () => {
 
           {/* Section 2: Booking Modifications */}
           <section className="space-y-3">
-            <h2 className="font-playfair text-xl font-bold text-catalogue-green border-b border-slate-100 pb-2">
+            <h2 className="font-playfair text-xl font-bold metal-emerald border-b border-slate-100 pb-2">
               2. Booking Modifications & Rescheduling
             </h2>
             <p>
@@ -114,7 +114,7 @@ export const CancellationRefundPage = () => {
 
           {/* Section 3: Refund Process & Timeline */}
           <section className="space-y-3">
-            <h2 className="font-playfair text-xl font-bold text-catalogue-green border-b border-slate-100 pb-2">
+            <h2 className="font-playfair text-xl font-bold metal-emerald border-b border-slate-100 pb-2">
               3. Refund Processing Procedure & Expected Timeline
             </h2>
             <div className="p-5 bg-slate-50 rounded-2xl border border-slate-200 text-xs space-y-2.5">
@@ -138,7 +138,7 @@ export const CancellationRefundPage = () => {
 
           {/* Section 4: How to Request Cancellation */}
           <section className="space-y-3">
-            <h2 className="font-playfair text-xl font-bold text-catalogue-green border-b border-slate-100 pb-2">
+            <h2 className="font-playfair text-xl font-bold metal-emerald border-b border-slate-100 pb-2">
               4. How to Request a Cancellation or Refund
             </h2>
             <p>
@@ -169,7 +169,7 @@ export const CancellationRefundPage = () => {
 
           {/* Section 5: Force Majeure & Special Events */}
           <section className="space-y-3">
-            <h2 className="font-playfair text-xl font-bold text-catalogue-green border-b border-slate-100 pb-2">
+            <h2 className="font-playfair text-xl font-bold metal-emerald border-b border-slate-100 pb-2">
               5. Special Circumstances & Force Majeure
             </h2>
             <p className="text-xs text-slate-600 leading-relaxed">
@@ -179,7 +179,7 @@ export const CancellationRefundPage = () => {
 
           {/* Section 6: Contact for Refund Support */}
           <section className="space-y-3 pt-4 border-t border-slate-200">
-            <h2 className="font-playfair text-xl font-bold text-catalogue-green">
+            <h2 className="font-playfair text-xl font-bold metal-emerald">
               6. Dedicated Refund Support Desk
             </h2>
             <p className="text-xs text-slate-600">

@@ -8,6 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../..
 import { Badge } from '../../../components/ui/badge';
 import { fadeInUp, fadeInLeft, fadeInRight, staggerContainer, heroStagger, heroItem } from './animations';
 import { ROOMS_DATA, ATTRACTIONS_DATA, HIDDEN_TRAILS_DATA, RECOMMENDED_TRAILS_DATA, TEMPLE_DETAILS_DATA } from './data';
+import { bgVideoDesktop, bgVideoMobile } from './assets';
 import { logo, pillerImg, leafImg, templeBotImg, bgImg, locationMapImg, hotelBuildingImg, diningImg, hallImg, sarangapaniImg, mahamahamImg, airavatesvaraImg, uppiliappanImg, ramaswamyImg } from './assets';
 export const SectionWrapper = ({ children, className, id }: { children: React.ReactNode, className?: string, id?: string }) => (
   <section id={id} className={cn("relative py-16 px-6 md:px-12", className)}>
@@ -23,23 +24,57 @@ export const SectionWrapper = ({ children, className, id }: { children: React.Re
   </section>
 );
 
-export const DecorativeLayout = ({ children }: { children: React.ReactNode }) => {
+/* Looping background video – shown on every page that uses DecorativeLayout (pass bgVideo={null} to turn off) (warm tone + blur baked into the files).
+   Phones get the vertical file, larger screens the wide one; reduced-motion users keep the still image. */
+const BackgroundVideo = ({ desktop, mobile }: { desktop: string; mobile: string }) => {
+  const [src, setSrc] = useState<string | null>(null);
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const mq = window.matchMedia('(max-width: 767px)');
+    const pick = () => { setReady(false); setSrc(mq.matches ? mobile : desktop); };
+    pick();
+    mq.addEventListener('change', pick);
+    return () => mq.removeEventListener('change', pick);
+  }, [desktop, mobile]);
+
+  if (!src) return null;
+  return (
+    <video
+      key={src}
+      src={src}
+      className={cn("site-bg-video fixed inset-0 w-full h-full pointer-events-none z-0", ready && "is-ready")}
+      autoPlay
+      muted
+      loop
+      playsInline
+      preload="auto"
+      aria-hidden="true"
+      onCanPlay={() => setReady(true)}
+    />
+  );
+};
+
+export const DecorativeLayout = ({
+  children,
+  bgVideo = { desktop: bgVideoDesktop, mobile: bgVideoMobile },
+}: { children: React.ReactNode; bgVideo?: { desktop: string; mobile: string } | null }) => {
   return (
     <motion.div 
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.9, ease: "easeOut" }}
       className="min-h-screen relative bg-brand-cream"
-      style={{ 
-        backgroundImage: `url(${bgImg})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundAttachment: 'fixed',
-        backgroundRepeat: 'no-repeat'
-      }}
     >
+      {/* Background photo – warm tone, blur and haze are pre-baked into the image file */}
+      <div
+        className="site-bg-photo fixed inset-0 pointer-events-none z-0"
+        style={{ backgroundImage: `url(${bgImg})` }}
+      />
+      {bgVideo && <BackgroundVideo desktop={bgVideo.desktop} mobile={bgVideo.mobile} />}
       <motion.div
-        className="fixed inset-0 pointer-events-none z-0 bg-[radial-gradient(circle_at_50%_20%,rgba(255,249,240,0.9),transparent_34%),linear-gradient(to_bottom,rgba(255,249,240,0.35),rgba(255,249,240,0.72))]"
+        className="site-bg-wash fixed inset-0 pointer-events-none z-0"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1.4, ease: "easeOut" }}
@@ -65,7 +100,7 @@ export const DecorativeLayout = ({ children }: { children: React.ReactNode }) =>
       </motion.div>
       
       {/* Content */}
-      <div className="relative z-20">
+      <div className="relative z-20 decor-safe">
         {children}
       </div>
     </motion.div>

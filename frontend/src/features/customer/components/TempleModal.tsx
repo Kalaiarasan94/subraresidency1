@@ -92,7 +92,7 @@ export const TempleModal = ({ temple, onClose }: { temple: any, onClose: () => v
                  <img src={temple.image} alt={temple.name} className="w-full h-full object-cover" />
               </div>
               <div className="border-b border-catalogue-gold/20 pb-4">
-                <h2 className="font-playfair text-3xl md:text-4xl font-black text-catalogue-green uppercase tracking-tight leading-tight">
+                <h2 className="font-playfair text-3xl md:text-4xl font-black metal-emerald uppercase tracking-tight leading-tight">
                   {temple.name}
                 </h2>
               </div>
@@ -101,14 +101,14 @@ export const TempleModal = ({ temple, onClose }: { temple: any, onClose: () => v
            <div className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-1">
-                   <p className="text-[10px] font-bold text-catalogue-gold uppercase tracking-[0.2em]">Suggested Darshan Time</p>
+                   <p className="text-[10px] font-bold metal-gold uppercase tracking-[0.2em] metal-flat">Suggested Darshan Time</p>
                    <p className="text-catalogue-green font-bold flex items-center gap-2 text-sm">
                       <Clock size={14} className="text-catalogue-gold shrink-0" />
                       {temple.timing}
                    </p>
                 </div>
                 <div className="space-y-1">
-                   <p className="text-[10px] font-bold text-catalogue-gold uppercase tracking-[0.2em]">Dress Code</p>
+                   <p className="text-[10px] font-bold metal-gold uppercase tracking-[0.2em] metal-flat">Dress Code</p>
                    <p className="text-catalogue-green font-bold flex items-center gap-2 text-sm italic">
                       <Shirt size={14} className="text-catalogue-gold shrink-0" />
                       {temple.dressCode}
@@ -118,7 +118,7 @@ export const TempleModal = ({ temple, onClose }: { temple: any, onClose: () => v
 
               <div className="space-y-6">
                 <div className="space-y-1">
-                  <p className="text-[10px] font-bold text-catalogue-gold uppercase tracking-widest">Special For</p>
+                  <p className="text-[10px] font-bold metal-gold uppercase tracking-widest metal-flat">Special For</p>
                   <p className="text-base text-catalogue-green font-bold italic leading-relaxed">{temple.specialFor}</p>
                 </div>
 
@@ -128,7 +128,7 @@ export const TempleModal = ({ temple, onClose }: { temple: any, onClose: () => v
                 
                 <div className="space-y-6 pt-2">
                    <div className="bg-catalogue-green/5 p-6 border border-catalogue-gold/20 ornate-shape">
-                      <p className="text-[10px] font-bold text-catalogue-gold uppercase tracking-widest mb-2">Guest Note</p>
+                      <p className="text-[10px] font-bold metal-gold uppercase tracking-widest mb-2 metal-flat">Guest Note</p>
                       <p className="text-sm text-catalogue-green font-semibold italic leading-relaxed">{temple.guestNote}</p>
                    </div>
                 </div>

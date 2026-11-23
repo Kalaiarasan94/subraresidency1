@@ -19,7 +19,7 @@ export const Footer = () => (
               <span className="font-playfair text-[9px] font-bold tracking-[0.25em] text-catalogue-gold uppercase mt-1">Residency Kumbakonam</span>
             </div>
           </div>
-          <p className="font-playfair text-catalogue-gold italic text-sm font-semibold">
+          <p className="font-playfair metal-gold-bright italic text-sm font-semibold metal-flat">
             &quot;Home, Away from Home&quot;
           </p>
           <p className="text-xs text-catalogue-cream/75 leading-relaxed">
@@ -33,7 +33,7 @@ export const Footer = () => (
 
         {/* Column 2: Explore Navigation */}
         <div className="space-y-4 lg:pl-6">
-          <h4 className="font-playfair text-base font-bold text-white uppercase tracking-widest border-b border-catalogue-gold/20 pb-2">
+          <h4 className="font-playfair text-base font-bold metal-gold-bright uppercase tracking-widest border-b border-catalogue-gold/20 pb-2 metal-flat">
             Explore
           </h4>
           <ul className="space-y-2.5 text-xs">
@@ -78,7 +78,7 @@ export const Footer = () => (
 
         {/* Column 3: Legal & Regulatory Policies */}
         <div className="space-y-4">
-          <h4 className="font-playfair text-base font-bold text-white uppercase tracking-widest border-b border-catalogue-gold/20 pb-2">
+          <h4 className="font-playfair text-base font-bold metal-gold-bright uppercase tracking-widest border-b border-catalogue-gold/20 pb-2 metal-flat">
             Policies & Legal
           </h4>
           <ul className="space-y-2.5 text-xs">
@@ -102,7 +102,7 @@ export const Footer = () => (
             </li>
           </ul>
           <div className="p-3 rounded-xl bg-white/5 border border-catalogue-gold/15 text-[11px] text-catalogue-cream/70 space-y-1">
-            <p className="font-bold text-catalogue-gold uppercase text-[10px] tracking-wider">
+            <p className="font-bold metal-gold-bright uppercase text-[10px] tracking-wider metal-flat">
               100% Secure Payments
             </p>
             <p>
@@ -113,7 +113,7 @@ export const Footer = () => (
 
         {/* Column 4: Contact & Front Desk */}
         <div className="space-y-4">
-          <h4 className="font-playfair text-base font-bold text-white uppercase tracking-widest border-b border-catalogue-gold/20 pb-2">
+          <h4 className="font-playfair text-base font-bold metal-gold-bright uppercase tracking-widest border-b border-catalogue-gold/20 pb-2 metal-flat">
             Contact Front Desk
           </h4>
           <div className="space-y-3 text-xs">
